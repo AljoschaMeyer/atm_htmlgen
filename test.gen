@@ -1,0 +1,10 @@
+
+foo§§ bar§§ ( baz ) b§ lu§)bb
+
+§span(foo)
+
+§span{"a": "b"}(bar )
+
+§span(c)(baz)
+
+§span(i)(c)(blubb)

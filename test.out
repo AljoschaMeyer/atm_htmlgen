@@ -1,0 +1,9 @@
+foo§ bar§ ( baz ) blu)bb
+
+<span>foo</span>
+
+<span a="b">bar</span>
+
+<span class="c">baz</span>
+
+<span id="i" class"c">blubb</span>
