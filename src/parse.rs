@@ -1,3 +1,4 @@
+use sourcefile::SourceFile;
 use thiserror::Error;
 use ropey::Rope;
 use serde::Deserialize;
@@ -5,7 +6,7 @@ use serde::Deserialize;
 use atm_parser_helper::{Eoi, Error, ParserHelper};
 use valuable_value::human::{VVDeserializer, Error as VVError};
 
-use crate::{Yatt, RunConfiguration};
+use crate::{Yatt, RunConfiguration, print_trace};
 use crate::macros::{OutInternal, Trace};
 
 // An offset into the source map.
@@ -15,12 +16,31 @@ pub(crate) type OffsetSpan = (Offset /* start, inclusive */, Offset /* end, excl
 
 #[derive(Error, Debug)]
 pub(crate) enum ParseError {
-    #[error("unexpected end of input")]
+    #[error("never printed")]
     Eoi,
-    #[error("TODO")]
+    #[error("never printed")]
     Parameters(VVError, Trace),
-    #[error("TODO")]
+    #[error("never printed")]
     UnknownMacroName(Trace),
+}
+
+impl ParseError {
+    pub fn print_parse_error(&self, source: &SourceFile) {
+        match self {
+            ParseError::Eoi => {
+                println!("Unexpected end of input.");
+            }
+            ParseError::UnknownMacroName(t) => {
+                print!("Unknown macro name.");
+                print_trace(t.clone(), source, false);
+            }
+            ParseError::Parameters(e, t) => {
+                print!("Could not parse macro parameters.");
+                print_trace(t.clone(), source, true);
+                println!("\n{}", e);
+            }
+        }
+    }
 }
 
 impl Eoi for ParseError {
@@ -104,7 +124,7 @@ impl<'a> Parser<'a> {
                         }
                     }
                 } else {
-                    let trace_start = source_offset + self.p.position() - (initial_position + 1);
+                    let trace_start = source_offset + self.p.position() - initial_position;
                     let start_macro_name = self.p.position();
 
                     loop {
@@ -133,8 +153,84 @@ impl<'a> Parser<'a> {
 
                         self.p.advance(1);
                         start = self.p.position();
+                    } else if macro_name == b"html" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "html".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"style" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "style".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"title" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "title".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"body" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "body".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"head" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "head".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"aside" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "aside".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"footer" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "footer".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"header" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "header".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"h1" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "h1".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"h2" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "h2".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"h3" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "h3".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"h4" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "h4".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"h5" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "h5".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"h6" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "h6".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"main" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "main".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"nav" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "nav".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"section" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "section".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"blockquote" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "blockquote".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"figcaption" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "figcaption".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"figure" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "figure".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"pre" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "pre".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"div" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "div".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"p" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "p".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"li" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "li".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"ul" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "ul".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"ol" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "ol".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"a" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "a".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"abbr" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "abbr".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"code" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "code".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"dfn" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "dfn".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"em" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "em".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"q" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "q".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"s" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "s".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"span" {
-                        self.pm(OutInternal::Span, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "span".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"strong" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "strong".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"script" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "script".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"input" {
+                        self.pm(OutInternal::Input, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"output" {
+                        self.pm(|t, p, a| OutInternal::Output(t, p, a, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"output_tee" {
+                        self.pm(|t, p, a| OutInternal::Output(t, p, a, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {
                         let trace_end = source_offset + self.p.position() - initial_position;
                         let trace = Trace(Some((trace_start, trace_end)));
@@ -176,7 +272,7 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn parse_args(&mut self, y: &mut Yatt, source_offset: Offset) -> Result<Box<[OutInternal]>, ParseError> {
+    fn parse_args(&mut self, y: &mut Yatt, source_offset: Offset) -> Result<Vec<OutInternal>, ParseError> {
         let initial_position = self.p.position();
         let mut outs = Vec::new();
 
@@ -193,7 +289,7 @@ impl<'a> Parser<'a> {
     fn pm<'s, P, M>(&'s mut self, m: M, y: &mut Yatt, source_offset: Offset, parse_parameters: bool, initial_position: usize, trace_start: usize, outs: &mut Vec<OutInternal>, start: &mut usize, last_non_ws: &mut usize) -> Result<(), ParseError>
     where
         P: Deserialize<'s> + Default,
-        M: Fn(Trace, P, Box<[OutInternal]>) -> OutInternal,
+        M: Fn(Trace, P, Vec<OutInternal>) -> OutInternal,
     {
         let params = if parse_parameters {
             let mut d = VVDeserializer::new(self.p.rest());

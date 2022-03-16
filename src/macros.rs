@@ -1,77 +1,109 @@
+use sourcefile::SourceFile;
 use std::error::Error;
 use std::io;
-use std::path::PathBuf;
+use std::fs;
 use std::collections::BTreeMap;
+use std::path::PathBuf;
 
 use ropey::{Rope, RopeSlice};
 use thiserror::Error;
 
-use crate::{State, Yatt};
+use crate::{State, Yatt, print_trace};
 use crate::parse;
 use crate::parse::OffsetSpan;
 
 #[derive(Clone, Debug)]
 pub(crate) struct Trace(pub Option<OffsetSpan>);
 
-fn up_and_down<D, U, P>(down: D, up: U, params: &P, args: Box<[OutInternal]>, m_span: Trace, y: &mut Yatt) -> Result<Rope, ExpansionError>
+fn down_macro<D, P>(down: D, params: &P, args: Vec<OutInternal>, m_span: Trace, y: &mut Yatt) -> Result<Rope, ExpansionError>
 where
     D: Fn(&P, usize /*number of arguments*/, &mut Yatt, Trace) -> Result<Out, ExpansionError>,
-    U: Fn(&P, RopeSlice, &mut Yatt, Trace) -> Result<Rope, ExpansionError>,
 {
     let o = down(params, args.len(), y, m_span.clone())?;
     let internal = out_to_internal(o, args).map_err(|e| ExpansionError::ArgumentIndex(e, m_span.clone()))?;
     let d = expand(internal, y)?;
-    return up(params, d.slice(..), y, m_span);
+    return Ok(d);
 }
 
-fn up_id<P>(_p: &P, r: RopeSlice, y: &mut Yatt, _trace: Trace) -> Result<Rope, ExpansionError> {
-    Ok(r.into())
+fn up_macro<U, P>(up: U, params: &P, args: Vec<OutInternal>, m_span: Trace, y: &mut Yatt) -> Result<Rope, ExpansionError>
+where
+    U: Fn(&P, &[Rope], &mut Yatt, Trace) -> Result<Rope, ExpansionError>,
+{
+    let mut expanded_args = Vec::new();
+    for arg in args {
+        expanded_args.push(expand(arg, y)?);
+    }
+
+    return up(params, &expanded_args, y, m_span);
 }
 
 #[derive(Error, Debug)]
 pub(crate) enum ExpansionError {
-    #[error("TODO {0}")]
+    #[error("never printed")]
     ArgumentIndex(usize, Trace),
-    #[error("TODO {0}")]
+    #[error("never printed")]
     ArgumentNumber(usize, Trace),
-    #[error("TODO {0}")]
-    InputIO(io::Error, Trace),
-    #[error("{0}")]
+    #[error("never printed")]
+    InputIO(io::Error, PathBuf, Trace),
+    #[error("never printed")]
+    OutputIO(io::Error, PathBuf, Trace),
+    #[error("never printed")]
+    CopyAll(fs_extra::error::Error, PathBuf, PathBuf, Trace),
+    #[error("never printed")]
     Parse(#[from] parse::ParseError),
+}
+
+impl ExpansionError {
+    pub fn print_expansion_error(&self, source: &SourceFile) {
+        match self {
+            ExpansionError::ArgumentIndex(i, t) => {
+                println!("Buggy macro referred to argument number {}, but it did not get that many arguments.", i);
+                print_trace(t.clone(), source, false);
+            }
+            ExpansionError::ArgumentNumber(i, t) => {
+                println!("Macro received an invalid number of arguments ({}).", i);
+                print_trace(t.clone(), source, false);
+            }
+            ExpansionError::InputIO(e, path, t) => {
+                println!("Failed to read input file {}:\n {}\n", path.to_string_lossy(), e);
+                print_trace(t.clone(), source, false);
+            }
+            ExpansionError::OutputIO(e, path, t) => {
+                println!("Failed to write output file {}:\n {}\n", path.to_string_lossy(), e);
+                print_trace(t.clone(), source, false);
+            }
+            ExpansionError::CopyAll(e, from, to, t) => {
+                println!("Failed to copy file {} to {}:\n {}\n", from.to_string_lossy(), to.to_string_lossy(), e);
+                print_trace(t.clone(), source, false);
+            }
+            ExpansionError::Parse(e) => {
+                e.print_parse_error(source);
+            }
+        }
+    }
 }
 
 type TagParams = BTreeMap<String, String>;
 
 #[derive(Clone)]
 pub enum Out {
-    Many(Box<[Out]>),
+    Many(Vec<Out>),
     Argument(usize),
     Text(Rope),
-    EmptyMacro((), Box<[Out]>),
-    Span(TagParams, Box<[Out]>)
-    // Macro {
-    //     m: Macro,
-    //     arguments: Box<[Out]>,
-    // },
-    // Input(PathBuf),
+    HtmlTag(String, TagParams, Vec<Out>),
+    Input([PathBuf; 1], Vec<Out>),
+    Output([PathBuf; 1], Vec<Out>, bool),
 }
 
 #[derive(Clone)]
 pub(crate) enum OutInternal {
-    Many(Box<[OutInternal]>),
+    Many(Vec<OutInternal>),
     Text(Rope, Trace),
-    EmptyMacro(Trace, (), Box<[OutInternal]>),
-    Span(Trace, TagParams, Box<[OutInternal]>),
-    // Macro {
-    //     m: Macro,
-    //     m_span: Trace,
-    //     arguments: Box<[OutInternal]>,
-    // },
-    // Input {
-    //     span: Trace,
-    //     path: PathBuf,
-    // },
-
+    EmptyMacro(Trace, (), Vec<OutInternal>),
+    HtmlTag(Trace, String, TagParams, Vec<OutInternal>),
+    Input(Trace, [PathBuf; 1], Vec<OutInternal>),
+    Output(Trace, [PathBuf; 1], Vec<OutInternal>, bool),
+    CopyAll(Trace, [PathBuf; 2], Vec<OutInternal>),
 }
 
 pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionError> {
@@ -94,48 +126,90 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }
         }
 
-        // D: Fn(&P, usize /*number of arguments*/, &mut Yatt) -> Result<Out, Box<dyn Error>>,
-        // U: Fn(&P, RopeSlice, &mut Yatt) -> Result<Rope, Box<dyn Error>>,
-        OutInternal::Span(trace, params, args) => {
-            return up_and_down(|p, n, y, trace| {
-                html_tag("span", p, n, y, trace)
-            }, up_id, &params, args, trace, y);
+        OutInternal::HtmlTag(trace, tag, params, args) => {
+            return down_macro(|p, n, y, trace| {
+                html_tag(&tag, p, n, y, trace)
+            }, &params, args, trace, y);
         }
 
-        // OutInternal::Macro {m, m_span, arguments} => {
-        //     match m.0(arguments.len(), &mut y.states) {
-        //         Err(e) => return Err(ExpansionError::Down(e, m_span)),
-        //         Ok(o) => {
-        //             let internal = out_to_internal(o, arguments).map_err(|e| ExpansionError::ArgumentIndex(e, m_span.clone()))?;
-        //             let down = expand(internal, y)?;
-        //             return m.1(down.slice(..)).map_err(|e| ExpansionError::Up(e, m_span));
-        //         }
-        //     }
-        // }
-        //
-        // OutInternal::Input {span, path} => {
-        //     if path.is_absolute() {
-        //         y.cwd = path.parent().expect("Input file must not be the root of the file system.").to_path_buf();
-        //         y.filename = path.strip_prefix(&y.cwd).unwrap().to_path_buf();
-        //     } else {
-        //         let tmp = path.parent().expect("Input file must not be the root of the file system.").to_path_buf();
-        //         y.cwd = y.cwd.join(tmp);
-        //         y.filename = path.strip_prefix(&y.cwd).unwrap().to_path_buf();
-        //     }
-        //
-        //     match std::fs::read_to_string(&y.cwd.join(&y.filename)) {
-        //         Err(e) => return Err(ExpansionError::InputIO(e, span)),
-        //         Ok(entry) => {
-        //             let ast = parse::parse(&entry, y)?;
-        //             return expand(ast, y);
-        //         }
-        //     }
-        // }
+        OutInternal::Input(span, path, args) => {
+            arguments_exact(0, &args, &span)?;
+            let path = &path[0];
+            if path.is_absolute() {
+                let tmp = path.parent().expect("Input file must not be the root of the file system.").to_path_buf();
+                y.state.cwd = y.state.basedir.join(&tmp.strip_prefix("/").unwrap());
+                y.state.filename = path.strip_prefix(&tmp).unwrap().to_path_buf();
+            } else {
+                let tmp = path.parent().expect("Input file must not be the root of the file system.").to_path_buf();
+                y.state.cwd = y.state.cwd.join(&tmp);
+                y.state.filename = path.strip_prefix(&tmp).unwrap().to_path_buf();
+            }
+
+            let p = y.state.cwd.join(&y.state.filename);
+
+            match fs::read_to_string(&p) {
+                Err(e) => return Err(ExpansionError::InputIO(e, p, span)),
+                Ok(entry) => {
+                    let source_offset = y.source.contents.len();
+                    y.source.add_file_raw(&y.c.entrypoint.to_string_lossy(), &entry);
+                    let ast = parse::parse(&entry, y, source_offset)?;
+                    return expand(ast, y);
+                }
+            }
+        }
+
+        OutInternal::Output(span, path, args, tee) => {
+            arguments_exact(1, &args, &span)?;
+            return up_macro(|path, args, y, span| {
+                let path = &path[0];
+                let content = args[0].to_string();
+
+                let p = if path.is_absolute() {
+                    y.state.basedir.join(&path.strip_prefix("/").unwrap())
+                } else {
+                    y.state.cwd.join(path)
+                };
+
+                let mut dirname = p.clone();
+                dirname.pop();
+                let _ = fs_extra::dir::create_all(dirname, false);
+
+                match fs::write(&p, &content) {
+                    Err(e) => return Err(ExpansionError::OutputIO(e, p, span)),
+                    Ok(()) => {
+                        if tee {
+                            return Ok(args[0].clone());
+                        } else {
+                            return Ok(Rope::new());
+                        }
+                    }
+                }
+            }, &path, args, span, y);
+        }
+
+        OutInternal::CopyAll(span, params, args) => {
+            arguments_exact(0, &args, &span)?;
+            let from = &params[0];
+            let to = &params[1];
+
+            fs_extra::copy_items(&params[0..1], to, &fs_extra::dir::CopyOptions::new())
+                .map_err(|e| ExpansionError::CopyAll(e, from.clone(), to.clone(), span))?;
+
+            return Ok(Rope::new());
+        }
+    }
+}
+
+fn arguments_exact(n: usize, args: &[OutInternal], span: &Trace) -> Result<(), ExpansionError> {
+    if args.len() != n {
+        return Err(ExpansionError::ArgumentNumber(args.len(), span.clone()));
+    } else {
+        return Ok(());
     }
 }
 
 // Error is the index of an invalid argument.
-fn out_to_internal(out: Out, args: Box<[OutInternal]>) -> Result<OutInternal, usize> {
+fn out_to_internal(out: Out, args: Vec<OutInternal>) -> Result<OutInternal, usize> {
     match out {
         Out::Many(outs) => {
             return Ok(OutInternal::Many(outs_to_internals(outs, args)?));
@@ -150,31 +224,17 @@ fn out_to_internal(out: Out, args: Box<[OutInternal]>) -> Result<OutInternal, us
             }
         }
 
-        Out::EmptyMacro(params, a) => {
-            Ok(OutInternal::EmptyMacro(Trace(None), params, outs_to_internals(a, args)?))
+        Out::HtmlTag(tag, params, a) => {
+            Ok(OutInternal::HtmlTag(Trace(None), tag, params, outs_to_internals(a, args)?))
         }
 
-        Out::Span(params, a) => {
-            Ok(OutInternal::Span(Trace(None), params, outs_to_internals(a, args)?))
-        }
+        Out::Input(path, a) => return Ok(OutInternal::Input(Trace(None), path, outs_to_internals(a, args)?)),
 
-        // Out::Macro { m, arguments: m_args} => {
-        //     let mut m_args_internal = Vec::with_capacity(m_args.len());
-        //     for arg in m_args.into_iter() {
-        //         m_args_internal.push(out_to_internal(arg.clone(), arguments.clone())?);
-        //     }
-        //     return Ok(OutInternal::Macro {
-        //         m,
-        //         m_span: Trace(None),
-        //         arguments: m_args_internal.into(),
-        //     });
-        // }
-        //
-        // Out::Input(path) => return Ok(OutInternal::Input { path, span: Trace(None) }),
+        Out::Output(path, a, tee) => return Ok(OutInternal::Output(Trace(None), path, outs_to_internals(a, args)?, tee)),
     }
 }
 
-fn outs_to_internals(outs: Box<[Out]>, args: Box<[OutInternal]>) -> Result<Box<[OutInternal]>, usize> {
+fn outs_to_internals(outs: Vec<Out>, args: Vec<OutInternal>) -> Result<Vec<OutInternal>, usize> {
     let mut internals = Vec::with_capacity(outs.len());
     for o in outs.into_iter() {
         internals.push(out_to_internal(o.clone(), args.clone())?);
@@ -182,7 +242,6 @@ fn outs_to_internals(outs: Box<[Out]>, args: Box<[OutInternal]>) -> Result<Box<[
     Ok(internals.into())
 }
 
-// D: Fn(&P, usize /*number of arguments*/, &mut Yatt) -> Result<Out, Box<dyn Error>>,
 fn html_tag(tag: &str, params: &TagParams, args: usize, _y: &mut Yatt, trace: Trace) -> Result<Out, ExpansionError> {
     if args == 1 {
         let mut open = format!("<{}", tag);
