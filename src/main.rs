@@ -1,11 +1,10 @@
-use std::collections::{BTreeMap, BTreeSet};
-use std::error::Error;
+use std::path::Path;
+use std::collections::HashMap;
 use std::io;
 use std::env;
 use std::path::PathBuf;
 
 use sourcefile::SourceFile;
-use ropey::{Rope, RopeSlice};
 use thiserror::Error;
 
 mod macros;
@@ -27,31 +26,35 @@ pub fn run(c: RunConfiguration) {
 }
 
 fn do_run(y: &mut Yatt) -> Result<(), YattError> {
-    match std::fs::read_to_string(&y.c.entrypoint) {
+    match std::fs::read_to_string(&y.state.entrypoint) {
         Err(e) => return Err(YattError::EntryIO(e)),
         Ok(entry) => {
-            y.source.add_file_raw(&y.c.entrypoint.to_string_lossy(), &entry);
+            y.source.add_file_raw(&y.state.entrypoint.to_string_lossy(), &entry);
             let ast = parse::parse(&entry, y, 0)?;
             let _expanded = macros::expand(ast, y)?;
-            return Ok(());
+
+            if y.state.second_iteration {
+                return Ok(());
+            } else {
+                let sticky_state = y.state.sticky_state.clone();
+                y.state = State::new(y.state.entrypoint.clone())?;
+                y.state.second_iteration = true;
+                y.state.sticky_state = sticky_state;
+                return do_run(y);
+            }
         }
     }
 }
 
 struct Yatt {
-    c: RunConfiguration,
     pub state: State,
     source: SourceFile,
 }
 
 impl Yatt {
     fn new(c: RunConfiguration) -> Result<Self, io::Error> {
-        let entrypoint = std::env::current_dir()?.join(c.entrypoint.clone());
-        let cwd = std::env::current_dir()?.join(entrypoint.parent().expect("Entrypoint must not be the root of the file system."));
-        let filename = entrypoint.strip_prefix(&cwd).unwrap().to_path_buf();
         return Ok(Yatt {
-            c,
-            state: State::new(cwd, filename),
+            state: State::new(c.entrypoint)?,
             source: SourceFile::new(),
         });
     }
@@ -60,7 +63,7 @@ impl Yatt {
 #[derive(Error, Debug)]
 enum YattError {
     #[error("never printed")]
-    EntryIO(io::Error),
+    EntryIO(#[from] io::Error),
     #[error("never printed")]
     Parse(#[from] ParseError),
     #[error("never printed")]
@@ -79,7 +82,7 @@ fn print_yatt_error(e: YattError, source: &SourceFile) {
 
 pub(crate) fn print_trace(t: Trace, source: &SourceFile, show_end: bool) {
     match t {
-        Trace(None) => println!("Generated in macro, the macro is buggy and should have thrown error instead"),
+        Trace(None) => println!("Generated in macro at unknown location."),
         Trace(Some(span)) => {
             let s = source.resolve_offset_span(span.0, span.1).unwrap();
             let offset = if show_end { &s.start } else { &s.end };
@@ -89,20 +92,251 @@ pub(crate) fn print_trace(t: Trace, source: &SourceFile, show_end: bool) {
     }
 }
 
-pub struct State {
-    basedir: PathBuf,
-    cwd: PathBuf,
-    filename: PathBuf, // within the cwd
+pub(crate) struct State {
+    pub entrypoint: PathBuf,
+    pub current_file: PathBuf,
+    pub current_output: PathBuf,
+    pub second_iteration: bool,
+    pub sticky_state: StickyState,
+
+    pub domain: String,
+
+    pub hsection_level: usize,
+    pub hsection_current_count: [usize; 6],
+    pub hsection_pre_number: [String; 6],
+    pub hsection_post_number: [String; 6],
+    pub hsection_render_number: [bool; 6],
+    pub hsection_name: [String; 6],
+
+    pub box_exercise_current_count: usize,
+    pub box_exercise_level: usize,
+    pub box_other_current_count: usize,
+    pub box_other_level: usize,
+    pub box_current: Option<String>, // id of current box if any
 }
 
 impl State {
-    fn new(basedir: PathBuf, initial_file: PathBuf) -> Self {
-        State {
-            cwd: basedir.clone(),
-            basedir,
-            filename: initial_file,
+    fn new(entrypoint: PathBuf) -> Result<Self, io::Error> {
+        let entrypoint = std::env::current_dir()?.join(entrypoint.clone());
+        let cwd = entrypoint.parent().expect("entrypoint must not be the root of the file system.").to_path_buf();
+        std::env::set_current_dir(&cwd)?;
+
+        return Ok(State {
+            current_file: entrypoint.clone(),
+            entrypoint,
+            current_output: "".into(),
+            second_iteration: false,
+            sticky_state: StickyState::new(),
+
+            domain: "http://localhost:8080/".to_string(),
+
+            hsection_level: 0,
+            hsection_current_count: [0; 6],
+            hsection_pre_number: ["".into(), "<div>Chapter ".into(), "".into(), "".into(), "".into(), "".into()],
+            hsection_post_number: ["".into(), "</div>".into(), ": ".into(),": ".into(), ": ".into(), ": ".into()],
+            hsection_render_number: [false, true, true, false, false, false],
+            hsection_name: ["".into(), "Chapter".into(), "Section".into(), "Subsection".into(), "Subsubsection".into(), "Subsubsubsection".into()],
+
+            box_exercise_current_count: 0,
+            box_exercise_level: 1,
+            box_other_current_count: 0,
+            box_other_level: 1,
+            box_current: None,
+        });
+    }
+
+    pub(crate) fn cwd(&self) -> PathBuf {
+        self.current_file.parent().expect("Cwd must not be the root of the file system.").to_path_buf()
+    }
+
+    // pub(crate) fn current_filename(&self) -> PathBuf {
+    //     self.current_file.strip_prefix(&self.cwd()).unwrap().to_path_buf()
+    // }
+
+    pub(crate) fn base_dir(&self) -> PathBuf {
+        self.entrypoint.parent().expect("Entrypoint must not be the root of the file system.").to_path_buf()
+    }
+
+    pub(crate) fn current_output_relative(&self) -> PathBuf {
+        self.current_output.strip_prefix(self.base_dir()).unwrap().to_path_buf()
+    }
+
+    // pub(crate) fn relative_path(&self, to: &Path) -> PathBuf {
+    //     let mut cwd_relative = self.cwd().strip_prefix(self.base_dir()).unwrap().to_path_buf();
+    //     let up = cwd_relative.components().count();
+    //     if up == 0 {
+    //         return self.current_output_relative();
+    //     } else {
+    //         for _ in 0..up {
+    //             cwd_relative.push("..");
+    //         }
+    //         return cwd_relative.join(self.current_output_relative());
+    //     }
+    // }
+    //
+    // pub(crate) fn relative_link(&self, id: &str) -> PathBuf {
+    //     let info = self.sticky_state.ids.get(id).unwrap();
+    //     return self.relative_path(&info.file);
+    // }
+
+    pub(crate) fn register_id(&mut self, id: impl Into<String>, kind: CrefKind, trace: Trace) -> Result<String, ExpansionError> {
+        let id = id.into();
+        if id == "" {
+            return Ok("".to_string());
+        }
+        match self.sticky_state.ids.insert(id.clone().into(), IdInfo {
+            definition: trace.clone(),
+            file: self.current_output_relative(),
+            kind,
+        }) {
+            Some(info) if !self.second_iteration => return Err(ExpansionError::DuplicateId(info.definition, trace)),
+            _ => return Ok(self.resolve_id_to_url(id, trace)?),
         }
     }
+
+    pub(crate) fn resolve_id_to_url(&self, id: impl Into<String>, trace: Trace) -> Result<String, ExpansionError> {
+        if self.second_iteration {
+            let id = id.into();
+            match self.sticky_state.ids.get(&id) {
+                None => return Err(ExpansionError::UnknownId(trace)),
+                Some(info) => {
+                    return Ok(format!(
+                        "{}{}#{}",
+                        self.domain,
+                        info.file.to_string_lossy(),
+                        id,
+                    ));
+                }
+            }
+        } else {
+            return Ok("set in second iteration".to_string());
+        }
+    }
+
+    pub(crate) fn register_define(&mut self, defined: impl Into<String>, href: String, singular: String, plural: String, trace: Trace) -> Result<(), ExpansionError> {
+        let defined = defined.into();
+        if defined == "" {
+            return Err(ExpansionError::EmptyDefine(trace));
+        }
+
+        match self.sticky_state.defined.insert(defined.into(), DefinedInfo {
+            definition: trace.clone(),
+            href,
+            singular,
+            plural,
+        }) {
+            Some(info) if !self.second_iteration => return Err(ExpansionError::DuplicateDefine(info.definition, trace)),
+            _ => return Ok(()),
+        }
+    }
+
+    pub(crate) fn resolve_defined_to_url(&self, defined: impl Into<String>, trace: Trace) -> Result<String, ExpansionError> {
+        if self.second_iteration {
+            let defined = defined.into();
+            match self.sticky_state.defined.get(&defined) {
+                None => return Err(ExpansionError::UnknownDefine(trace)),
+                Some(info) => {
+                    return Ok(info.href.clone());
+                }
+            }
+        } else {
+            return Ok("set in second iteration".to_string());
+        }
+    }
+}
+
+#[derive(Clone)]
+pub(crate) enum BoxKind {
+    Exercise,
+    Other(OtherBoxKind),
+}
+
+impl BoxKind {
+    pub(crate) fn class(&self) -> String {
+        match self {
+            BoxKind::Exercise => "exercise".to_string(),
+            BoxKind::Other(OtherBoxKind::Fact) => "fact".to_string(),
+            BoxKind::Other(OtherBoxKind::Example) => "example".to_string(),
+            BoxKind::Other(OtherBoxKind::Definition) => "definition".to_string(),
+        }
+    }
+
+    pub(crate) fn exercise() -> Self {
+        BoxKind::Exercise
+    }
+
+    pub(crate) fn fact() -> Self {
+        BoxKind::Other(OtherBoxKind::Fact)
+    }
+
+    pub(crate) fn example() -> Self {
+        BoxKind::Other(OtherBoxKind::Example)
+    }
+
+    pub(crate) fn definition() -> Self {
+        BoxKind::Other(OtherBoxKind::Definition)
+    }
+}
+
+#[derive(Clone)]
+pub(crate) enum OtherBoxKind {
+    Fact,
+    Example,
+    Definition,
+}
+
+#[derive(Clone)]
+pub(crate) struct StickyState {
+    pub ids: HashMap<String, IdInfo>,
+    pub hsections: HashMap<String, HSectionInfo>,
+    pub boxes: HashMap<String, BoxInfo>,
+    pub defined: HashMap<String, DefinedInfo>,
+}
+
+impl StickyState {
+    fn new() -> Self {
+        StickyState {
+            ids: HashMap::new(),
+            hsections: HashMap::new(),
+            boxes: HashMap::new(),
+            defined: HashMap::new(),
+        }
+    }
+}
+
+#[derive(Clone)]
+pub(crate) enum CrefKind {
+    HSection,
+    Box,
+    BoxlessDefinition,
+}
+
+#[derive(Clone)]
+pub(crate) struct IdInfo {
+    pub definition: Trace,
+    pub file: PathBuf,
+    pub kind: CrefKind,
+}
+
+#[derive(Clone)]
+pub struct HSectionInfo {
+    pub name: String, // "Chapter", "Section", etc.
+    pub numbering: String,
+}
+
+#[derive(Clone)]
+pub(crate) struct BoxInfo {
+    pub name: String, // "Theorem", "Lemma", etc.
+    pub numbering: String,
+    pub kind: BoxKind,
+}
+
+#[derive(Clone)]
+pub(crate) struct DefinedInfo {
+    pub definition: Trace,
+    pub href: String,
+    pub singular: String,
+    pub plural: String,
 }
 
 fn main() {

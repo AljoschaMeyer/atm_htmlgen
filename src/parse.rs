@@ -3,10 +3,10 @@ use thiserror::Error;
 use ropey::Rope;
 use serde::Deserialize;
 
-use atm_parser_helper::{Eoi, Error, ParserHelper};
+use atm_parser_helper::{Eoi, ParserHelper};
 use valuable_value::human::{VVDeserializer, Error as VVError};
 
-use crate::{Yatt, RunConfiguration, print_trace};
+use crate::{Yatt, print_trace, BoxKind};
 use crate::macros::{OutInternal, Trace};
 
 // An offset into the source map.
@@ -137,6 +137,7 @@ impl<'a> Parser<'a> {
                             self.p.rest().starts_with("[".as_bytes()) ||
                             self.p.rest().starts_with("{".as_bytes()) ||
                             self.p.rest().starts_with("(".as_bytes()) ||
+                            self.p.rest().starts_with(")".as_bytes()) ||
                             self.p.rest().len() == 0
                         {
                             break;
@@ -231,6 +232,60 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Output(t, p, a, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"output_tee" {
                         self.pm(|t, p, a| OutInternal::Output(t, p, a, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"copy" {
+                        self.pm(OutInternal::CopyAll, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"template" {
+                        self.pm(OutInternal::Template, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"hsection" {
+                        self.pm(OutInternal::HSection, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"lorem" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, LOREM), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"cref" {
+                        self.pm(OutInternal::Cref, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$" {
+                        self.pm(|t, p, a| OutInternal::TeX(t, p, a, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$$" {
+                        self.pm(|t, p, a| OutInternal::TeX(t, p, a, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"cwd" {
+                        self.pm(OutInternal::Cwd, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"set_domain" {
+                        self.pm(OutInternal::SetDomain, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"definition" {
+                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::definition(), "Definition".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"example" {
+                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::example(), "Example".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"exercise" {
+                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::exercise(), "Exercise".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"statement" {
+                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Statement".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"observation" {
+                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Observation".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"theorem" {
+                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Theorem".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"lemma" {
+                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Lemma".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"corollary" {
+                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Corollary".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"conjecture" {
+                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Conjecture".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"colorExercise" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, COLOR_EXERCISE), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"colorFact" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, COLOR_FACT), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"colorExample" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, COLOR_EXAMPLE), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"colorDefinition" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, COLOR_DEFINITION), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"define" {
+                        self.pm(OutInternal::Define, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"r" {
+                        self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, false, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"R" {
+                        self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, true, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"rs" {
+                        self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, false, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"Rs" {
+                        self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, true, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {
                         let trace_end = source_offset + self.p.position() - initial_position;
                         let trace = Trace(Some((trace_start, trace_end)));
@@ -322,26 +377,9 @@ impl<'a> Parser<'a> {
     }
 }
 
-// pub(crate) enum Ast {
-//     // Text that will be written somewhere without needing any processing beyond handling escape sequences and ignoring comments.
-//     Text(OffsetSpan),
-//     // Invocation of a plugin-defined macro.
-//     Invocation {
-//         name: OffsetSpan,
-//         m: Macro,
-//         // options: OffsetSpan,
-//         arguments: Vec<Ast>,
-//     },
-//     // // Invocation of the built-in `input` macro.
-//     // Input {
-//     //     name: OffsetSpan,
-//     //     argument: OffsetSpan,
-//     //     resolved: Vec<Ast>,
-//     // },
-//     // // Invocation of the built-in `output` macro.
-//     // Output {
-//     //     name: OffsetSpan,
-//     //     path: OffsetSpan,
-//     //     contents: Vec<Ast>,
-//     // },
-// }
+static LOREM: &str = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.";
+
+static COLOR_FACT: &str = "rgb(204, 115, 0)";
+static COLOR_DEFINITION: &str = "rgb(124, 0, 132)";
+static COLOR_EXAMPLE: &str = "rgb(0, 133, 18)";
+static COLOR_EXERCISE: &str = "rgb(0, 95, 133)";

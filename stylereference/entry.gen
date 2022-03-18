@@ -1,0 +1,81 @@
+§set_domain(file:///C:/Users/mail/projects/atm_htmlgen/stylereference/)
+
+§copy["assets", "build"]
+§copy[".htaccess", "build"]
+
+§output["build/main.css"](§input["main.css.gen"])
+
+§output["build/index.html"](
+  §template(
+
+  )(
+    §h1(h1)()(A Level 1 Heading)
+    §p(§lorem)
+    §p(§lorem)
+    §p(§lorem)
+
+    §hsection(h2)(A Level 2 Heading)(
+      §p(§lorem)
+
+      §hsection(h3)(A Level 3 Heading)(
+        §p(§lorem)
+
+        §hsection(h4)(A Level 4 Heading)(
+          §p(§lorem)
+
+          §hsection(h5)(A Level 5 Heading)(
+            §p(§lorem)
+
+            §hsection(h6)(A Level 6 Heading)(
+              §p(§lorem)
+            )
+          )
+        )
+      )
+    )
+
+    <hr>
+
+    §p(
+      This paragraph references §cref(h2), §cref(h3), §cref(h4), §cref(h5), and §cref(h6).
+    )
+    §p(
+      Inline math like §$(x \neq 3) works, as does display math:
+    )
+    §$$(\emptyset \subseteq Y)
+
+    <hr>
+
+    §definition["definition_with_name"](Some Name)(§p(§lorem))
+    §definition["definition"](§p(§lorem))
+    §example["example"](§p(§lorem))
+    §exercise["exercise"](§p(§lorem))
+    §statement["statement"](§p(§lorem))
+    §observation["observation"](§p(§lorem))
+    §theorem["theorem"](§p(§lorem))
+    §lemma["lemma"](§p(§lorem))
+    §corollary["corollary"](§p(§lorem))
+    §conjecture["conjecture"](§p(§lorem))
+
+    §hsection()(Another Chapter)(
+      §theorem["theorem2"](§p(§lorem))
+
+      <hr>
+
+      §p(
+        This paragraph references §cref(definition), §cref(example), §cref(exercise) and §cref(statement).
+      )
+      §p(
+        A §define["boxless_definition"](boxless)(boxless definition) is a definition that is not contained in a box.
+        You can reference it.
+      )
+      §definition["defs"](
+        §p(Various more definitions: §define(def1)(definition one), §define(def2)(definition two)(definition twoes), and §define(def3)(definition three)(definition threes)(wOOt).)
+      )
+      §p(
+        Lots of references: §r(boxless), §rs(boxless), §R(boxless), §Rs(boxless), and §r(def1), §rs(def1), §R(def1), §Rs(def1), and §r(def2), §rs(def2), §R(def2), §Rs(def2), and §r(def3), §rs(def3), §R(def3), §Rs(def3). You can also reference a defined term by an arbitrary name, e.g., §r(boxless)(Alex) and §r(def1)(Blake).
+      )
+    )
+
+  )
+)
