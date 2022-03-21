@@ -160,6 +160,7 @@ pub(crate) enum OutInternal {
     EmptyMacro(Trace, (), Vec<OutInternal>),
     Const(Trace, (), Vec<OutInternal>, &'static str),
     HtmlTag(Trace, String, TagParams, Vec<OutInternal>),
+    P(Trace, (), Vec<OutInternal>),
     Input(Trace, [PathBuf; 1], Vec<OutInternal>),
     Output(Trace, [PathBuf; 1], Vec<OutInternal>, bool),
     CopyAll(Trace, [PathBuf; 2], Vec<OutInternal>),
@@ -251,9 +252,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             let path = &path[0];
 
             let p = if path.is_absolute() {
-                y.state.base_dir().join(&path.strip_prefix("/").unwrap())
+                y.state.base_dir().join("build/").join(&path.strip_prefix("/").unwrap())
             } else {
-                y.state.cwd().join(path)
+                y.state.cwd().join("build/").join(path)
             };
 
             let mut dirname = p.clone();
@@ -285,13 +286,13 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         OutInternal::CopyAll(span, params, args) => {
             arguments_exact(0, &args, &span)?;
             let from = &params[0];
-            let to = &params[1];
+            let to = PathBuf::from("build/").join(&params[1]);
 
             let mut opts = fs_extra::dir::CopyOptions::new();
             opts.copy_inside = true;
             opts.overwrite = true;
 
-            fs_extra::copy_items(&params[0..1], to, &opts)
+            fs_extra::copy_items(&params[0..1], &to, &opts)
                 .map_err(|e| ExpansionError::CopyAll(e, from.clone(), to.clone(), span))?;
 
             return Ok(Rope::new());
@@ -307,7 +308,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         <link rel="stylesheet" href="./assets/katex.min.css">
         <link rel="stylesheet" href="./assets/fonts.css">
         <link rel="stylesheet" href="./main.css">
-"###.into()),
+        <script src="./assets/floating-ui.core.min.js"></script>
+        <script src="./assets/floating-ui.dom.min.js"></script>"###.into()),
                     Out::Argument(0),
                     Out::Text(r###"
     </head>
@@ -315,6 +317,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 "###.into()),
                     Out::Argument(1),
                     Out::Text(r###"
+        <script src="./assets/previews.js"></script>
     </body>
 </html>
 "###.into()),
@@ -457,7 +460,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     kind: kind.clone(),
                 });
 
-                return Ok(format!(r###"<article class="{}" id="{}">
+                let box_html = format!(r###"<article class="{}" id="{}">
     <h6><a href="{}">{} {}{}{}</a></h6>
     {}
 </article>"###,
@@ -469,7 +472,26 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     if args.len() == 2 { ": " } else { "" },
                     if args.len() == 2 { args[0].clone() } else { Rope::new() },
                     if args.len() == 2 { &args[1] } else { &args[0] },
-                ).into());
+                );
+
+                y.state.create_preview(&id, &box_html)?;
+                y.state.create_box_previews(&box_html)?;
+                return Ok(box_html.into());
+            }, &params, args, trace, y);
+
+            y.state.box_current = None;
+
+            return r;
+        }
+
+        OutInternal::P(trace, params, args) => {
+            arguments_exact(1, &args, &trace)?;
+
+            let r = up_macro(|_p, args, y, _trace| {
+                let p_html = format!(r###"<p>{}</p>"###, args[0]);
+
+                y.state.create_boxless_previews(&p_html)?;
+                return Ok(p_html.into());
             }, &params, args, trace, y);
 
             y.state.box_current = None;
@@ -536,6 +558,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             return up_macro(|_p, args, y, trace| {
                 if boxless {
                     y.state.register_id(&target_id.clone(), CrefKind::BoxlessDefinition, Trace(None))?;
+                    y.state.boxless_previews.insert(target_id.to_string());
+                } else {
+                    y.state.box_previews.insert(target_id.to_string());
                 }
 
                 let defined = args[0].clone();
@@ -549,6 +574,11 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 } else {
                     y.state.resolve_id_to_url(&target_id, Trace(None))?
                 };
+                let preview_url = format!(
+                    "{}/previews/{}.html",
+                    y.state.domain,
+                    target_id,
+                );
                 let singular = args[1].to_string();
                 let plural = if args.len() >= 3 {
                     args[2].to_string()
@@ -556,7 +586,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     format!("{}s", singular)
                 };
 
-                y.state.register_define(defined, href.clone(), singular, plural, trace)?;
+                y.state.register_define(defined, href.clone(), preview_url, singular, plural, trace)?;
 
                 return Ok(format!(r###"<dfn{}><a href="{}">{}</a></dfn>"###,
                     if boxless { format!(r#" id="{}""#, target_id) } else { "".to_string() },
@@ -595,8 +625,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                             };
 
                             return Ok(format!(
-                                r###"<a class="ref definition" href="{}">{}</a>"###,
+                                r###"<a class="ref definition" href="{}" data-preview="{}">{}</a>"###,
                                 info.href,
+                                y.state.resolve_defined_to_preview_url(id, id_trace.clone())?,
                                 name,
                             ).into());
                         }

@@ -179,3 +179,18 @@ article {
 .example {
   border-color: §colorExample§ ;
 }
+
+.preview {
+  position: absolute;
+  background: rgba(255, 255, 255, 30);
+  box-shadow: 0px 0px 3px 4px #DDDDDD;
+  padding: 4px;
+}
+
+.preview_content {
+  max-width: 41em;
+}
+
+.preview_content > * {
+  margin: 0;
+}

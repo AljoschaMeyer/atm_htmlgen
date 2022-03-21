@@ -1,0 +1,43 @@
+- A §define(set)(set) is a collection of objects that ignores the order of its objects and how often they occur.
+- We denote a §r(set) by listing its objects within curly braces, separated by commas, for example: §$(§$set(1)(2)((()))).
+- The §define(empty_set)(empty set) §$(§$set) — the collection that contains no objects at all — is also written as §$(§$emptyset).
+
+Because a §r(set) ignores the order of its objects, §$(§$set(1)(2)), and §$(§$set(2)(1)) both denote the same §r(set). Since a §r(set) also ignores how often its object occur, §$(§$set(1)(2)), and §$(§$set(1)(2)(1)) also denote the same §r(set). All three expressions are simply different ways of denoting the unique mathematical object characterized by the fact that §$(1) and §$(2) belong to it, but nothing else does.
+
+We now introduce more succinct terminology for talking about which objects do and which objects do not belong to a particular §r(set).
+
+To express that an object §$(x) occurs in a §r(set) §$(X), we write §$(x §$in X), and we say that §verbatim(§$(x) is an §define(element)(element) of §$(X)), §verbatim(§$(x) is a §define(member)(member) of §$(X)), or more simply that §verbatim(§$(x) §define(in)(in) §$(X)).
+
+If not §$(x §$in X), we write §$(x §notin X).
+
+Example: §$(1 §$in §$set(1)(2)), §$(2 §$in §$set(1)(2)), and §$(3 §$notin §$set(1)(2)).
+
+§cref(venn) demonstrates how §rs(set) can be visualized in Venn diagrams, graphic representations where a §r(set) is represented as a blob enclosing its §rs(element). Note how in this representation the idea of a §r(set) containing §rs(element) multiple times or in a particular order cannot even be expressed, making Venn diagrams a more faithful representation of §rs(set) than our written notation.
+
+Example: a Venn diagram of two sets
+
+Exercise: Draw a Venn diagram for the §rs(set) TODO.
+
+We can make precise what it means that §rs(set) ignore the order and multiplicity of their §rs(element) by defining when two §rs(set) are considered equal.
+
+Let §$(A) and §$(B) be sets. We say §$(A) and §$(B) are §define(setequal)(equal), written as §$(A = B), if for all §$(x) we have §$(x §$in A) if and only if §$(x §$in B). Otherwise, we write §$(A §$neq the B).
+
+Example: Then diagram with equality
+
+Exercise: When §cref(example_set_equality) displays §r(setequal)(unequal) sets, the explanation lists only a single §r(element) that occurs in exactly one of the §rs(set) rather than all such §rs(element). Why is this sufficient?
+
+Equipped with a precise definition of §r(setequal)(set equality), we can now prove some simple properties of §r(setequal) §rs(set), such as every §r(set) being §r(setequal) two itself. These properties seem so self-evidently true that it can initially be hard to know where to even begin proving them. So while the following proofs might not be the most flashy ones, the knowledge that we can rigorously reason about such fundamental properties rather than bluntly accepting them as true is quite nifty.
+
+
+
+
+
+
+
+Sometimes it is more convenient to define a §r(set) by stating a property which is fulfilled by exactly its §rs(member) rather than by explicitly listing all of them. For example, we might want to talk about the set of all medalists at the 1896 Olympic Games without having to list them all:
+
+§p(A §define(comprehension)(set comprehension) denotes the §r(set) of all objects §$(x) satisfying some property §$(P), written as §$$(§$set(x §$st \mathrm{§$(x) satisfies §$(P)})).)
+
+Example: §p(
+  §$(§$set(x §$st \mathrm{§$(x) is an even digit})) denotes the same §r(set) as §$(§$set(0)(2)(4)(6)(8)).
+)

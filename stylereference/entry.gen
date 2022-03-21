@@ -1,11 +1,11 @@
-§set_domain(file:///C:/Users/mail/projects/atm_htmlgen/stylereference/)
+§set_domain(file:///C:/Users/mail/projects/atm_htmlgen/stylereference/build/)
 
-§copy["assets", "build"]
-§copy[".htaccess", "build"]
+§copy["assets", "."]
+§copy[".htaccess", "."]
 
-§output["build/main.css"](§input["main.css.gen"])
+§output["main.css"](§input["main.css.gen"])
 
-§output["build/index.html"](
+§output["index.html"](
   §template(
 
   )(
@@ -77,5 +77,6 @@
       )
     )
 
+    §definition["rec"](§p(This §define(rec)(definition) is recursive, it is defined in terms of §r(rec)(itself).))
   )
 )

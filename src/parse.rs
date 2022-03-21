@@ -199,7 +199,7 @@ impl<'a> Parser<'a> {
                     } else if macro_name == b"div" {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "div".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"p" {
-                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "p".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::P(t, p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"li" {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "li".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"ul" {

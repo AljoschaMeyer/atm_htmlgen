@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::path::Path;
 use std::collections::HashMap;
 use std::io;
@@ -113,6 +114,9 @@ pub(crate) struct State {
     pub box_other_current_count: usize,
     pub box_other_level: usize,
     pub box_current: Option<String>, // id of current box if any
+
+    pub box_previews: HashSet<String>,
+    pub boxless_previews: HashSet<String>,
 }
 
 impl State {
@@ -142,6 +146,9 @@ impl State {
             box_other_current_count: 0,
             box_other_level: 1,
             box_current: None,
+
+            box_previews: HashSet::new(),
+            boxless_previews: HashSet::new(),
         });
     }
 
@@ -158,7 +165,7 @@ impl State {
     }
 
     pub(crate) fn current_output_relative(&self) -> PathBuf {
-        self.current_output.strip_prefix(self.base_dir()).unwrap().to_path_buf()
+        self.current_output.strip_prefix(self.base_dir().join("build/")).unwrap().to_path_buf()
     }
 
     // pub(crate) fn relative_path(&self, to: &Path) -> PathBuf {
@@ -187,11 +194,49 @@ impl State {
         match self.sticky_state.ids.insert(id.clone().into(), IdInfo {
             definition: trace.clone(),
             file: self.current_output_relative(),
+            // preview: self.base_dir().join(format!(r#"previews/{}.html"#, id)),
             kind,
         }) {
             Some(info) if !self.second_iteration => return Err(ExpansionError::DuplicateId(info.definition, trace)),
             _ => return Ok(self.resolve_id_to_url(id, trace)?),
         }
+    }
+
+    pub(crate) fn create_preview(&mut self, id: impl Into<String>, content: impl Into<String>) -> Result<(), ExpansionError> {
+        let id = id.into();
+        let content = content.into();
+        let _ = fs_extra::dir::create_all(self.base_dir().join("previews/"), false);
+
+        let p = self.base_dir().join(format!(r#"previews/{}.html"#, id));
+        return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
+    }
+
+    pub(crate) fn create_box_previews(&mut self, content: impl Into<String>) -> Result<(), ExpansionError> {
+        let content = content.into();
+
+        let _ = fs_extra::dir::create_all(self.base_dir().join("previews/"), false);
+
+        for id in self.box_previews.iter() {
+            let p = self.base_dir().join(format!(r#"previews/{}.html"#, id));
+            return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
+        }
+
+        self.box_previews.clear();
+        return Ok(());
+    }
+
+    pub(crate) fn create_boxless_previews(&mut self, content: impl Into<String>) -> Result<(), ExpansionError> {
+        let content = content.into();
+
+        let _ = fs_extra::dir::create_all(self.base_dir().join("previews/"), false);
+
+        for id in self.boxless_previews.iter() {
+            let p = self.base_dir().join(format!(r#"previews/{}.html"#, id));
+            return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
+        }
+
+        self.box_previews.clear();
+        return Ok(());
     }
 
     pub(crate) fn resolve_id_to_url(&self, id: impl Into<String>, trace: Trace) -> Result<String, ExpansionError> {
@@ -213,7 +258,24 @@ impl State {
         }
     }
 
-    pub(crate) fn register_define(&mut self, defined: impl Into<String>, href: String, singular: String, plural: String, trace: Trace) -> Result<(), ExpansionError> {
+    pub(crate) fn resolve_defined_to_preview_url(&self, id: impl Into<String>, trace: Trace) -> Result<String, ExpansionError> {
+        if self.second_iteration {
+            let id = id.into();
+            match self.sticky_state.defined.get(&id) {
+                Some(info) => {
+                    return Ok(info.preview.clone());
+                }
+                None => {
+                    println!("!!{:?}", id);
+                    return Err(ExpansionError::UnknownId(trace));
+                }
+            }
+        } else {
+            return Ok("set in second iteration".to_string());
+        }
+    }
+
+    pub(crate) fn register_define(&mut self, defined: impl Into<String>, href: String, preview: String, singular: String, plural: String, trace: Trace) -> Result<(), ExpansionError> {
         let defined = defined.into();
         if defined == "" {
             return Err(ExpansionError::EmptyDefine(trace));
@@ -222,6 +284,7 @@ impl State {
         match self.sticky_state.defined.insert(defined.into(), DefinedInfo {
             definition: trace.clone(),
             href,
+            preview,
             singular,
             plural,
         }) {
@@ -335,6 +398,7 @@ pub(crate) struct BoxInfo {
 pub(crate) struct DefinedInfo {
     pub definition: Trace,
     pub href: String,
+    pub preview: String,
     pub singular: String,
     pub plural: String,
 }
