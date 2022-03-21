@@ -713,7 +713,7 @@ fn html_tag(tag: &str, params: &TagParams, args: usize, _y: &mut Yatt, trace: Tr
         }
         open.push_str(r###" id=""###);
 
-        let start_middle = r###"" class""###;
+        let start_middle = r###"" class=""###;
         let middle = r###"">"###;
 
         let close = format!("</{}>", tag);
