@@ -489,12 +489,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
             let r = up_macro(|_p, args, y, _trace| {
                 let p_html = format!(r###"<p>{}</p>"###, args[0]);
-
                 y.state.create_boxless_previews(&p_html)?;
                 return Ok(p_html.into());
             }, &params, args, trace, y);
-
-            y.state.box_current = None;
 
             return r;
         }
@@ -527,9 +524,10 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                                 CrefKind::Box => {
                                     let box_info = y.state.sticky_state.boxes.get(&id.to_string()).unwrap();
                                     let tag = format!(
-                                        r###"<a class="ref {}" href="{}">{} {}</a>"###,
+                                        r###"<a class="ref {}" href="{}" data-preview="{}">{} {}</a>"###,
                                         box_info.kind.class(),
                                         url,
+                                        y.state.id_to_preview_url(id),
                                         box_info.name,
                                         box_info.numbering,
                                     );
@@ -550,12 +548,17 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             arguments_gte(2, &args, &trace)?;
             arguments_lt(5, &args, &trace)?;
 
-            let (target_id, boxless) = match &y.state.box_current {
-                None => (params.0[0].clone(), true),
-                Some(id) => (id.to_string(), false),
-            };
+            // let (target_id, boxless) = match &y.state.box_current {
+            //     None => (params.0[0].clone(), true),
+            //     Some(id) => (id.to_string(), false),
+            // };
 
             return up_macro(|_p, args, y, trace| {
+                let (target_id, boxless) = match &y.state.box_current {
+                    None => (params.0[0].clone(), true),
+                    Some(id) => (id.to_string(), false),
+                };
+
                 if boxless {
                     y.state.register_id(&target_id.clone(), CrefKind::BoxlessDefinition, Trace(None))?;
                     y.state.boxless_previews.insert(target_id.to_string());
@@ -574,11 +577,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 } else {
                     y.state.resolve_id_to_url(&target_id, Trace(None))?
                 };
-                let preview_url = format!(
-                    "{}/previews/{}.html",
-                    y.state.domain,
-                    target_id,
-                );
+                let preview_url = y.state.id_to_preview_url(target_id.clone());
                 let singular = args[1].to_string();
                 let plural = if args.len() >= 3 {
                     args[2].to_string()

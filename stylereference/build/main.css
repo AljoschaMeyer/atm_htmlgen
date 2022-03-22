@@ -36,7 +36,7 @@ h2 {
     margin-bottom: 4rem;
 }
 
-h2 > div {
+h2 div {
   font-size: 34px;
   margin-bottom: 1rem;
 }

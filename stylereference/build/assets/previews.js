@@ -76,19 +76,29 @@ function position_preview({clientX, clientY, ref: target, node: tooltip}) {
 }
 
 body.addEventListener("mouseover", (evt) => {
-  if (evt.target.classList.contains("ref")) {
+  if (evt.target.dataset.preview) {
     let do_not_display = false;
     const cancel_listener = () => {
       do_not_display = true;
     };
     evt.target.addEventListener("mouseleave", cancel_listener);
 
-    wait(400).then(() => {
+    Promise.all([
+      wait(400),
+      fetch(evt.target.dataset.preview)
+        .then(response => {
+          if (!response.ok) {
+            return "Could not load preview. You can still click the reference to jump to its target.";
+          } else {
+            return response.text();
+          }
+        }),
+    ]).then(([_, content]) => {
       if (!do_not_display) {
-        const content = `<article class="definition" id="definition_with_name">
-        <h6><a href="file:///C:/Users/mail/projects/atm_htmlgen/stylereference/build/index.html#definition_with_name">Definition 1.1: Some Name</a></h6>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque <a class="ref">penatibus</a> et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-    </article>`;
+    //     const content = `<article class="definition" id="definition_with_name">
+    //     <h6><a href="file:///C:/Users/mail/projects/atm_htmlgen/stylereference/build/index.html#definition_with_name">Definition 1.1: Some Name</a></h6>
+    //     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque <a class="ref">penatibus</a> et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+    // </article>`;
 
         evt.target.removeEventListener("mouseleave", cancel_listener);
 

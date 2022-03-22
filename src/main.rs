@@ -205,19 +205,20 @@ impl State {
     pub(crate) fn create_preview(&mut self, id: impl Into<String>, content: impl Into<String>) -> Result<(), ExpansionError> {
         let id = id.into();
         let content = content.into();
-        let _ = fs_extra::dir::create_all(self.base_dir().join("previews/"), false);
+        let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);
 
-        let p = self.base_dir().join(format!(r#"previews/{}.html"#, id));
+        let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
         return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
     }
 
     pub(crate) fn create_box_previews(&mut self, content: impl Into<String>) -> Result<(), ExpansionError> {
         let content = content.into();
 
-        let _ = fs_extra::dir::create_all(self.base_dir().join("previews/"), false);
+        let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);
 
         for id in self.box_previews.iter() {
-            let p = self.base_dir().join(format!(r#"previews/{}.html"#, id));
+            let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
+            // println!("\nbox {}: {:?}: {:?}", id, p, content);
             return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
         }
 
@@ -228,14 +229,14 @@ impl State {
     pub(crate) fn create_boxless_previews(&mut self, content: impl Into<String>) -> Result<(), ExpansionError> {
         let content = content.into();
 
-        let _ = fs_extra::dir::create_all(self.base_dir().join("previews/"), false);
+        let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);
 
         for id in self.boxless_previews.iter() {
-            let p = self.base_dir().join(format!(r#"previews/{}.html"#, id));
-            return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
+            let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
+            std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
         }
 
-        self.box_previews.clear();
+        self.boxless_previews.clear();
         return Ok(());
     }
 
@@ -258,6 +259,14 @@ impl State {
         }
     }
 
+    pub(crate) fn id_to_preview_url(&self, id: impl Into<String>) -> String {
+        return format!(
+            r###"{}previews/{}.html"###,
+            self.domain,
+            id.into(),
+        );
+    }
+
     pub(crate) fn resolve_defined_to_preview_url(&self, id: impl Into<String>, trace: Trace) -> Result<String, ExpansionError> {
         if self.second_iteration {
             let id = id.into();
@@ -266,7 +275,6 @@ impl State {
                     return Ok(info.preview.clone());
                 }
                 None => {
-                    println!("!!{:?}", id);
                     return Err(ExpansionError::UnknownId(trace));
                 }
             }

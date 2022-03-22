@@ -1,4 +1,4 @@
-§set_domain(file:///C:/Users/mail/projects/atm_htmlgen/stylereference/build/)
+§set_domain(http://localhost:1234/)
 
 §copy["assets", "."]
 §copy[".htaccess", "."]
