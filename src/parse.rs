@@ -268,14 +268,6 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Corollary".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"conjecture" {
                         self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Conjecture".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
-                    } else if macro_name == b"colorExercise" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, COLOR_EXERCISE), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
-                    } else if macro_name == b"colorFact" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, COLOR_FACT), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
-                    } else if macro_name == b"colorExample" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, COLOR_EXAMPLE), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
-                    } else if macro_name == b"colorDefinition" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, COLOR_DEFINITION), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"define" {
                         self.pm(OutInternal::Define, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"r" {
@@ -286,6 +278,16 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, false, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"Rs" {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, true, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"verbatim" {
+                        self.pm(OutInternal::Verbatim, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"set_math_id" {
+                        self.pm(OutInternal::SetMathId, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$set" {
+                        self.pm(OutInternal::MathSet, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$in" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "in".into(), r###"\in"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$notin" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "notin".into(), r###"\notin"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {
                         let trace_end = source_offset + self.p.position() - initial_position;
                         let trace = Trace(Some((trace_start, trace_end)));
@@ -378,8 +380,3 @@ impl<'a> Parser<'a> {
 }
 
 static LOREM: &str = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.";
-
-static COLOR_FACT: &str = "rgb(204, 115, 0)";
-static COLOR_DEFINITION: &str = "rgb(124, 0, 132)";
-static COLOR_EXAMPLE: &str = "rgb(0, 133, 18)";
-static COLOR_EXERCISE: &str = "rgb(0, 95, 133)";

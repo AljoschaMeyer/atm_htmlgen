@@ -62,6 +62,10 @@ pub(crate) enum ExpansionError {
     #[error("never printed")]
     DuplicateId(Trace /* definition */, Trace /* redefinition */),
     #[error("never printed")]
+    UnknownMathId(Trace, String),
+    #[error("never printed")]
+    DuplicateMathId(Trace /* redefinition */, String /* id */),
+    #[error("never printed")]
     HSectionTooManyLevels(Trace),
     #[error("never printed")]
     CrefBoxlessDefinition(Trace),
@@ -114,6 +118,18 @@ impl ExpansionError {
             ExpansionError::UnknownId(id) => {
                 println!("Tried to reference undefined id.");
                 print_trace(id.clone(), source, true);
+            }
+            ExpansionError::UnknownMathId(t, id) => {
+                println!("Must set the id for each math macro that links to a definition.");
+                println!("Macro: {}", id);
+                println!("At:");
+                print_trace(t.clone(), source, true);
+            }
+            ExpansionError::DuplicateMathId(redefinition, id) => {
+                println!("Cannot define the id corresponding to a math macro multiple times.");
+                println!("Id: {}", id);
+                println!("Redefinition at:");
+                print_trace(redefinition.clone(), source, true);
             }
             ExpansionError::DuplicateDefine(definition, redefinition) => {
                 println!("Cannot define the same name multiple times.");
@@ -173,6 +189,10 @@ pub(crate) enum OutInternal {
     Cwd(Trace, (), Vec<OutInternal>),
     SetDomain(Trace, String, Vec<OutInternal>),
     ReferenceDefined(Trace, (), Vec<OutInternal>, bool /*capitalize*/, bool /*plural*/),
+    SetMathId(Trace, SetMathId, Vec<OutInternal>),
+    MathMacro(Trace, (), Vec<OutInternal>, String /* id */, String /* tex */),
+    MathSet(Trace, (), Vec<OutInternal>),
+    Verbatim(Trace, (), Vec<OutInternal>),
 }
 
 impl OutInternal {
@@ -307,7 +327,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
     <head>
         <link rel="stylesheet" href="./assets/katex.min.css">
         <link rel="stylesheet" href="./assets/fonts.css">
-        <link rel="stylesheet" href="./main.css">
+        <link rel="stylesheet" href="./assets/main.css">
         <script src="./assets/floating-ui.core.min.js"></script>
         <script src="./assets/floating-ui.dom.min.js"></script>"###.into()),
                     Out::Argument(0),
@@ -548,11 +568,6 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             arguments_gte(2, &args, &trace)?;
             arguments_lt(5, &args, &trace)?;
 
-            // let (target_id, boxless) = match &y.state.box_current {
-            //     None => (params.0[0].clone(), true),
-            //     Some(id) => (id.to_string(), false),
-            // };
-
             return up_macro(|_p, args, y, trace| {
                 let (target_id, boxless) = match &y.state.box_current {
                     None => (params.0[0].clone(), true),
@@ -635,6 +650,88 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             } else {
                 return Ok(Rope::new());
             }
+        }
+
+        OutInternal::Verbatim(trace, params, args) => {
+            arguments_exact(1, &args, &trace)?;
+
+            return down_macro(|_p, _n, _y, _trace| {
+                return Ok(Out::Many(vec![
+                        Out::Text(r###"<span class="verbatim">"###.into()),
+                        Out::Argument(0),
+                        Out::Text(r###"</span>"###.into()),
+                    ]));
+            }, &params, args, trace, y);
+        }
+
+        OutInternal::SetMathId(trace, params, args) => {
+            arguments_exact(0, &args, &trace)?;
+
+            if y.state.second_iteration {
+                return Ok(Rope::new());
+            } else {
+                match y.state.sticky_state.math_definitions.insert(params.0[0].clone(), params.0[1].to_string()) {
+                    None => return Ok(Rope::new()),
+                    Some(_) => return Err(ExpansionError::DuplicateMathId(trace.clone(), params.0[0].to_string())),
+                }
+            }
+        }
+
+        OutInternal::MathMacro(trace, _params, args, math_id, tex) => {
+            arguments_exact(0, &args, &trace)?;
+
+            if y.state.second_iteration {
+                match y.state.sticky_state.math_definitions.get(&math_id) {
+                    None => return Err(ExpansionError::UnknownMathId(trace, math_id.to_string())),
+                    Some(id) => {
+                        let url = y.state.resolve_id_to_url(id, trace)?;
+                        let preview_url = y.state.id_to_preview_url(id);
+                        return Ok(format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{{}}}}}"###, preview_url, url, tex).into());
+                    }
+                }
+            } else {
+                return Ok(Rope::new());
+            }
+        }
+
+        OutInternal::MathSet(trace, params, args) => {
+            return down_macro(|_p, n, y, trace| {
+                if y.state.second_iteration {
+                    match y.state.sticky_state.math_definitions.get("set") {
+                        None => return Err(ExpansionError::UnknownMathId(trace, "set".to_string())),
+                        Some(id) => {
+                            let url = y.state.resolve_id_to_url(id, trace)?;
+                            let preview_url = y.state.id_to_preview_url(id);
+                            if n == 0 {
+                                return Ok(Out::Text(format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\emptyset}}}}"###, preview_url, url).into()));
+                            } else {
+                                // KaTeX doesn't like how \left and \right are used within other stuff?
+                                // let left_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\left\lbrace}}}}"###, preview_url, url);
+                                // let right_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\right\rbrace}}}}"###, preview_url, url);
+                                let left_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\lbrace}}}}"###, preview_url, url);
+                                let right_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\rbrace}}}}"###, preview_url, url);
+
+                                let mut outs = vec![Out::Text(left_delimiter.into())];
+                                for i in 0..n {
+                                    if i != 0 {
+                                        outs.push(Out::Text(", ".into()));
+                                    }
+                                    outs.push(Out::Argument(i));
+                                }
+                                outs.push(Out::Text(right_delimiter.into()));
+
+                                return Ok(Out::Many(outs));
+                            }
+                        }
+                    }
+                } else {
+                    let mut outs = vec![];
+                    for i in 0..n {
+                        outs.push(Out::Argument(i));
+                    }
+                    return Ok(Out::Many(outs));
+                }
+            }, &params, args, trace, y);
         }
     }
 }
@@ -822,5 +919,14 @@ pub struct TeX;
 impl Default for TeX {
     fn default() -> Self {
         TeX
+    }
+}
+
+#[derive(Deserialize, Clone)]
+pub struct SetMathId([String; 2]);
+
+impl Default for SetMathId {
+    fn default() -> Self {
+        SetMathId(["".to_string(), "".to_string()])
     }
 }

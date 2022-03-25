@@ -1,0 +1,35 @@
+§template(
+
+)(
+  §hsection(chapter_sets)(Sets)(
+    §definition["set"](Set)(
+      §set_math_id["set", "set"]
+      §p(
+        A §define(set)(set) is a collection of objects that ignores the order of those objects and how often they occur.
+      )§p(
+        We denote a §r(set) by listing its objects within curly braces, separated by commas, for example: §$(§$set(1)(2)(3)).
+      )§p(
+        The §define(empty_set)(empty set) §$(§$set()) — the collection that contains no objects at all — is also written as §$(§$set).
+      )
+    )
+
+    §p(
+      Because a §r(set) ignores the order of its objects, §$(§$set(1)(2)), and §$(§$set(2)(1)) both denote the same §r(set). Since a §r(set) also ignores how often its object occur, §$(§$set(1)(2)), and §$(§$set(1)(2)(1)) also denote the same §r(set). All three expressions are simply different ways of denoting the unique mathematical object characterized by the fact that §$(1) and §$(2) belong to it, but nothing else does.
+    )§p(
+      We now introduce more succinct terminology for talking about which objects do and which objects do not belong to a particular §r(set).
+    )
+
+    §definition["set_membership"](Set Membership)(
+      §set_math_id["in", "set_membership"]
+      §set_math_id["notin", "set_membership"]
+      §p(
+        To express that an object §$(x) occurs in a §r(set) §$(X), we write §$(x §$in X), and we say that §verbatim(§$(x) is an §define(element)(element) of §$(X)), §verbatim(§$(x) is a §define(member)(member) of §$(X)), or more simply that §verbatim(§$(x) §define(in)(in) §$(X)).
+      )§p(
+        If not §$(x §$in X), we write §$(x §$notin X).
+      )
+    )
+
+
+
+  )
+)

@@ -21,6 +21,8 @@ pub struct RunConfiguration {
 pub fn run(c: RunConfiguration) {
     let mut y = Yatt::new(c).unwrap();
 
+    let _ = fs_extra::dir::create_all(y.state.base_dir().join("build/"), false);
+
     if let Err(e) = do_run(&mut y) {
         print_yatt_error(e, &y.source);
     }
@@ -218,7 +220,6 @@ impl State {
 
         for id in self.box_previews.iter() {
             let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
-            // println!("\nbox {}: {:?}: {:?}", id, p, content);
             return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
         }
 
@@ -362,6 +363,7 @@ pub(crate) struct StickyState {
     pub hsections: HashMap<String, HSectionInfo>,
     pub boxes: HashMap<String, BoxInfo>,
     pub defined: HashMap<String, DefinedInfo>,
+    pub math_definitions: HashMap<String, String>,
 }
 
 impl StickyState {
@@ -371,6 +373,7 @@ impl StickyState {
             hsections: HashMap::new(),
             boxes: HashMap::new(),
             defined: HashMap::new(),
+            math_definitions: HashMap::new(),
         }
     }
 }

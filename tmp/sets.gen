@@ -8,7 +8,7 @@ We now introduce more succinct terminology for talking about which objects do an
 
 To express that an object §$(x) occurs in a §r(set) §$(X), we write §$(x §$in X), and we say that §verbatim(§$(x) is an §define(element)(element) of §$(X)), §verbatim(§$(x) is a §define(member)(member) of §$(X)), or more simply that §verbatim(§$(x) §define(in)(in) §$(X)).
 
-If not §$(x §$in X), we write §$(x §notin X).
+If not §$(x §$in X), we write §$(x §$notin X).
 
 Example: §$(1 §$in §$set(1)(2)), §$(2 §$in §$set(1)(2)), and §$(3 §$notin §$set(1)(2)).
 
