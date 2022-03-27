@@ -1,5 +1,8 @@
 §template(
+  <link rel="stylesheet" href="./assets/euler_diagrams.css">
+  <script defer src="./assets/katex.min.js"></script>
 
+  <script defer src="./assets/euler_diagrams.js" type="module"></script>
 )(
   §hsection(chapter_sets)(Sets)(
     §definition["set"](Set)(
@@ -14,7 +17,7 @@
     )
 
     §p(
-      Because a §r(set) ignores the order of its objects, §$(§$set(1)(2)), and §$(§$set(2)(1)) both denote the same §r(set). Since a §r(set) also ignores how often its object occur, §$(§$set(1)(2)), and §$(§$set(1)(2)(1)) also denote the same §r(set). All three expressions are simply different ways of denoting the unique mathematical object characterized by the fact that §$(1) and §$(2) belong to it, but nothing else does.
+      Because a §r(set) ignores the order of its objects, §$(§$set(1)(2)), and §$(§$set(2)(1)) both denote the same §r(set). Since a §r(set) also ignores how often its object occur, §$(§$set(1)(2)) and §$(§$set(1)(2)(1)) also denote the same §r(set). All three expressions are simply different ways of denoting the unique mathematical object characterized by the fact that §$(1) and §$(2) belong to it, but nothing else does.
     )§p(
       We now introduce more succinct terminology for talking about which objects do and which objects do not belong to a particular §r(set).
     )
@@ -29,6 +32,21 @@
       )
     )
 
+    §example["example_set_membership"](
+      §$(1 §$in §$set(1)(2)), §$(2 §$in §$set(1)(2)), and §$(3 §$notin §$set(1)(2)).
+    )
+
+    §p(
+      We can visualize §rs(member)(set membership) by drawing §rs(set) as blobs that enclose their §rs(element). §cref(example_euler_diagram) demonstrates such an §define["euler_diagram"](euler_diagram)(Euler diagram). Note how the idea of a §r(set) containing §rs(element) multiple times or in a particular order cannot even be expressed in these depictions, making §rs(euler_diagram) a more faithful representations of §rs(set) than our written notation.
+    )
+
+    §example["example_euler_diagram"](Euler Diagram)(
+      §captioned(
+        §input["euler_diagrams/vanilla.html"]
+      )(
+        §p(An interactive §r(euler_diagram) showing two §rs(set). Toggle the buttons to change the depicted §rs(set).)
+      )
+    )
 
 
   )

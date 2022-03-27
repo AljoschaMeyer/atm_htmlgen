@@ -1,5 +1,4 @@
 use std::collections::HashSet;
-use std::path::Path;
 use std::collections::HashMap;
 use std::io;
 use std::env;
@@ -220,7 +219,7 @@ impl State {
 
         for id in self.box_previews.iter() {
             let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
-            return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
+            let _ = std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
         }
 
         self.box_previews.clear();
@@ -234,7 +233,7 @@ impl State {
 
         for id in self.boxless_previews.iter() {
             let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
-            std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
+            let _ = std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
         }
 
         self.boxless_previews.clear();

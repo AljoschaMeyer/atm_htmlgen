@@ -2,17 +2,36 @@
 
 :root {
     --color-bg: #fff;
+    --color-bg2: #eee;
+    --color-bg3: #ddd;
+    --color-text: #1a1a1a;
+
     --color-fact: rgb(204, 115, 0);
     --color-definition: rgb(124, 0, 132);
     --color-example: rgb(0, 133, 18);
     --color-exercise: rgb(0, 95, 133);
+
+    --color-obstruction: rgb(237, 7, 71);
+
+    --c1-half: rgba(0, 40, 255, 0.7);
+    --c1-transparent: rgba(0, 40, 255, 0.1);
+    --c2-half: rgba(0, 170, 3, 0.7);
+    --c2-transparent: rgba(0, 170, 3, 0.1);
+}
+
+.c1 {
+  color: var(--c1-half);
+}
+
+.c2 {
+  color: var(--c2-half);
 }
 
 html {
     font-family: 'Roboto', sans-serif;
     font-size: 17px;
     line-height: 1.68;
-    color: #1a1a1a;
+    color: var(--color-text);
     text-align: justify;
 }
 
@@ -130,6 +149,14 @@ em, i {
   content: "”";
 }
 
+.outlink {
+  border-bottom: 1px solid var(--color-text);
+}
+
+.label {
+  font: normal 1.21em KaTeX_Main,serif;
+}
+
 .centered {
     text-align: center;
 }
@@ -209,4 +236,11 @@ article {
 
 .preview_content > * {
   margin: 0;
+}
+
+.caption {
+  border-top: solid 1px;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  font-size: 16px;
 }

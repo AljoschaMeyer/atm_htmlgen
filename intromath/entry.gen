@@ -79,3 +79,6 @@
 )
 
 §output["sets.html"](§input["sets.gen"])
+§output["deductive_reasoning.html"](§input["deductive_reasoning.gen"])
+
+§output["assets/tex.js"](§input["tex.js"])

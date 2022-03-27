@@ -1,0 +1,15 @@
+§template(
+
+)(
+  §hsection(chapter_deductive_reasoning)(Deductive Reasoning)(
+
+    §definition["defeq"](Defeq)(
+      §set_math_id["defeq", "defeq"]
+      §set_math_id["eqdef", "defeq"]
+      §p(
+        Bla §$(A §$defeq 42)
+      )
+    )
+
+  )
+)

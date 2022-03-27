@@ -280,6 +280,10 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, true, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"verbatim" {
                         self.pm(OutInternal::Verbatim, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"link" {
+                        self.pm(OutInternal::Link, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"captioned" {
+                        self.pm(OutInternal::Captioned, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"set_math_id" {
                         self.pm(OutInternal::SetMathId, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$set" {
@@ -288,6 +292,10 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "in".into(), r###"\in"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$notin" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "notin".into(), r###"\notin"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$defeq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "defeq".into(), r###"\coloneqq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$eqdef" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "eqdef".into(), r###"\eqqcolon"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {
                         let trace_end = source_offset + self.p.position() - initial_position;
                         let trace = Trace(Some((trace_start, trace_end)));

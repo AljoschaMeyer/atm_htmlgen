@@ -1,0 +1,79 @@
+.euler_diagram {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.eulersvg {
+  max-height: 24rem;
+}
+
+.euler {
+  stroke-width: 2;
+}
+
+.euler.c1 {
+  stroke: var(--c1-half);
+  fill: var(--c1-transparent);
+}
+
+.euler.c2 {
+  stroke: var(--c2-half);
+  fill: var(--c2-transparent);
+}
+
+.s3 {
+  color: var(--color-obstruction);
+  fill: var(--color-obstruction);
+}
+
+.euler_toggles, .the_sets {
+  display: flex;
+}
+
+.euler_toggles > div, .the_sets > div {
+  flex: 1;
+}
+
+.euler_toggle {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.35em 0.5em;
+  border: 0.1em solid var(--color-text);
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: var(--color-text);
+  background-color: var(--color-bg2);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.preview .euler_toggle {
+  cursor: not-allowed;
+}
+
+.euler_toggle:hover {
+  background-color: var(--color-bg3);
+}
+
+.preview .euler_toggle:hover {
+  background-color: var(--color-bg2);
+}
+
+.euler_toggle.in {
+  background-color: var(--color-bg3);
+}
+
+.euler_toggle.in:hover {
+  background-color: var(--color-bg2);
+}
+
+.preview .euler_toggle.in:hover {
+  background-color: var(--color-bg3);
+}
+
+.the_sets {
+  margin: 1rem 0;
+}

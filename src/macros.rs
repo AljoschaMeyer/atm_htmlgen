@@ -193,6 +193,8 @@ pub(crate) enum OutInternal {
     MathMacro(Trace, (), Vec<OutInternal>, String /* id */, String /* tex */),
     MathSet(Trace, (), Vec<OutInternal>),
     Verbatim(Trace, (), Vec<OutInternal>),
+    Link(Trace, (), Vec<OutInternal>),
+    Captioned(Trace, (), Vec<OutInternal>),
 }
 
 impl OutInternal {
@@ -247,6 +249,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         OutInternal::Input(span, path, args) => {
             arguments_exact(0, &args, &span)?;
             let path = &path[0];
+
+            let old_current_file = y.state.current_file.clone();
             if path.is_absolute() {
                 y.state.current_file = y.state.base_dir().join(path.strip_prefix("/").unwrap());
             } else {
@@ -259,7 +263,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     let source_offset = y.source.contents.len();
                     y.source.add_file_raw(&y.state.entrypoint.to_string_lossy(), &entry);
                     let ast = parse::parse(&entry, y, source_offset)?;
-                    return expand(ast, y);
+                    let r = expand(ast, y)?;
+                    y.state.current_file = old_current_file;
+                    return Ok(r);
                 }
             }
         }
@@ -660,6 +666,34 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                         Out::Text(r###"<span class="verbatim">"###.into()),
                         Out::Argument(0),
                         Out::Text(r###"</span>"###.into()),
+                    ]));
+            }, &params, args, trace, y);
+        }
+
+        OutInternal::Link(trace, params, args) => {
+            arguments_exact(2, &args, &trace)?;
+
+            return down_macro(|_p, _n, _y, _trace| {
+                return Ok(Out::Many(vec![
+                        Out::Text(r###"<a class="outlink" href=""###.into()),
+                        Out::Argument(1),
+                        Out::Text(r###"">"###.into()),
+                        Out::Argument(0),
+                        Out::Text(r###"</a>"###.into()),
+                    ]));
+            }, &params, args, trace, y);
+        }
+
+        OutInternal::Captioned(trace, params, args) => {
+            arguments_exact(2, &args, &trace)?;
+
+            return down_macro(|_p, _n, _y, _trace| {
+                return Ok(Out::Many(vec![
+                        Out::Text(r###"<div class="captioned">"###.into()),
+                        Out::Argument(0),
+                        Out::Text(r###"<div class="caption">"###.into()),
+                        Out::Argument(1),
+                        Out::Text(r###"</div></div>"###.into()),
                     ]));
             }, &params, args, trace, y);
         }
