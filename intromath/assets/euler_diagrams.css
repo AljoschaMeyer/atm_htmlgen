@@ -55,7 +55,7 @@
 }
 
 .euler_toggle:hover {
-  background-color: var(--color-bg3);
+  background-color: var(--color-bg);
 }
 
 .preview .euler_toggle:hover {
@@ -67,7 +67,7 @@
 }
 
 .euler_toggle.in:hover {
-  background-color: var(--color-bg2);
+  background-color: var(--color-bg);
 }
 
 .preview .euler_toggle.in:hover {

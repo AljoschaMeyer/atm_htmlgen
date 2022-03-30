@@ -2,6 +2,186 @@
 
 )(
   §hsection(chapter_deductive_reasoning)(Deductive Reasoning)(
+    §p(
+      Mathematicians go about understanding the world in a very rigorous manner; they do not §em(guess) or §em(believe) things, but they §em(prove) them. Once a fact has been proven, it can be used for proving other facts. In this chapter, we take a close look at how to operate in this framework. As a human being, you are already adept at reasoning about the world, so some of what follows will likely be familiar to you already. Turning your intuitive understanding into explicit knowledge will improve your ability to reason this way.
+    )
+
+    §hsection(section_deductive_reasoning)(Gathering Knowledge)(
+      §p(
+        §define["deductive_reasoning"](deductive reasoning)(deductive reasonings)(Deductive reasoning) is the process of concluding facts from assumptions. If we assume that squirrels are always hungry, and that Alex is a squirrel, we can conclude that Alex is always hungry. A framework for §r(deductive reasoning) must provide clear rules on which deduction steps are valid. If, for example, we knew that Vic was always hungry, we should not be able to conclude that Vic is a squirrel; Vic could be a badger for all we know.
+      )§p(
+        Contrast this with §define["inductive_reasoning"](inductive reasoning), the process of hypothesizing causes from observed facts. From observing that the sun rises and sets every day, you might form the potential explanation that the sun orbits the earth. Later observations might invalidate a hypothesis, but a hypothesis can never be proven beyond doubt.
+      )§p(
+        Even though §r(inductive reasoning) can lead to false conclusions, it has its firm place in humanity's quest for knowledge. Physics or chemistry, for example, would make little sense if they were not grounded in observations of the world around us. They can strive to find increasingly accurate models of the world, but there can always be a new experiment that contradicts the existing models.
+      )§p(
+        Unlike the natural sciences, mathematics thus relies on §r(deductive reasoning) alone. Rigorous adherence to the principle that every claim has to follow from either assumptions or previously proven claims may not be a normal mode of operation for your brain, but learning to operate that way comes with a number of benefits:
+      )§ul(
+        §li(
+          Proven knowledge is permanent. It does not degrade, it does not go out of style, it will not be falsified by a future experiment. This has enabled mathematicians to build up knowledge over centuries.
+        )
+        §li(
+          Proven knowledge is verifiable. It does not matter who wrote a proof, whether you trust them or not. If every single step follows the deduction rules, then the resulting information is true.
+        )
+        §li(
+          Proven knowledge is inspectable. If you do not understand why something is true, the proof breaks it down for you into small, almost obviously correct steps. More often than not, the person who wrote that initially incomprehensible proof is yourself from the past. But if the proof is well written, you are always able to untangle it.
+        )
+        §li(
+          Proven knowledge is composable. Once a fact has been proven, it can be reused in further proofs. Furthermore, the details of how it was proven do not affect that reuse in any way.
+        )
+      )§p(
+        Once mastered, §r(deductive reasoning) enables you to think thoughts you would not have been able to think otherwise, because you would have been overwhelmed by the sheer amount of details and the accumulation of tiny errors.
+      )§p(
+        A key property of §r(deductive reasoning) is that the mere form of a statement already implies how it can be proven. Suppose we want to prove that there is at least one hungry badger, how do we go about it? By presenting an actual hungry badger. How do you prove that there is at least one flying squirrel? By presenting an actual flying squirrel. If however we wanted to prove that all squirrels can fly, presenting an individual flying one would not help at all.
+      )§p(
+        Consequently, the fewer different forms of statements there are, the less complicated the system of §r(deductive reasoning) becomes. In the next section, we examine a small number of constructs for forming statements, chosen so that any statement of interest can be expressed using these constructs. The accompanying examples may feel trivial or even boring in their simplicity. That is an incredibly important and desired aspect of the system. Proving facts should not in itself be difficult; all complexity should come from the subject matter at hand, not the proof mechanism itself. Humanity has expended a great deal of collective brainpower so that the contents of the following section would become as simple as possible.
+      )
+
+    )
+
+    §hsection(section_whirlwind_tour)(A Whirlwind Tour of Tiny Proofs)(
+      §p(
+        In order to formulate statements, we first need objects that the statements can talk about. For the coming examples, we will primarily use the natural numbers (§$(0, 1, 2, §$ldots)). To demonstrate that this mode of reasoning can be applied to anything really, we will also talk about a population of friendly (and hungry) squirrels: §$(§$value(Alex)), §$(§$value(Blake)), and §$(§$value(Charlie)).
+      )§p(
+        A squirrel by itself is not a statement; §$(§$value(Alex)) is neither true nor false, but merely an adorable object of interest. The same applies to the number §$(17), although arguably less adorable. We can bridge into the world of statements by comparing objects for equality:
+      )§definition["eq"](Equality)()(
+        §set_math_id["eq", "eq"]
+        §set_math_id["neq", "eq"]
+        §p(
+          Two objects are considered §define["equal"](equal) if they are identical: everything is equal to itself, but not equal to anything else. Claiming that two objects are §r(equal) is a statement. We write §verbatim(§$(x §$eq y)) to compactly express that the object §$(x) is §r(equal) to the object §$(y).
+        )
+      )
+
+      §p(
+        Now we established enough concepts to look at a first statement and a proof of it.
+      )
+
+      §statement["tour_equality"](
+        §p(§$(17 §$eq 17).)
+      )(
+        §p(The statement holds by the §r(equal)(definition of equality).)
+      )
+
+      §p(
+        Though rather unexciting, this is our first real proof. Introducing the concept of §r(equal)(equality) would be rather pointless if we could not immediately determine whether any two objects are §r(equal) or not.
+      )§p(
+        We can make things slightly more interesting by adding §define(term)(terms)(terms) such as §$(1 + 2) to our language of statements. A §r(term) always denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §verbatim(§$(+)) denotes addition of two numbers.
+      )
+
+      §statement["tour_terms"](
+        §p(§$(5 + 12 §$eq 17).)
+      )(
+        §p(§$(5 + 12) is §$(17), and §$(17 §$eq 17) by the §r(equal)(definition of equality).)
+      )
+
+      §p(
+        Introducing §rs(term) still does not add any real depth however: after evaluating the §rs(term), their §r(equal)(equality) also either does or does not hold by definition. To formulate and prove more meaningful statements, we need the ability to define statements whose truth depends on the truth of other statements.
+      )
+
+      §hsection(quantifiers)(Quantifiers)(
+        §p(
+          The first such statements we examine are those of §define["existential_quantification"](existential quantification), which is just fancy terminology for stating that at least one object satisfying a certain property exists:
+        )
+
+        §statement["tour_existential_quantification"](
+          §p(There exists a squirrel §$(s) such that §$(s §$eq §$value(Alex)).)
+        )(
+          §p(Define §$(s §$defeq §$value(Alex)), then §$(s §$eq §$value(Alex)).)
+        )
+
+        §p(
+          You prove §r(existential quantification)(statements of this form) by presenting an object that satisfies the required property. Note how two symbols that looks similar but have completely different meaning appear in the proof: §$(§$eq) signifies a statement that is true if both sides of the sign denote the same object, whereas §$(§$defeq) makes the name on the left side denote the object on the right side.
+        )§p(
+          As §r(existential quantification) results in statements about statements, we can formulate statements with multiple, nested levels of quantification:
+        )
+
+        §statement["tour_existential_quantification_nested"](
+          §p(There exists a squirrel §$(s) such that there exists a squirrel §$(t) such that §$(s §$eq t).)
+        )(
+          §p(Define §$(s §$defeq §$value(Charlie)) and §$(t §$defeq §$value(Charlie)), then §$(s §$eq t).)
+        )
+
+        §exercise["tour_existential_quantification_atleast"](
+          §p(
+            When mathematicians say §verbatim(there exists an object) they mean §verbatim(there exists at least one object, and there may or may not be more). Why is that, why is it not necessary to say so explicitly?
+          )
+        )
+
+        §p(
+          Besides §r(existential quantification) for asserting that a statement holds for at least one object, there is §define["universal_quantification"](universal quantification) for asserting that a statement holds for all objects:
+        )
+
+        §statement["tour_universal_quantification"](
+          §p(For all natural numbers §$(n) it holds that §$(n §$eq n).)
+        )(
+          §p(Let §$(n) be a natural number. Then §$(n §$eq n).)
+        )
+
+        §p(
+          Because there are infinitely many natural numbers, we cannot prove a statement about every single number by going through all of them; we need our proofs to be of finite size. The only way to prove statements of r(universal quantification) is by showing that the property in question holds for an arbitrarily chosen object, one about which we know nothing except that it is the kind of object that the statement speaks of. Throughout the book, we always use the phrase §verbatim(Let §$(x) be a §i(something).) to express when this is happening. Proving statements by working with arbitrarily chosen, featureless objects usually takes some getting used to, but it is the only way of making meaningful statements about infinitely many objects.
+        )§p(
+          The phrase §verbatim(Let §$(x) be a §i(something).) is also sometimes used as a different way of phrasing statements of §r(universal quantification), namely to specify in advance which kinds of objects a statement will talk about. The following example expresses exactly the same fact as §cref(tour_universal_quantification) (and thus admits an identical proof), merely formulated differently:
+        )
+
+        §statement["tour_assumptions"](
+          §p(Let §$(n) be a natural number.)
+        )(
+          §p(§$(n §$eq n).)
+        )(
+          §p(Let §$(n) be a natural number. Then §$(n §$eq n).)
+        )
+
+      )
+
+      §hsection(definitions)(Definitions)(
+        §p(
+          §R(existential quantification) and §r(universal quantification) enable us to define a more interesting relation between numbers than equality:
+        )
+
+        §definition["leq"](
+          §p(
+            Let §$(n) and §$(m) be natural numbers.
+          )
+        )(
+          §set_math_id["leq", "leq"]
+          §p(
+            We say that §$(n) is §define(less than or equal to) §$(m), written as §$(n §$leq m), if there exists a natural number §$(k) such that §$(n + k §$eq m).
+          )
+        )
+
+        §p(
+          With this concept defined, we can formulate statements about numbers being §r(less than or equal to) other numbers:
+        )
+
+        §statement["tour_leq"](
+          §p(There exists a natural number §$(n) such that §$(n §$leq 17).)
+        )(
+          §p(
+            Define §$(n §$defeq 12). Then §$(n §$leq 17) if there exists a natural number §$(k) such that §$(n + k §$eq 17).
+          )§p(
+            Define §$(k §$defeq 5). Then §$(n + k §$eq 12 + 5 §$eq 17), and thus §$(n §$leq 17).
+          )
+        )
+        §statement["tour_leq2"](
+          §p(Let §$(n) be a natural number.)
+        )(
+          §p(§$(n §$leq n).)
+        )(
+          §p(
+            Define §$(k §$defeq 0). Then §$(n + k §$eq n + 0 §$eq n), and thus §$(n §$leq n).
+          )
+        )
+
+
+
+
+        §p(
+          It is worth taking a step back bla
+        )
+      )
+
+
+
+    )
 
     §definition["defeq"](Defeq)(
       §set_math_id["defeq", "defeq"]

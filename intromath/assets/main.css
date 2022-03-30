@@ -10,6 +10,7 @@
     --color-definition: rgb(124, 0, 132);
     --color-example: rgb(0, 133, 18);
     --color-exercise: rgb(0, 95, 133);
+    --color-proof: rgb(0, 173, 126);
 
     --color-obstruction: rgb(237, 7, 71);
 
@@ -211,6 +212,10 @@ article {
   border-color: var(--color-exercise);
 }
 
+.proof {
+  border-color: var(--color-proof);
+}
+
 .fact {
   border-color: var(--color-fact);
 }
@@ -221,6 +226,21 @@ article {
 
 .example {
   border-color: var(--color-example);
+}
+
+.assumptions > *:first-child::before {
+  content: "Assumptions: ";
+  font-style: italic;
+}
+
+.claim > *:first-child::before{
+  content: "Claim: ";
+  font-style: italic;
+}
+
+.proof_body > *:first-child::before {
+  content: "Proof: ";
+  font-style: italic;
 }
 
 .preview {

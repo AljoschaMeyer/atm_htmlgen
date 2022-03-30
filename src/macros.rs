@@ -183,6 +183,8 @@ pub(crate) enum OutInternal {
     Template(Trace, Template, Vec<OutInternal>),
     HSection(Trace, HSection, Vec<OutInternal>),
     Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String),
+    Fact(Trace, BoxParams, Vec<OutInternal>, String),
+    Proof(Trace, Proof, Vec<OutInternal>),
     Define(Trace, Define, Vec<OutInternal>),
     Cref(Trace, Cref, Vec<OutInternal>),
     TeX(Trace, TeX, Vec<OutInternal>, bool),
@@ -192,9 +194,9 @@ pub(crate) enum OutInternal {
     SetMathId(Trace, SetMathId, Vec<OutInternal>),
     MathMacro(Trace, (), Vec<OutInternal>, String /* id */, String /* tex */),
     MathSet(Trace, (), Vec<OutInternal>),
-    Verbatim(Trace, (), Vec<OutInternal>),
     Link(Trace, (), Vec<OutInternal>),
     Captioned(Trace, (), Vec<OutInternal>),
+    Enclose(Trace, (), Vec<OutInternal>, &'static str, &'static str),
 }
 
 impl OutInternal {
@@ -289,17 +291,25 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
             y.state.current_output = p.clone();
 
-            let r = up_macro(|_path, args, _y, span| {
+            let r = up_macro(|_path, args, y, span| {
                 let content = args[0].to_string();
 
-                match fs::write(&p, &content) {
-                    Err(e) => return Err(ExpansionError::OutputIO(e, p.clone(), span)),
-                    Ok(()) => {
-                        if tee {
-                            return Ok(args[0].clone());
-                        } else {
-                            return Ok(Rope::new());
+                if y.state.second_iteration {
+                    match fs::write(&p, &content) {
+                        Err(e) => return Err(ExpansionError::OutputIO(e, p.clone(), span)),
+                        Ok(()) => {
+                            if tee {
+                                return Ok(args[0].clone());
+                            } else {
+                                return Ok(Rope::new());
+                            }
                         }
+                    }
+                } else {
+                    if tee {
+                        return Ok(args[0].clone());
+                    } else {
+                        return Ok(Rope::new());
                     }
                 }
             }, &path, args, span, y);
@@ -311,15 +321,18 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
         OutInternal::CopyAll(span, params, args) => {
             arguments_exact(0, &args, &span)?;
-            let from = &params[0];
-            let to = PathBuf::from("build/").join(&params[1]);
 
-            let mut opts = fs_extra::dir::CopyOptions::new();
-            opts.copy_inside = true;
-            opts.overwrite = true;
+            if y.state.second_iteration {
+                let from = &params[0];
+                let to = PathBuf::from("build/").join(&params[1]);
 
-            fs_extra::copy_items(&params[0..1], &to, &opts)
+                let mut opts = fs_extra::dir::CopyOptions::new();
+                opts.copy_inside = true;
+                opts.overwrite = true;
+
+                fs_extra::copy_items(&params[0..1], &to, &opts)
                 .map_err(|e| ExpansionError::CopyAll(e, from.clone(), to.clone(), span))?;
+            }
 
             return Ok(Rope::new());
         }
@@ -452,7 +465,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
         OutInternal::Box(trace, params, args, kind, name) => {
             arguments_gte(1, &args, &trace)?;
-            arguments_lt(3, &args, &trace)?;
+            arguments_lt(4, &args, &trace)?;
 
             let (hsection_level, number) = match kind {
                 BoxKind::Exercise => {
@@ -463,6 +476,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     y.state.box_other_current_count += 1;
                     (y.state.box_other_level, y.state.box_other_current_count)
                 }
+                BoxKind::Proof => (0, 0), // not used, dummy values
             };
 
             let mut numbering = "".to_string();
@@ -486,18 +500,146 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     kind: kind.clone(),
                 });
 
+
+
                 let box_html = format!(r###"<article class="{}" id="{}">
-    <h6><a href="{}">{} {}{}{}</a></h6>
-    {}
+    <h6><a href="{}">{} {}{}{}</a></h6>{}    {}
 </article>"###,
                     kind.class(),
                     id,
                     url,
                     name,
                     numbering,
-                    if args.len() == 2 { ": " } else { "" },
-                    if args.len() == 2 { args[0].clone() } else { Rope::new() },
-                    if args.len() == 2 { &args[1] } else { &args[0] },
+                    if args.len() == 3 { ": " } else { "" },
+                    if args.len() == 3 { args[0].clone() } else { Rope::new() },
+                    if args.len() >= 2 {
+                        format!(r###"
+                        <div class="assumptions">
+                            {}
+                        </div>
+"###, args[args.len() - 2])
+                    } else {
+                        "".to_string()
+                    },
+                    args[args.len() - 1],
+                );
+
+                y.state.create_preview(&id, &box_html)?;
+                y.state.create_box_previews(&box_html)?;
+                return Ok(box_html.into());
+            }, &params, args, trace, y);
+
+            y.state.box_current = None;
+
+            return r;
+        }
+
+        OutInternal::Fact(trace, params, args, name) => {
+            arguments_gte(2, &args, &trace)?;
+            arguments_lt(5, &args, &trace)?;
+
+            y.state.box_other_current_count += 1;
+            let hsection_level = y.state.box_other_level;
+            let number = y.state.box_other_current_count;
+
+            let mut numbering = "".to_string();
+            for i in 0..=hsection_level {
+                if y.state.hsection_current_count[i] != 0 {
+                    numbering.push_str(&format!("{}", y.state.hsection_current_count[i]));
+                    numbering.push('.');
+                }
+            }
+            numbering.push_str(&format!("{}", number));
+
+            let id = params.0[0].clone();
+            y.state.box_current = Some(id.to_string());
+
+            let id_trace = Trace(None);
+            let r = up_macro(|_p, args, y, _trace| {
+                let url = y.state.register_id(&id.clone(), CrefKind::Box, id_trace.clone())?;
+                y.state.sticky_state.boxes.insert(id.to_string(), crate::BoxInfo {
+                    name: name.clone(),
+                    numbering: numbering.clone(),
+                    kind: BoxKind::fact(),
+                });
+
+
+
+                let box_html = format!(r###"<article class="{}" id="{}">
+    <h6><a href="{}">{} {}{}{}</a></h6>{}
+    <div class="claim">{}</div>
+    <div class="proof_body">{}</div>
+</article>"###,
+                    BoxKind::fact().class(),
+                    id,
+                    url,
+                    name,
+                    numbering,
+                    if args.len() == 4 { ": " } else { "" },
+                    if args.len() == 4 { args[0].clone() } else { Rope::new() },
+                    if args.len() >= 3 {
+                        format!(r###"
+                        <div class="assumptions">
+                            {}
+                        </div>
+"###, args[args.len() - 3])
+                    } else {
+                        "".to_string()
+                    },
+                    args[args.len() - 2],
+                    args[args.len() - 1],
+                );
+
+                y.state.create_preview(&id, &box_html)?;
+                y.state.create_box_previews(&box_html)?;
+                return Ok(box_html.into());
+            }, &params, args, trace, y);
+
+            y.state.box_current = None;
+
+            return r;
+        }
+
+        OutInternal::Proof(trace, params, args) => {
+            arguments_gte(2, &args, &trace)?;
+            arguments_lt(4, &args, &trace)?;
+
+            let kind = BoxKind::proof();
+            let name = "Proof";
+
+            let id = format!("proof_{}", params.0[0]);
+            y.state.box_current = Some(id.to_string());
+
+            let id_trace = Trace(None);
+            let r = up_macro(|_p, args, y, _trace| {
+                let url = y.state.register_id(&id.clone(), CrefKind::Box, id_trace.clone())?;
+                y.state.sticky_state.boxes.insert(id.to_string(), crate::BoxInfo {
+                    name: name.to_string(),
+                    numbering: "".to_string(),
+                    kind: kind.clone(),
+                });
+                let claim_name = y.state.claim_name(&params.0[0], id_trace.clone())?;
+
+                let box_html = format!(r###"<article class="{}" id="{}">
+    <h6><a href="{}">Proof of {}</a></h6>{}
+    <div class="claim">{}</div>
+    <div class="proof_body">{}</div>
+</article>"###,
+                    kind.class(),
+                    id,
+                    url,
+                    claim_name,
+                    if args.len() >= 2 {
+                        format!(r###"
+                        <div class="assumptions">
+                            {}
+                        </div>
+"###, args[0])
+                    } else {
+                        "".to_string()
+                    },
+                    &args[args.len() - 2],
+                    &args[args.len() - 1],
                 );
 
                 y.state.create_preview(&id, &box_html)?;
@@ -523,7 +665,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         }
 
         OutInternal::Cref(trace, params, args) => {
-            arguments_exact(1, &args, &trace)?;
+            arguments_gte(1, &args, &trace)?;
+            arguments_lt(3, &args, &trace)?;
 
             let id_trace = args[0].trace();
 
@@ -538,26 +681,45 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                             match info.kind {
                                 CrefKind::HSection => {
                                     let hsection_info = y.state.sticky_state.hsections.get(&id.to_string()).unwrap();
+                                    let label = if args.len() == 2 {
+                                        args[1].to_string()
+                                    } else {
+                                        format!("{}&nbsp;{}", hsection_info.name, hsection_info.numbering)
+                                    };
                                     let tag = format!(
-                                        r###"<a class="ref" href="{}">{} {}</a>"###,
+                                        r###"<a class="ref" href="{}">{}</a>"###,
                                         url,
-                                        hsection_info.name,
-                                        hsection_info.numbering,
+                                        label,
                                     );
                                     return Ok(tag.into());
                                 }
 
                                 CrefKind::Box => {
                                     let box_info = y.state.sticky_state.boxes.get(&id.to_string()).unwrap();
-                                    let tag = format!(
-                                        r###"<a class="ref {}" href="{}" data-preview="{}">{} {}</a>"###,
-                                        box_info.kind.class(),
-                                        url,
-                                        y.state.id_to_preview_url(id),
-                                        box_info.name,
-                                        box_info.numbering,
-                                    );
-                                    return Ok(tag.into());
+                                    match box_info.kind {
+                                        BoxKind::Proof => {
+                                            let claim_name = y.state.claim_name(&id.to_string(), id_trace.clone())?;
+                                            let tag = format!(
+                                                r###"<a class="ref {}" href="{}" data-preview="{}">proof of {}</a>"###,
+                                                box_info.kind.class(),
+                                                url,
+                                                y.state.id_to_preview_url(id),
+                                                claim_name,
+                                            );
+                                            return Ok(tag.into());
+                                        }
+                                        _ => {
+                                            let tag = format!(
+                                                r###"<a class="ref {}" href="{}" data-preview="{}">{}&nbsp;{}</a>"###,
+                                                box_info.kind.class(),
+                                                url,
+                                                y.state.id_to_preview_url(id),
+                                                box_info.name,
+                                                box_info.numbering,
+                                            );
+                                            return Ok(tag.into());
+                                        }
+                                    }
                                 }
 
                                 CrefKind::BoxlessDefinition => return Err(ExpansionError::CrefBoxlessDefinition(id_trace.clone())),
@@ -571,8 +733,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         }
 
         OutInternal::Define(trace, params, args) => {
-            arguments_gte(2, &args, &trace)?;
-            arguments_lt(5, &args, &trace)?;
+            arguments_gte(1, &args, &trace)?;
+            arguments_lt(4, &args, &trace)?;
 
             return up_macro(|_p, args, y, trace| {
                 let (target_id, boxless) = match &y.state.box_current {
@@ -599,9 +761,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     y.state.resolve_id_to_url(&target_id, Trace(None))?
                 };
                 let preview_url = y.state.id_to_preview_url(target_id.clone());
-                let singular = args[1].to_string();
-                let plural = if args.len() >= 3 {
-                    args[2].to_string()
+                let singular = args[0].to_string();
+                let plural = if args.len() >= 2 {
+                    args[1].to_string()
                 } else {
                     format!("{}s", singular)
                 };
@@ -611,7 +773,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 return Ok(format!(r###"<dfn{}><a href="{}">{}</a></dfn>"###,
                     if boxless { format!(r#" id="{}""#, target_id) } else { "".to_string() },
                     href,
-                    if args.len() >= 4 { args[3].clone() } else { args[1].clone() },
+                    if args.len() >= 3 { args[2].clone() } else { args[0].clone() },
                 ).into());
             }, &params, args, trace, y);
         }
@@ -658,14 +820,14 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }
         }
 
-        OutInternal::Verbatim(trace, params, args) => {
+        OutInternal::Enclose(trace, params, args, pre, post) => {
             arguments_exact(1, &args, &trace)?;
 
             return down_macro(|_p, _n, _y, _trace| {
                 return Ok(Out::Many(vec![
-                        Out::Text(r###"<span class="verbatim">"###.into()),
+                        Out::Text(pre.into()),
                         Out::Argument(0),
-                        Out::Text(r###"</span>"###.into()),
+                        Out::Text(post.into()),
                     ]));
             }, &params, args, trace, y);
         }
@@ -935,6 +1097,15 @@ pub struct BoxParams([String; 1]);
 impl Default for BoxParams {
     fn default() -> Self {
         BoxParams(["".to_string()])
+    }
+}
+
+#[derive(Deserialize, Clone)]
+pub struct Proof([String; 1]);
+
+impl Default for Proof {
+    fn default() -> Self {
+        Proof(["".to_string()])
     }
 }
 

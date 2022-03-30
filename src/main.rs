@@ -206,20 +206,27 @@ impl State {
     pub(crate) fn create_preview(&mut self, id: impl Into<String>, content: impl Into<String>) -> Result<(), ExpansionError> {
         let id = id.into();
         let content = content.into();
-        let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);
 
-        let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
-        return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
+        if self.second_iteration {
+            let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);
+
+            let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
+            return std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)));
+        } else {
+            return Ok(());
+        }
     }
 
     pub(crate) fn create_box_previews(&mut self, content: impl Into<String>) -> Result<(), ExpansionError> {
         let content = content.into();
 
-        let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);
+        if self.second_iteration {
+            let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);
 
-        for id in self.box_previews.iter() {
-            let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
-            let _ = std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
+            for id in self.box_previews.iter() {
+                let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
+                let _ = std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
+            }
         }
 
         self.box_previews.clear();
@@ -229,11 +236,13 @@ impl State {
     pub(crate) fn create_boxless_previews(&mut self, content: impl Into<String>) -> Result<(), ExpansionError> {
         let content = content.into();
 
-        let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);
+        if self.second_iteration {
+            let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);
 
-        for id in self.boxless_previews.iter() {
-            let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
-            let _ = std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
+            for id in self.boxless_previews.iter() {
+                let p = self.base_dir().join(format!(r#"build/previews/{}.html"#, id));
+                let _ = std::fs::write(&p, &content).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
+            }
         }
 
         self.boxless_previews.clear();
@@ -314,11 +323,21 @@ impl State {
             return Ok("set in second iteration".to_string());
         }
     }
+
+    pub(crate) fn claim_name(&self, id: &str, trace: Trace) -> Result<String, ExpansionError> {
+        match self.sticky_state.boxes.get(id) {
+            None => return Err(ExpansionError::UnknownId(trace)),
+            Some(box_info) => {
+                return Ok(format!("{}&nbsp;{}", box_info.name, box_info.numbering,));
+            }
+        }
+    }
 }
 
 #[derive(Clone)]
 pub(crate) enum BoxKind {
     Exercise,
+    Proof,
     Other(OtherBoxKind),
 }
 
@@ -326,6 +345,7 @@ impl BoxKind {
     pub(crate) fn class(&self) -> String {
         match self {
             BoxKind::Exercise => "exercise".to_string(),
+            BoxKind::Proof => "proof".to_string(),
             BoxKind::Other(OtherBoxKind::Fact) => "fact".to_string(),
             BoxKind::Other(OtherBoxKind::Example) => "example".to_string(),
             BoxKind::Other(OtherBoxKind::Definition) => "definition".to_string(),
@@ -334,6 +354,10 @@ impl BoxKind {
 
     pub(crate) fn exercise() -> Self {
         BoxKind::Exercise
+    }
+
+    pub(crate) fn proof() -> Self {
+        BoxKind::Proof
     }
 
     pub(crate) fn fact() -> Self {

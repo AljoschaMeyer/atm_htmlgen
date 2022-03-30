@@ -1,13 +1,58 @@
-foo§ bar§ ( baz ) blu)bb
+§template(
+  <link rel="stylesheet" href="./assets/euler_diagrams.css">
+  <script defer src="./assets/katex.min.js"></script>
 
-<span>foo</span>
+  <script defer src="./assets/euler_diagrams.js" type="module"></script>
+)(
+  §hsection(chapter_sets)(Sets)(
+    §hsection(section_sets)(Basic Definitions)(
+      §definition["set"](Set)(
+        §set_math_id["set", "set"]
+        §p(
+          §verbatim(§$(a))
+          A §define(set)(set) is a collection of objects that ignores the order of those objects and how often they occur.
+        )§p(
+          We denote a §r(set) by listing its objects within curly braces, separated by commas, for example: §$(§$set(1)(2)(3)).
+        )§p(
+          The §define(empty_set)(empty set) §$(§$set()) — the collection that contains no objects at all — is also written as §$(§$set).
+        )
+      )
 
-<span a="b">bar</span>
+      §p(
+        Because a §r(set) ignores the order of its objects, §$(§$set(1)(2)), and §$(§$set(2)(1)) both denote the same §r(set). Since a §r(set) also ignores how often its object occur, §$(§$set(1)(2)) and §$(§$set(1)(2)(1)) also denote the same §r(set). All three expressions are simply different ways of denoting the unique mathematical object characterized by the fact that §$(1) and §$(2) belong to it, but nothing else does.
+      )§p(
+        We now introduce more succinct terminology for talking about which objects do and which objects do not belong to a particular §r(set).
+      )
 
-<span class="c">baz</span>
+      §definition["set_membership"](Set Membership)(
+        §set_math_id["in", "set_membership"]
+        §set_math_id["notin", "set_membership"]
+        §p(
+          To express that an object §$(x) occurs in a §r(set) §$(X), we write §$(x §$in X), and we say that §verbatim(§$(x) is an §define(element)(element) of §$(X)), §verbatim(§$(x) is a §define(member)(member) of §$(X)), or more simply that §verbatim(§$(x) §define(in)(in) §$(X)).
+        )§p(
+          If not §$(x §$in X), we write §$(x §$notin X).
+        )
+      )
 
-<span id="i" class"c">blubb</span>
+      §example["example_set_membership"](
+        §$(1 §$in §$set(1)(2)), §$(2 §$in §$set(1)(2)), and §$(3 §$notin §$set(1)(2)).
+      )
 
-<div>I'm imported!</div>
+      §p(
+        We can visualize §rs(member)(set membership) by drawing §rs(set) as blobs that enclose their §rs(element). §cref(example_euler_diagram) demonstrates such an §define["euler_diagram"](euler_diagram)(Euler diagram). Note how the idea of a §r(set) containing §rs(element) multiple times or in a particular order cannot even be expressed in these depictions, making §rs(euler_diagram) a more faithful representations of §rs(set) than our written notation.
+      )
 
-zzz
+      §example["example_euler_diagram"](Euler Diagram)(
+        §captioned(
+          §input["euler_diagrams/vanilla.html"]
+        )(
+          §p(An interactive §r(euler_diagram) showing two §rs(set). Toggle the buttons to change the depicted §rs(set).)
+        )
+      )
+
+
+    )
+
+
+  )
+)

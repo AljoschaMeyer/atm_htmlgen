@@ -216,6 +216,10 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "dfn".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"em" {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "em".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"i" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "i".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"b" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "b".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"q" {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "q".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"s" {
@@ -240,6 +244,12 @@ impl<'a> Parser<'a> {
                         self.pm(OutInternal::HSection, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"lorem" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, LOREM), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"hr" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, "<hr>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"br" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, "<br>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$ldots" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, "\\ldots"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"cref" {
                         self.pm(OutInternal::Cref, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$" {
@@ -257,17 +267,19 @@ impl<'a> Parser<'a> {
                     } else if macro_name == b"exercise" {
                         self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::exercise(), "Exercise".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"statement" {
-                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Statement".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Fact(t, p, a, "Statement".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"observation" {
-                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Observation".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Fact(t, p, a, "Observation".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"theorem" {
-                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Theorem".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Fact(t, p, a, "Theorem".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"lemma" {
-                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Lemma".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Fact(t, p, a, "Lemma".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"corollary" {
-                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Corollary".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Fact(t, p, a, "Corollary".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"conjecture" {
-                        self.pm(|t, p, a| OutInternal::Box(t, p, a, BoxKind::fact(), "Conjecture".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Fact(t, p, a, "Conjecture".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"proof" {
+                        self.pm(OutInternal::Proof, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"define" {
                         self.pm(OutInternal::Define, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"r" {
@@ -278,8 +290,10 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, false, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"Rs" {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, true, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$value" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\mathrm{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"verbatim" {
-                        self.pm(OutInternal::Verbatim, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="verbatim">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"link" {
                         self.pm(OutInternal::Link, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"captioned" {
@@ -288,14 +302,36 @@ impl<'a> Parser<'a> {
                         self.pm(OutInternal::SetMathId, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$set" {
                         self.pm(OutInternal::MathSet, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$eq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "eq".into(), r###"="###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$neq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "neq".into(), r###"\noteq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$leq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "leq".into(), r###"\leq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$in" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "in".into(), r###"\in"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$notin" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "notin".into(), r###"\notin"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$seq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "seq".into(), r###"="###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$sneq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "sneq".into(), r###"\neq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$defeq" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "defeq".into(), r###"\coloneqq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$eqdef" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "eqdef".into(), r###"\eqqcolon"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$subseteq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "subseteq".into(), r###"\subseteq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$subset" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "subset".into(), r###"\subset"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$supseteq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "supseteq".into(), r###"\supseteq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$supset" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "supset".into(), r###"\supset"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$nsubseteq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "nsubseteq".into(), r###"\nsubseteq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$nsupseteq" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "nsupseteq".into(), r###"\nsupseteq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {
                         let trace_end = source_offset + self.p.position() - initial_position;
                         let trace = Trace(Some((trace_start, trace_end)));
