@@ -234,7 +234,7 @@ impl State {
     }
 
     pub(crate) fn create_boxless_previews(&mut self, content: impl Into<String>) -> Result<(), ExpansionError> {
-        let content = content.into();
+        let content = format!(r###"<article>{}</article>"###, content.into());
 
         if self.second_iteration {
             let _ = fs_extra::dir::create_all(self.base_dir().join("build/previews/"), false);

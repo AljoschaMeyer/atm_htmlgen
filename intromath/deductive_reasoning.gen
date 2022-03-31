@@ -58,13 +58,15 @@
       §statement["tour_equality"](
         §p(§$(17 §$eq 17).)
       )(
-        §p(The statement holds by the §r(equal)(definition of equality).)
+        §p(The claim holds by the §r(equal)(definition of equality).)
       )
 
       §p(
         Though rather unexciting, this is our first real proof. Introducing the concept of §r(equal)(equality) would be rather pointless if we could not immediately determine whether any two objects are §r(equal) or not.
       )§p(
-        We can make things slightly more interesting by adding §define(term)(terms)(terms) such as §$(1 + 2) to our language of statements. A §r(term) always denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §verbatim(§$(+)) denotes addition of two numbers.
+        We can make things slightly more interesting by adding §definex["tour_def_term"](term)(terms)(terms)(
+          A §rdef(term) denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §verbatim(§$(+)) denotes addition of two numbers.
+        ) such as §$(1 + 2) to our language of statements. A §r(term) always denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §verbatim(§$(+)) denotes addition of two numbers.
       )
 
       §statement["tour_terms"](
@@ -79,7 +81,13 @@
 
       §hsection(quantifiers)(Quantifiers)(
         §p(
-          The first such statements we examine are those of §define["existential_quantification"](existential quantification), which is just fancy terminology for stating that at least one object satisfying a certain property exists:
+          The first such statements we examine are those of §definex["existential_quantification"](existential quantification)(
+            §p(
+              A statement of §rdef(existential quantification) asserts that there exists at least one object satisfying a certain property: §verbatim(There exists a natural number §$(n) such that §$(n = 17)).
+            )§p(
+              You prove a statement of §r(existential quantification) by presenting an object that satisfies the required property: §verbatim(Define §$(n §$defeq 17), then §$(n §$eq n)).
+            )
+          ), which is just fancy terminology for stating that at least one object satisfying a certain property exists:
         )
 
         §statement["tour_existential_quantification"](
@@ -89,7 +97,9 @@
         )
 
         §p(
-          You prove §r(existential quantification)(statements of this form) by presenting an object that satisfies the required property. Note how two symbols that looks similar but have completely different meaning appear in the proof: §$(§$eq) signifies a statement that is true if both sides of the sign denote the same object, whereas §$(§$defeq) makes the name on the left side denote the object on the right side.
+          You prove §r(existential quantification)(statements of this form) by presenting an object that satisfies the required property. Note how two symbols that looks similar but have completely different meaning appear in the proof: §verbatim(§$(§$eq)) signifies a statement that is true if both sides of the sign denote the same object, whereas §definex["defeq"](defeq)()()(
+            §p(The §verbatim(§$(§$defeq)) symbol makes the name on its left denote the object on its right: §verbatim(Define §$(x §$defeq 42), then §$(x §$eq 42)).)
+          )§set_math_id["defeq", "defeq"]§set_math_id["eqdef", "defeq"]§verbatim(§$(§$defeq)) makes the name on the left side denote the object on the right side.
         )§p(
           As §r(existential quantification) results in statements about statements, we can formulate statements with multiple, nested levels of quantification:
         )
@@ -102,22 +112,28 @@
 
         §exercise["tour_existential_quantification_atleast"](
           §p(
-            When mathematicians say §verbatim(there exists an object) they mean §verbatim(there exists at least one object, and there may or may not be more). Why is that, why is it not necessary to say so explicitly?
+            When mathematicians say §verbatim(there exists an object) they mean §verbatim(there exists at least one object, and there may or may not be more). Why is that, and why is it not necessary to say so explicitly?
           )
         )
 
         §p(
-          Besides §r(existential quantification) for asserting that a statement holds for at least one object, there is §define["universal_quantification"](universal quantification) for asserting that a statement holds for all objects:
+          Besides §r(existential quantification) for asserting that a statement holds for at least one object, there is §definex["universal_quantification"](universal quantification)(
+            §p(
+              A statement of §rdef(universal quantification) asserts that all objects satisfy a certain property: §verbatim(For all natural numbers §$(n) it holds that §$(n §$eq n)).
+            )§p(
+              You prove a statement of §r(universal quantification) by showing that an arbitrarily chosen object satisfies the required property: §verbatim(Let §$(n) be a natural number. Then §$(n §$eq n)).
+            )
+          ) for asserting that a statement holds for all objects:
         )
 
         §statement["tour_universal_quantification"](
           §p(For all natural numbers §$(n) it holds that §$(n §$eq n).)
         )(
-          §p(Let §$(n) be a natural number. Then §$(n §$eq n).)
+          §p(Let §$(n) be a natural number. Then §$(n §$eq n) by the §r(equal)(definition of equality).)
         )
 
         §p(
-          Because there are infinitely many natural numbers, we cannot prove a statement about every single number by going through all of them; we need our proofs to be of finite size. The only way to prove statements of r(universal quantification) is by showing that the property in question holds for an arbitrarily chosen object, one about which we know nothing except that it is the kind of object that the statement speaks of. Throughout the book, we always use the phrase §verbatim(Let §$(x) be a §i(something).) to express when this is happening. Proving statements by working with arbitrarily chosen, featureless objects usually takes some getting used to, but it is the only way of making meaningful statements about infinitely many objects.
+          Because there are infinitely many natural numbers, we cannot prove a statement about every single number by going through all of them; we need our proofs to be of finite size. The only way to prove statements of §r(universal quantification) is by showing that the property in question holds for an arbitrarily chosen object, one about which we know nothing except that it is the kind of object that the statement speaks of. Throughout the book, we always use the phrase §verbatim(Let §$(x) be a §i(something).) to express when this is happening. Proving statements by working with arbitrarily chosen, featureless objects usually takes some getting used to, but it is the only way of making meaningful statements about infinitely many objects.
         )§p(
           The phrase §verbatim(Let §$(x) be a §i(something).) is also sometimes used as a different way of phrasing statements of §r(universal quantification), namely to specify in advance which kinds of objects a statement will talk about. The following example expresses exactly the same fact as §cref(tour_universal_quantification) (and thus admits an identical proof), merely formulated differently:
         )
@@ -127,7 +143,7 @@
         )(
           §p(§$(n §$eq n).)
         )(
-          §p(Let §$(n) be a natural number. Then §$(n §$eq n).)
+          §p(Let §$(n) be a natural number. Then §$(n §$eq n) by the §r(equal)(definition of equality).)
         )
 
       )
@@ -158,7 +174,7 @@
           §p(
             Define §$(n §$defeq 12). Then §$(n §$leq 17) if there exists a natural number §$(k) such that §$(n + k §$eq 17).
           )§p(
-            Define §$(k §$defeq 5). Then §$(n + k §$eq 12 + 5 §$eq 17), and thus §$(n §$leq 17).
+            Define §$(k §$defeq 5). Then §$$align*(n + k &§$eq 12 + 5)(&§$eq 17,) and thus §$(n §$leq 17).
           )
         )
         §statement["tour_leq2"](
@@ -167,28 +183,137 @@
           §p(§$(n §$leq n).)
         )(
           §p(
-            Define §$(k §$defeq 0). Then §$(n + k §$eq n + 0 §$eq n), and thus §$(n §$leq n).
+            Define §$(k §$defeq 0). Then §$$align*(n + k &§$eq n + 0)(&§$eq n,) and thus §$(n §$leq n).
           )
         )
 
+        §p(
+          As you can see, a definition is nothing but a shorthand; proofs proceed by unfolding the definition and then continuing as if the body of the definition had been used rather than its shorter name. Naming recurring concepts is vital to achieving concise yet precise communication, and it can also help in clarifying thought processes. This can lead to short sentences carrying large amounts of information, but this information can always be recovered by repeatedly unfolding definitions.
+        )§p(
+          This book tries to make the unfolding of definitions as easy as possible: you can hover over any defined terminology (for example, §verbatim(§r(less than or equal to))) or symbol (for example, §verbatim(§$(§$leq))), and the definition will open in a tooltip. The terminology or symbol is also a hyperlink to its definition.
+        )
 
-
+        §exercise["exercise_tour_leq"](
+          §p(Prove that for all natural numbers §$(n) it holds that §$(0 §$leq n).)
+        )
 
         §p(
-          It is worth taking a step back bla
+          Originally, §r(equal)(equality) was our only way of moving from objects of interest to statements of truth: §$(17) is not a statement (it is neither true nor false), but §$(17 §$eq 18) is (albeit a false one). The newly defined concept of numbers being §r(less than or equal to) each other achieves the same lift of conceptual level. Notice that its definition ultimately relies on §r(equal)(equality) again. Every such definition can ultimately be broken down to the level of §r(equal)(equality) comparisons again.
+        )§p(
+          Aside from introducing new concepts like this, we can also define new §rs(term), that is, new ways of compactly describing objects of interest based on other objects:
         )
+
+        §definition["twice"](
+          §p(
+            Let §$(n) be a natural number.
+          )
+        )(
+          §set_math_id["twice", "twice"]
+          §p(
+            We denote by §$(§$twice(n)) the number §$(n + n).
+          )
+        )
+        §statement["tour_twice"](
+          §p(
+            There exists a natural number §$(n) such that §$(§$twice(n) §$eq n).
+          )
+        )(
+          §p(
+            Define §$(n §$defeq 0), then §$$align*(
+              §$twice(n) &§$eq n + n
+            )(
+              &§$eq 0 + 0
+            )(
+              &§$eq 0
+            )(
+              &§$eq n.
+            )
+          )
+        )
+
       )
 
+      §hsection(utilizing_quantification)(Utilizing Quantifications)(
+        §p(
+          Once a statement of §r(universal quantification) has been proven, the acquired knowledge can be used in other proofs:
+        )
 
+        §statement["use_universal"](
+          §p(§$(5 §$leq 5).)
+        )(
+          §p(§$(5) is a natural number. Thus, by §cref(tour_leq2), §$(5 §$leq 5).)
+        )
+
+        §p(
+          It would not have been difficult to prove §cref(use_universal) directly, but utilizing §cref(tour_leq2) saved us the trouble of finding a suitable number §$(k) to add to §$(5). In fact, our proof works even if we have no idea how §verbatim(§$(§$leq)) is defined. This hints at one of the key strengths of §r(deductive reasoning): we can reason in terms of high-level concepts (§verbatim(§$(§$leq))) while still getting the guarantee that everything works because it can ultimately be broken down to simple and correct building blocks (§r(equal)(equality) and §r(existential quantification)).
+        )
+
+        §p(
+          Using a statement of §r(existential quantification) is less straightforward, because you merely know that an object satisfying a certain property exists, but you do not know anything else about that object. Thus you cannot utilize any further properties of the object in your proof.
+        )
+
+        §statement["use_existential"](
+          §p(There exists a natural number §$(n) such that §$(n §$leq 18).)
+        )(
+          §p(
+            By §cref(tour_leq), there exists §$(n) such that §$(n §$leq 17). We thus know about this §$(n) that there exists §$(k) such that §$(n + k §$eq 17), and this is in fact all we §em(can) know about it.
+          )§p(
+            If §$(n + k §$eq 17), then also §$(§$p(n + k) + 1 §$eq 17 + 1), then also §$(§$p(n + k) + 1 §$eq 18), and then also §$(n + §$p(k + 1) §$eq 18).
+          )§p(
+            §$(k + 1) is a natural number, so we have found a number that we can add to §$(n) to obtain §$(18). Or in other words, we have proven that §$(n §$leq 18).
+          )
+        )
+
+        §p(
+          Compared to directly choosing a suitable §$(n), this proof is of course needlessly complicated. But it demonstrates how to work with this number that we know very little about. There are 18 different numbers which are possible candidates for this §$(n), each of them with unique properties not shared by any other number. Most of these properties are completely unrelated to the proof at hand.
+        )§p(
+          If we worked with any specific number, we might be distracted by its properties. By working with the abstract value §$(n) that we obtained from §cref(tour_leq) however, only the relevant property of being §r(less than or equal to) §$(17) is available to our reasoning, which protects us from losing ourselves in irrelevant details.
+        )
+
+        §p(
+          You can argue that knowing a statement of §r(universal quantification) is more useful than knowing a statement of §r(existential quantification), because it can be more readily used in further proofs. This is offset by the fact that statements of §r(existential quantification) are much easier to prove — providing a specific example is easier than working with abstract values which can represent any number of specific values.
+        )§p(
+          Interestingly enough, you can also take on a completely opposite view. What is interesting about properties that hold for every single object there is? §R(existential quantification) conveys the actually useful facts, it talks about the hidden gems among the masses of uninteresting objects. Unfortunately, these statements are much more difficult to prove — you need a clever idea for finding an object with the desired properties, rather than being handed an uncomplicated, distraction-free abstract value to work with.
+        )
+
+        §exercise["existential_vs_universal"](
+          §p(
+            Try to pinpoint the two different definitions of §verbatim(usefulness) and §verbatim(difficulty) respectively that lead to the preceding two lines of reasoning. Which definitions do you think are more appropriate?
+          )
+        )
+
+      )
+
+      §hsection(names)(Names)(
+        §p(
+          At this point, we should briefly discuss §definex(name)(names)(names)(
+            §p()
+          ), which we have started using in §rs(term) such as §verbatim(§$(n + k §$eq 17)) without prior discussion. §Rs(name) can stand in for objects or §rs(term), but they never drop out of nowhere. Every §r(name) has to be introduced before it can appear in a proof: If we have no idea what §$(x) is, how are we to determine whether §$(x §$eq 6) is true or false?
+        )§p(
+          There is only a limited number of ways in which §rs(name) can be introduced, and we have already seen all of them:
+        )§ul(
+          §li(
+            Formulating §rs(universal quantification): §verbatim(For all squirrels §$(s) it holds that…).
+          )§li(
+            Proving §rs(universal quantification): §verbatim(Let §$(s) be a squirrel, then…).
+          )§li(
+            Formulating §rs(existential quantification): §verbatim(There exists a squirrel §$(s) such that…).
+          )§li(
+            Proving §rs(existential quantification): §verbatim(Let §$(s) be a squirrel such that…).
+          )§li(
+            §R(defeq)(Naming) §rs(term): §verbatim(Define §$(s §$defeq §$ldots)).
+          )
+        )
+      )§p(
+        Each time you see a §r(name), and each time you use one yourself, it must have been introduced by exactly one of these constructs (or an equivalent wording expressing the same notion).
+      )§p(
+        §R(name) introductions usually make the §r(name) available up until the end of the current text component, for example, until the end of the current statement, definition, (sub-)exercise, and so on. That is why the statements in this chapter quantify §$(n) again and again.
+      )
 
     )
 
-    §definition["defeq"](Defeq)(
-      §set_math_id["defeq", "defeq"]
-      §set_math_id["eqdef", "defeq"]
-      §p(
-        Bla §$(A §$defeq 42)
-      )
+    §hsection(negation)(Negation)(
+
     )
 
   )

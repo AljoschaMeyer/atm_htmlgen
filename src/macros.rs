@@ -163,6 +163,7 @@ pub enum Out {
     Many(Vec<Out>),
     Argument(usize),
     Text(Rope),
+    TeX(TeX, Vec<Out>, bool),
     HtmlTag(String, TagParams, Vec<Out>),
     Input([PathBuf; 1], Vec<Out>),
     Output([PathBuf; 1], Vec<Out>, bool),
@@ -185,18 +186,20 @@ pub(crate) enum OutInternal {
     Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String),
     Fact(Trace, BoxParams, Vec<OutInternal>, String),
     Proof(Trace, Proof, Vec<OutInternal>),
-    Define(Trace, Define, Vec<OutInternal>),
+    Define(Trace, Define, Vec<OutInternal>, bool /* is there custom definition text */),
     Cref(Trace, Cref, Vec<OutInternal>),
     TeX(Trace, TeX, Vec<OutInternal>, bool),
     Cwd(Trace, (), Vec<OutInternal>),
     SetDomain(Trace, String, Vec<OutInternal>),
-    ReferenceDefined(Trace, (), Vec<OutInternal>, bool /*capitalize*/, bool /*plural*/),
+    ReferenceDefined(Trace, (), Vec<OutInternal>, bool /*capitalize*/, bool /*plural*/, bool /*fake define*/),
     SetMathId(Trace, SetMathId, Vec<OutInternal>),
     MathMacro(Trace, (), Vec<OutInternal>, String /* id */, String /* tex */),
     MathSet(Trace, (), Vec<OutInternal>),
+    MathEnv(Trace, (), Vec<OutInternal>, &'static str /*environment name*/),
     Link(Trace, (), Vec<OutInternal>),
     Captioned(Trace, (), Vec<OutInternal>),
     Enclose(Trace, (), Vec<OutInternal>, &'static str, &'static str),
+    EncloseMath(Trace, (), Vec<OutInternal>, &'static str /* id */, &'static str, &'static str),
 }
 
 impl OutInternal {
@@ -732,9 +735,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }
         }
 
-        OutInternal::Define(trace, params, args) => {
-            arguments_gte(1, &args, &trace)?;
-            arguments_lt(4, &args, &trace)?;
+        OutInternal::Define(trace, params, args, custom_text) => {
+            arguments_gte(if custom_text {2} else {1}, &args, &trace)?;
+            arguments_lt(if custom_text {5} else {4}, &args, &trace)?;
 
             return up_macro(|_p, args, y, trace| {
                 let (target_id, boxless) = match &y.state.box_current {
@@ -742,11 +745,18 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     Some(id) => (id.to_string(), false),
                 };
 
-                if boxless {
+                if custom_text {
                     y.state.register_id(&target_id.clone(), CrefKind::BoxlessDefinition, Trace(None))?;
-                    y.state.boxless_previews.insert(target_id.to_string());
+
+                    let p = y.state.base_dir().join(format!(r#"build/previews/{}.html"#, target_id));
+                    let _ = std::fs::write(&p, format!(r###"<article>{}</article>"###, &args[args.len() - 1])).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
                 } else {
-                    y.state.box_previews.insert(target_id.to_string());
+                    if boxless {
+                        y.state.register_id(&target_id.clone(), CrefKind::BoxlessDefinition, Trace(None))?;
+                        y.state.boxless_previews.insert(target_id.to_string());
+                    } else {
+                        y.state.box_previews.insert(target_id.to_string());
+                    }
                 }
 
                 let defined = args[0].clone();
@@ -762,7 +772,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 };
                 let preview_url = y.state.id_to_preview_url(target_id.clone());
                 let singular = args[0].to_string();
-                let plural = if args.len() >= 2 {
+                let plural = if args.len() >= (if custom_text {3} else {2}) {
                     args[1].to_string()
                 } else {
                     format!("{}s", singular)
@@ -773,12 +783,12 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 return Ok(format!(r###"<dfn{}><a href="{}">{}</a></dfn>"###,
                     if boxless { format!(r#" id="{}""#, target_id) } else { "".to_string() },
                     href,
-                    if args.len() >= 3 { args[2].clone() } else { args[0].clone() },
+                    if args.len() >= (if custom_text {4} else {3}) { args[2].clone() } else { args[0].clone() },
                 ).into());
             }, &params, args, trace, y);
         }
 
-        OutInternal::ReferenceDefined(trace, params, args, capitalize, pluralize) => {
+        OutInternal::ReferenceDefined(trace, params, args, capitalize, pluralize, fakedef) => {
             arguments_gte(1, &args, &trace)?;
             arguments_lt(3, &args, &trace)?;
 
@@ -806,12 +816,21 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                                 }
                             };
 
-                            return Ok(format!(
-                                r###"<a class="ref definition" href="{}" data-preview="{}">{}</a>"###,
-                                info.href,
-                                y.state.resolve_defined_to_preview_url(id, id_trace.clone())?,
-                                name,
-                            ).into());
+                            if fakedef {
+                                return Ok(format!(
+                                    r###"<dfn id="{}"><a href="{}">{}</a></dfn>"###,
+                                    &id,
+                                    y.state.resolve_defined_to_preview_url(&id, id_trace.clone())?,
+                                    name,
+                                ).into());
+                            } else {
+                                return Ok(format!(
+                                    r###"<a class="ref definition" href="{}" data-preview="{}">{}</a>"###,
+                                    info.href,
+                                    y.state.resolve_defined_to_preview_url(id, id_trace.clone())?,
+                                    name,
+                                ).into());
+                            }
                         }
                     }
                 }, &params, args, trace, y);
@@ -890,6 +909,33 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }
         }
 
+        OutInternal::EncloseMath(trace, params, args, math_id, pre, post) => {
+            arguments_exact(1, &args, &trace)?;
+
+            return down_macro(|_p, _n, y, trace| {
+                if y.state.second_iteration {
+                    match y.state.sticky_state.math_definitions.get(math_id) {
+                        None => return Err(ExpansionError::UnknownMathId(trace, math_id.to_string())),
+                        Some(id) => {
+                            let url = y.state.resolve_id_to_url(id, trace)?;
+                            let preview_url = y.state.id_to_preview_url(id);
+
+                            let pre_tex = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{{}}}}}"###, preview_url, url, pre);
+                            let post_tex = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{{}}}}}"###, preview_url, url, post);
+
+                            return Ok(Out::Many(vec![
+                                    Out::Text(pre_tex.into()),
+                                    Out::Argument(0),
+                                    Out::Text(post_tex.into()),
+                                ]));
+                        }
+                    }
+                } else {
+                    return Ok(Out::Argument(0));
+                }
+            }, &params, args, trace, y);
+        }
+
         OutInternal::MathSet(trace, params, args) => {
             return down_macro(|_p, n, y, trace| {
                 if y.state.second_iteration {
@@ -929,6 +975,24 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 }
             }, &params, args, trace, y);
         }
+
+        OutInternal::MathEnv(trace, params, args, env) => {
+            return down_macro(|_p, n, _y, _trace| {
+                let mut outs = vec![Out::Text(format!(r###"\begin{{{}}}"###, env).into())];
+                for i in 0..n {
+                    if i != 0 {
+                        outs.push(Out::Text(r###"\\
+"###.into()));
+                    }
+                    outs.push(Out::Argument(i));
+                }
+                outs.push(Out::Text(format!(r###"\end{{{}}}"###, env).into()));
+
+                return Ok(Out::TeX(TeX::default(), vec![Out::Many(outs)], true));
+            }, &params, args, trace, y);
+        }
+
+
     }
 }
 
@@ -981,6 +1045,8 @@ fn out_to_internal(out: Out, args: Vec<OutInternal>) -> Result<OutInternal, usiz
         Out::Output(path, a, tee) => return Ok(OutInternal::Output(Trace(None), path, outs_to_internals(a, args)?, tee)),
 
         Out::Cref(params, a) => return Ok(OutInternal::Cref(Trace(None), params, outs_to_internals(a, args)?)),
+
+        Out::TeX(path, a, display) => return Ok(OutInternal::TeX(Trace(None), path, outs_to_internals(a, args)?, display)),
     }
 }
 

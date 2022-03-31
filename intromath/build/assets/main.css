@@ -206,6 +206,7 @@ article {
 
   border-width: 4px;
   border-style: solid;
+  border-color: var(--color-text);
 }
 
 .exercise {
@@ -231,16 +232,23 @@ article {
 .assumptions > *:first-child::before {
   content: "Assumptions: ";
   font-style: italic;
+  display: block;
 }
 
-.claim > *:first-child::before{
+.claim > *:first-child::before {
   content: "Claim: ";
   font-style: italic;
+  display: block;
 }
 
 .proof_body > *:first-child::before {
   content: "Proof: ";
   font-style: italic;
+  display: block;
+}
+
+.proof_body > :only-child::before, .claim > *:only-child::before, .assumptions > *:only-child::before {
+  display: inline;
 }
 
 .preview {
@@ -258,9 +266,17 @@ article {
   margin: 0;
 }
 
+.preview_content > p {
+  border-color: var(--color-text);
+}
+
 .caption {
   border-top: solid 1px;
   margin-top: 1rem;
   padding-top: 1rem;
   font-size: 16px;
+}
+
+.grouping_paren {
+  color: #757575;
 }

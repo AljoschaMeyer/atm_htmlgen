@@ -1,38 +1,10 @@
 /* typography shamelessly stolen from https://ssbc.github.io/scuttlebutt-protocol-guide/ */
 
-:root {
-    --color-bg: #fff;
-    --color-bg2: #eee;
-    --color-bg3: #ddd;
-    --color-text: #1a1a1a;
-
-    --color-fact: rgb(204, 115, 0);
-    --color-definition: rgb(124, 0, 132);
-    --color-example: rgb(0, 133, 18);
-    --color-exercise: rgb(0, 95, 133);
-    --color-proof: rgb(0, 173, 126);
-
-    --color-obstruction: rgb(237, 7, 71);
-
-    --c1-half: rgba(0, 40, 255, 0.7);
-    --c1-transparent: rgba(0, 40, 255, 0.1);
-    --c2-half: rgba(0, 170, 3, 0.7);
-    --c2-transparent: rgba(0, 170, 3, 0.1);
-}
-
-.c1 {
-  color: var(--c1-half);
-}
-
-.c2 {
-  color: var(--c2-half);
-}
-
 html {
     font-family: 'Roboto', sans-serif;
     font-size: 17px;
     line-height: 1.68;
-    color: var(--color-text);
+    color: #1a1a1a;
     text-align: justify;
 }
 
@@ -40,7 +12,7 @@ body {
     margin:5% auto;
     max-width: 41em;
     padding:0 .6em;
-    background: var(--color-bg);
+    background: #fff;
     overflow-x: hidden;
 }
 
@@ -142,22 +114,6 @@ em, i {
     font-style: italic;
 }
 
-.verbatim:before {
-  content: "“";
-}
-
-.verbatim:after {
-  content: "”";
-}
-
-.outlink {
-  border-bottom: 1px solid var(--color-text);
-}
-
-.label {
-  font: normal 1.21em KaTeX_Main,serif;
-}
-
 .centered {
     text-align: center;
 }
@@ -174,7 +130,7 @@ em, i {
 }
 
 dfn {
-    color: var(--color-definition);
+    color: §colorDefinition§ ;
     font-weight: bold;
     font-style: normal;
 }
@@ -206,49 +162,22 @@ article {
 
   border-width: 4px;
   border-style: solid;
-  border-color: var(--color-text);
 }
 
 .exercise {
-  border-color: var(--color-exercise);
-}
-
-.proof {
-  border-color: var(--color-proof);
+  border-color: §colorExercise§ ;
 }
 
 .fact {
-  border-color: var(--color-fact);
+  border-color: §colorFact§ ;
 }
 
 .definition {
-  border-color: var(--color-definition);
+  border-color: §colorDefinition§ ;
 }
 
 .example {
-  border-color: var(--color-example);
-}
-
-.assumptions > *:first-child::before {
-  content: "Assumptions: ";
-  font-style: italic;
-  display: block;
-}
-
-.claim > *:first-child::before {
-  content: "Claim: ";
-  font-style: italic;
-  display: block;
-}
-
-.proof_body > *:first-child::before {
-  content: "Proof: ";
-  font-style: italic;
-  display: block;
-}
-
-.proof_body > :only-child::before, .claim > *:only-child::before, .assumptions > *:only-child::before {
-  display: inline;
+  border-color: §colorExample§ ;
 }
 
 .preview {
@@ -264,19 +193,4 @@ article {
 
 .preview_content > * {
   margin: 0;
-}
-
-.preview_content > p {
-  border-color: var(--color-text);
-}
-
-.caption {
-  border-top: solid 1px;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  font-size: 16px;
-}
-
-.grouping_paren {
-  color: #757575;
 }
