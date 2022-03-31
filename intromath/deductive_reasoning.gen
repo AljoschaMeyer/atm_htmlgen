@@ -45,7 +45,6 @@
         A squirrel by itself is not a statement; §$(§$value(Alex)) is neither true nor false, but merely an adorable object of interest. The same applies to the number §$(17), although arguably less adorable. We can bridge into the world of statements by comparing objects for equality:
       )§definition["eq"](Equality)()(
         §set_math_id["eq", "eq"]
-        §set_math_id["neq", "eq"]
         §p(
           Two objects are considered §define["equal"](equal) if they are identical: everything is equal to itself, but not equal to anything else. Claiming that two objects are §r(equal) is a statement. We write §verbatim(§$(x §$eq y)) to compactly express that the object §$(x) is §r(equal) to the object §$(y).
         )
@@ -312,7 +311,76 @@
 
     )
 
-    §hsection(negation)(Negation)(
+    §hsection(negations)(Negation)(
+      §p(
+        It is now time to further extend our system of §r(deductive reasoning). The §definex["negation"](negation)(
+          §p(
+            A §rdef(negation) asserts that another statement does not hold.
+          )§p(
+            You prove a §r(negation)(negated) statement depending on the kind of statement that is being §r(negation)(negated).
+          )
+        ) of a statement is a new statement that is true if the old statement is false, and vice versa. Or in other words, a §r(negation) asserts that another statement does not hold. How do we prove a §r(negation)(negated) statement? That depends on the kind of statement that is being §r(negation)(negated). The easiest case is that of an §r(equal)(equality), whose truth can be derived directly by definition:
+      )
+
+      §statement["tour_negation_eq"](
+        §p(It does not hold that §$(5 §$eq 6).)
+      )(
+        §p(§$(5 §$eq 6) does not hold by §r(equal)(the definition of equality), so the §r(negation) of §$(5 §$eq 6) does hold.)
+      )
+
+      §p(
+        Another easy case is that of a §r(negation)(negated) §r(negation) (a §definex["double_negation"](double negation)(A §rdef(double negation) is the §r(negation) of a §r(negation).)), which is simply canceled out.
+      )
+
+      §statement["tour_negation_negation"](
+        §p(It does not hold that it does not hold that §$(5 §$eq 5).)
+      )(
+        §p(
+          The statement that remains after eliminating the §r(double negation) is §$(5 §$eq 5), which holds by §r(equal)(the definition of equality).
+        )
+      )
+
+      §p(
+        More interesting are §rs(negation) of quantifications. If a statement does not hold for all objects, then there has to exist a counterexample. In other words, we can prove the §r(negation) of a statement of §r(universal quantification) by changing it to §r(existential quantification) and moving the §r(negation) past the quantifier:
+      )
+
+      §statement["tour_negation_universal"](
+        §p(It does not hold for all squirrels §$(s) that §$(s §$eq §$value(Alex)).)
+      )(
+        §p(
+          We can prove the statement by showing that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq §$value(Alex)). Define §$(s §$defeq §$value(Blake)), then it does not hold that §$(s §$eq §$value(Alex)).
+        )
+      )
+
+      §p(
+        Conversely, if no object satisfying a property exists, then all objects do not satisfy that property. That is, we can prove the §r(negation) of a statement of §r(existential quantification) by changing it to §r(universal quantification) and moving the §r(negation) past the quantifier.
+      )
+
+      §statement["tour_negation_existential"](
+        §p(It does not hold that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq s).)
+      )(
+        §p(
+          We can prove the statement by showing that for all squirrels §$(s) it does not hold that it does not hold that §$(s §$eq s). Let §$(s) be a squirrel. Then §$(s §$eq s), which is exactly what remains to be proven after the §r(double negation) has been eliminated.
+        )
+      )
+
+      §p(
+        §Rs(negation) are usually formulated less verbosely, for example §verbatim(It does not hold that there exist such that…) would normally be written along the lines of §verbatim(There exists no such that…). The negation of statements of §r(equal)(equality) even has its own symbol: if §$(x) and §$(y) are §definex["neq"](unequal)(
+          §set_math_id["neq", "neq"]
+          §p(Two objects are §rdef(unequal), written as §$(x §$neq y), if they are not §r(equal).)
+        ), we write §$(x §$neq y).
+      )
+
+
+
+
+Because every statement must be either true or false, we can disprove a statement by proving its negation.
+
+Tacitly assuming that every statement has to be either true or false opens up some useful proof techniques, but it is not the only self-consistent way of thinking about statements. A different viewpoint is that of distinguishing between statements that have been proven, statements that have been disproven, and statements for which neither a proof nor a disproof are known.
+
+Focusing on proveability rather than truth leads to the school of thought of intuitionism, as opposed to classical mathematics. To keep things compact, this book sticks consistently to classical mathematics.
+
+
 
     )
 

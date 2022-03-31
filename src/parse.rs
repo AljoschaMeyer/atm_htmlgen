@@ -319,7 +319,7 @@ impl<'a> Parser<'a> {
                     } else if macro_name == b"$eq" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "eq".into(), r###"="###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$neq" {
-                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "neq".into(), r###"\noteq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "neq".into(), r###"\neq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$leq" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "leq".into(), r###"\leq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$in" {
