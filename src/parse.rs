@@ -278,6 +278,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Fact(t, p, a, "Corollary".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"conjecture" {
                         self.pm(|t, p, a| OutInternal::Fact(t, p, a, "Conjecture".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"falsehood" {
+                        self.pm(|t, p, a| OutInternal::Fact(t, p, a, "Falsehood".to_string()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"proof" {
                         self.pm(OutInternal::Proof, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"define" {

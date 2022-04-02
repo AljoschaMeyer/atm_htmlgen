@@ -84,7 +84,7 @@
             §p(
               A statement of §rdef(existential quantification) asserts that there exists at least one object satisfying a certain property: §verbatim(There exists a natural number §$(n) such that §$(n = 17)).
             )§p(
-              You prove a statement of §r(existential quantification) by presenting an object that satisfies the required property: §verbatim(Define §$(n §$defeq 17), then §$(n §$eq n)).
+              You prove a statement of §r(existential quantification) by presenting a §r(witness), that is, an object that satisfies the required property: §verbatim(Define §$(n §$defeq 17), then §$(n §$eq n)).
             )
           ), which is just fancy terminology for stating that at least one object satisfying a certain property exists:
         )
@@ -96,7 +96,9 @@
         )
 
         §p(
-          You prove §r(existential quantification)(statements of this form) by presenting an object that satisfies the required property. Note how two symbols that looks similar but have completely different meaning appear in the proof: §verbatim(§$(§$eq)) signifies a statement that is true if both sides of the sign denote the same object, whereas §definex["defeq"](defeq)()()(
+          You prove §r(existential quantification)(statements of this form) by presenting a §definex["witness"](witness)(witnesses)(
+            §p(A §rdef(witness) for a statement of §r(existential quantification) is an object for which the quantified claim holds.)
+          ), that is, an object that satisfies the required property. Note how two symbols that looks similar but have completely different meaning appear in the proof: §verbatim(§$(§$eq)) signifies a statement that is true if both sides of the sign denote the same object, whereas §definex["defeq"](defeq)()()(
             §p(The §verbatim(§$(§$defeq)) symbol makes the name on its left denote the object on its right: §verbatim(Define §$(x §$defeq 42), then §$(x §$eq 42)).)
           )§set_math_id["defeq", "defeq"]§set_math_id["eqdef", "defeq"]§verbatim(§$(§$defeq)) makes the name on the left side denote the object on the right side.
         )§p(
@@ -248,7 +250,7 @@
         )
 
         §p(
-          Using a statement of §r(existential quantification) is less straightforward, because you merely know that an object satisfying a certain property exists, but you do not know anything else about that object. Thus you cannot utilize any further properties of the object in your proof.
+          Using a statement of §r(existential quantification) is less straightforward, because you merely know that some §r(witness) satisfying a certain property exists, but you do not know anything else about that §r(witness). Thus you cannot utilize any further properties of the §r(witness) in your proof.
         )
 
         §statement["use_existential"](
@@ -264,15 +266,15 @@
         )
 
         §p(
-          Compared to directly choosing a suitable §$(n), this proof is of course needlessly complicated. But it demonstrates how to work with this number that we know very little about. There are 18 different numbers which are possible candidates for this §$(n), each of them with unique properties not shared by any other number. Most of these properties are completely unrelated to the proof at hand.
+          Compared to directly choosing a suitable §$(n), this proof is of course needlessly complicated. But it demonstrates how to work with this number §$(n) that we know very little about. There are 18 different numbers which are possible candidates for this §$(n), each of them with unique properties not shared by any other number. Most of these properties are completely unrelated to the proof at hand.
         )§p(
           If we worked with any specific number, we might be distracted by its properties. By working with the abstract value §$(n) that we obtained from §cref(tour_leq) however, only the relevant property of being §r(less than or equal to) §$(17) is available to our reasoning, which protects us from losing ourselves in irrelevant details.
         )
 
         §p(
-          You can argue that knowing a statement of §r(universal quantification) is more useful than knowing a statement of §r(existential quantification), because it can be more readily used in further proofs. This is offset by the fact that statements of §r(existential quantification) are much easier to prove — providing a specific example is easier than working with abstract values which can represent any number of specific values.
+          You can argue that knowing a statement of §r(universal quantification) is more useful than knowing a statement of §r(existential quantification), because it can be more readily used in further proofs. This is offset by the fact that statements of §r(existential quantification) are much easier to prove — providing a specific §r(witness) is easier than working with abstract values which can represent any number of specific values.
         )§p(
-          Interestingly enough, you can also take on a completely opposite view. What is interesting about properties that hold for every single object there is? §R(existential quantification) conveys the actually useful facts, it talks about the hidden gems among the masses of uninteresting objects. Unfortunately, these statements are much more difficult to prove — you need a clever idea for finding an object with the desired properties, rather than being handed an uncomplicated, distraction-free abstract value to work with.
+          Interestingly enough, you can also take on a completely opposite view. What is interesting about properties that hold for every single object there is? §R(existential quantification) conveys the actually useful facts, it talks about the hidden gems among the masses of uninteresting objects. Unfortunately, these statements are much more difficult to prove — you need a clever idea for finding an object with the desired properties, rather than being handed an uncomplicated, distraction-free, abstract value to work with.
         )
 
         §exercise["existential_vs_universal"](
@@ -303,17 +305,47 @@
             §R(defeq)(Naming) §rs(term): §verbatim(Define §$(s §$defeq §$ldots)).
           )
         )
-      )§p(
-        Each time you see a §r(name), and each time you use one yourself, it must have been introduced by exactly one of these constructs (or an equivalent wording expressing the same notion).
-      )§p(
-        §R(name) introductions usually make the §r(name) available up until the end of the current text component, for example, until the end of the current statement, definition, (sub-)exercise, and so on. That is why the statements in this chapter quantify §$(n) again and again.
+        §p(
+          Each time you see a §r(name), and each time you use one yourself, it must have been introduced by exactly one of these constructs (or an equivalent wording expressing the same notion).
+        )§p(
+          §R(name) introductions usually make the §r(name) available up until the end of the current text component, for example, until the end of the current statement, definition, (sub-)exercise, and so on. That is why the statements in this chapter quantify §$(n) again and again.
+        )
+
       )
 
+    §hsection(quantifier_order)(Quantifier Order)(
+      §p(
+        Does it matter in which order the quantifications of a statement occur? It does not for nested §rs(existential quantification) such as those of §cref(tour_existential_quantification_nested): It makes no difference in which order we define the §rs(witness), so the same proofs still work if the order of the quantifications in the statement is swapped. The same as the case for nested statements of §r(universal quantification), the order in which we obtain the featureless values for which to prove the desired properties does not matter for the prove to be correct.
+      )
+
+      §p(
+        When interleaving §r(existential quantification) and §r(universal quantification) however, the quantifier order matters, as exemplified by the following statement:
+      )
+
+      §statement["tour_order"](
+        §p(For all natural numbers §$(n) there exists a natural number §$(m) such that §$(n §$eq m).)
+      )(
+        §p(
+          Let §$(n) be a natural number. Define §$(m §$defeq n). Then §$(n §$eq m).
+        )
+      )
+
+      §p(
+        §cref(tour_order)(This statement) is true, but what happens if we swap the order of the quantifiers?
+      )
+
+      §falsehood["tour_order2"](
+        §p(There exists a natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m).)
+      )(
+        §p(???)
+      )
+
+      §cref(tour_order2) is clearly different from §cref(tour_order), there certainly is no number that is §r(equal) to every number. But how do we disprove a statement? For that, we need to examine the concept of negated statements.
     )
 
     §hsection(negations)(Negation)(
       §p(
-        It is now time to further extend our system of §r(deductive reasoning). The §definex["negation"](negation)(
+        The §definex["negation"](negation)(
           §p(
             A §rdef(negation) asserts that another statement does not hold.
           )§p(
@@ -365,24 +397,43 @@
       )
 
       §p(
-        §Rs(negation) are usually formulated less verbosely, for example §verbatim(It does not hold that there exist such that…) would normally be written along the lines of §verbatim(There exists no such that…). The negation of statements of §r(equal)(equality) even has its own symbol: if §$(x) and §$(y) are §definex["neq"](unequal)(
+        §Rs(negation) are usually formulated less verbosely, for example §verbatim(It does not hold that there exist §$(x) such that…) would normally be written along the lines of §verbatim(There exists no §$(x) such that…). The negation of statements of §r(equal)(equality) even has its own symbol: if §$(x) and §$(y) are §definex["neq"](unequal)(
           §set_math_id["neq", "neq"]
           §p(Two objects are §rdef(unequal), written as §$(x §$neq y), if they are not §r(equal).)
         ), we write §$(x §$neq y).
+      )§p(
+        We can now disprove §cref(tour_order2) by proving its §r(negation):
       )
 
+      §statement["tour_not_order2"](
+        §p(It is not the case that there exists a natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m).)
+      )(
+        §p(
+          We can prove the statement by showing that for all natural numbers §$(m) it is not the case that for all natural numbers §$(n) we have §$(n §$eq m). This we can prove by showing that for all natural numbers §$(m) there exists a natural number §$(n) such that §$(n §$neq m).
+        )§p(
+          Let §$(m) be a natural number. Define §$(n §$defeq m + 1). Then §$(n §$neq m), because §$(m + 1 §$neq m).
+        )
+      )
 
+      §p(
+        Disproving statements by proving their §r(negation) makes sense only if we assume that every statement must either be true or false. This assumption is known as the §definex(principle of bivalence)(
+          §p(The §rdef(principle of bivalence) states that every statement is either true or false.)
+        ), and while it might feel self-evident, it is possible to find self-consistent frameworks for §r(deductive reasoning) that reject it. To keep things compact, this book consistently sticks to the prevalent school of §verbatim(classical mathematics) that accepts the §r(principle of bivalence).
+      )
 
+      §p(
+        The proof of §cref(tour_not_order2) is representative for how we usually prove §r(negation)(negated) statements: First, we convert the statement into an equivalent one in which the only §r(negation)(negated) sub-statements are statements of §r(equal)(equality), and then, we prove that new statement as usual, without having to worry about §rs(negation) anymore.
+      )§p(
+        Because this conversion is completely mechanical, it is often left implicit in written proofs. Incorrect manipulation of §rs(negation) is a common source of errors for new learners however, so it is a good habit to carefully and explicitly think through the process of threading a §r(negation) through a statement, whenever you encounter it.
+      )
 
-Because every statement must be either true or false, we can disprove a statement by proving its negation.
-
-Tacitly assuming that every statement has to be either true or false opens up some useful proof techniques, but it is not the only self-consistent way of thinking about statements. A different viewpoint is that of distinguishing between statements that have been proven, statements that have been disproven, and statements for which neither a proof nor a disproof are known.
-
-Focusing on proveability rather than truth leads to the school of thought of intuitionism, as opposed to classical mathematics. To keep things compact, this book sticks consistently to classical mathematics.
-
-
+      §exercise["exercise_tour_not"](
+        Disprove that for all natural numbers §$(n) there exists a natural number number §$(m) such that §$(n) is not §r(less than or equal to) §$(m). Explicitly state the different stages of moving the §r(negation) through the statement to reach a statement you can prove.
+      )
 
     )
+
+
 
   )
 )
