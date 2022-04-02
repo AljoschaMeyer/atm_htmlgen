@@ -69,6 +69,8 @@ pub(crate) enum ExpansionError {
     HSectionTooManyLevels(Trace),
     #[error("never printed")]
     CrefBoxlessDefinition(Trace),
+    #[error("never printed")]
+    CaseNotInCases(Trace),
     #[cfg(unix)]
     #[error("never printed")]
     TeX(katex::Error, Trace),
@@ -106,6 +108,10 @@ impl ExpansionError {
             }
             ExpansionError::CrefBoxlessDefinition(t) => {
                 println!("Cannot use `§cref` to reference a boxless definition");
+                print_trace(t.clone(), source, false);
+            }
+            ExpansionError::CaseNotInCases(t) => {
+                println!("Cannot use `§case` outside of `§cases`");
                 print_trace(t.clone(), source, false);
             }
             ExpansionError::DuplicateId(definition, redefinition) => {
@@ -200,6 +206,8 @@ pub(crate) enum OutInternal {
     Captioned(Trace, (), Vec<OutInternal>),
     Enclose(Trace, (), Vec<OutInternal>, &'static str, &'static str),
     EncloseMath(Trace, (), Vec<OutInternal>, &'static str /* id */, &'static str, &'static str),
+    Cases(Trace, (), Vec<OutInternal>),
+    Case(Trace, Case, Vec<OutInternal>),
 }
 
 impl OutInternal {
@@ -614,7 +622,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             y.state.box_current = Some(id.to_string());
 
             let id_trace = Trace(None);
-            let r = up_macro(|_p, args, y, _trace| {
+            let r = up_macro(|p, args, y, _trace| {
                 let url = y.state.register_id(&id.clone(), CrefKind::Box, id_trace.clone())?;
                 y.state.sticky_state.boxes.insert(id.to_string(), crate::BoxInfo {
                     name: name.to_string(),
@@ -624,15 +632,16 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 let claim_name = y.state.claim_name(&params.0[0], id_trace.clone())?;
 
                 let box_html = format!(r###"<article class="{}" id="{}">
-    <h6><a href="{}">Proof of {}</a></h6>{}
+    <h6><a href="{}">{}Proof of {}</a></h6>{}
     <div class="claim">{}</div>
     <div class="proof_body">{}</div>
 </article>"###,
                     kind.class(),
                     id,
                     url,
+                    p.0[1],
                     claim_name,
-                    if args.len() >= 2 {
+                    if args.len() >= 3 {
                         format!(r###"
                         <div class="assumptions">
                             {}
@@ -688,6 +697,21 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                                         args[1].to_string()
                                     } else {
                                         format!("{}&nbsp;{}", hsection_info.name, hsection_info.numbering)
+                                    };
+                                    let tag = format!(
+                                        r###"<a class="ref" href="{}">{}</a>"###,
+                                        url,
+                                        label,
+                                    );
+                                    return Ok(tag.into());
+                                }
+
+                                CrefKind::Case => {
+                                    let numbering = y.state.sticky_state.cases.get(&id.to_string()).unwrap();
+                                    let label = if args.len() == 2 {
+                                        args[1].to_string()
+                                    } else {
+                                        format!("Case&nbsp;{}", numbering)
                                     };
                                     let tag = format!(
                                         r###"<a class="ref" href="{}">{}</a>"###,
@@ -778,10 +802,11 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     format!("{}s", singular)
                 };
 
-                y.state.register_define(defined, href.clone(), preview_url, singular, plural, trace)?;
+                y.state.register_define(defined, href.clone(), preview_url.clone(), singular, plural, trace)?;
 
-                return Ok(format!(r###"<dfn{}><a href="{}">{}</a></dfn>"###,
+                return Ok(format!(r###"<dfn{} data-preview="{}"><a href="{}">{}</a></dfn>"###,
                     if boxless { format!(r#" id="{}""#, target_id) } else { "".to_string() },
+                    preview_url,
                     href,
                     if args.len() >= (if custom_text {4} else {3}) { args[2].clone() } else { args[0].clone() },
                 ).into());
@@ -947,9 +972,6 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                             if n == 0 {
                                 return Ok(Out::Text(format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\emptyset}}}}"###, preview_url, url).into()));
                             } else {
-                                // KaTeX doesn't like how \left and \right are used within other stuff?
-                                // let left_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\left\lbrace}}}}"###, preview_url, url);
-                                // let right_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\right\rbrace}}}}"###, preview_url, url);
                                 let left_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\lbrace}}}}"###, preview_url, url);
                                 let right_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\rbrace}}}}"###, preview_url, url);
 
@@ -989,6 +1011,64 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 outs.push(Out::Text(format!(r###"\end{{{}}}"###, env).into()));
 
                 return Ok(Out::TeX(TeX::default(), vec![Out::Many(outs)], true));
+            }, &params, args, trace, y);
+        }
+
+        OutInternal::Cases(trace, params, args) => {
+            arguments_exact(1, &args, &trace)?;
+            y.state.cases.push(0);
+            let r = down_macro(|_p, _n, _y, _trace| Ok(Out::Many(vec![
+                    Out::Text(r###"<div class="cases">"###.into()),
+                    Out::Argument(0),
+                    Out::Text("</div>".into()),
+                ])), &params, args, trace, y)?;
+            let _ = y.state.cases.pop();
+            return Ok(r);
+        }
+
+        OutInternal::Case(trace, params, args) => {
+            arguments_gte(1, &args, &trace)?;
+            arguments_lt(3, &args, &trace)?;
+
+            return down_macro(|p, n, y, trace| {
+                match y.state.cases.last_mut() {
+                    Some(last) => *last += 1,
+                    None => return Err(ExpansionError::CaseNotInCases(trace.clone())),
+                }
+
+                let mut numbering = "".to_string();
+                for i in 0..y.state.cases.len() {
+                    if i != 0 {
+                        numbering.push('.');
+                    }
+                    numbering.push_str(&format!("{}", y.state.cases[i]))
+                }
+
+                let id = &p.0[0];
+                let linkable = id != "";
+                let href = if linkable {
+                    y.state.register_id(id, CrefKind::Case, trace.clone())?
+                } else {
+                    "".to_string()
+                };
+
+                return Ok(Out::Many(vec![
+                    Out::Text(r###"<div class="case_label"><span class="case_name">"###.into()),
+                    Out::Text(
+                        if linkable {
+                            format!(r###"<a href="{}" id="{}">"###, href, id).into()
+                        } else {
+                            "".into()
+                        }
+                    ),
+                    Out::Text(format!("Case {}:</span> ", numbering).into()),
+                    if n >= 2 {Out::Argument(0)} else {Out::Text("".into())},
+                    Out::Text(if linkable {"</a>".into()} else {"".into()}),
+                    Out::Text("</div>".into()),
+                    Out::Text(r###"<div class="case_body">"###.into()),
+                    Out::Argument(n - 1),
+                    Out::Text("</div>".into()),
+                ]));
             }, &params, args, trace, y);
         }
 
@@ -1167,11 +1247,11 @@ impl Default for BoxParams {
 }
 
 #[derive(Deserialize, Clone)]
-pub struct Proof([String; 1]);
+pub struct Proof([String; 2]);
 
 impl Default for Proof {
     fn default() -> Self {
-        Proof(["".to_string()])
+        Proof(["".to_string(), "".to_string()])
     }
 }
 
@@ -1199,5 +1279,14 @@ pub struct SetMathId([String; 2]);
 impl Default for SetMathId {
     fn default() -> Self {
         SetMathId(["".to_string(), "".to_string()])
+    }
+}
+
+#[derive(Deserialize, Clone)]
+pub struct Case([String; 1]);
+
+impl Default for Case {
+    fn default() -> Self {
+        Case(["".to_string()])
     }
 }

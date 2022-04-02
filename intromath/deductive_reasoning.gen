@@ -343,7 +343,7 @@
       §cref(tour_order2) is clearly different from §cref(tour_order), there certainly is no number that is §r(equal) to every number. But how do we disprove a statement? For that, we need to examine the concept of negated statements.
     )
 
-    §hsection(negations)(Negation)(
+    §hsection(negations)(Negations)(
       §p(
         The §definex["negation"](negation)(
           §p(
@@ -422,7 +422,7 @@
       )
 
       §p(
-        The proof of §cref(tour_not_order2) is representative for how we usually prove §r(negation)(negated) statements: First, we convert the statement into an equivalent one in which the only §r(negation)(negated) sub-statements are statements of §r(equal)(equality), and then, we prove that new statement as usual, without having to worry about §rs(negation) anymore.
+        The proof of §cref(tour_not_order2) is representative for how we usually prove §r(negation)(negated) statements: First, we convert the statement into an equivalent one in which the only §r(negation)(negated) substatements are statements of §r(equal)(equality), and then, we prove that new statement as usual, without having to worry about §rs(negation) anymore.
       )§p(
         Because this conversion is completely mechanical, it is often left implicit in written proofs. Incorrect manipulation of §rs(negation) is a common source of errors for new learners however, so it is a good habit to carefully and explicitly think through the process of threading a §r(negation) through a statement, whenever you encounter it.
       )
@@ -432,6 +432,215 @@
       )
 
     )
+
+    §hsection(conjunction_disjunction)(Conjunctions and Disjunctions)(
+      §p(
+        Between §r(existential quantification), §r(universal quantification), and §r(negation), we have covered the most complicated kinds of statements. What remains are a few statements which relate truth of other statements to each other.
+      )§p(
+        A §definex["conjunction"](conjunction)(
+          §p(
+            A §rdef(conjunction) asserts that two substatements both hold: §verbatim(§$(5 §$eq 5) and §$(6 §$eq 6)).
+          )§p(
+            You prove a §r(conjunction) by proving both of its substatements: §verbatim(§$(5 §$eq 5) holds by definition, and §$(6 §$eq 6) holds by definition, and so the full statement holds).
+          )
+        ) asserts that two substatements are both true:
+      )
+
+      §statement["tour_conjunction"](
+        §p(§$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Blake) §$eq §$value(Blake)).)
+      )(
+        §p(
+          §$(§$value(Alex) §$eq §$value(Alex)) holds by §r(equal)(the definition of equality), and §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+        )
+      )
+
+      §p(
+        As you can see, you prove a §r(conjunction) by proving both of its substatements.
+      )§p(
+        A §definex["disjunction"](disjunction)(
+          §p(
+            A §rdef(disjunction) asserts that out of two substatements at least one holds: §verbatim(§$(5 §$eq 6) or §$(6 §$eq 6)).
+          )§p(
+            You prove a §r(disjunction) by proving either of its substatements: §verbatim(§$(6 §$eq 6) holds by definition, and so the full statement holds).
+          )
+        ) asserts that out of two substatements at least one is true:
+      )
+
+      §statement["tour_disjunction"](
+        §p(§$(§$value(Alex) §$eq §$value(Charlie)) or §$(§$value(Blake) §$eq §$value(Blake)).)
+      )(
+        §p(
+          §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+        )
+      )
+
+      §p(
+        Unsurprisingly enough, you prove a §r(disjunction) by proving one of its substatements. The following two examples demonstrate the remaining two constellations of substatement truth which result in a true §r(disjunction).
+      )
+
+      §statement["tour_disjunction2"](
+        §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Charlie)).)
+      )(
+        §p(
+          §$(§$value(Alex) §$eq §$value(Alex)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+        )
+      )
+      §statement["tour_disjunction3"](
+        §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake)).)
+      )(
+        §p(
+          §$(§$value(Alex) §$eq §$value(Alex)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+        )
+      )
+
+      §p(
+        If both substatements of a §r(disjunction) hold, you can prove either one. For example, §cref(tour_disjunction3) also admits the following proof:
+      )
+
+      §proof["tour_disjunction3", "Alternate "](
+        §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake)).)
+      )(
+        §p(
+          §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+        )
+      )
+
+      §p(
+        Whereas §verbatim(or) signifies a §r(disjunction) in a proof and thus admits the possibility of both substatements being true, in everyday language §verbatim(or) usually signifies an exclusive choice. In a formal context, the §definex["xor"](exclusive or)(
+          §p(
+            The §rdef(exclusive or) of two substatements asserts that exactly one of them holds.
+          )
+        ) which denotes that both at least and at most one of two alternatives is true — i.e., exactly one — is formulated as an explicit §verbatim(either §i(something) or §i(another thing)).
+      )
+
+      §exercise["tour_xor"](
+        §p(
+          Using §r(negation), §r(conjunction), and §r(disjunction), construct a statement with the same meaning as §verbatim(Either §$(§$value(Alex)) is hungry or §$(§$value(Alex)) is asleep).
+        )§p(
+          Whenever you encounter an §r(exclusive or), you can prove it by first translating it into the equivalent statement that only uses §r(negation), §r(conjunction), and §r(disjunction).
+        )
+      )
+
+      §p(
+        Notice that whenever the §r(exclusive or) of two statements is true, then so is their §r(disjunction). Remember also that we assume every statement to be either true or false (the §r(principle of bivalence)). From these two properties, we obtain the §definex["excluded_middle"](law of excluded middle)(
+          §p(
+            The §rdef(law of excluded middle) states that §verbatim(§i(something) or not §i(something)) always holds.
+          )
+        ): we can always assume §verbatim(§i(something) or not §i(something)) to be true, no matter how simple or complicated of a statement §verbatim(§i(something)) is.
+      )
+
+    )
+
+    §hsection(utilizing_conjunction_disjunction)(Utilizing Conjunctions and Disjunctions)(
+      §p(
+        Once a §r(conjunction) is proven, both of its substatements can be assumed to be true:
+      )
+
+      §statement["tour_use_conjunction"](
+        §p(
+          §$(§$value(Alex) §$eq §$value(Alex)).
+        )
+      )(
+        §p(
+          §$(§$value(Alex) §$eq §$value(Alex)) by §cref(tour_conjunction).
+        )
+      )
+
+      §p(
+        Utilizing a §r(disjunction) to prove another statement is more difficult however, because either of its substatements might not be true. So it does not suffice to assume any one of the substatements and finish the proof from there. Instead, you need to demonstrate that the proof can be completed regardless of which substatement is assumed to be true. This is called a §definex["case_distinction"](case distinction)(
+          §p(
+            A §rdef(case distinction) is a proof technique in which you finish multiple subproofs, each assuming some statement to be true such that the §r(disjunction) of those statements is true.
+          )
+        ) and results in having to complete two independent proofs.
+      )
+
+      §statement["tour_use_disjunction"](
+        §p(
+          Let §$(s) be a squirrel.
+        )
+      )(
+        §p(
+          §$(s §$neq §$value(Alex)) or §$(s §$neq §$value(Blake)).
+        )
+      )(
+        §p(
+          Let §$(s) be a squirrel. By the §r(law of excluded middle) we know that §$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex)). We do a §r(case distinction) on §verbatim(§$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex))):
+        )§cases(
+          §case(§$(s §$eq §$value(Alex)))(
+            §p(
+              If §$(s §$eq §$value(Alex)), then §$(s §$neq §$value(Blake)), so the claim holds.
+            )
+          )
+          §case(§$(s §$neq §$value(Alex)))(
+            §p(
+              If §$(s §$neq §$value(Alex)), the claim holds by assumption.
+            )
+          )
+        )§p(
+          As the claim holds in all cases, it is true.
+        )
+      )
+
+      §exercise["exercise_tour_use_disjunction"](
+        §p(
+          Formulate a statement that expresses that no natural number is equal to all natural numbers, and prove it.
+        )
+      )
+
+      §p(
+        Similar to §rs(existential quantification) and §rs(universal quantification), there are two different viewpoints on whether §rs(conjunction) or §rs(disjunction) are easier to use for proving other statements. On the one hand, a §r(conjunction) is more powerful, allowing you to use any of its substatements. On the other hand, you need to figure out which one to use, whereas there is no such decision to be made when assuming a §r(disjunction).
+      )
+
+    )
+
+    §hsection(negating_conjunction_disjunction)(Negating Conjunctions and Disjunctions)(
+      §p(
+        The similarities to the behavior of quantifiers continues with the way that you prove the §rs(negation) of §rs(conjunction) and §rs(disjunction).
+      )§p(
+        If two statements are not both true, then at least one of them has to be false. In other words, you can prove a §r(negation)(negated) §r(conjunction) by changing it to a §r(disjunction) and §r(negation)(negating) its substatements.
+      )
+
+      §statement["tour_negation_conjunction"](
+        §p(
+          It does not hold that §$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Alex) §$eq §$value(Blake)).
+        )
+      )(
+        §p(
+          We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Alex)) or §$(§$value(Alex) §$neq §$value(Blake)). The latter holds by §r(equal)(the definition of equality).
+        )
+      )
+
+      §p(
+        Conversely, if two statements are not both false, then at least one of them has to be true. In other words, we can prove a §r(negation)(negated) §r(disjunction) by changing it to a §r(conjunction) and §r(negation)(negating) its substatements.
+      )
+
+      §statement["tour_negation_disjunction"](
+        §p(
+          It does not hold that §$(§$value(Alex) §$eq §$value(Blake)) or §$(§$value(Alex) §$eq §$value(Charlie)).
+        )
+      )(
+        §p(
+          We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Blake)) and §$(§$value(Alex) §$neq §$value(Charlie)). Both hold by §r(equal)(the definition of equality).
+        )
+      )
+
+      §p(
+        The two ways of proving §r(negation)(negated) §rs(conjunction) and §rs(disjunction) are collectively referred to as §definex["de_morgan"](De Morgan's laws)(
+          §p(
+            §rdef(De Morgan's laws) state how to prove §r(negation)(negated) §rs(conjunction) and §rs(disjunction):
+          )§ul(
+            §li(
+              You prove a §r(negation)(negated) §r(conjunction) by changing it to a §r(disjunction) and §r(negation)(negating) its substatements.
+            )§li(
+              You prove a §r(negation)(negated) §r(disjunction) by changing it to a §r(conjunction) and §r(negation)(negating) its substatements.
+            )
+          )
+        ).
+      )
+
+    )
+
+    
 
 
 

@@ -90,7 +90,7 @@ h6 {
     margin: 0.1rem 0rem 0rem 0rem;
 }
 
-p {
+p, .cases {
     margin: 0 0 1rem;
 }
 
@@ -279,4 +279,12 @@ article {
 
 .grouping_paren {
   color: #757575;
+}
+
+.case_name {
+  font-weight: 700;
+}
+
+.case_body {
+  margin-left: 1rem;
 }

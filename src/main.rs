@@ -118,6 +118,8 @@ pub(crate) struct State {
 
     pub box_previews: HashSet<String>,
     pub boxless_previews: HashSet<String>,
+
+    pub cases: Vec<usize>,
 }
 
 impl State {
@@ -150,6 +152,8 @@ impl State {
 
             box_previews: HashSet::new(),
             boxless_previews: HashSet::new(),
+
+            cases: Vec::new(),
         });
     }
 
@@ -387,6 +391,7 @@ pub(crate) struct StickyState {
     pub boxes: HashMap<String, BoxInfo>,
     pub defined: HashMap<String, DefinedInfo>,
     pub math_definitions: HashMap<String, String>,
+    pub cases: HashMap<String, String>,
 }
 
 impl StickyState {
@@ -397,6 +402,7 @@ impl StickyState {
             boxes: HashMap::new(),
             defined: HashMap::new(),
             math_definitions: HashMap::new(),
+            cases: HashMap::new(),
         }
     }
 }
@@ -406,6 +412,7 @@ pub(crate) enum CrefKind {
     HSection,
     Box,
     BoxlessDefinition,
+    Case,
 }
 
 #[derive(Clone)]
