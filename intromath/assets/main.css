@@ -229,7 +229,7 @@ article {
   border-color: var(--color-example);
 }
 
-.assumptions > *:first-child::before {
+/* .assumptions > *:first-child::before {
   content: "Assumptions: ";
   font-style: italic;
   display: block;
@@ -239,7 +239,7 @@ article {
   content: "Claim: ";
   font-style: italic;
   display: block;
-}
+} */
 
 .proof_body > *:first-child::before {
   content: "Proof: ";
@@ -287,4 +287,10 @@ article {
 
 .case_body {
   margin-left: 1rem;
+}
+
+/* Hack to prevent katex blocking mouse interaction with invisible rectangles */
+.vlist-r > .vlist:only-child {
+  display: none;
+  /* background: rgba(255, 0, 0, 0.5); */
 }

@@ -257,7 +257,7 @@
           §p(There exists a natural number §$(n) such that §$(n §$leq 18).)
         )(
           §p(
-            By §cref(tour_leq), there exists §$(n) such that §$(n §$leq 17). We thus know about this §$(n) that there exists §$(k) such that §$(n + k §$eq 17), and this is in fact all we §em(can) know about it.
+            From §cref(tour_leq) we obtain §$(n) such that §$(n §$leq 17). From the definition of §verbatim(§$(§$leq)) we obtain §$(k) such that §$(n + k §$eq 17).
           )§p(
             If §$(n + k §$eq 17), then also §$(§$p(n + k) + 1 §$eq 17 + 1), then also §$(§$p(n + k) + 1 §$eq 18), and then also §$(n + §$p(k + 1) §$eq 18).
           )§p(
@@ -287,8 +287,22 @@
 
       §hsection(names)(Names)(
         §p(
-          At this point, we should briefly discuss §definex(name)(names)(names)(
-            §p()
+          At this point, we should briefly discuss §definex["name"](name)(names)(names)(
+            §p(
+              A §rdef(name) is a shorthand for a §r(term) or object. Every name must be bound to a §r(term) or object through one of the following constructs:
+            )§ul(
+              §li(
+                Formulating §rs(universal quantification): §verbatim(For all squirrels §$(s) it holds that…).
+              )§li(
+                Proving §rs(universal quantification): §verbatim(Let §$(s) be a squirrel, then…).
+              )§li(
+                Formulating §rs(existential quantification): §verbatim(There exists a squirrel §$(s) such that…).
+              )§li(
+                Proving §rs(existential quantification): §verbatim(Obtain a squirrel §$(s) such that…).
+              )§li(
+                Explicit §r(defeq)(naming): §verbatim(Define §$(s §$defeq §$ldots)).
+              )
+            )
           ), which we have started using in §rs(term) such as §verbatim(§$(n + k §$eq 17)) without prior discussion. §Rs(name) can stand in for objects or §rs(term), but they never drop out of nowhere. Every §r(name) has to be introduced before it can appear in a proof: If we have no idea what §$(x) is, how are we to determine whether §$(x §$eq 6) is true or false?
         )§p(
           There is only a limited number of ways in which §rs(name) can be introduced, and we have already seen all of them:
@@ -300,13 +314,13 @@
           )§li(
             Formulating §rs(existential quantification): §verbatim(There exists a squirrel §$(s) such that…).
           )§li(
-            Proving §rs(existential quantification): §verbatim(Let §$(s) be a squirrel such that…).
+            Proving §rs(existential quantification): §verbatim(Obtain a squirrel §$(s) such that…).
           )§li(
-            §R(defeq)(Naming) §rs(term): §verbatim(Define §$(s §$defeq §$ldots)).
+            Explicit §r(defeq)(naming): §verbatim(Define §$(s §$defeq §$ldots)).
           )
         )
         §p(
-          Each time you see a §r(name), and each time you use one yourself, it must have been introduced by exactly one of these constructs (or an equivalent wording expressing the same notion).
+          Each time you see a §r(name), and each time you use one yourself, it must have been introduced by exactly one of these constructs. The precise wording for the construct can of course vary, as long as it is clear which of the five constructs is meant. But sticking to exactly one formulation per construct will make you proofs easier to understand.
         )§p(
           §R(name) introductions usually make the §r(name) available up until the end of the current text component, for example, until the end of the current statement, definition, (sub-)exercise, and so on. That is why the statements in this chapter quantify §$(n) again and again.
         )
@@ -315,11 +329,23 @@
 
     §hsection(quantifier_order)(Quantifier Order)(
       §p(
-        Does it matter in which order the quantifications of a statement occur? It does not for nested §rs(existential quantification) such as those of §cref(tour_existential_quantification_nested): It makes no difference in which order we define the §rs(witness), so the same proofs still work if the order of the quantifications in the statement is swapped. The same as the case for nested statements of §r(universal quantification), the order in which we obtain the featureless values for which to prove the desired properties does not matter for the prove to be correct.
+        Does it matter in which order the quantifications of a statement occur? It does not for nested §rs(existential quantification) such as those of §cref(tour_existential_quantification_nested): It makes no difference in which order we define the §rs(witness), so the same proofs still work if the order of the quantifications in the statement is swapped. The same as the case for nested statements of §r(universal quantification), the order in which we obtain the featureless values for which to prove the desired properties does not matter for the proof to be correct.
+      )§p(
+        These observations are examples of §definex["meta_statement"](meta statement)(meta statements)(meta statements)(
+          §p(
+            A §rdef(meta statement) is a statement about statements.
+          )
+        ), statements about statements. We are not yet able to rigorously prove them, but, by the end of this book, we will do exactly that. For now, we merely state some particularly useful and simple §rs(meta statement) and allow their (often implicit) use when writing proofs.
+      )§p(
+        Even though we do not prove §rs(meta statement) yet, we can be a bit more precise in formulating them. We say that two statements §definex["equivalent_statements"](mean the same)(
+          §p(
+            Two statements §rdef(mean the same) if, whenever we can prove one of them, we can also prove the other.
+          )
+        ) if, whenever we can prove one of them, we can also prove the other. Restating our observations about quantify order: If we swap two successive §rs(existential quantification) (or two successive §rs(universal quantification)), the new and old statement §r(mean the same).
       )
 
       §p(
-        When interleaving §r(existential quantification) and §r(universal quantification) however, the quantifier order matters, as exemplified by the following statement:
+        When interleaving §r(existential quantification) and §r(universal quantification) however, the quantifier order can make a difference, as exemplified by the following statement:
       )
 
       §statement["tour_order"](
@@ -416,7 +442,7 @@
       )
 
       §p(
-        Disproving statements by proving their §r(negation) makes sense only if we assume that every statement must either be true or false. This assumption is known as the §definex(principle of bivalence)(
+        Disproving statements by proving their §r(negation) makes sense only if we assume that every statement must either be true or false. This assumption is known as the §definex["bivalence"](principle of bivalence)(
           §p(The §rdef(principle of bivalence) states that every statement is either true or false.)
         ), and while it might feel self-evident, it is possible to find self-consistent frameworks for §r(deductive reasoning) that reject it. To keep things compact, this book consistently sticks to the prevalent school of §verbatim(classical mathematics) that accepts the §r(principle of bivalence).
       )
@@ -640,9 +666,204 @@
 
     )
 
-    
+    §hsection(meta_conjunction_disjunction)(Meta Statements for Conjunctions And Disjunctions)(
+      §p(
+        We can observe some simple §rs(meta statement) for §rs(conjunction) and §rs(disjunction). The order of the two substatements of a §r(conjunction) or §r(disjunction) does not matter: §verbatim(§i(something) and §i(another thing)) and §verbatim(§i(another thing) and §i(something)) §r(mean the same), as do §verbatim(§i(something) or §i(another thing)) and §verbatim(§i(another thing) or §i(something)). These laws are called the §definex["conjunction_commutativity"](commutative conjunction)(blarg)(commutativity)(
+          §p(
+            The §rdef(commutative conjunction)(commutativity) of §rs(conjunction) states that, after swapping the order of the substatements of a §r(conjunction), the old and new statement §r(mean the same).
+          )
+        ) of §rs(conjunction) and the §definex["disjunction_commutativity"](commutative disjunction)(blarg)(commutativity)(
+          §p(
+            The §rdef(commutative disjunction)(commutativity) of §rs(disjunction) states that, after swapping the order of the substatements of a §r(disjunction), the old and new statement §r(mean the same).
+          )
+        ) of §rs(disjunction) respectively.
+      )§p(
+        Because a §r(conjunction) has exactly two substatements, we technically cannot state directly that three different statements all must hold, we instead either have to say that §verbatim(§i(something) and (§i(another thing) and §i(a third thing))) or that §verbatim((§i(something) and §i(another thing)) and §i(a third thing)). Both ways of grouping the §rs(conjunction) §r(mean the same), which is why we do not require making the grouping explicit. This law is called the §definex["conjunction_associativity"](associative conjunction)(blarg)(associativity)(
+          §p(
+            The §rdef(associative conjunction)(associativity) of §rs(conjunction) states that all ways of grouping multiple §rs(conjunction) §r(mean the same).
+          )
+        ) of §rs(conjunction), and allows us to think in terms of §rs(conjunction) with arbitrarily many substatements.
+      )§p(
+        For §rs(disjunction) we have the analogous §definex["disjunction_associativity"](associative disjunction)(blarg)(associativity)(
+          §p(
+            The §rdef(associative disjunction)(associativity) of §rs(disjunction) states that all ways of grouping multiple §rs(disjunction) §r(mean the same).
+          )
+        ) of §rs(disjunction), and we can accordingly think in terms of §rs(disjunction) with arbitrarily many substatements. We even allow §rs(case distinction) with more than two cases, as long as the §r(disjunction) over all cases is known to be true.
+      )
+
+      §exercise["exercise_associativity_conjunction_disjunction"](
+        Show that the grouping of §rs(conjunction) and §rs(disjunction) does matter when they both occur, by giving two statements that only differ in that grouping, proving one of them, and disproving the other.
+      )
+
+      §exercise["exercise_analogies_conjunction_quantification"](
+        Find and summarize as many of the analogies between the properties of §r(conjunction)/§r(disjunction) and §r(universal quantification)(universal)/§r(existential quantification) as you can.
+      )
+
+    )
+
+    §hsection(implications)(Implications)(
+      §p(
+        §R(deductive reasoning) is about deriving statements from other statements. Whether some statement — the §definex["conclusion"](conclusion)(
+          §p(
+            An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
+          )§p(
+            You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
+          )
+        ) — can be derived from some other statement — the §definex["premise"](premise)(
+          §p(
+            An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
+          )§p(
+            You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
+          )
+        ) — is in itself either true or false, that is, it is a statement itself. Such a statement is called an §definex["implication"](implication)(
+          §p(
+            An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
+          )§p(
+            You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
+          )
+        ).
+      )
+      §set_math_id["implies", "implication"]
+      §set_math_id["impliedby", "implication"]
+
+      §statement["tour_implication"](
+        §p(Let §$(n) be a natural number.)
+      )(
+        §p(
+          If §$(n §$leq 5), then §$(n §$leq 7).
+        )
+      )(
+        §p(
+          Assume §$(n §$leq 5). From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5).
+        )§p(
+          If §$(n + k §$eq 5), then also §$(§$p(n + k) + 2 §$eq 5 + 2), then also §$(§$p(n + k) + 2 §$eq 7), then also §$(n + §$p(k + 2) §$eq 7), and thus, because §$(k + 2) is a natural number, §$(n §$leq 7).
+        )
+      )
+
+      §p(
+        You prove an §r(implication) by assuming the §r(premise) to hold and then proving the §r(conclusion). Note that the truth of an §r(implication) has no bearing on the truth of its §r(premise) or its §r(conclusion) in isolation. Considering §cref(tour_implication), there exist both numbers which are §r(less than or equal to) §$(5) as well as numbers that are not §r(less than or equal to) §$(5), same for §$(7). But we do know that there exist no numbers which are both §r(less than or equal to) §$(5) and not §r(less than or equal to) §$(7).
+      )§p(
+        The proof of §cref(tour_implication) consists primarily of a chain of §verbatim(if §i(something), then also §i(another thing)) fragments, that is, it consists of many successive implications. A more readable way of writing such proofs is by separating those statements with double arrows (§verbatim(§$(§$implies))), particularly if the implications connect mathematical symbols rather than statements in natural language:
+      )
+
+      §drop(
+        §theorem*["tour_monotonicity_addition"](Monotonicity of Addition)(
+          §p(
+            Let §$(n, m, k) be natural numbers.
+          )
+        )(
+          §$$(
+            n §$leq m §$implies n + k §$leq m + k
+          )
+        )(
+          §p(
+            omited.
+          )
+        )
+
+        §theorem*["tour_associativity_addition"](Associativivity of Addition)(
+          §p(
+            Let §$(a, b, c) be natural numbers.
+          )
+        )(
+          §$$(
+            a + §$p(b + c) §$eq §$p(a + b) + c
+          )
+        )(
+          §p(
+            omited.
+          )
+        )
+      )
+
+      §proof["tour_implication", "More Readable "](
+        §p(Let §$(n) be a natural number.)
+      )(
+        §p(
+          If §$(n §$leq 5), then §$(n §$leq 7).
+        )
+      )(
+        §p(
+          Assume §$(n §$leq 5). From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5). Then
+        )§$$align*(
+          && n + k &§$eq 5
+        )(
+          §$implies {} && §$p(n + k) + 2 &§$eq 5 + 2 §$tag(§cref(tour_monotonicity_addition)(Monotonicity) $+$)
+        )(
+          §$implies {} && §$p(n + k) + 2 &§$eq 7 §$tag(Definition $+$)
+        )(
+          §$implies {} && n + §$p(k + 2) &§$eq 7 §$tag(§cref(tour_associativity_addition)(Associativity) $+$)
+        )(
+          §$implies {} && n &§$leq 7. §$tag(§cref(leq)(Definition) $§$leq§ $)
+        )
+      )
+
+      §p(
+        A nice benefit of laying out a proof like this is that we can annotate each line with the reason for why the §r(implication) holds.
+      )
+
+      §theorem["transitivity_leq"](Transitivity of §$(§$leq[true]))(
+        §p(
+          Let §$(a, b, c) be natural numbers.
+        )
+      )(
+        §p(
+          If §$(a §$leq b) and §$(b §$leq c), then §$(a §$leq c).
+        )
+      )(
+        §p(§cref(exercise_transitivity_leq))
+      )
+
+      §exercise["exercise_transitivity_leq"](
+        §p(Prove §cref(transitivity_leq).)
+      )
+
+      §p(
+        §Rs(implication) are so common that various phrases and symbols are in use for expressing them; all of the following denote an §r(implication) with §r(premise) §verbatim(A) and §r(conclusion) §verbatim(B):
+      )§ul(
+        §li(§verbatim(A) implies §verbatim(B))
+        §li(if §verbatim(A), then §verbatim(B))
+        §li(whenever §verbatim(A), also §verbatim(B))
+        §li(from §verbatim(A) follows §verbatim(B))
+        §li(§verbatim(A) §$(§$implies) §verbatim(B))
+        §li(§verbatim(B) §$(§$impliedby) §verbatim(A))
+        §li(§verbatim(A) is sufficient for §verbatim(B))
+        §li(§verbatim(B) is necessary for §verbatim(A))
+      )
+
+    )
+
+    §hsection(utilizing_implications)(Utilizing Implications)(
+      §p(
+        Once an §r(implication) is proven, you can prove its §r(conclusion) by proving its §r(premise):
+      )
+
+      §statement["tour_use_implication"](
+        §p(
+          §$(1 §$leq 3)
+        )
+      )(
+        §p(
+          §$(1 §$leq 2) because §$(1 + 1 §$eq 2), and §$(2 §$leq 3) because §$(2 + 1 §$eq 3).
+        )§p(
+          With §cref(transitivity_leq) follows that §$(1 §$leq 3).
+        )
+      )
+    )
 
 
+
+    - using implications
+    - transitivity
+    - contraposition
+    - negation
+    - explosion
+
+
+
+
+    - proof that 20 leq 21
+    - exercises for wrong attempts at negations
 
   )
 )

@@ -74,6 +74,8 @@ pub(crate) enum ExpansionError {
     #[cfg(unix)]
     #[error("never printed")]
     TeX(katex::Error, Trace),
+    #[error("never printed")]
+    AlreadyMathmode(Trace),
 }
 
 impl ExpansionError {
@@ -158,6 +160,10 @@ impl ExpansionError {
                 println!("{:?}\n", e);
                 print_trace(t.clone(), source, false);
             }
+            ExpansionError::AlreadyMathmode(t) => {
+                println!("Cannot enter math mode while already in math mode.");
+                print_trace(t.clone(), source, false);
+            }
         }
     }
 }
@@ -190,7 +196,7 @@ pub(crate) enum OutInternal {
     Template(Trace, Template, Vec<OutInternal>),
     HSection(Trace, HSection, Vec<OutInternal>),
     Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String),
-    Fact(Trace, BoxParams, Vec<OutInternal>, String),
+    Fact(Trace, BoxParams, Vec<OutInternal>, String, bool /*no numbering*/),
     Proof(Trace, Proof, Vec<OutInternal>),
     Define(Trace, Define, Vec<OutInternal>, bool /* is there custom definition text */),
     Cref(Trace, Cref, Vec<OutInternal>),
@@ -199,7 +205,7 @@ pub(crate) enum OutInternal {
     SetDomain(Trace, String, Vec<OutInternal>),
     ReferenceDefined(Trace, (), Vec<OutInternal>, bool /*capitalize*/, bool /*plural*/, bool /*fake define*/),
     SetMathId(Trace, SetMathId, Vec<OutInternal>),
-    MathMacro(Trace, (), Vec<OutInternal>, String /* id */, String /* tex */),
+    MathMacro(Trace, MathMacro, Vec<OutInternal>, String /* id */, String /* tex */),
     MathSet(Trace, (), Vec<OutInternal>),
     MathEnv(Trace, (), Vec<OutInternal>, &'static str /*environment name*/),
     Link(Trace, (), Vec<OutInternal>),
@@ -208,6 +214,7 @@ pub(crate) enum OutInternal {
     EncloseMath(Trace, (), Vec<OutInternal>, &'static str /* id */, &'static str, &'static str),
     Cases(Trace, (), Vec<OutInternal>),
     Case(Trace, Case, Vec<OutInternal>),
+    Drop(Trace, (), Vec<OutInternal>),
 }
 
 impl OutInternal {
@@ -381,7 +388,11 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         OutInternal::TeX(span, path, args, display) => {
             arguments_exact(1, &args, &span)?;
 
-            return up_macro(|_, args, _y, span| {
+            y.state.enable_mathmode(&span)?;
+
+            return up_macro(|_, args, y, span| {
+                y.state.disable_mathmode(&span)?;
+
                 #[cfg(unix)]
                 {
                     let content = args[0].to_string();
@@ -545,15 +556,17 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             return r;
         }
 
-        OutInternal::Fact(trace, params, args, name) => {
+        OutInternal::Fact(trace, params, args, name, no_numbering) => {
             arguments_gte(2, &args, &trace)?;
             arguments_lt(5, &args, &trace)?;
 
-            y.state.box_other_current_count += 1;
+            if !no_numbering {
+                y.state.box_other_current_count += 1;
+            }
             let hsection_level = y.state.box_other_level;
             let number = y.state.box_other_current_count;
 
-            let mut numbering = "".to_string();
+            let mut numbering = " ".to_string();
             for i in 0..=hsection_level {
                 if y.state.hsection_current_count[i] != 0 {
                     numbering.push_str(&format!("{}", y.state.hsection_current_count[i]));
@@ -561,6 +574,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 }
             }
             numbering.push_str(&format!("{}", number));
+            if no_numbering {
+                numbering = "".to_string();
+            }
 
             let id = params.0[0].clone();
             y.state.box_current = Some(id.to_string());
@@ -574,10 +590,31 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     kind: BoxKind::fact(),
                 });
 
-
+                let preview_html = format!(r###"<article class="{}" id="{}">
+    <h6><a href="{}">{}{}{}{}</a></h6>{}
+    <div class="claim">{}</div>
+</article>"###,
+                    BoxKind::fact().class(),
+                    id,
+                    url,
+                    name,
+                    numbering,
+                    if args.len() == 4 { ": " } else { "" },
+                    if args.len() == 4 { args[0].clone() } else { Rope::new() },
+                    if args.len() >= 3 {
+                        format!(r###"
+                        <div class="assumptions">
+                            {}
+                        </div>
+"###, args[args.len() - 3])
+                    } else {
+                        "".to_string()
+                    },
+                    args[args.len() - 2],
+                );
 
                 let box_html = format!(r###"<article class="{}" id="{}">
-    <h6><a href="{}">{} {}{}{}</a></h6>{}
+    <h6><a href="{}">{}{}{}{}</a></h6>{}
     <div class="claim">{}</div>
     <div class="proof_body">{}</div>
 </article>"###,
@@ -601,8 +638,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     args[args.len() - 1],
                 );
 
-                y.state.create_preview(&id, &box_html)?;
-                y.state.create_box_previews(&box_html)?;
+                y.state.create_preview(&id, &preview_html)?;
+                y.state.create_box_previews(&preview_html)?;
                 return Ok(box_html.into());
             }, &params, args, trace, y);
 
@@ -736,15 +773,37 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                                             return Ok(tag.into());
                                         }
                                         _ => {
-                                            let tag = format!(
-                                                r###"<a class="ref {}" href="{}" data-preview="{}">{}&nbsp;{}</a>"###,
-                                                box_info.kind.class(),
-                                                url,
-                                                y.state.id_to_preview_url(id),
-                                                box_info.name,
-                                                box_info.numbering,
-                                            );
-                                            return Ok(tag.into());
+                                            if y.state.mathmode {
+                                                let label = if args.len() == 2 {
+                                                    args[1].to_string()
+                                                } else {
+                                                    format!("{}~{}", box_info.name, box_info.numbering)
+                                                };
+
+                                                let tex = format!(
+                                                    r###"\href{{{}}}{{\htmlClass{{ref {}}}{{\htmlData{{preview={}}}{{{}}}}}}}"###,
+                                                    url,
+                                                    box_info.kind.class(),
+                                                    y.state.id_to_preview_url(id),
+                                                    label,
+                                                );
+                                                return Ok(tex.into());
+                                            } else {
+                                                let label = if args.len() == 2 {
+                                                    args[1].to_string()
+                                                } else {
+                                                    format!("{}&nbsp;{}", box_info.name, box_info.numbering)
+                                                };
+
+                                                let tag = format!(
+                                                    r###"<a class="ref {}" href="{}" data-preview="{}">{}</a>"###,
+                                                    box_info.kind.class(),
+                                                    url,
+                                                    y.state.id_to_preview_url(id),
+                                                    label,
+                                                );
+                                                return Ok(tag.into());
+                                            }
                                         }
                                     }
                                 }
@@ -917,7 +976,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }
         }
 
-        OutInternal::MathMacro(trace, _params, args, math_id, tex) => {
+        OutInternal::MathMacro(trace, params, args, math_id, tex) => {
             arguments_exact(0, &args, &trace)?;
 
             if y.state.second_iteration {
@@ -926,7 +985,12 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     Some(id) => {
                         let url = y.state.resolve_id_to_url(id, trace)?;
                         let preview_url = y.state.id_to_preview_url(id);
-                        return Ok(format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{{}}}}}"###, preview_url, url, tex).into());
+
+                        if params.0[0] {
+                            return Ok(format!(r###"\htmlData{{preview={}}}{{{}}}"###, preview_url, tex).into());
+                        } else {
+                            return Ok(format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{{}}}}}"###, preview_url, url, tex).into());
+                        }
                     }
                 }
             } else {
@@ -1072,6 +1136,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }, &params, args, trace, y);
         }
 
+        OutInternal::Drop(trace, params, args) => {
+            return up_macro(|_p, _args, _y, _trace| Ok("".into()), &params, args, trace, y);
+        }
 
     }
 }
@@ -1288,5 +1355,14 @@ pub struct Case([String; 1]);
 impl Default for Case {
     fn default() -> Self {
         Case(["".to_string()])
+    }
+}
+
+#[derive(Deserialize, Clone)]
+pub struct MathMacro([bool; 1]);
+
+impl Default for MathMacro {
+    fn default() -> Self {
+        MathMacro([false])
     }
 }

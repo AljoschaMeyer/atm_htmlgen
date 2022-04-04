@@ -120,6 +120,8 @@ pub(crate) struct State {
     pub boxless_previews: HashSet<String>,
 
     pub cases: Vec<usize>,
+
+    pub mathmode: bool,
 }
 
 impl State {
@@ -154,6 +156,8 @@ impl State {
             boxless_previews: HashSet::new(),
 
             cases: Vec::new(),
+
+            mathmode: false,
         });
     }
 
@@ -335,6 +339,20 @@ impl State {
                 return Ok(format!("{}&nbsp;{}", box_info.name, box_info.numbering,));
             }
         }
+    }
+
+    pub(crate) fn enable_mathmode(&mut self, trace: &Trace) -> Result<(), ExpansionError> {
+        if self.mathmode {
+            return Err(ExpansionError::AlreadyMathmode(trace.clone()));
+        } else {
+            self.mathmode = true;
+            return Ok(());
+        }
+    }
+
+    pub(crate) fn disable_mathmode(&mut self, _trace: &Trace) -> Result<(), ExpansionError> {
+        self.mathmode = false;
+        return Ok(());
     }
 }
 
