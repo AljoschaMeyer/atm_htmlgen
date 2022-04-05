@@ -818,6 +818,12 @@
         §p(Prove §cref(transitivity_leq).)
       )
 
+      §exercise["exercise_exactly_one"](
+        §p(
+          Formulate a statement that expresses that exactly one squirrel is §r(equal) to §$(§$value(Alex)).
+        )
+      )
+
       §p(
         §Rs(implication) are so common that various phrases and symbols are in use for expressing them; all of the following denote an §r(implication) with §r(premise) §verbatim(A) and §r(conclusion) §verbatim(B):
       )§ul(
@@ -840,30 +846,149 @@
 
       §statement["tour_use_implication"](
         §p(
-          §$(1 §$leq 3)
+          §$(3 §$leq 7)
         )
       )(
         §p(
-          §$(1 §$leq 2) because §$(1 + 1 §$eq 2), and §$(2 §$leq 3) because §$(2 + 1 §$eq 3).
-        )§p(
-          With §cref(transitivity_leq) follows that §$(1 §$leq 3).
+          §$(3 §$leq 5) because §$(3 + 2 §$eq 5). With §cref(tour_implication) follows that §$(3 §$leq 7).
         )
       )
+
+      §p(
+        Now consider a situation where §i(something) §r(implication)(implies) §i(another thing), and §i(another thing) §r(implication)(implies) §i(a third thing). Then we also get that §i(something) §r(implication)(implies) §i(a third thing), because if we can assume §i(something), then the first §i(implication) gives us §i(another thing), from which the second §i(implication) gives us §i(a third thing). This property of §rs(implication) is called the §definex["transitivity_implication"](transitive implication)(blarg)(transitivity)(
+          §p(
+            The §rdef(transitive implication)(transitivity) of §rs(implication) states that if §i(something) §r(implication)(implies) §i(another thing), and §i(another thing) §r(implication)(implies) §i(a third thing), then §i(something) §r(implication)(implies) §i(a third thing).
+          )
+        ) of §rs(implication), and is crucial to §r(deductive reasoning); the §r(transitive implication)(transitivity) of §rs(implication) is the reason why we can prove statements by chaining multiple small steps where each step §r(implication)(implies) the next one.
+      )
+
     )
 
+    §hsection(negating_implication)(Negating Implications)(
+      §p(
+        An §r(implication) expresses that its §r(conclusion) cannot be false while its §r(premise) is a true. Consequently you disprove an §r(implication), or equivalently, you prove a §r(negation)(negated) §r(implication), by showing that its §r(premise) holds but its §r(conclusion) does not.
+      )
+
+      §statement["tour_negation_implication"](
+        §p(
+          §$(§$value(Alex) §$eq §$value(Alex)) does not imply that §$(§$value(Alex) §$eq §$value(Blake))
+        )
+      )(
+        §p(
+          §$(§$value(Alex) §$eq §$value(Alex)) holds but §$(§$value(Alex) §$eq §$value(Blake)) does not.
+        )
+      )
+
+      §exercise["wrong_negation_implication"](
+        §p(
+          TODO
+        )
+      )§exercise["wrong_negation_implication2"](
+        §p(
+          TODO
+        )
+      )
+
+      §p(
+        From a similar line of reasoning we can derive another §r(meta statement). If the §r(conclusion) of an implication does not hold, then the §r(premise) of the implication cannot hold either. This reformulation of an §r(implication) is called its §definex(contrapositive)(
+          §p(
+            The §rdef(contrapositive) of an §r(implication) §verbatim(A implies B) is §verbatim(not B implies not A).
+          )
+        ): the §r(contrapositive) of §verbatim(A implies B) is §verbatim(not B implies not A). An §r(implication) and its §r(contrapositive) §r(mean the same), this is called the law of §definex(contraposition)(
+          §p(
+            The law of §rdef(contraposition)(contraposition) states that an §r(implication) and its §r(contrapositive) §r(mean the same).
+          )
+        ).
+      )
+
+      §statement["tour_contraposition"](
+        §p(Let §$(n) be a natural number.)
+      )(
+        §p(
+          If §$(n) is not §r(less than or equal to) §$(7), then §$(n) is not §r(less than or equal to) §$(5).
+        )
+      )(
+        §p(
+          The statement is the §r(contrapositive) of §cref(tour_implication) and thus holds by the law of §r(contraposition).
+        )
+      )
+
+      §exercise["exercise_wrong_negations_implication"](
+        §p(
+          How are the wrong attempts at §r(negation)(negating) §rs(implication) of §cref(wrong_negation_implication) and §cref(wrong_negation_implication2) related?
+        )
+      )
+
+    )
+
+    §hsection(absurd_implications)(Absurd Implications)(
+      §p(
+        Any time you prove an §r(implication), you start by assuming its §r(premise) to be true. What happens, if the premise is a false statement? Perhaps surprisingly, the §r(implication) as a whole turns out to be true in that case. We demonstrate this with an example:
+      )
+
+      §statement["absurd"](
+        §p(
+          If §$(0 §$eq 1), then §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
+        )
+      )(
+        §p(
+          Assume §$(0 §$eq 1). Further notice that §$(0 §$neq 1) holds by §r(equal)(the definition of equality). Thus also the §r(disjunction) §verbatim(§$(0 §$neq 1) or §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon) holds.
+        )§p(
+          Because §$(0 §$eq 1), the first substatement of that §r(disjunction) cannot be true, so the second substatement has to be. Thus, we have shown that §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
+        )
+      )
+
+      §p(
+        Eating pumpkin pie in a hot air balloon is rather atypical behavior for squirrels, and yet we were able to prove it by assuming a falsehood. In fact, we could have proven §em(any) statement, even that §$(§$value(Alex)) is §em(not) currently eating pumpkin pie in a hot air balloon. The fact that every statement can be proven from a falsehood is vivaciously called the §definex(principle of explosion)(
+          §p(
+            The §rdef(principle of explosion) states that from a falsehood every statement can be proven.
+          )
+        ).
+      )§p(
+        When proving an §r(implication) with a false premise, we got to assume a falsehood to hold. By the §r(principle of explosion), we can then prove any statement. In particular, we can prove the §r(conclusion), and if we can prove the §r(conclusion) by assuming the §r(premise), then the §r(implication) as a whole holds.
+      )§p(
+        This can lead to statements to whose truth it might take some getting used to, such as the one in the following exercise:
+      )
+
+      §exercise["exercise_absurd"](
+        §p(
+          Prove that there exist a squirrel §$(s) such that §$(s §$eq §$value(Alex)) implies §$(s §$eq §$value(Blake)).
+        )
+      )
+
+    )
+
+    §hsection(contradictions)(Proofs by Contradiction)(
+      §p(
+        §Rs(implication) with a false §r(premise) always hold, but what about §rs(implication) with a false §r(conclusion)? If the §r(implication) is to hold, we must be able to prove its §r(conclusion), which should be impossible if the §r(conclusion) is false. Except, of course, if the §r(premise) is also false. So we can observe the following: if a §r(implication) with a false §r(conclusion) holds, its §r(premise) must be false.
+      )§p(
+        We can use this as a proof technique: If we can manage to prove a falsehood by assuming the §r(negation) of some statement, then the §r(negation) of that statement must have been false, and thus, the original statement must have been true. Such a proof is called a §definex["proof_by_contradiction"](proof by contradiction)(
+          §p(
+            A §rdef(proof by contradiction) shows a statement by assuming its negation and deriving a falsehood from it.
+          )
+        ) (§verbatim(contradiction) being synonymous to §verbatim(falsehood) in this context).
+      )
+
+      §statement["tour_contradiction"](
+        §p(
+          There is no squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t).
+        )
+      )(
+        §p(
+          Suppose toward a contradiction that there exists a squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t).
+        )§p(
+          Then we know that both §$(s §$eq §$value(Alex)) and §$(s §$eq §$value(Blake)), and thus §$(§$value(Alex) §$eq §$value(Blake)). This is a contradiction, the assumption must have been false, and thus, the original statement must be true.
+        )
+      )
 
 
-    - using implications
-    - transitivity
-    - contraposition
-    - negation
-    - explosion
-
+    )
 
 
 
     - proof that 20 leq 21
     - exercises for wrong attempts at negations
+    - consistent metasyntactic statements
 
   )
 )
