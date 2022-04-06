@@ -306,6 +306,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Define(t, p, a, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"definex" {
                         self.pm(|t, p, a| OutInternal::Define(t, p, a, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"proof_part" {
+                        self.pm(OutInternal::ProofPart, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"r" {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, false, false, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"R" {
@@ -350,6 +352,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "implies".into(), r###"\implies"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$impliedby" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "impliedby".into(), r###"\impliedby"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$iff" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "iff".into(), r###"\iff"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$in" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "in".into(), r###"\in"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$notin" {

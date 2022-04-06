@@ -215,6 +215,7 @@ pub(crate) enum OutInternal {
     Cases(Trace, (), Vec<OutInternal>),
     Case(Trace, Case, Vec<OutInternal>),
     Drop(Trace, (), Vec<OutInternal>),
+    ProofPart(Trace, (), Vec<OutInternal>),
 }
 
 impl OutInternal {
@@ -1117,7 +1118,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 };
 
                 return Ok(Out::Many(vec![
-                    Out::Text(r###"<div class="case_label"><span class="case_name">"###.into()),
+                    Out::Text(r###"<div class="proof_part_title"><span class="case_name">"###.into()),
                     Out::Text(
                         if linkable {
                             format!(r###"<a href="{}" id="{}">"###, href, id).into()
@@ -1129,7 +1130,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     if n >= 2 {Out::Argument(0)} else {Out::Text("".into())},
                     Out::Text(if linkable {"</a>".into()} else {"".into()}),
                     Out::Text("</div>".into()),
-                    Out::Text(r###"<div class="case_body">"###.into()),
+                    Out::Text(r###"<div class="proof_part_body">"###.into()),
                     Out::Argument(n - 1),
                     Out::Text("</div>".into()),
                 ]));
@@ -1138,6 +1139,17 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
         OutInternal::Drop(trace, params, args) => {
             return up_macro(|_p, _args, _y, _trace| Ok("".into()), &params, args, trace, y);
+        }
+
+        OutInternal::ProofPart(trace, params, args) => {
+            arguments_exact(2, &args, &trace)?;
+            return down_macro(|_p, _n, _y, _trace| Ok(Out::Many(vec![
+                    Out::Text(r###"<div class="proof_part"><div class="proof_part_title">"###.into()),
+                    Out::Argument(0),
+                    Out::Text(r###"</div><div class="proof_part_body">"###.into()),
+                    Out::Argument(1),
+                    Out::Text("</div></div>".into()),
+                ])), &params, args, trace, y);
         }
 
     }
