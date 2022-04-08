@@ -194,7 +194,7 @@ pub(crate) enum OutInternal {
     Output(Trace, [PathBuf; 1], Vec<OutInternal>, bool),
     CopyAll(Trace, [PathBuf; 2], Vec<OutInternal>),
     Template(Trace, Template, Vec<OutInternal>),
-    HSection(Trace, HSection, Vec<OutInternal>),
+    HSection(Trace, HSection, Vec<OutInternal>, bool /*no numbering*/),
     Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String),
     Fact(Trace, BoxParams, Vec<OutInternal>, String, bool /*no numbering*/),
     Proof(Trace, Proof, Vec<OutInternal>),
@@ -228,7 +228,7 @@ impl OutInternal {
             | OutInternal::Output(t, _, _, _)
             | OutInternal::CopyAll(t, _, _)
             | OutInternal::Template(t, _, _)
-            | OutInternal::HSection(t, _, _) => t.clone(),
+            | OutInternal::HSection(t, _, _, _) => t.clone(),
             _ => unimplemented!(),
         }
     }
@@ -422,7 +422,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }, &path, args, span, y);
         }
 
-        OutInternal::HSection(trace, params, args) => {
+        OutInternal::HSection(trace, params, args, no_numbering) => {
             arguments_exact(3, &args, &trace)?;
 
             y.state.hsection_level += 1;
@@ -432,7 +432,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
             let level = y.state.hsection_level;
 
-            y.state.hsection_current_count[level] += 1;
+            if !no_numbering {
+                y.state.hsection_current_count[level] += 1;
+            }
 
             if y.state.box_exercise_level == level {
                 y.state.box_exercise_current_count = 0;
@@ -451,6 +453,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     }
                 }
             }
+            if no_numbering {
+                numbering = "".to_string();
+            }
 
             let id_trace = args[0].trace();
             let r = up_macro(|_p, args, y, _trace| {
@@ -467,9 +472,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     level + 1,
                     args[0],
                     url,
-                    if y.state.hsection_render_number[level] { &y.state.hsection_pre_number[level] } else { "" },
-                    if y.state.hsection_render_number[level] { &numbering } else { "" },
-                    if y.state.hsection_render_number[level] { &y.state.hsection_post_number[level] } else { "" },
+                    if y.state.hsection_render_number[level] && !no_numbering { &y.state.hsection_pre_number[level] } else { "" },
+                    if y.state.hsection_render_number[level] && !no_numbering { &numbering } else { "" },
+                    if y.state.hsection_render_number[level] && !no_numbering { &y.state.hsection_post_number[level] } else { "" },
                     args[1],
                     level + 1,
                     args[2]).into(),

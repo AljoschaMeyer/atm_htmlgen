@@ -12,12 +12,12 @@
       )§p(
         Contrast this with §define["inductive_reasoning"](inductive reasoning), the process of hypothesizing causes from observed facts. From observing that the sun rises and sets every day, you might form the potential explanation that the sun orbits the earth. Later observations might invalidate a hypothesis, but a hypothesis can never be proven beyond doubt.
       )§p(
-        Even though §r(inductive reasoning) can lead to false conclusions, it has its firm place in humanity's quest for knowledge. Physics or chemistry, for example, would make little sense if they were not grounded in observations of the world around us. They can strive to find increasingly accurate models of the world, but there can always be a new experiment that contradicts the existing models.
+        Even though §r(inductive reasoning) can lead to false conclusions, it has its firm place in humanity's quest for knowledge. Physics or chemistry, for example, would make little sense if they were not grounded in observations of the world around us. They can strive to find increasingly accurate models of the world, but there can always be a new observation that contradicts the existing models.
       )§p(
         Unlike the natural sciences, mathematics relies on §r(deductive reasoning) alone. Rigorous adherence to the principle that every claim has to follow from either assumptions or previously proven claims may not be a normal mode of operation for your brain, but learning to operate that way comes with a number of benefits:
       )§ul(
         §li(
-          Proven knowledge is permanent. It does not degrade, it does not go out of style, it will not be falsified by a future experiment. This has enabled mathematicians to build up knowledge over centuries.
+          Proven knowledge is permanent. It does not degrade, it does not go out of style, it will not be falsified by a future observation. This has enabled mathematicians to build up knowledge over centuries.
         )
         §li(
           Proven knowledge is verifiable. It does not matter who wrote a proof, whether you trust them or not. If every single step follows the deduction rules, then the resulting information is true.
@@ -197,9 +197,15 @@
         )
 
         §p(
-          Originally, §r(equal)(equality) was our only way of moving from objects of interest to statements of truth: §verbatim(§$(17)) is not a statement (it is neither true nor false), but §verbatim(§$(17 §$eq 18)) is (albeit a false one). The newly defined concept of numbers being §r(less than or equal to) each other achieves the same lift of conceptual level. Notice that its definition relies on §r(equal)(equality) again. Every such definition can ultimately be broken down to the level of §r(equal)(equality) comparisons.
+          Originally, §r(equal)(equality) was our only way of moving from objects of interest to statements of truth: §verbatim(§$(17)) is not a statement (it is neither true nor false), but §verbatim(§$(17 §$eq 18)) is (albeit a false one). The newly defined concept of numbers being §r(less than or equal to) each other achieves the same shift of conceptual level, it combines a number of §rs(term) into a statement. We call such concepts §definex["predicate"](predicate)(predicates)(predicates)(
+            §p(
+              A §rdef(predicate) combines a number of §rs(term) into a statement.
+            )§p(
+              The prototypical §r(predicate) is §r(equal)(equality): §verbatim(§$(17)) is not a statement (it is neither true nor false), but §verbatim(§$(17 §$eq 18)) is.
+            )
+          ).
         )§p(
-          Aside from introducing new ways of combining objects of interest into statements, we can also define new §rs(term), that is, new ways of compactly describing objects of interest based on other objects:
+          Aside from defining new §rs(predicate), we can also define new §rs(term), that is, new ways of compactly describing objects of interest based on other objects:
         )
 
         §definition["twice"](
@@ -325,767 +331,905 @@
 
       )
 
-    §hsection(quantifier_order)(Quantifier Order)(
-      §p(
-        Does it matter in which order the quantifications of a statement occur? It does not for nested §rs(existential quantification) such as those of §cref(tour_existential_quantification_nested): It makes no difference in which order we define the §rs(witness), so the same proofs still work if the order of the quantifications in the statement is swapped. The same is the case for nested statements of §r(universal quantification), the order in which we obtain the featureless values for which to prove the desired properties does not matter for the proof to be correct.
-      )§p(
-        These observations are examples of §definex["meta_statement"](meta statement)(meta statements)(meta statements)(
-          §p(
-            A §rdef(meta statement) is a statement about statements.
-          )
-        ), statements about statements. We are not yet able to rigorously prove them, but, by the end of this book, we will do exactly that. For now, we merely state some particularly useful and simple §rs(meta statement) and allow their (often implicit) use when writing proofs.
-      )§p(
-        Even though we do not prove §rs(meta statement) yet, we can be a bit more precise in formulating them. We say that two statements §definex["equivalent_statements"](mean the same)(
-          §p(
-            Two statements §rdef(mean the same) if, whenever we can prove one of them, we can also prove the other.
-          )
-        ) if, whenever we can prove one of them, we can also prove the other. Restating our observations about quantifier order: If we swap two successive §rs(existential quantification) (or two successive §rs(universal quantification)), the old and new statement §r(mean the same).
-      )
-
-      §p(
-        When interleaving §r(existential quantification) and §r(universal quantification) however, the quantifier order can make a difference, as exemplified by the following statement:
-      )
-
-      §statement["tour_order"](
-        §p(For all natural numbers §$(n) there exists a natural number §$(m) such that §$(n §$eq m).)
-      )(
+      §hsection(quantifier_order)(Quantifier Order)(
         §p(
-          Let §$(n) be a natural number. Define §$(m §$defeq n). Then §$(n §$eq m).
-        )
-      )
-
-      §p(
-        §cref(tour_order)(This statement) is true, but what happens if we swap the order of the quantifiers?
-      )
-
-      §falsehood["tour_order2"](
-        §p(There exists a natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m).)
-      )(
-        §p(???)
-      )
-
-      §cref(tour_order2) is clearly different from §cref(tour_order), there certainly is no number that is §r(equal) to every number. But how do we disprove a statement? For that, we need to examine the concept of negated statements.
-    )
-
-    §hsection(negations)(Negations)(
-      §p(
-        The §definex["negation"](negation)(
-          §p(
-            A §rdef(negation) asserts that another statement does not hold.
-          )§p(
-            You prove a §r(negation)(negated) statement depending on the kind of statement that is being §r(negation)(negated).
-          )
-        ) of a statement is a new statement that is true if the old statement is false, and vice versa. Or in other words, a §r(negation) asserts that another statement does not hold. How do we prove a §r(negation)(negated) statement? That depends on the kind of statement that is being §r(negation)(negated). The easiest case is that of an §r(equal)(equality), whose truth can be derived directly by definition:
-      )
-
-      §statement["tour_negation_eq"](
-        §p(It does not hold that §$(5 §$eq 6).)
-      )(
-        §p(§$(5 §$eq 6) does not hold by §r(equal)(the definition of equality), so the §r(negation) of §$(5 §$eq 6) does hold.)
-      )
-
-      §p(
-        Another easy case is that of a §r(negation)(negated) §r(negation) (a §definex["double_negation"](double negation)(A §rdef(double negation) is the §r(negation) of a §r(negation).)), which is simply canceled out.
-      )
-
-      §statement["tour_negation_negation"](
-        §p(It does not hold that it does not hold that §$(5 §$eq 5).)
-      )(
-        §p(
-          The statement that remains after eliminating the §r(double negation) is §$(5 §$eq 5), which holds by §r(equal)(the definition of equality).
-        )
-      )
-
-      §p(
-        More interesting are §rs(negation) of quantifications. If a statement does not hold for all objects, then there has to exist a counterexample. In other words, we can prove the §r(negation) of a statement of §r(universal quantification) by changing it to §r(existential quantification) and moving the §r(negation) past the quantifier:
-      )
-
-      §statement["tour_negation_universal"](
-        §p(It does not hold for all squirrels §$(s) that §$(s §$eq §$value(Alex)).)
-      )(
-        §p(
-          We can prove the statement by showing that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq §$value(Alex)). Define §$(s §$defeq §$value(Blake)), then it does not hold that §$(s §$eq §$value(Alex)).
-        )
-      )
-
-      §p(
-        Conversely, if no object satisfying a property exists, then all objects do not satisfy that property. That is, we can prove the §r(negation) of a statement of §r(existential quantification) by changing it to §r(universal quantification) and moving the §r(negation) past the quantifier.
-      )
-
-      §statement["tour_negation_existential"](
-        §p(It does not hold that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq s).)
-      )(
-        §p(
-          We can prove the statement by showing that for all squirrels §$(s) it does not hold that it does not hold that §$(s §$eq s). Let §$(s) be a squirrel. Then §$(s §$eq s), which is exactly what remains to be proven after the §r(double negation) has been eliminated.
-        )
-      )
-
-      §p(
-        §Rs(negation) are usually formulated less verbosely, for example §verbatim(It does not hold that there exist §$(x) such that…) would normally be written along the lines of §verbatim(There exists no §$(x) such that…). The negation of statements of §r(equal)(equality) even has its own symbol: if §$(x) and §$(y) are §definex["neq"](unequal)(
-          §set_math_id["neq", "neq"]
-          §p(Two objects are §rdef(unequal), written as §$(x §$neq y), if they are not §r(equal).)
-        ), we write §$(x §$neq y).
-      )§p(
-        We can now disprove §cref(tour_order2) by proving its §r(negation):
-      )
-
-      §statement["tour_not_order2"](
-        §p(There exists no natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m).)
-      )(
-        §p(
-          We can prove the statement by showing that for all natural numbers §$(m) it is not the case that for all natural numbers §$(n) we have §$(n §$eq m). This we can prove by showing that for all natural numbers §$(m) there exists a natural number §$(n) such that §$(n §$neq m).
+          Does it matter in which order the quantifications of a statement occur? It does not for nested §rs(existential quantification) such as those of §cref(tour_existential_quantification_nested): It makes no difference in which order we define the §rs(witness), so the same proofs still work if the order of the quantifications in the statement is swapped. The same is the case for nested statements of §r(universal quantification), the order in which we obtain the featureless values for which to prove the desired properties does not matter for the proof to be correct.
         )§p(
-          Let §$(m) be a natural number. Define §$(n §$defeq m + 1). Then §$(n §$neq m), because §$(m + 1 §$neq m).
-        )
-      )
-
-      §p(
-        Disproving statements by proving their §r(negation) makes sense only if we assume that every statement must either be true or false. This assumption is known as the §definex["bivalence"](principle of bivalence)(
-          §p(The §rdef(principle of bivalence) states that every statement is either true or false.)
-        ), and while it might feel self-evident, it is possible to find self-consistent frameworks for §r(deductive reasoning) that reject it. To keep things compact, this book consistently sticks to the prevalent school of §verbatim(classical mathematics) that accepts the §r(principle of bivalence).
-      )
-
-      §p(
-        The proof of §cref(tour_not_order2) is representative for how we usually prove §r(negation)(negated) statements: First, we convert the statement into an equivalent one in which the only §r(negation)(negated) substatements are statements of §r(equal)(equality), and then, we prove that new statement as usual, without having to worry about §rs(negation) anymore.
-      )§p(
-        Because this conversion is completely mechanical, it is often left implicit in written proofs. Incorrect manipulation of §rs(negation) is a common source of errors for new learners however, so it is a good habit to carefully and explicitly think through the process of threading a §r(negation) through a statement, whenever you encounter it.
-      )
-
-      §exercise["exercise_tour_not"](
-        §p(
-          Disprove that for all natural numbers §$(n) there exists a natural number number §$(m) such that §$(n) is not §r(less than or equal to) §$(m). Explicitly state the different stages of moving the §r(negation) through the statement to reach a statement you can prove.
-        )
-      )§exercise["wrong_negation_existential"](
-        §p(
-          A common mistake when §r(negation)(negating) statements of §r(existential quantification) is to propagate the §r(negation) without swapping to §r(universal quantification).
-        )§p(
-          Give a statement §verbatim(§i(bla)) such that §verbatim(there exists no squirrel §$(s) such that §i(bla)) and §verbatim(there exists a squirrel §$(s) such that not §i(bla)) do not §r(mean the same).
-        )
-      )§exercise["wrong_negation_universal"](
-        §p(
-          A common mistake when §r(negation)(negating) statements of §r(universal quantification) is to propagate the §r(negation) without swapping to §r(existential quantification).
-        )§p(
-          Give a statement §verbatim(§i(bla)) such that §verbatim(it does not hold that for all squirrels §$(s) holds §i(bla)) and §verbatim(for all squirrels §$(s) does not hold §i(bla)) do not §r(mean the same).
-        )
-      )
-
-    )
-
-    §hsection(conjunction_disjunction)(Conjunctions and Disjunctions)(
-      §p(
-        Between §r(existential quantification), §r(universal quantification), and §r(negation), we have covered the most complicated kinds of statements. What remains are a few statements which relate truth of other statements to each other.
-      )§p(
-        A §definex["conjunction"](conjunction)(
-          §p(
-            A §rdef(conjunction) asserts that two substatements both hold: §verbatim(§$(5 §$eq 5) and §$(6 §$eq 6)).
-          )§p(
-            You prove a §r(conjunction) by proving both of its substatements: §verbatim(§$(5 §$eq 5) holds by definition, and §$(6 §$eq 6) holds by definition, and so the full statement holds).
-          )
-        ) asserts that two substatements are both true:
-      )
-
-      §statement["tour_conjunction"](
-        §p(§$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Blake) §$eq §$value(Blake)).)
-      )(
-        §p(
-          §$(§$value(Alex) §$eq §$value(Alex)) holds by §r(equal)(the definition of equality), and §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
-        )
-      )
-
-      §p(
-        As you can see, you prove a §r(conjunction) by proving both of its substatements.
-      )§p(
-        A §definex["disjunction"](disjunction)(
-          §p(
-            A §rdef(disjunction) asserts that out of two substatements at least one holds: §verbatim(§$(5 §$eq 6) or §$(6 §$eq 6)).
-          )§p(
-            You prove a §r(disjunction) by proving either of its substatements: §verbatim(§$(6 §$eq 6) holds by definition, and so the full statement holds).
-          )
-        ) asserts that out of two substatements at least one is true:
-      )
-
-      §statement["tour_disjunction"](
-        §p(§$(§$value(Alex) §$eq §$value(Charlie)) or §$(§$value(Blake) §$eq §$value(Blake)).)
-      )(
-        §p(
-          §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
-        )
-      )
-
-      §p(
-        Unsurprisingly enough, you prove a §r(disjunction) by proving one of its substatements. The following two examples demonstrate the remaining two constellations of substatement truth which result in a true §r(disjunction).
-      )
-
-      §statement["tour_disjunction2"](
-        §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Charlie)).)
-      )(
-        §p(
-          §$(§$value(Alex) §$eq §$value(Alex)) holds by §r(equal)(the definition of equality), and so the full statement holds.
-        )
-      )
-      §statement["tour_disjunction3"](
-        §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake)).)
-      )(
-        §p(
-          §$(§$value(Alex) §$eq §$value(Alex)) holds by §r(equal)(the definition of equality), and so the full statement holds.
-        )
-      )
-
-      §p(
-        If both substatements of a §r(disjunction) hold, you can prove either one. For example, §cref(tour_disjunction3) also admits the following proof:
-      )
-
-      §proof["tour_disjunction3", "Alternate "](
-        §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake)).)
-      )(
-        §p(
-          §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
-        )
-      )
-
-      §p(
-        Whereas §verbatim(or) signifies a §r(disjunction) in a proof and thus admits the possibility of both substatements being true, in everyday language §verbatim(or) usually signifies an exclusive choice. In a formal context, the §definex["xor"](exclusive or)(
-          §p(
-            The §rdef(exclusive or) of two substatements asserts that exactly one of them holds.
-          )
-        ) which denotes that both at least and at most one of two alternatives is true — i.e., exactly one — is formulated as an explicit §verbatim(either §i(bla) or §i(blubb)).
-      )
-
-      §exercise["tour_xor"](
-        §p(
-          Using §r(negation), §r(conjunction), and §r(disjunction), construct a statement with the same meaning as §verbatim(Either §$(§$value(Alex)) is hungry or §$(§$value(Alex)) is asleep).
-        )§p(
-          Whenever you encounter an §r(exclusive or), you can prove it by first translating it into the equivalent statement that only uses §r(negation), §r(conjunction), and §r(disjunction).
-        )
-      )
-
-      §p(
-        Notice that whenever the §r(exclusive or) of two statements is true, then so is their §r(disjunction). Remember also that we assume every statement to be either true or false (the §r(principle of bivalence)). From these two properties, we obtain the §definex["excluded_middle"](law of excluded middle)(
-          §p(
-            The §rdef(law of excluded middle) states that §verbatim(§i(bla) or not §i(bla)) always holds.
-          )
-        ): we can always assume §verbatim(§i(bla) or not §i(bla)) to be true, no matter how simple or complicated of a statement §verbatim(§i(bla)) is.
-      )
-
-    )
-
-    §hsection(utilizing_conjunction_disjunction)(Utilizing Conjunctions and Disjunctions)(
-      §p(
-        Once a §r(conjunction) is proven, both of its substatements can be assumed to be true:
-      )
-
-      §statement["tour_use_conjunction"](
-        §p(
-          §$(§$value(Alex) §$eq §$value(Alex)).
-        )
-      )(
-        §p(
-          §$(§$value(Alex) §$eq §$value(Alex)) by §cref(tour_conjunction).
-        )
-      )
-
-      §p(
-        Utilizing a §r(disjunction) to prove another statement is more difficult however, because either of its substatements might not be true. So it does not suffice to assume any one of the substatements and finish the proof from there. Instead, you need to demonstrate that the proof can be completed regardless of which substatement is assumed to be true. This is called a §definex["case_distinction"](case distinction)(
-          §p(
-            A §rdef(case distinction) is a proof technique in which you finish multiple subproofs, each assuming some statement to be true such that the §r(disjunction) of those statements is true.
-          )
-        ) and results in having to complete two independent proofs.
-      )
-
-      §statement["tour_use_disjunction"](
-        §p(
-          Let §$(s) be a squirrel.
-        )
-      )(
-        §p(
-          §$(s §$neq §$value(Alex)) or §$(s §$neq §$value(Blake)).
-        )
-      )(
-        §p(
-          Let §$(s) be a squirrel. By the §r(law of excluded middle) we know that §$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex)). We do a §r(case distinction) on §verbatim(§$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex))):
-        )§cases(
-          §case(§$(s §$eq §$value(Alex)))(
+          These observations are examples of §definex["meta_statement"](meta statement)(meta statements)(meta statements)(
             §p(
-              If §$(s §$eq §$value(Alex)), then §$(s §$neq §$value(Blake)), so the claim holds.
+              A §rdef(meta statement) is a statement about statements.
             )
-          )
-          §case(§$(s §$neq §$value(Alex)))(
+          ), statements about statements. We are not yet able to rigorously prove them, but, by the end of this book, we will do exactly that. For now, we merely state some particularly useful and simple §rs(meta statement) and allow their (often implicit) use when writing proofs.
+        )§p(
+          Even though we do not prove §rs(meta statement) yet, we can be a bit more precise in formulating them. We say that two statements §definex["equivalent_statements"](mean the same)(
             §p(
-              If §$(s §$neq §$value(Alex)), the claim holds by assumption.
+              Two statements §rdef(mean the same) if, whenever we can prove one of them, we can also prove the other.
             )
-          )
-        )§p(
-          As the claim holds in all cases, it is true.
+          ) if, whenever we can prove one of them, we can also prove the other. Restating our observations about quantifier order: If we swap two successive §rs(existential quantification) (or two successive §rs(universal quantification)), the old and new statement §r(mean the same).
         )
-      )
 
-      §exercise["exercise_tour_use_disjunction"](
         §p(
-          Formulate a statement that expresses that no natural number is equal to all natural numbers, and prove it.
+          When interleaving §r(existential quantification) and §r(universal quantification) however, the quantifier order can make a difference, as exemplified by the following statement:
         )
-      )
 
-      §p(
-        Similar to §rs(existential quantification) and §rs(universal quantification), there are two different viewpoints on whether §rs(conjunction) or §rs(disjunction) are easier to use for proving other statements. On the one hand, a §r(conjunction) is more powerful, allowing you to use any of its substatements. On the other hand, you need to figure out which one to use, whereas you do not face such a decision when assuming a §r(disjunction).
-      )
-
-    )
-
-    §hsection(negating_conjunction_disjunction)(Negating Conjunctions and Disjunctions)(
-      §p(
-        The similarities to the behavior of quantifiers continues with the way that you prove the §rs(negation) of §rs(conjunction) and §rs(disjunction).
-      )§p(
-        If two statements are not both true, then at least one of them has to be false. In other words, you can prove a §r(negation)(negated) §r(conjunction) by changing it to a §r(disjunction) and §r(negation)(negating) its substatements.
-      )
-
-      §statement["tour_negation_conjunction"](
-        §p(
-          It does not hold that §$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Alex) §$eq §$value(Blake)).
-        )
-      )(
-        §p(
-          We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Alex)) or §$(§$value(Alex) §$neq §$value(Blake)). The latter holds by §r(equal)(the definition of equality).
-        )
-      )
-
-      §p(
-        Conversely, if two statements are not both false, then at least one of them has to be true. In other words, we can prove a §r(negation)(negated) §r(disjunction) by changing it to a §r(conjunction) and §r(negation)(negating) its substatements.
-      )
-
-      §statement["tour_negation_disjunction"](
-        §p(
-          It does not hold that §$(§$value(Alex) §$eq §$value(Blake)) or §$(§$value(Alex) §$eq §$value(Charlie)).
-        )
-      )(
-        §p(
-          We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Blake)) and §$(§$value(Alex) §$neq §$value(Charlie)). Both hold by §r(equal)(the definition of equality).
-        )
-      )
-
-      §p(
-        The two ways of proving §r(negation)(negated) §rs(conjunction) and §rs(disjunction) are collectively referred to as §definex["de_morgan"](De Morgan's laws)(
-          §p(
-            §rdef(De Morgan's laws) state how to prove §r(negation)(negated) §rs(conjunction) and §rs(disjunction):
-          )§ul(
-            §li(
-              You prove a §r(negation)(negated) §r(conjunction) by changing it to a §r(disjunction) and §r(negation)(negating) its substatements.
-            )§li(
-              You prove a §r(negation)(negated) §r(disjunction) by changing it to a §r(conjunction) and §r(negation)(negating) its substatements.
-            )
-          )
-        ).
-      )
-
-      §exercise["wrong_negation_conjunction"](
-        §p(
-          A common mistake when §r(negation)(negating) §rs(conjunction) is to propagate the §r(negation) without swapping to a §r(disjunction).
-        )§p(
-          Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(not (§i(bla) and §i(blubb))) and §verbatim((not §i(bla)) and (not §i(blubb))) do not §r(mean the same).
-        )
-      )§exercise["wrong_negation_disjunction"](
-        §p(
-          A common mistake when §r(negation)(negating) §rs(disjunction) is to propagate the §r(negation) without swapping to a §r(conjunction).
-        )§p(
-          Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(not (§i(bla) anord §i(blubb))) and §verbatim((not §i(bla)) or (not §i(blubb))) do not §r(mean the same).
-        )
-      )
-
-    )
-
-    §hsection(meta_conjunction_disjunction)(Meta Statements for Conjunctions And Disjunctions)(
-      §p(
-        We can observe some simple §rs(meta statement) for §rs(conjunction) and §rs(disjunction). The order of the two substatements of a §r(conjunction) or §r(disjunction) does not matter: §verbatim(§i(bla) and §i(blubb)) and §verbatim(§i(blubb) and §i(bla)) §r(mean the same), as do §verbatim(§i(bla) or §i(blubb)) and §verbatim(§i(blubb) or §i(bla)). These laws are called the §definex["conjunction_commutativity"](commutative conjunction)(blarg)(commutativity)(
-          §p(
-            The §rdef(commutative conjunction)(commutativity) of §rs(conjunction) states that, after swapping the order of the substatements of a §r(conjunction), the old and new statement §r(mean the same).
-          )
-        ) of §rs(conjunction) and the §definex["disjunction_commutativity"](commutative disjunction)(blarg)(commutativity)(
-          §p(
-            The §rdef(commutative disjunction)(commutativity) of §rs(disjunction) states that, after swapping the order of the substatements of a §r(disjunction), the old and new statement §r(mean the same).
-          )
-        ) of §rs(disjunction) respectively.
-      )§p(
-        Because a §r(conjunction) has exactly two substatements, we technically cannot state directly that three different statements all must hold, we instead either have to say that §verbatim(§i(bla) and (§i(blubb) and §i(blip))) or that §verbatim((§i(bla) and §i(blubb)) and §i(blip)). Both ways of grouping the §rs(conjunction) §r(mean the same), which is why we do not require making the grouping explicit. This law is called the §definex["conjunction_associativity"](associative conjunction)(blarg)(associativity)(
-          §p(
-            The §rdef(associative conjunction)(associativity) of §rs(conjunction) states that all ways of grouping multiple §rs(conjunction) §r(mean the same).
-          )
-        ) of §rs(conjunction), and allows us to think in terms of §rs(conjunction) with arbitrarily many substatements.
-      )§p(
-        For §rs(disjunction) we have the analogous §definex["disjunction_associativity"](associative disjunction)(blarg)(associativity)(
-          §p(
-            The §rdef(associative disjunction)(associativity) of §rs(disjunction) states that all ways of grouping multiple §rs(disjunction) §r(mean the same).
-          )
-        ) of §rs(disjunction), and we can accordingly think in terms of §rs(disjunction) with arbitrarily many substatements. We even allow §rs(case distinction) with more than two cases, as long as the §r(disjunction) over all cases is known to be true.
-      )
-
-      §exercise["exercise_associativity_conjunction_disjunction"](
-        Show that the grouping of §rs(conjunction) and §rs(disjunction) does matter when they both occur, by giving two statements that only differ in that grouping, proving one of them, and disproving the other.
-      )
-
-      §exercise["exercise_analogies_conjunction_quantification"](
-        Find and summarize as many of the analogies between the properties of §r(conjunction)/§r(disjunction) and §r(universal quantification)(universal)/§r(existential quantification) as you can.
-      )
-
-    )
-
-    §hsection(implications)(Implications)(
-      §p(
-        §R(deductive reasoning) is about deriving statements from other statements. Whether some statement — the §definex["conclusion"](conclusion)(
-          §p(
-            An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
-          )§p(
-            You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
-          )
-        ) — can be derived from some other statement — the §definex["premise"](premise)(
-          §p(
-            An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
-          )§p(
-            You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
-          )
-        ) — is in itself either true or false, that is, it is a statement itself. Such a statement is called an §definex["implication"](implication)(
-          §p(
-            An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
-          )§p(
-            You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
-          )
-        ).
-      )
-      §set_math_id["implies", "implication"]
-      §set_math_id["impliedby", "implication"]
-
-      §statement["tour_implication"](
-        §p(Let §$(n) be a natural number.)
-      )(
-        §p(
-          If §$(n §$leq 5), then §$(n §$leq 7).
-        )
-      )(
-        §p(
-          Assume §$(n §$leq 5). From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5).
-        )§p(
-          If §$(n + k §$eq 5), then also §$(§$p(n + k) + 2 §$eq 5 + 2), then also §$(§$p(n + k) + 2 §$eq 7), then also §$(n + §$p(k + 2) §$eq 7), and thus, because §$(k + 2) is a natural number, §$(n §$leq 7).
-        )
-      )
-
-      §p(
-        You prove an §r(implication) by assuming the §r(premise) to hold and then proving the §r(conclusion). Note that the truth of an §r(implication) has no bearing on the truth of its §r(premise) or its §r(conclusion) in isolation. Considering §cref(tour_implication), there exist both numbers which are §r(less than or equal to) §$(5) as well as numbers that are not §r(less than or equal to) §$(5), same for §$(7). But we do know that there exist no numbers which are both §r(less than or equal to) §$(5) and not §r(less than or equal to) §$(7).
-      )§p(
-        The proof of §cref(tour_implication) consists primarily of a chain of §verbatim(if §i(bla), then also §i(blubb)) fragments, that is, it consists of many successive implications. A more readable way of writing such proofs is by separating those statements with double arrows (§verbatim(§$(§$implies))), particularly if the implications connect mathematical symbols rather than natural language statements:
-      )
-
-      §drop(
-        §theorem*["tour_monotonicity_addition"](Monotonicity of Addition)(
-          §p(
-            Let §$(n, m, k) be natural numbers.
-          )
+        §statement["tour_order"](
+          §p(For all natural numbers §$(n) there exists a natural number §$(m) such that §$(n §$eq m).)
         )(
-          §p(Then)
-          §$$(
-            n §$leq m §$implies n + k §$leq m + k.
+          §p(
+            Let §$(n) be a natural number. Define §$(m §$defeq n). Then §$(n §$eq m).
+          )
+        )
+
+        §p(
+          §cref(tour_order)(This statement) is true, but what happens if we swap the order of the quantifiers?
+        )
+
+        §falsehood["tour_order2"](
+          §p(There exists a natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m).)
+        )(
+          §p(???)
+        )
+
+        §p(
+          §cref(tour_order2) is clearly different from §cref(tour_order), there certainly is no number that is §r(equal) to every number. But how do we disprove a statement? For that, we need to examine the concept of negated statements.
+        )
+      )
+
+      §hsection(negations)(Negations)(
+        §p(
+          The §definex["negation"](negation)(
+            §p(
+              A §rdef(negation) asserts that another statement does not hold.
+            )§p(
+              You prove a §r(negation)(negated) statement depending on the kind of statement that is being §r(negation)(negated).
+            )
+          ) of a statement is a new statement that is true if the old statement is false, and vice versa. Or in other words, a §r(negation) asserts that another statement does not hold. How do we prove a §r(negation)(negated) statement? That depends on the kind of statement that is being §r(negation)(negated). The easiest case is that of an §r(equal)(equality), whose truth can be derived directly by definition:
+        )
+
+        §statement["tour_negation_eq"](
+          §p(It does not hold that §$(5 §$eq 6).)
+        )(
+          §p(§$(5 §$eq 6) does not hold by §r(equal)(the definition of equality), so the §r(negation) of §$(5 §$eq 6) does hold.)
+        )
+
+        §p(
+          Another easy case is that of a §r(negation)(negated) §r(negation) (a §definex["double_negation"](double negation)(A §rdef(double negation) is the §r(negation) of a §r(negation).)), which is simply canceled out.
+        )
+
+        §statement["tour_negation_negation"](
+          §p(It does not hold that it does not hold that §$(5 §$eq 5).)
+        )(
+          §p(
+            The statement that remains after eliminating the §r(double negation) is §$(5 §$eq 5), which holds by §r(equal)(the definition of equality).
+          )
+        )
+
+        §p(
+          More interesting are §rs(negation) of quantifications. If a statement does not hold for all objects, then there has to exist a counterexample. In other words, we can prove the §r(negation) of a statement of §r(universal quantification) by changing it to §r(existential quantification) and moving the §r(negation) past the quantifier:
+        )
+
+        §statement["tour_negation_universal"](
+          §p(It does not hold for all squirrels §$(s) that §$(s §$eq §$value(Alex)).)
+        )(
+          §p(
+            We can prove the statement by showing that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq §$value(Alex)). Define §$(s §$defeq §$value(Blake)), then it does not hold that §$(s §$eq §$value(Alex)).
+          )
+        )
+
+        §p(
+          Conversely, if no object satisfying a property exists, then all objects do not satisfy that property. That is, we can prove the §r(negation) of a statement of §r(existential quantification) by changing it to §r(universal quantification) and moving the §r(negation) past the quantifier.
+        )
+
+        §statement["tour_negation_existential"](
+          §p(It does not hold that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq s).)
+        )(
+          §p(
+            We can prove the statement by showing that for all squirrels §$(s) it does not hold that it does not hold that §$(s §$eq s). Let §$(s) be a squirrel. Then §$(s §$eq s), which is exactly what remains to be proven after the §r(double negation) has been eliminated.
+          )
+        )
+
+        §p(
+          §Rs(negation) are usually formulated less verbosely, for example §verbatim(It does not hold that there exist §$(x) such that…) would normally be written along the lines of §verbatim(There exists no §$(x) such that…). The negation of statements of §r(equal)(equality) even has its own symbol: if §$(x) and §$(y) are §definex["neq"](unequal)(
+            §set_math_id["neq", "neq"]
+            §p(Two objects are §rdef(unequal), written as §$(x §$neq y), if they are not §r(equal).)
+          ), we write §$(x §$neq y).
+        )§p(
+          We can now disprove §cref(tour_order2) by proving its §r(negation):
+        )
+
+        §statement["tour_not_order2"](
+          §p(There exists no natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m).)
+        )(
+          §p(
+            We can prove the statement by showing that for all natural numbers §$(m) it is not the case that for all natural numbers §$(n) we have §$(n §$eq m). This we can prove by showing that for all natural numbers §$(m) there exists a natural number §$(n) such that §$(n §$neq m).
+          )§p(
+            Let §$(m) be a natural number. Define §$(n §$defeq m + 1). Then §$(n §$neq m), because §$(m + 1 §$neq m).
+          )
+        )
+
+        §p(
+          Disproving statements by proving their §r(negation) makes sense only if we assume that every statement must either be true or false. This assumption is known as the §definex["bivalence"](principle of bivalence)(
+            §p(The §rdef(principle of bivalence) states that every statement is either true or false.)
+          ), and while it might feel self-evident, it is possible to find self-consistent frameworks for §r(deductive reasoning) that reject it. To keep things compact, this book consistently sticks to the prevalent school of §verbatim(classical mathematics) that accepts the §r(principle of bivalence).
+        )
+
+        §p(
+          The proof of §cref(tour_not_order2) is representative for how we usually prove §r(negation)(negated) statements: First, we convert the statement into an equivalent one in which the only §r(negation)(negated) substatements are statements of §r(equal)(equality), and then, we prove that new statement as usual, without having to worry about §rs(negation) anymore.
+        )§p(
+          Because this conversion is completely mechanical, it is often left implicit in written proofs. Incorrect manipulation of §rs(negation) is a common source of errors for new learners however, so it is a good habit to carefully and explicitly think through the process of threading a §r(negation) through a statement, whenever you encounter it.
+        )
+
+        §exercise["exercise_tour_not"](
+          §p(
+            Disprove that for all natural numbers §$(n) there exists a natural number number §$(m) such that §$(n) is not §r(less than or equal to) §$(m). Explicitly state the different stages of moving the §r(negation) through the statement to reach a statement you can prove.
+          )
+        )§exercise["wrong_negation_existential"](
+          §p(
+            A common mistake when §r(negation)(negating) statements of §r(existential quantification) is to propagate the §r(negation) without swapping to §r(universal quantification).
+          )§p(
+            Give a statement §verbatim(§i(bla)) such that §verbatim(there exists no squirrel §$(s) such that §i(bla)) and §verbatim(there exists a squirrel §$(s) such that not §i(bla)) do not §r(mean the same).
+          )
+        )§exercise["wrong_negation_universal"](
+          §p(
+            A common mistake when §r(negation)(negating) statements of §r(universal quantification) is to propagate the §r(negation) without swapping to §r(existential quantification).
+          )§p(
+            Give a statement §verbatim(§i(bla)) such that §verbatim(it does not hold that for all squirrels §$(s) holds §i(bla)) and §verbatim(for all squirrels §$(s) does not hold §i(bla)) do not §r(mean the same).
+          )
+        )
+
+      )
+
+      §hsection(conjunction_disjunction)(Conjunctions and Disjunctions)(
+        §p(
+          Between §r(existential quantification), §r(universal quantification), and §r(negation), we have covered the most complicated kinds of statements. What remains are a few statements which relate truth of other statements to each other.
+        )§p(
+          A §definex["conjunction"](conjunction)(
+            §p(
+              A §rdef(conjunction) asserts that two substatements both hold: §verbatim(§$(5 §$eq 5) and §$(6 §$eq 6)).
+            )§p(
+              You prove a §r(conjunction) by proving both of its substatements: §verbatim(§$(5 §$eq 5) holds by definition, and §$(6 §$eq 6) holds by definition, and so the full statement holds).
+            )
+          ) asserts that two substatements are both true:
+        )
+
+        §statement["tour_conjunction"](
+          §p(§$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Blake) §$eq §$value(Blake)).)
+        )(
+          §p(
+            §$(§$value(Alex) §$eq §$value(Alex)) holds by §r(equal)(the definition of equality), and §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+          )
+        )
+
+        §p(
+          As you can see, you prove a §r(conjunction) by proving both of its substatements.
+        )§p(
+          A §definex["disjunction"](disjunction)(
+            §p(
+              A §rdef(disjunction) asserts that out of two substatements at least one holds: §verbatim(§$(5 §$eq 6) or §$(6 §$eq 6)).
+            )§p(
+              You prove a §r(disjunction) by proving either of its substatements: §verbatim(§$(6 §$eq 6) holds by definition, and so the full statement holds).
+            )
+          ) asserts that out of two substatements at least one is true:
+        )
+
+        §statement["tour_disjunction"](
+          §p(§$(§$value(Alex) §$eq §$value(Charlie)) or §$(§$value(Blake) §$eq §$value(Blake)).)
+        )(
+          §p(
+            §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+          )
+        )
+
+        §p(
+          Unsurprisingly enough, you prove a §r(disjunction) by proving one of its substatements. The following two examples demonstrate the remaining two constellations of substatement truth which result in a true §r(disjunction).
+        )
+
+        §statement["tour_disjunction2"](
+          §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Charlie)).)
+        )(
+          §p(
+            §$(§$value(Alex) §$eq §$value(Alex)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+          )
+        )
+        §statement["tour_disjunction3"](
+          §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake)).)
+        )(
+          §p(
+            §$(§$value(Alex) §$eq §$value(Alex)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+          )
+        )
+
+        §p(
+          If both substatements of a §r(disjunction) hold, you can prove either one. For example, §cref(tour_disjunction3) also admits the following proof:
+        )
+
+        §proof["tour_disjunction3", "Alternate "](
+          §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake)).)
+        )(
+          §p(
+            §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
+          )
+        )
+
+        §p(
+          Whereas §verbatim(or) signifies a §r(disjunction) in a proof and thus admits the possibility of both substatements being true, in everyday language §verbatim(or) usually signifies an exclusive choice. In a formal context, the §definex["xor"](exclusive or)(
+            §p(
+              The §rdef(exclusive or) of two substatements asserts that exactly one of them holds.
+            )
+          ) which denotes that both at least and at most one of two alternatives is true — i.e., exactly one — is formulated as an explicit §verbatim(either §i(bla) or §i(blubb)).
+        )
+
+        §exercise["tour_xor"](
+          §p(
+            Using §r(negation), §r(conjunction), and §r(disjunction), construct a statement with the same meaning as §verbatim(Either §$(§$value(Alex)) is hungry or §$(§$value(Alex)) is asleep).
+          )§p(
+            Whenever you encounter an §r(exclusive or), you can prove it by first translating it into the equivalent statement that only uses §r(negation), §r(conjunction), and §r(disjunction).
+          )
+        )
+
+        §p(
+          Notice that whenever the §r(exclusive or) of two statements is true, then so is their §r(disjunction). Remember also that we assume every statement to be either true or false (the §r(principle of bivalence)). From these two properties, we obtain the §definex["excluded_middle"](law of excluded middle)(
+            §p(
+              The §rdef(law of excluded middle) states that §verbatim(§i(bla) or not §i(bla)) always holds.
+            )
+          ): we can always assume §verbatim(§i(bla) or not §i(bla)) to be true, no matter how simple or complicated of a statement §verbatim(§i(bla)) is.
+        )
+
+      )
+
+      §hsection(utilizing_conjunction_disjunction)(Utilizing Conjunctions and Disjunctions)(
+        §p(
+          Once a §r(conjunction) is proven, both of its substatements can be assumed to be true:
+        )
+
+        §statement["tour_use_conjunction"](
+          §p(
+            §$(§$value(Alex) §$eq §$value(Alex)).
           )
         )(
           §p(
-            omited
+            §$(§$value(Alex) §$eq §$value(Alex)) by §cref(tour_conjunction).
           )
         )
 
-        §theorem*["tour_associativity_addition"](Associativivity of Addition)(
+        §p(
+          Utilizing a §r(disjunction) to prove another statement is more difficult however, because either of its substatements might not be true. So it does not suffice to assume any one of the substatements and finish the proof from there. Instead, you need to demonstrate that the proof can be completed regardless of which substatement is assumed to be true. This is called a §definex["case_distinction"](case distinction)(
+            §p(
+              A §rdef(case distinction) is a proof technique in which you finish multiple subproofs, each assuming some statement to be true such that the §r(disjunction) of those statements is true.
+            )
+          ) and results in having to complete two independent proofs.
+        )
+
+        §statement["tour_use_disjunction"](
+          §p(
+            Let §$(s) be a squirrel.
+          )
+        )(
+          §p(
+            §$(s §$neq §$value(Alex)) or §$(s §$neq §$value(Blake)).
+          )
+        )(
+          §p(
+            Let §$(s) be a squirrel. By the §r(law of excluded middle) we know that §$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex)). We do a §r(case distinction) on §verbatim(§$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex))):
+          )§cases(
+            §case(§$(s §$eq §$value(Alex)))(
+              §p(
+                If §$(s §$eq §$value(Alex)), then §$(s §$neq §$value(Blake)), so the claim holds.
+              )
+            )
+            §case(§$(s §$neq §$value(Alex)))(
+              §p(
+                If §$(s §$neq §$value(Alex)), the claim holds by assumption.
+              )
+            )
+          )§p(
+            As the claim holds in all cases, it is true.
+          )
+        )
+
+        §exercise["exercise_tour_use_disjunction"](
+          §p(
+            Formulate a statement that expresses that no natural number is equal to all natural numbers, and prove it.
+          )
+        )
+
+        §p(
+          Similar to §rs(existential quantification) and §rs(universal quantification), there are two different viewpoints on whether §rs(conjunction) or §rs(disjunction) are easier to use for proving other statements. On the one hand, a §r(conjunction) is more powerful, allowing you to use any of its substatements. On the other hand, you need to figure out which one to use, whereas you do not face such a decision when assuming a §r(disjunction).
+        )
+
+      )
+
+      §hsection(negating_conjunction_disjunction)(Negating Conjunctions and Disjunctions)(
+        §p(
+          The similarities to the behavior of quantifiers continues with the way that you prove the §rs(negation) of §rs(conjunction) and §rs(disjunction).
+        )§p(
+          If two statements are not both true, then at least one of them has to be false. In other words, you can prove a §r(negation)(negated) §r(conjunction) by changing it to a §r(disjunction) and §r(negation)(negating) its substatements.
+        )
+
+        §statement["tour_negation_conjunction"](
+          §p(
+            It does not hold that §$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Alex) §$eq §$value(Blake)).
+          )
+        )(
+          §p(
+            We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Alex)) or §$(§$value(Alex) §$neq §$value(Blake)). The latter holds by §r(equal)(the definition of equality).
+          )
+        )
+
+        §p(
+          Conversely, if two statements are not both false, then at least one of them has to be true. In other words, we can prove a §r(negation)(negated) §r(disjunction) by changing it to a §r(conjunction) and §r(negation)(negating) its substatements.
+        )
+
+        §statement["tour_negation_disjunction"](
+          §p(
+            It does not hold that §$(§$value(Alex) §$eq §$value(Blake)) or §$(§$value(Alex) §$eq §$value(Charlie)).
+          )
+        )(
+          §p(
+            We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Blake)) and §$(§$value(Alex) §$neq §$value(Charlie)). Both hold by §r(equal)(the definition of equality).
+          )
+        )
+
+        §p(
+          The two ways of proving §r(negation)(negated) §rs(conjunction) and §rs(disjunction) are collectively referred to as §definex["de_morgan"](De Morgan's laws)(
+            §p(
+              §rdef(De Morgan's laws) state how to prove §r(negation)(negated) §rs(conjunction) and §rs(disjunction):
+            )§ul(
+              §li(
+                You prove a §r(negation)(negated) §r(conjunction) by changing it to a §r(disjunction) and §r(negation)(negating) its substatements.
+              )§li(
+                You prove a §r(negation)(negated) §r(disjunction) by changing it to a §r(conjunction) and §r(negation)(negating) its substatements.
+              )
+            )
+          ).
+        )
+
+        §exercise["wrong_negation_conjunction"](
+          §p(
+            A common mistake when §r(negation)(negating) §rs(conjunction) is to propagate the §r(negation) without swapping to a §r(disjunction).
+          )§p(
+            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(not (§i(bla) and §i(blubb))) and §verbatim((not §i(bla)) and (not §i(blubb))) do not §r(mean the same).
+          )
+        )§exercise["wrong_negation_disjunction"](
+          §p(
+            A common mistake when §r(negation)(negating) §rs(disjunction) is to propagate the §r(negation) without swapping to a §r(conjunction).
+          )§p(
+            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(not (§i(bla) anord §i(blubb))) and §verbatim((not §i(bla)) or (not §i(blubb))) do not §r(mean the same).
+          )
+        )
+
+      )
+
+      §hsection(meta_conjunction_disjunction)(Meta Statements for Conjunctions And Disjunctions)(
+        §p(
+          We can observe some simple §rs(meta statement) for §rs(conjunction) and §rs(disjunction). The order of the two substatements of a §r(conjunction) or §r(disjunction) does not matter: §verbatim(§i(bla) and §i(blubb)) and §verbatim(§i(blubb) and §i(bla)) §r(mean the same), as do §verbatim(§i(bla) or §i(blubb)) and §verbatim(§i(blubb) or §i(bla)). These laws are called the §definex["conjunction_commutativity"](commutative conjunction)(blarg)(commutativity)(
+            §p(
+              The §rdef(commutative conjunction)(commutativity) of §rs(conjunction) states that, after swapping the order of the substatements of a §r(conjunction), the old and new statement §r(mean the same).
+            )
+          ) of §rs(conjunction) and the §definex["disjunction_commutativity"](commutative disjunction)(blarg)(commutativity)(
+            §p(
+              The §rdef(commutative disjunction)(commutativity) of §rs(disjunction) states that, after swapping the order of the substatements of a §r(disjunction), the old and new statement §r(mean the same).
+            )
+          ) of §rs(disjunction) respectively.
+        )§p(
+          Because a §r(conjunction) has exactly two substatements, we technically cannot state directly that three different statements all must hold, we instead either have to say that §verbatim(§i(bla) and (§i(blubb) and §i(blip))) or that §verbatim((§i(bla) and §i(blubb)) and §i(blip)). Both ways of grouping the §rs(conjunction) §r(mean the same), which is why we do not require making the grouping explicit. This law is called the §definex["conjunction_associativity"](associative conjunction)(blarg)(associativity)(
+            §p(
+              The §rdef(associative conjunction)(associativity) of §rs(conjunction) states that all ways of grouping multiple §rs(conjunction) §r(mean the same).
+            )
+          ) of §rs(conjunction), and allows us to think in terms of §rs(conjunction) with arbitrarily many substatements.
+        )§p(
+          For §rs(disjunction) we have the analogous §definex["disjunction_associativity"](associative disjunction)(blarg)(associativity)(
+            §p(
+              The §rdef(associative disjunction)(associativity) of §rs(disjunction) states that all ways of grouping multiple §rs(disjunction) §r(mean the same).
+            )
+          ) of §rs(disjunction), and we can accordingly think in terms of §rs(disjunction) with arbitrarily many substatements. We even allow §rs(case distinction) with more than two cases, as long as the §r(disjunction) over all cases is known to be true.
+        )
+
+        §exercise["exercise_associativity_conjunction_disjunction"](
+          Show that the grouping of §rs(conjunction) and §rs(disjunction) does matter when they both occur, by giving two statements that only differ in that grouping, proving one of them, and disproving the other.
+        )
+
+        §exercise["exercise_analogies_conjunction_quantification"](
+          Find and summarize as many of the analogies between the properties of §r(conjunction)/§r(disjunction) and §r(universal quantification)(universal)/§r(existential quantification) as you can.
+        )
+
+      )
+
+      §hsection(implications)(Implications)(
+        §p(
+          §R(deductive reasoning) is about deriving statements from other statements. Whether some statement — the §definex["conclusion"](conclusion)(
+            §p(
+              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
+            )§p(
+              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
+            )
+          ) — can be derived from some other statement — the §definex["premise"](premise)(
+            §p(
+              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
+            )§p(
+              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
+            )
+          ) — is in itself either true or false, that is, it is a statement itself. Such a statement is called an §definex["implication"](implication)(
+            §p(
+              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
+            )§p(
+              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
+            )
+          ).
+        )
+        §set_math_id["implies", "implication"]
+        §set_math_id["impliedby", "implication"]
+
+        §statement["tour_implication"](
+          §p(Let §$(n) be a natural number.)
+        )(
+          §p(
+            If §$(n §$leq 5), then §$(n §$leq 7).
+          )
+        )(
+          §p(
+            Assume §$(n §$leq 5). From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5).
+          )§p(
+            If §$(n + k §$eq 5), then also §$(§$p(n + k) + 2 §$eq 5 + 2), then also §$(§$p(n + k) + 2 §$eq 7), then also §$(n + §$p(k + 2) §$eq 7), and thus, because §$(k + 2) is a natural number, §$(n §$leq 7).
+          )
+        )
+
+        §p(
+          You prove an §r(implication) by assuming the §r(premise) to hold and then proving the §r(conclusion). Note that the truth of an §r(implication) has no bearing on the truth of its §r(premise) or its §r(conclusion) in isolation. Considering §cref(tour_implication), there exist both numbers which are §r(less than or equal to) §$(5) as well as numbers that are not §r(less than or equal to) §$(5), same for §$(7). But we do know that there exist no numbers which are both §r(less than or equal to) §$(5) and not §r(less than or equal to) §$(7).
+        )§p(
+          The proof of §cref(tour_implication) consists primarily of a chain of §verbatim(if §i(bla), then also §i(blubb)) fragments, that is, it consists of many successive implications. A more readable way of writing such proofs is by separating those statements with double arrows (§verbatim(§$(§$implies))), particularly if the implications connect mathematical symbols rather than natural language statements:
+        )
+
+        §drop(
+          §theorem*["tour_monotonicity_addition"](Monotonicity of Addition)(
+            §p(
+              Let §$(n, m, k) be natural numbers.
+            )
+          )(
+            §p(Then)
+            §$$(
+              n §$leq m §$implies n + k §$leq m + k.
+            )
+          )(
+            §p(
+              omited
+            )
+          )
+
+          §theorem*["tour_associativity_addition"](Associativivity of Addition)(
+            §p(
+              Let §$(a, b, c) be natural numbers.
+            )
+          )(
+            §p(Then)
+            §$$(
+              a + §$p(b + c) §$eq §$p(a + b) + c.
+            )
+          )(
+            §p(
+              omited
+            )
+          )
+        )
+
+        §proof["tour_implication", "More Readable "](
+          §p(Let §$(n) be a natural number.)
+        )(
+          §p(
+            If §$(n §$leq 5), then §$(n §$leq 7).
+          )
+        )(
+          §p(
+            Assume §$(n §$leq 5). From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5). Then
+          )§$$align*(
+            && n + k &§$eq 5
+          )(
+            §$implies {} && §$p(n + k) + 2 &§$eq 5 + 2 §$tag(§cref(tour_monotonicity_addition)(Monotonicity) $+$)
+          )(
+            §$implies {} && §$p(n + k) + 2 &§$eq 7 §$tag(Definition $+$)
+          )(
+            §$implies {} && n + §$p(k + 2) &§$eq 7 §$tag(§cref(tour_associativity_addition)(Associativity) $+$)
+          )(
+            §$implies {} && n &§$leq 7. §$tag(§cref(leq)(Definition) $§$leq§ $)
+          )
+        )
+
+        §p(
+          A nice benefit of laying out a proof like this is that we can annotate each line with the reason why the §r(implication) holds.
+        )
+
+        §theorem["transitivity_leq"](Transitivity of §$(§$leq[true]))(
           §p(
             Let §$(a, b, c) be natural numbers.
           )
         )(
-          §p(Then)
-          §$$(
-            a + §$p(b + c) §$eq §$p(a + b) + c.
+          §p(
+            If §$(a §$leq b) and §$(b §$leq c), then §$(a §$leq c).
+          )
+        )(
+          §p(§cref(exercise_transitivity_leq))
+        )
+
+        §exercise["exercise_transitivity_leq"](
+          §p(Prove §cref(transitivity_leq).)
+        )
+
+        §exercise["exercise_exactly_one"](
+          §p(
+            Formulate a statement that expresses that exactly one squirrel is §r(equal) to §$(§$value(Alex)). It is possible to do this without using §rs(implication), but the arguably most elegant solution uses one.
+          )
+        )
+
+        §p(
+          §Rs(implication) are so common that various phrases and symbols are in use for expressing them; all of the following denote an §r(implication) with §r(premise) §verbatim(§i(bla)) and §r(conclusion) §verbatim(§i(blubb)):
+        )§ul(
+          §li(§verbatim(§i(bla) implies §i(blubb)))
+          §li(§verbatim(if §i(bla), then §i(blubb)))
+          §li(§verbatim(whenever §i(bla), also §i(blubb)))
+          §li(§verbatim(from §i(bla) follows §i(blubb)))
+          §li(§verbatim(§i(blubb) follows from §i(bla)))
+          §li(§verbatim(§i(bla) §$(§$implies) §i(blubb)))
+          §li(§verbatim(§i(blubb) §$(§$impliedby) §i(bla)))
+          §li(§verbatim(§i(bla) is sufficient for §i(blubb)))
+          §li(§verbatim(§i(blubb) is necessary for §i(bla)))
+        )
+
+      )
+
+      §hsection(utilizing_implications)(Utilizing Implications)(
+        §p(
+          Once an §r(implication) is proven, you can use it to show that its §r(conclusion) holds by proving its §r(premise):
+        )
+
+        §statement["tour_use_implication"](
+          §p(
+            §$(3 §$leq 7)
           )
         )(
           §p(
-            omited
+            §$(3 §$leq 5) because §$(3 + 2 §$eq 5). With §cref(tour_implication) follows that §$(3 §$leq 7).
+          )
+        )
+
+        §p(
+          Now consider a situation where §verbatim(§i(bla)) §r(implication)(implies) §verbatim(§i(blubb)), and §verbatim(§i(blubb)) §r(implication)(implies) §verbatim(§i(blip)). Then we also know that §verbatim(§i(bla)) §r(implication)(implies) §verbatim(§i(blip)), because if we can assume §verbatim(§i(bla)), then the first §i(implication) gives us §verbatim(§i(blubb)), from which the second §i(implication) gives us §verbatim(§i(blip)). This property of §rs(implication) is called the §definex["transitivity_implication"](transitive implication)(blarg)(transitivity)(
+            §p(
+              The §rdef(transitive implication)(transitivity) of §rs(implication) states that if §verbatim(§i(bla)) §r(implication)(implies) §verbatim(§i(blubb)), and §verbatim(§i(blubb)) §r(implication)(implies) §verbatim(§i(blip)), then §verbatim(§i(bla)) §r(implication)(implies) §verbatim(§i(blip)).
+            )
+          ) of §rs(implication), and is crucial to §r(deductive reasoning): the §r(transitive implication)(transitivity) of §rs(implication) is the reason why we can prove statements by chaining multiple small steps where each step §r(implication)(implies) the next one.
+        )
+
+      )
+
+      §hsection(negating_implication)(Negating Implications)(
+        §p(
+          An §r(implication) expresses that its §r(conclusion) cannot be false while its §r(premise) is a true. Consequently you disprove an §r(implication), or equivalently, you prove a §r(negation)(negated) §r(implication), by showing that its §r(premise) holds but its §r(conclusion) does not.
+        )
+
+        §statement["tour_negation_implication"](
+          §p(
+            §$(§$value(Alex) §$eq §$value(Alex)) does not imply that §$(§$value(Alex) §$eq §$value(Blake))
+          )
+        )(
+          §p(
+            §$(§$value(Alex) §$eq §$value(Alex)) holds but §$(§$value(Alex) §$eq §$value(Blake)) does not.
+          )
+        )
+
+        §exercise["wrong_negation_implication"](
+          §p(
+            A common mistake when §r(negation)(negating) §rs(implication) is to simply negate both the §r(premise) and the §r(conclusion) and call it a day.
+          )§p(
+            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(if §i(bla) then §i(blubb)) and §verbatim(if not §i(bla) then not §i(blubb)) do not §r(mean the same).
+          )
+        )§exercise["wrong_negation_implication2"](
+          §p(
+            A common mistake when §r(negation)(negating) §rs(implication) is to simply swap the §r(premise) and the §r(conclusion) and call it a day.
+          )§p(
+            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(if §i(bla) then §i(blubb)) and §verbatim(if §i(blubb) then §i(bla)) do not §r(mean the same).
+          )
+        )
+
+        §p(
+          From a similar line of reasoning we can derive another §r(meta statement). If the §r(conclusion) of an implication does not hold, then the §r(premise) of the implication cannot hold either. This reformulation of an §r(implication) is called its §definex(contrapositive)(
+            §p(
+              The §rdef(contrapositive) of an §r(implication) §verbatim(§i(bla) implies §i(blubb)) is §verbatim(not §i(blubb) implies not §i(bla)).
+            )
+          ): the §r(contrapositive) of §verbatim(§i(bla) implies §i(blubb)) is §verbatim(not §i(blubb) implies not §i(bla)). An §r(implication) and its §r(contrapositive) §r(mean the same), this is called the law of §definex(contraposition)(
+            §p(
+              The law of §rdef(contraposition)(contraposition) states that an §r(implication) and its §r(contrapositive) §r(mean the same).
+            )
+          ).
+        )
+
+        §statement["tour_contraposition"](
+          §p(Let §$(n) be a natural number.)
+        )(
+          §p(
+            If §$(n) is not §r(less than or equal to) §$(7), then §$(n) is not §r(less than or equal to) §$(5).
+          )
+        )(
+          §p(
+            The statement is the §r(contrapositive) of §cref(tour_implication) and thus holds by the law of §r(contraposition).
+          )
+        )
+
+        §exercise["exercise_wrong_negations_implication"](
+          §p(
+            How are the incorrect attempts at §r(negation)(negating) §rs(implication) of §cref(wrong_negation_implication) and §cref(wrong_negation_implication2) related?
+          )
+        )
+
+      )
+
+      §hsection(absurd_implications)(Absurd Implications)(
+        §p(
+          Any time you prove an §r(implication), you start by assuming its §r(premise) to be true. So what happens if the premise is a false statement? Perhaps surprisingly, the §r(implication) as a whole turns out to be true in that case. We demonstrate this with an example:
+        )
+
+        §statement["absurd"](
+          §p(
+            If §$(0 §$eq 1), then §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
+          )
+        )(
+          §p(
+            Assume §$(0 §$eq 1). Further notice that §$(0 §$neq 1) holds by §r(equal)(the definition of equality). Thus also the §r(disjunction) §verbatim(§$(0 §$neq 1) or §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon) holds.
+          )§p(
+            Because §$(0 §$eq 1), the first substatement of that §r(disjunction) cannot be true, so the second substatement has to be. Thus, we have shown that §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
+          )
+        )
+
+        §p(
+          Eating pumpkin pie in a hot air balloon is rather atypical behavior for squirrels, and yet we were able to prove it by assuming a falsehood. In fact, we could have proven §em(any) statement, including even that §$(§$value(Alex)) is §em(not) currently eating pumpkin pie in a hot air balloon. The fact that every statement can be proven from a falsehood is vivaciously called the §definex(principle of explosion)(
+            §p(
+              The §rdef(principle of explosion) states that from a falsehood every statement can be proven.
+            )
+          ).
+        )§p(
+          When proving an §r(implication) with a false premise, we get to assume a falsehood to hold. By the §r(principle of explosion), we can then prove any statement. In particular, we can prove the §r(conclusion) of the §r(implication), and if we can prove the §r(conclusion) by assuming the §r(premise), then the §r(implication) as a whole holds.
+        )§p(
+          This can lead to statements to whose truth it might take some getting used to, such as the one in the following exercise:
+        )
+
+        §exercise["exercise_absurd"](
+          §p(
+            Prove that there exist a squirrel §$(s) such that §$(s §$eq §$value(Alex)) implies §$(s §$eq §$value(Blake)).
+          )
+        )
+
+      )
+
+      §hsection(contradictions)(Proofs by Contradiction)(
+        §p(
+          §Rs(implication) with a false §r(premise) always hold, but what about §rs(implication) with a false §r(conclusion)? If the §r(implication) is to hold, we must be able to prove its §r(conclusion), which should be impossible if the §r(conclusion) is false. Except, of course, if the §r(premise) is false as well. So we can observe the following: If an §r(implication) with a false §r(conclusion) holds, its §r(premise) must be false.
+        )§p(
+          We can use this as a proof technique: If we can manage to prove a falsehood by assuming the §r(negation) of some statement, then the §r(negation) of that statement must have been false, and thus, the original statement must have been true. Such a proof is called a §definex["proof_by_contradiction"](proof by contradiction)(
+            §p(
+              A §rdef(proof by contradiction) shows a statement by assuming its negation and deriving a falsehood from it.
+            )
+          ), §verbatim(contradiction) being synonymous to §verbatim(falsehood) in this context.
+        )
+
+        §statement["tour_contradiction"](
+          §p(
+            There is no squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t).
+          )
+        )(
+          §p(
+            Suppose toward a contradiction that there exists a squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t).
+          )§p(
+            Then we know that both §$(s §$eq §$value(Alex)) and §$(s §$eq §$value(Blake)), and thus §$(§$value(Alex) §$eq §$value(Blake)). This is a contradiction, the assumption must have been false, and thus, the original statement must be true.
+          )
+        )
+
+      )
+
+      §hsection(biimplications)(Bi-implications)(
+        §p(
+          When two statements §r(implication)(imply) each other, then either both of them or none of them have to hold. This is called a §definex["bi_implication"](bi-implication)(
+            §p(
+              A §rdef(bi-implication) asserts that two statements §r(implication)(imply) each other: §verbatim(§$(5 §$eq 6) if and only if §$(6 §$eq 7)).
+            )§p(
+              You prove a §r(bi-implication) by proving both §rs(implication) separately.
+            )
+          ).
+        )
+
+        §statement["tour_iff"](
+          §p(
+            §$(5 §$eq 6) if and only if §$(6 §$eq 7)
+          )
+        )(
+          §proof_part(
+            §verbatim(§$(§$implies)):
+          )(
+            §p(
+              Assume §$(5 §$eq 6). Then, by the §r(principle of explosion), §$(6 §$eq 7).
+            )
+          )
+          §proof_part(
+            §verbatim(§$(§$impliedby)):
+          )(
+            §p(
+              Assume §$(6 §$eq 7). Then, by the §r(principle of explosion), §$(5 §$eq 6).
+            )
+          )
+        )
+
+        §p(
+          You prove a §r(bi-implication) by proving both §rs(implication) separately. You prove a §r(negation)(negated) §r(bi-implication) by disproving either of the §rs(implication).
+        )§p(
+          A common variation on proving both §rs(implication) directly is to prove the §r(contrapositive) of one of them:
+        )
+
+        §statement["tour_iff2"](
+          §p(
+            §$(5 §$eq 6) if and only if §$(6 §$eq 7)
+          )
+        )(
+          §proof_part(
+            §verbatim(§$(5 §$eq 6 §$implies 6 §$eq 7)):
+          )(
+            §p(
+              Assume §$(5 §$eq 6). Then, by the §r(principle of explosion), §$(6 §$eq 7).
+            )
+          )
+          §proof_part(
+            §verbatim(§$(5 §$neq 6 §$implies 6 §$neq 7)):
+          )(
+            §p(
+              §$(5 §$neq 6) by §r(equal)(the definition of equality).
+            )
+          )
+        )
+
+        §p(
+          There are a few different ways of formulating §rs(bi-implication):
+        )§ul(
+          §set_math_id["iff", "bi_implication"]
+          §li(§verbatim(§i(bla) if and only if §i(blubb)))
+          §li(§verbatim(§i(bla) iff §i(blubb)))
+          §li(§verbatim(§i(bla) exactly if §i(blubb)))
+          §li(§verbatim(§i(bla) is equivalent to §i(blubb)))
+          §li(§verbatim(§i(bla) and §i(blubb) imply each other))
+          §li(§verbatim(§i(bla) §$(§$iff) §i(blubb)))
+        )
+
+        §p(
+          Finally, the concept of statements that §r(mean the same) is exactly that of statements that imply each other.
+        )
+
+      )
+
+    )
+
+    §hsection(deductive_reasoning_conclusion)(Conclusion)(
+      §p(
+        This wraps up the overview of our system of §r(deductive reasoning). We denote objects of interest by §rs(term), combine §rs(term) into statements via §rs(predicate), and build up more complex statements from there. We acquire knowledge by proving statements, letting the types of statements determine how the proofs must work. §cref(summary_statements) summarizes the different types of statements that we use.
+      )
+
+      §div(wide)(
+        §figure["summary_statements"](Table of Statements)()(
+          §captioned(
+            §table(
+              §thead(
+                §tr(
+                  §th(Statement)
+                  §th(Proving)
+                  §th(Using)
+                  §th(Handling Negation)
+                )
+              )
+              §tbody(
+                §tr(
+                  §td(§R(existential quantification):§br§ §verbatim(There exists §$(x) such that §i(bla)))
+                  §td(Provide a §r(witness):§br§verbatim(Define §$(x §$defeq §$ldots)).)
+                  §td(Can obtain §r(witness).)
+                  §td(Swap to §r(universal quantification), move §r(negation) inside.)
+                )§tr(
+                  §td(§R(universal quantification):§br§ §verbatim(For all §$(x) holds §i(bla)))
+                  §td(Prove for arbitrary object:§br§verbatim(Let §$(x) be something, then…).)
+                  §td(Can assume §verbatim(§i(bla)) for all objects.)
+                  §td(Swap to §r(existential quantification), move §r(negation) inside.)
+                )§tr(
+                  §td(§R(negation):§br § §verbatim(It does not hold that §i(bla)))
+                  §td(Varies by type of §r(negation)(negated) statement.)
+                  §td(Can use the statement obtained by moving the §r(negation) inside.)
+                  §td(§R(double negation) can be dropped.)
+                )§tr(
+                  §td(§R(conjunction):§br§ §verbatim(§i(bla) and §i(blubb)))
+                  §td(Prove both §verbatim(§i(bla)) and §verbatim(§i(blubb)).)
+                  §td(Can assume either statement.)
+                  §td(Swap to §r(disjunction), move §r(negation) inside.)
+                )§tr(
+                  §td(§R(disjunction):§br§ §verbatim(§i(bla) or §i(blubb)))
+                  §td(Prove §verbatim(§i(bla)) or §verbatim(§i(blubb)).)
+                  §td(Can do a §r(case distinction).)
+                  §td(Swap to §r(conjunction), move §r(negation) inside.)
+                )§tr(
+                  §td(§R(implication):§br§ §verbatim(If §i(bla) then §i(blubb).))
+                  §td(Assume §verbatim(§i(bla)) and prove §verbatim(§i(blubb)).)
+                  §td(Can prove §verbatim(§i(bla)) to prove §verbatim(§i(blubb)).)
+                  §td(Prove §verbatim(§i(bla)) and disprove §verbatim(§i(blubb)).)
+                )§tr(
+                  §td(§R(bi-implication):§br§ §verbatim(§i(bla) if and only if §i(blubb)))
+                  §td(Prove §verbatim(§i(bla) §$(§$implies) §i(blubb)) and§br§ §verbatim(§i(blubb) §$(§$implies) §i(bla)).)
+                  §td(Proving/disproving either statement also proves/disproves the other.)
+                  §td(Disprove either §r(implication).)
+                )
+              )
+            )
+          )(
+            §p(
+              The different types of statements in our system of §r(deductive reasoning), summarized as a table.
+            )
           )
         )
       )
 
-      §proof["tour_implication", "More Readable "](
-        §p(Let §$(n) be a natural number.)
-      )(
-        §p(
-          If §$(n §$leq 5), then §$(n §$leq 7).
-        )
-      )(
-        §p(
-          Assume §$(n §$leq 5). From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5). Then
-        )§$$align*(
-          && n + k &§$eq 5
-        )(
-          §$implies {} && §$p(n + k) + 2 &§$eq 5 + 2 §$tag(§cref(tour_monotonicity_addition)(Monotonicity) $+$)
-        )(
-          §$implies {} && §$p(n + k) + 2 &§$eq 7 §$tag(Definition $+$)
-        )(
-          §$implies {} && n + §$p(k + 2) &§$eq 7 §$tag(§cref(tour_associativity_addition)(Associativity) $+$)
-        )(
-          §$implies {} && n &§$leq 7. §$tag(§cref(leq)(Definition) $§$leq§ $)
-        )
-      )
-
       §p(
-        A nice benefit of laying out a proof like this is that we can annotate each line with the reason why the §r(implication) holds.
+        In this chapter, we have only looked at statements about numbers and squirrels, two fairly limited domains. The goal of the next chapter is to find a class of objects of interest such that they can express any subject we might want to study. Our system of §r(deductive reasoning) applied to such a universal class of objects: that's mathematics.
       )
 
-      §theorem["transitivity_leq"](Transitivity of §$(§$leq[true]))(
+      §hsection(caution)(Words of Caution)(
         §p(
-          Let §$(a, b, c) be natural numbers.
+          §R(deductive reasoning) is a powerful tool. Knowing that some conclusions you reached are provably correct makes it easy to dismiss anyone who disagrees with you. But always remember that every proof ultimately rests on certain assumptions about the objects of interest.
+        )§p(
+          While you might know for certain that a conclusion follows from certain assumptions, you cannot know whether those assumptions were correct in the first place. Every proof is only as good as its assumptions; §r(deductive reasoning) offers guaranteed self-consistency, not absolute truths. If you start with awful assumptions, you can arrive at awful conclusions. Reaching those conclusions in a provably correct manner does not justify them at all, it is your assumptions you need to scrutinize.
+        )§p(
+          In mathematics, almost everyone agrees on the same assumptions, and the few points of contention are well-known (key phrases are §link(intuitionistic logic)(https://en.wikipedia.org/wiki/Intuitionistic_logic) and the §link(axiom of choice)(https://en.wikipedia.org/wiki/Axiom_of_choice)). But the world we inhabit is complex, and human beings even more so, making it difficult or even impossible for multiple people to work from identical assumptions on real-world problems.
+        )§p(
+          So the next time you disagree with someone, do not assume that their logic is faulty, try to work out the differences in your assumptions instead. Do so with kindness and humility, do not become the person from the following comic:
         )
-      )(
-        §p(
-          If §$(a §$leq b) and §$(b §$leq c), then §$(a §$leq c).
-        )
-      )(
-        §p(§cref(exercise_transitivity_leq))
-      )
 
-      §exercise["exercise_transitivity_leq"](
-        §p(Prove §cref(transitivity_leq).)
-      )
-
-      §exercise["exercise_exactly_one"](
-        §p(
-          Formulate a statement that expresses that exactly one squirrel is §r(equal) to §$(§$value(Alex)). It is possible to do this without using §rs(implication), but the arguably most elegant solution uses one.
+        §div(img_container)(
+          §a{"href": "https://xkcd.com/1112/"}(
+            <img alt="A comic about a person obnoxiously refusing to adjust their own assumptions despite facing evidence that they are incorrect." src="./assets/images/think_logically.png">
+          )
         )
       )
 
+    )
+
+    §hsection(exercises_deductive_reasoning)(Exercises)(
       §p(
-        §Rs(implication) are so common that various phrases and symbols are in use for expressing them; all of the following denote an §r(implication) with §r(premise) §verbatim(§i(bla)) and §r(conclusion) §verbatim(§i(blubb)):
+        Every chapter of this book ends with a collection of exercises that recapitulate the contents of the chapter and have you develop related concepts on your own. Every chapter except this one that is, as you will practice your §r(deductive reasoning) skills throughout the whole book.
+      )§p(
+        Like every new skill, you become better at mathematics by practicing. §strong(You do not solve exercises to check whether you understood the material, you solve the exercises so that you §em(do) understand the material.) You will spend more time on thinking about exercises than on reading the book.
+      )§p(
+        To get the most out of these exercises, try to follow some principles:
       )§ul(
-        §li(§verbatim(§i(bla) implies §i(blubb)))
-        §li(§verbatim(if §i(bla), then §i(blubb)))
-        §li(§verbatim(whenever §i(bla), also §i(blubb)))
-        §li(§verbatim(from §i(bla) follows §i(blubb)))
-        §li(§verbatim(§i(blubb) follows from §i(bla)))
-        §li(§verbatim(§i(bla) §$(§$implies) §i(blubb)))
-        §li(§verbatim(§i(blubb) §$(§$impliedby) §i(bla)))
-        §li(§verbatim(§i(bla) is sufficient for §i(blubb)))
-        §li(§verbatim(§i(blubb) is necessary for §i(bla)))
-      )
-
-    )
-
-    §hsection(utilizing_implications)(Utilizing Implications)(
-      §p(
-        Once an §r(implication) is proven, you can use it to show that its §r(conclusion) holds by proving its §r(premise):
-      )
-
-      §statement["tour_use_implication"](
-        §p(
-          §$(3 §$leq 7)
+        §li(
+          Write down your solutions, you §em(will) miss crucial details if you do not. Giving written solutions to only some of the exercises will teach you more than solving all of them in your head.
+        )§li(
+          Find other learners and talk about exercises that give you trouble. Exchange your write-ups and help each other improve them. Consider writing down solutions together.
+        )§li(
+          If at all possible, gather feedback on your written solutions from a more experienced. Ask them to be thorough and scrutinize your work mercilessly, in content and formal rigor as well as in style and presentation. You are not only learning new concepts, you are also getting to know a new mode of communication.
         )
-      )(
-        §p(
-          §$(3 §$leq 5) because §$(3 + 2 §$eq 5). With §cref(tour_implication) follows that §$(3 §$leq 7).
-        )
-      )
-
-      §p(
-        Now consider a situation where §verbatim(§i(bla)) §r(implication)(implies) §verbatim(§i(blubb)), and §verbatim(§i(blubb)) §r(implication)(implies) §verbatim(§i(blip)). Then we also know that §verbatim(§i(bla)) §r(implication)(implies) §verbatim(§i(blip)), because if we can assume §verbatim(§i(bla)), then the first §i(implication) gives us §verbatim(§i(blubb)), from which the second §i(implication) gives us §verbatim(§i(blip)). This property of §rs(implication) is called the §definex["transitivity_implication"](transitive implication)(blarg)(transitivity)(
-          §p(
-            The §rdef(transitive implication)(transitivity) of §rs(implication) states that if §verbatim(§i(bla)) §r(implication)(implies) §verbatim(§i(blubb)), and §verbatim(§i(blubb)) §r(implication)(implies) §verbatim(§i(blip)), then §verbatim(§i(bla)) §r(implication)(implies) §verbatim(§i(blip)).
-          )
-        ) of §rs(implication), and is crucial to §r(deductive reasoning): the §r(transitive implication)(transitivity) of §rs(implication) is the reason why we can prove statements by chaining multiple small steps where each step §r(implication)(implies) the next one.
-      )
-
-    )
-
-    §hsection(negating_implication)(Negating Implications)(
-      §p(
-        An §r(implication) expresses that its §r(conclusion) cannot be false while its §r(premise) is a true. Consequently you disprove an §r(implication), or equivalently, you prove a §r(negation)(negated) §r(implication), by showing that its §r(premise) holds but its §r(conclusion) does not.
-      )
-
-      §statement["tour_negation_implication"](
-        §p(
-          §$(§$value(Alex) §$eq §$value(Alex)) does not imply that §$(§$value(Alex) §$eq §$value(Blake))
-        )
-      )(
-        §p(
-          §$(§$value(Alex) §$eq §$value(Alex)) holds but §$(§$value(Alex) §$eq §$value(Blake)) does not.
-        )
-      )
-
-      §exercise["wrong_negation_implication"](
-        §p(
-          TODO
-        )
-      )§exercise["wrong_negation_implication2"](
-        §p(
-          TODO
-        )
-      )
-
-      §p(
-        From a similar line of reasoning we can derive another §r(meta statement). If the §r(conclusion) of an implication does not hold, then the §r(premise) of the implication cannot hold either. This reformulation of an §r(implication) is called its §definex(contrapositive)(
-          §p(
-            The §rdef(contrapositive) of an §r(implication) §verbatim(§i(bla) implies §i(blubb)) is §verbatim(not §i(blubb) implies not §i(bla)).
-          )
-        ): the §r(contrapositive) of §verbatim(§i(bla) implies §i(blubb)) is §verbatim(not §i(blubb) implies not §i(bla)). An §r(implication) and its §r(contrapositive) §r(mean the same), this is called the law of §definex(contraposition)(
-          §p(
-            The law of §rdef(contraposition)(contraposition) states that an §r(implication) and its §r(contrapositive) §r(mean the same).
-          )
-        ).
-      )
-
-      §statement["tour_contraposition"](
-        §p(Let §$(n) be a natural number.)
-      )(
-        §p(
-          If §$(n) is not §r(less than or equal to) §$(7), then §$(n) is not §r(less than or equal to) §$(5).
-        )
-      )(
-        §p(
-          The statement is the §r(contrapositive) of §cref(tour_implication) and thus holds by the law of §r(contraposition).
-        )
-      )
-
-      §exercise["exercise_wrong_negations_implication"](
-        §p(
-          How are the incorrect attempts at §r(negation)(negating) §rs(implication) of §cref(wrong_negation_implication) and §cref(wrong_negation_implication2) related?
-        )
-      )
-
-    )
-
-    §hsection(absurd_implications)(Absurd Implications)(
-      §p(
-        Any time you prove an §r(implication), you start by assuming its §r(premise) to be true. So what happens if the premise is a false statement? Perhaps surprisingly, the §r(implication) as a whole turns out to be true in that case. We demonstrate this with an example:
-      )
-
-      §statement["absurd"](
-        §p(
-          If §$(0 §$eq 1), then §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
-        )
-      )(
-        §p(
-          Assume §$(0 §$eq 1). Further notice that §$(0 §$neq 1) holds by §r(equal)(the definition of equality). Thus also the §r(disjunction) §verbatim(§$(0 §$neq 1) or §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon) holds.
-        )§p(
-          Because §$(0 §$eq 1), the first substatement of that §r(disjunction) cannot be true, so the second substatement has to be. Thus, we have shown that §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
-        )
-      )
-
-      §p(
-        Eating pumpkin pie in a hot air balloon is rather atypical behavior for squirrels, and yet we were able to prove it by assuming a falsehood. In fact, we could have proven §em(any) statement, including even that §$(§$value(Alex)) is §em(not) currently eating pumpkin pie in a hot air balloon. The fact that every statement can be proven from a falsehood is vivaciously called the §definex(principle of explosion)(
-          §p(
-            The §rdef(principle of explosion) states that from a falsehood every statement can be proven.
-          )
-        ).
       )§p(
-        When proving an §r(implication) with a false premise, we get to assume a falsehood to hold. By the §r(principle of explosion), we can then prove any statement. In particular, we can prove the §r(conclusion) of the §r(implication), and if we can prove the §r(conclusion) by assuming the §r(premise), then the §r(implication) as a whole holds.
-      )§p(
-        This can lead to statements to whose truth it might take some getting used to, such as the one in the following exercise:
-      )
-
-      §exercise["exercise_absurd"](
-        §p(
-          Prove that there exist a squirrel §$(s) such that §$(s §$eq §$value(Alex)) implies §$(s §$eq §$value(Blake)).
-        )
-      )
-
-    )
-
-    §hsection(contradictions)(Proofs by Contradiction)(
-      §p(
-        §Rs(implication) with a false §r(premise) always hold, but what about §rs(implication) with a false §r(conclusion)? If the §r(implication) is to hold, we must be able to prove its §r(conclusion), which should be impossible if the §r(conclusion) is false. Except, of course, if the §r(premise) is false as well. So we can observe the following: If an §r(implication) with a false §r(conclusion) holds, its §r(premise) must be false.
-      )§p(
-        We can use this as a proof technique: If we can manage to prove a falsehood by assuming the §r(negation) of some statement, then the §r(negation) of that statement must have been false, and thus, the original statement must have been true. Such a proof is called a §definex["proof_by_contradiction"](proof by contradiction)(
-          §p(
-            A §rdef(proof by contradiction) shows a statement by assuming its negation and deriving a falsehood from it.
-          )
-        ), §verbatim(contradiction) being synonymous to §verbatim(falsehood) in this context.
-      )
-
-      §statement["tour_contradiction"](
-        §p(
-          There is no squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t).
-        )
-      )(
-        §p(
-          Suppose toward a contradiction that there exists a squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t).
-        )§p(
-          Then we know that both §$(s §$eq §$value(Alex)) and §$(s §$eq §$value(Blake)), and thus §$(§$value(Alex) §$eq §$value(Blake)). This is a contradiction, the assumption must have been false, and thus, the original statement must be true.
-        )
-      )
-
-    )
-
-    §hsection(biimplications)(Bi-implications)(
-      When two statements §r(implication)(imply) each other, then either both of them or none of them have to hold. This is called a §definex["bi_implication"](bi-implication)(
-        §p(
-          A §rdef(bi-implication) asserts that two statements §r(implication)(imply) each other: §verbatim(§$(5 §$eq 6) if and only if §$(6 §$eq 7)).
-        )§p(
-          You prove a §r(bi-implication) by proving both §rs(implication) separately.
-        )
-      ).
-
-      §statement["tour_iff"](
-        §p(
-          §$(5 §$eq 6) if and only if §$(6 §$eq 7)
-        )
-      )(
-        §proof_part(
-          §verbatim(§$(§$implies)):
-        )(
-          §p(
-            Assume §$(5 §$eq 6). Then, by the §r(principle of explosion), §$(6 §$eq 7).
-          )
-        )
-        §proof_part(
-          §verbatim(§$(§$impliedby)):
-        )(
-          §p(
-            Assume §$(6 §$eq 7). Then, by the §r(principle of explosion), §$(5 §$eq 6).
-          )
-        )
-      )
-
-      §p(
-        You prove a §r(bi-implication) by proving both §rs(implication) separately. You prove a §r(negation)(negated) §r(bi-implication) by disproving either of the §rs(implication).
-      )§p(
-        A common variation on proving both §rs(implication) directly is to prove the §r(contrapositive) of one of them:
-      )
-
-      §statement["tour_iff2"](
-        §p(
-          §$(5 §$eq 6) if and only if §$(6 §$eq 7)
-        )
-      )(
-        §proof_part(
-          §verbatim(§$(5 §$eq 6 §$implies 6 §$eq 7)):
-        )(
-          §p(
-            Assume §$(5 §$eq 6). Then, by the §r(principle of explosion), §$(6 §$eq 7).
-          )
-        )
-        §proof_part(
-          §verbatim(§$(5 §$neq 6 §$implies 6 §$neq 7)):
-        )(
-          §p(
-            §$(5 §$neq 6) by §r(equal)(the definition of equality).
-          )
-        )
-      )
-
-      §p(
-        There are a few different ways of formulating §rs(bi-implication):
+        When writing down your solutions, try to adhere to the following guidelines:
       )§ul(
-        §set_math_id["iff", "bi_implication"]
-        §li(§verbatim(§i(bla) if and only if §i(blubb)))
-        §li(§verbatim(§i(bla) iff §i(blubb)))
-        §li(§verbatim(§i(bla) exactly if §i(blubb)))
-        §li(§verbatim(§i(bla) is equivalent to §i(blubb)))
-        §li(§verbatim(§i(bla) and §i(blubb) imply each other))
-        §li(§verbatim(§i(bla) §$(§$iff) §i(blubb)))
-      )
-
-      §p(
-        Finally, the concept of statements that §r(mean the same) is exactly that of statements that imply each other.
+        §li(
+          Help your reader understand you. If the exercise asks you to either prove or disprove a statement, begin by telling the reader which of the two you will do. The reader should never need to backtrack in order to understand your solution. Omit all information that is not directly relevant to your solution.
+        )§li(
+          Your reader has exactly the background knowledge given in the book up to the current point. You need to convince your reader of the correctness of your solutions. Your reader does not accept your intuitive reasoning, only knowledge derived from definitions counts. Write down computations step-by-step, annotating each step with the definition or proven statement that justifies it.
+        )§li(
+          Introducing formal arguments with an intuitive explanation can sometimes increase legibility. If you choose to do so, clearly communicate which parts of your solution constitute guiding intuition and which parts constitute formal reasoning. No intuitive explanation should be without a formal counterpart.
+        )
+      )§p(
+        Finally some hints for approaching difficult exercises:
+      )§ul(
+        §li(
+          You cannot solve an exercise you do not fully understand. Whenever you encounter a term in an exercise that you are unsure about, look up its definition. Never start an exercise if you cannot precisely define the task at hand.
+        )§li(
+          Examining concrete examples often leads to ideas that are applicable in general. Rather than diving directly into a proof, first get a feeling for the behavior of specific objects. Or perhaps look for counterexamples and analyze why you just cannot find any.
+        )§li(
+          Do not be discouraged if you struggle to solve an exercise. Always remember that you do not do exercises to measure your skills, but to hone them. The exercises you can easily solve are far less valuable than those you are having a hard time with. Keep in mind that moving on to another exercise and returning later to the difficult one can sometimes do wonders.
+        )
       )
 
     )
 
   )
+
 )
