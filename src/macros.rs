@@ -195,6 +195,7 @@ pub(crate) enum OutInternal {
     CopyAll(Trace, [PathBuf; 2], Vec<OutInternal>),
     Template(Trace, Template, Vec<OutInternal>),
     HSection(Trace, HSection, Vec<OutInternal>, bool /*no numbering*/),
+    ChapterNav(Trace, (), Vec<OutInternal>),
     Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String),
     Fact(Trace, BoxParams, Vec<OutInternal>, String, bool /*no numbering*/),
     Proof(Trace, Proof, Vec<OutInternal>),
@@ -363,6 +364,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     Out::Text(r###"<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="./assets/katex.min.css">
         <link rel="stylesheet" href="./assets/fonts.css">
         <link rel="stylesheet" href="./assets/main.css">
@@ -423,7 +425,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         }
 
         OutInternal::HSection(trace, params, args, no_numbering) => {
-            arguments_exact(3, &args, &trace)?;
+            arguments_exact(2, &args, &trace)?;
 
             y.state.hsection_level += 1;
             if y.state.hsection_level > 5 {
@@ -458,10 +460,17 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }
 
             let id_trace = args[0].trace();
-            let r = up_macro(|_p, args, y, _trace| {
-                let url = y.state.register_id(&args[0], CrefKind::HSection, id_trace.clone())?;
-                y.state.sticky_state.hsections.insert(args[0].to_string(), crate::HSectionInfo {
+
+            y.state.sticky_state.hsections_structure.push(
+                params.0[0].to_string(),
+                y.state.second_iteration,
+            );
+
+            let r = up_macro(|p, args, y, _trace| {
+                let url = y.state.register_id(&p.0[0].to_string(), CrefKind::HSection, id_trace.clone())?;
+                y.state.sticky_state.hsections.insert(p.0[0].to_string(), crate::HSectionInfo {
                     name: y.state.hsection_name[level].clone(),
+                    title: args[0].to_string(),
                     numbering: numbering.clone(),
                 });
 
@@ -470,14 +479,14 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
     {}
 </section>"###,
                     level + 1,
-                    args[0],
+                    p.0[0].to_string(),
                     url,
                     if y.state.hsection_render_number[level] && !no_numbering { &y.state.hsection_pre_number[level] } else { "" },
                     if y.state.hsection_render_number[level] && !no_numbering { &numbering } else { "" },
                     if y.state.hsection_render_number[level] && !no_numbering { &y.state.hsection_post_number[level] } else { "" },
-                    args[1],
+                    args[0],
                     level + 1,
-                    args[2]).into(),
+                    args[1]).into(),
                 );
             }, &params, args, trace, y);
 
@@ -487,8 +496,50 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 }
             }
             y.state.hsection_level -= 1;
+            y.state.sticky_state.hsections_structure.pop();
 
             return r;
+        }
+
+        OutInternal::ChapterNav(trace, params, args) => {
+            arguments_exact(0, &args, &trace)?;
+            return down_macro(|_p, _n, y, trace| {
+                if y.state.second_iteration {
+                    let (previous, next) = y.state.sticky_state.hsections_structure.previous_and_next_ids();
+
+                    let prev_link = if let Some(id) = previous {
+                        let info = y.state.sticky_state.hsections.get(id).unwrap();
+                        format!(r###"<a href="{}">{}</a>"###, y.state.resolve_id_to_url(id, trace.clone())?, info.title)
+                    } else {
+                        "".to_string()
+                    };
+                    let next_link = if let Some(id) = next {
+                        let info = y.state.sticky_state.hsections.get(id).unwrap();
+                        format!(r###"<a href="{}">{}</a>"###, y.state.resolve_id_to_url(id, trace.clone())?, info.title)
+                    } else {
+                        "".to_string()
+                    };
+
+                    let nav = format!(
+                        r###"<nav class="chapter_navigation slightlywide">
+    <div class="previous_chapter">
+        {}
+    </div>
+    <div class="navigation_to_toc"><a href="{}">Table of Contents</a></div>
+    <div class="next_chapter">
+        {}
+    </div>
+</nav>"###,
+                        prev_link,
+                        y.state.resolve_id_to_url("toc", trace)?,
+                        next_link,
+                    );
+
+                    return Ok(Out::Text(nav.into()));
+                } else {
+                    return Ok(Out::Many(vec![]))
+                }
+            }, &params, args, trace, y);
         }
 
         OutInternal::Box(trace, params, args, kind, name) => {
@@ -828,7 +879,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             arguments_gte(if custom_text {2} else {1}, &args, &trace)?;
             arguments_lt(if custom_text {5} else {4}, &args, &trace)?;
 
-            return up_macro(|_p, args, y, trace| {
+            return up_macro(|p, args, y, trace| {
                 let (target_id, boxless) = match &y.state.box_current {
                     None => (params.0[0].clone(), true),
                     Some(id) => (id.to_string(), false),
@@ -848,7 +899,11 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     }
                 }
 
-                let defined = args[0].clone();
+                let defined = if p.0.len() == 2 {
+                    p.0[1].to_string()
+                } else {
+                    args[0].to_string()
+                };
                 let href = if boxless {
                     format!(
                         "{}{}#{}",
@@ -1304,11 +1359,11 @@ impl Default for Template {
 }
 
 #[derive(Deserialize, Clone)]
-pub struct HSection;
+pub struct HSection([String; 1]);
 
 impl Default for HSection {
     fn default() -> Self {
-        HSection
+        HSection(["".to_string()])
     }
 }
 
@@ -1340,11 +1395,11 @@ impl Default for Proof {
 }
 
 #[derive(Deserialize, Clone)]
-pub struct Define([String; 1]);
+pub struct Define(Vec<String>);
 
 impl Default for Define {
     fn default() -> Self {
-        Define(["".to_string()])
+        Define(vec!["".to_string()])
     }
 }
 

@@ -1,0 +1,11 @@
+§template(
+
+)(
+  §hsection["chapter_higher_order_logic"](TODO Higher-Order Logic)(
+    §p(
+      TODO
+    )
+
+    §chapternav
+  )
+)

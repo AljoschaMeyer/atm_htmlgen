@@ -73,7 +73,7 @@ function name_set(set) {
 }
 
 function button_text(element, set, is_in) {
-  return tex_string(`${element} ${is_in ? "\\in" : "\\notin"} ${name_set(set)}`);
+  return tex_string(`${tex_symbol(element)} ${is_in ? "\\in" : "\\notin"} ${name_set(set)}`);
 }
 
 function render_set_def(set, s, s3) {
@@ -86,15 +86,19 @@ function set_tex(s, s3_) {
   const elements = s.reduce((acc, element, i) => {
     if (element) {
       if (s3[i]) {
-        acc.push(`\\htmlClass{s3}{${i}}`);
+        acc.push(`\\htmlClass{s3}{${tex_symbol(i)}}`);
       } else {
-        acc.push(i);
+        acc.push(tex_symbol(i));
       }
     }
     return acc;
   }, []);
 
   return set(elements);
+}
+
+function tex_symbol(i) {
+  return `\\htmlClass{symbol_container}{\\htmlClass{symbol${i}}{}}`;
 }
 
 function set_symmetric_difference(s1, s2) {
@@ -121,11 +125,11 @@ const container_vanilla = document.querySelector("#container_euler_vanilla");
 
 euler(container_vanilla, () => [false, false, false, false, false], () => {});
 
-// const container_equality = document.querySelector("#container_euler_equality");
-//
-// euler(container_equality, set_symmetric_difference, (container, s1, s2, s3) => {
-//   return render_results_relation(container, s1, s2, s3, "=", "\\neq");
-// });
+const container_equality = document.querySelector("#container_euler_equality");
+
+euler(container_equality, set_symmetric_difference, (container, s1, s2, s3) => {
+  return render_results_relation(container, s1, s2, s3, "=", "\\neq");
+});
 
 
 function polar_to_cartesian([x, y], r, t) {
@@ -133,7 +137,6 @@ function polar_to_cartesian([x, y], r, t) {
 }
 
 function element_cartesian(i) {
-  console.log(polar_to_cartesian([0, 0], 70, (PI * 1.5) + ((2 * PI * i) / 5)));
   return polar_to_cartesian([0, 0], 70, (PI * 1.5) + ((2 * PI * i) / 5));
 }
 

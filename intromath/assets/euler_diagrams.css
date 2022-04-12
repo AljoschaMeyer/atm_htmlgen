@@ -2,6 +2,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
+  font-size: 1.3rem
 }
 
 .eulersvg {
@@ -27,6 +28,14 @@
   fill: var(--color-obstruction);
 }
 
+.s3 .symbol0, .s3 .symbol1, .s3 .symbol2, .s3 .symbol3, .s3 .symbol4 {
+  background-color: var(--color-obstruction);
+}
+
+.euler_toggle .symbol_container {
+  margin-right: 0.2rem;
+}
+
 .euler_toggles, .the_sets {
   display: flex;
 }
@@ -48,6 +57,7 @@
   background-color: var(--color-bg2);
   text-align: center;
   transition: all 0.2s;
+  font-size: 0.75em;
 }
 
 .preview .euler_toggle {

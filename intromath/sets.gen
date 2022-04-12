@@ -4,7 +4,8 @@
 
   <script defer src="./assets/euler_diagrams.js" type="module"></script>
 )(
-  §hsection(chapter_sets)(Naïve Set Theory)(
+  §hsection["chapter_sets"](Naïve Set Theory)(
+    §p(Bla §symbol0 §symbol1 §symbol2 §symbol3 §symbol4 bla §$(§$set(1)(§$symbol0)(§$symbol1)(§$symbol2)(§$symbol3)(§$symbol4)(5)) bla.)
 
     §p(
       In the §cref(chapter_deductive_reasoning)(previous chapter) we examined the structure of statements, and how to prove or disprove them. The example statements we looked at talked about numbers, but our knowledge about statements is independent from that domain of discourse; we can formulate and prove statements about a population of squirrels in exactly the same way. But both numbers and squirrels are fairly limited domains. In this chapter, we examine a domain that is so powerful that we can express everything from numbers to computers to proofs themselves in it.
@@ -12,7 +13,7 @@
       Such a universal domain will allow us to apply very general concepts to arbitrarily specific situations. And yet you will find that the objects our statements will talk about are in themselves very simple. Striking the balance between simplicity and universality of foundational objects in the development of §em(set theory) was arguably one of the key achievements of the 20th century.
     )
 
-    §hsection(section_sets)(Sets)(
+    §hsection["section_sets"](Sets)(
       §p(
         When attempting to define the foundations of mathematics, you run into a chicken-egg problem: Any definition needs to make use of mathematical concepts, so in particular the definition of the foundational objects also requires prior definitions. But then it clearly is not foundational.
       )§p(
@@ -23,14 +24,14 @@
         With that out of the way, we can now look at the one definition on which everything else in this book will build upon:
       )
 
-      §definition["set"](Set)(
+      §definition["set"](Set)()(
         §set_math_id["set", "set"]
         §p(
-          A §define(set)(set) is a collection of objects that ignores the order of those objects and how often they occur.
+          A §define(set) is a collection of objects that ignores the order of those objects and how often they occur.
         )§p(
-          We denote a §r(set) by listing its objects within curly braces, separated by commas, for example: §$(§$set(1)(2)(3)).
+          We denote a §r(set) by listing its objects within curly braces, separated by commas, for example: §nobr(§$(§$set(1)(2)(3)).)
         )§p(
-          The §define(empty_set)(empty set) §$(§$set()) — the collection that contains no objects at all — is also written as §$(§$set).
+          The §define(empty set) §$(§$set()) — the collection that contains no objects at all — is also written as §nobr(§$(§$set).)
         )
       )
 
@@ -40,11 +41,11 @@
         After the build-up about the foundational concept that is able to express anything you could possibly dream up, the notion of §rs(set) might be a bit of a letdown at first glance. But I promise that by the end of this chapter, you will see the power and utility that lies within this simple definition. To reach that point, we first introduce more succinct terminology for talking about which objects do and which objects do not belong to a particular §r(set).
       )
 
-      §definition["set_membership"](Set Membership)(
+      §definition["set_membership"](Set Membership)()(
         §set_math_id["in", "set_membership"]
         §set_math_id["notin", "set_membership"]
         §p(
-          To express that an object §$(x) occurs in a §r(set) §$(X), we write §$(x §$in X), and we say that §verbatim(§$(x) is an §define(element)(element) of §$(X)), §verbatim(§$(x) is a §define(member)(member) of §$(X)), or more simply that §verbatim(§$(x) §define(in)(in) §$(X)).
+          To express that an object §$(x) occurs in a §r(set) §$(X), we write §$(x §$in X), and we say that §verbatim(§$(x) is an §define(element) of §$(X)), §verbatim(§$(x) is a §define(member) of §$(X)), or more simply that §verbatim(§$(x) §define(in) §$(X)).
         )§p(
           If not §$(x §$in X), we write §$(x §$notin X).
         )
@@ -55,30 +56,30 @@
       )
 
       §p(
-        We can visualize §rs(member)(set membership) by drawing §rs(set) as blobs that enclose their §rs(element). §cref(example_euler_diagram) demonstrates such an §define["euler_diagram"](euler_diagram)(Euler diagram). Note how the idea of a §r(set) containing §rs(element) multiple times or in a particular order cannot even be expressed in these depictions, making §rs(euler_diagram) a more faithful representations of §rs(set) than our written notation.
+        We can visualize §rs(member)(set membership) by drawing §rs(set) as blobs that enclose their §rs(element). §cref(example_euler_diagram) demonstrates such an §define["euler_diagram"](Euler diagram). Note how the idea of a §r(set) containing §rs(element) multiple times or in a particular order cannot even be expressed in these depictions, making §rs(Euler diagram) a more faithful representations of §rs(set) than our written notation.
       )
 
-      §example["example_euler_diagram"](Euler Diagram)(
+      §example["example_euler_diagram"](Euler Diagram)()(
         §captioned(
           §input["euler_diagrams/vanilla.html"]
         )(
-          §p(An interactive §r(euler_diagram) showing two §rs(set). Toggle the buttons to change the depicted §rs(set).)
+          §p(An interactive §r(Euler diagram) showing two §rs(set). Toggle the buttons to change the depicted §rs(set).)
         )
       )
 
-      §hsection(subsection_set_equality)(Set Equality)(
+      §hsection["subsection_set_equality"](Set Equality)(
         §p(
           We can make precise what it means that §rs(set) ignore the order and multiplicity of their §rs(element) by defining when two §rs(set) are considered equal.
         )
 
-        §definition["set_eq"](Set Equality)(
+        §definition["set_eq"](Set Equality)()(
           §set_math_id["seq", "set_eq"]
           §set_math_id["sneq", "set_eq"]
           §p(
             Let §$(A) and §$(B) be §rs(set).
           )
           §p(
-            We say §$(A) and §$(B) are §define(sequal)(equal), written as §$(A §$seq B), if for all §$(x) we have §$(x §$in A) if and only if §$(x §$in B).
+            We say §$(A) and §$(B) are §define["", "sequal"](equal)(equal), written as §$(A §$seq B), if for all §$(x) we have §$(x §$in A) if and only if §$(x §$in B).
           )§p(
              If not §$(A §$seq B), we write §$(A §$sneq B).
           )
@@ -96,12 +97,14 @@
           §cref(example_seq) visualizes that third interpretation.
         )
 
-        §example["example_seq"](Set Equality)(
-          §captioned(
-            §input["euler_diagrams/equality.html"]
-          )(
-            §p(
-              Two §rs(set), §span{"class": "s3"}(highlighting) the §rs(element) occurring in exactly one of them. You can change the §rs(set), note how the §rs(set) are §r(sequal) exactly if no such §rs(element) remain.
+        §div(slightlywide)(
+          §example["example_seq"](Set Equality)()(
+            §captioned(
+              §input["euler_diagrams/equality.html"]
+            )(
+              §p(
+                Two §rs(set), §span{"class": "s3"}(highlighting) the §rs(element) occurring in exactly one of them. You can change the §rs(set), note how the §rs(set) are §r(sequal) exactly if no such §rs(element) remain.
+              )
             )
           )
         )
@@ -135,17 +138,17 @@
         )
 
         §p(
-          These properties might feel so self-evidently true (just picture the §rs(euler_diagram)) that it can initially be hard to know where to even begin proving them. So while these proofs might not be the most flashy ones, I find it quite remarkable that we can rigorously reason about such fundamental properties rather than blindly accepting them as true.
+          These properties might feel so self-evidently true (just picture the §rs(Euler diagram)) that it can initially be hard to know where to even begin proving them. So while these proofs might not be the most flashy ones, I find it quite remarkable that we can rigorously reason about such fundamental properties rather than blindly accepting them as true.
         )
 
       )
 
-      §hsection(subsection_subsets)(Subsets)(
+      §hsection["subsection_subsets"](Subsets)(
         §p(
           We can think of §r(sequal)(set equality) as a very strict way of looking for similarities between two §rs(set). But there are more general ways in which §rs(set) can be related. It might be the case, for example, that one §r(set) contains all §rs(element) of another §r(set) and then some. This relation is common enough that we give it a name:
         )
 
-        §definition["subset"](Subset, Superset)(
+        §definition["subset"](Subset, Superset)()(
           §set_math_id["subseteq", "subset"]
           §set_math_id["subset", "subset"]
           §set_math_id["supseteq", "subset"]
@@ -164,7 +167,7 @@
           )
         )
 
-        §example["example_subset"](Subsets and Supersets)(
+        §example["example_subset"](Subsets and Supersets)()(
           §captioned(
             §input["euler_diagrams/equality.html"]
           )(
@@ -215,6 +218,7 @@
 
     )
 
+    §chapternav
 
   )
 )

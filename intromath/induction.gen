@@ -1,0 +1,11 @@
+§template(
+
+)(
+  §hsection["chapter_induction"](TODO Induction)(
+    §p(
+      TODO
+    )
+
+    §chapternav
+  )
+)

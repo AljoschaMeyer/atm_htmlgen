@@ -2,10 +2,10 @@
   §div(wide)(§h1(§span{"style": "font-size: 40px"}(An Opinionated)§br§ Introduction to§br§ Mathematics))
 
   §p(
-    Doing mathematics is a lot like playing the violin: not particularly pragmatic at a first glance, pretty frustrating in the beginning, and yet quite a few people say that learning to do it changed their life for the better.
+    Doing mathematics is a lot like playing the violin: not particularly pragmatic at first glance, pretty frustrating in the beginning, and yet quite a few people say that learning to do it changed their life for the better.
   )
 
-  §hsection*(prelude)(Prelude)(
+  §hsection*["prelude"](Prelude)(
     §p(
       The first time anyone holds a violin, they are unable to produce the music in their head. Singing or whistling might allow them to express themselves, but the violin is a hindrance. But suppose they persist, they put in hours and hours of practice, with feedback from a skilled violinist. At some point, the mechanics of playing the violin become second nature to them, the violin becomes a new mode of expression. And because the violin itself has been honed over the centuries to augment its player's ability to express themselves, they can ultimately play music that would be impossible to create without such a highly developed instrument.
     )
@@ -24,12 +24,68 @@
 
     §video_container(<iframe src="https://www.youtube-nocookie.com/embed/6Uf7-c-V8NY?start=4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>)
 
-    §hsection*(toc)(Table of Contents)(
-
+    §hsection*["toc"](Table of Contents)(
+      §div(toc slightlywide)(
+        §div(tocpart)(
+          §div(tocparttitle)(
+            Part 1: Tools of the Trade
+          )§div(tocpartchapters)(
+            §div(tocchapter)(
+              §cref(chapter_deductive_reasoning)
+              §cref(chapter_deductive_reasoning)(Deductive Reasoning)
+            )§div(tocchapter)(
+              §cref(chapter_sets)
+              §cref(chapter_sets)(WIP Naïve Set Theory)
+            )§div(tocchapter)(
+              §cref(chapter_induction)
+              §cref(chapter_induction)(TODO Induction)
+            )
+          )
+        )
+        §div(tocpart)(
+          §div(tocparttitle)(
+            Part 2: Comparisons
+          )§div(tocpartchapters)(
+            §div(tocchapter)(
+              §cref(chapter_cardinality)
+              §cref(chapter_cardinality)(TODO Cardinality)
+            )§div(tocchapter)(
+              §cref(chapter_homogeneous_relations)
+              §cref(chapter_homogeneous_relations)(TODO Homogeneous Relations)
+            )§div(tocchapter)(
+              §cref(chapter_abstract_algebra)
+              §cref(chapter_abstract_algebra)(TODO Abstract Algebra)
+            )
+          )
+        )
+        §div(tocpart)(
+          §div(tocparttitle)(
+            Part 3: Logics
+          )§div(tocpartchapters)(
+            §div(tocchapter)(
+              §cref(chapter_propositional_logic)
+              §cref(chapter_propositional_logic)(TODO Propositional Logic)
+            )§div(tocchapter)(
+              §cref(chapter_first_order_logic)
+              §cref(chapter_first_order_logic)(TODO First-Order Logic)
+            )§div(tocchapter)(
+              §cref(chapter_higher_order_logic)
+              §cref(chapter_higher_order_logic)(TODO Higher-Order Logic)
+            )
+          )
+        )
+      )
     )
 
+    §hsection*["about"](About the Book)(
+      §p(
+        This book is written by §link(Aljoscha Meyer)(https://aljoscha-meyer.de/), out of the desire for a high-quality, freely accessible introduction to the wonderful and useful world of mathematics. It is placed in the public domain, which means you are free to distribute or modify it however you like. You could create a translation, add more topics, or even print it on T-shirts, sell them, and keep all the profits for yourself.
+      )§p(
+        The source code for this book is hosted on §link(github)(https://github.com/AljoschaMeyer/introtcs). This is also the primary place to suggest changes to the book. Please do not hesitate to report even small errors such as misspelled words, failure to consistently stick to American English, awkward grammar, typographic mistakes, or stylistic mishaps.
+      )
+    )
 
-
+    §chapternav
   )
 
 )

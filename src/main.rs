@@ -13,6 +13,9 @@ use macros::*;
 mod parse;
 use parse::*;
 
+mod hsections;
+use hsections::*;
+
 pub struct RunConfiguration {
     pub entrypoint: PathBuf,
 }
@@ -38,7 +41,8 @@ fn do_run(y: &mut Yatt) -> Result<(), YattError> {
             if y.state.second_iteration {
                 return Ok(());
             } else {
-                let sticky_state = y.state.sticky_state.clone();
+                let mut sticky_state = y.state.sticky_state.clone();
+                sticky_state.hsections_structure.reset();
                 y.state = State::new(y.state.entrypoint.clone())?;
                 y.state.second_iteration = true;
                 y.state.sticky_state = sticky_state;
@@ -410,6 +414,7 @@ pub(crate) struct StickyState {
     pub defined: HashMap<String, DefinedInfo>,
     pub math_definitions: HashMap<String, String>,
     pub cases: HashMap<String, String>,
+    pub hsections_structure: HSections,
 }
 
 impl StickyState {
@@ -421,6 +426,7 @@ impl StickyState {
             defined: HashMap::new(),
             math_definitions: HashMap::new(),
             cases: HashMap::new(),
+            hsections_structure: HSections::new(),
         }
     }
 }
@@ -443,6 +449,7 @@ pub(crate) struct IdInfo {
 #[derive(Clone)]
 pub struct HSectionInfo {
     pub name: String, // "Chapter", "Section", etc.
+    pub title: String,
     pub numbering: String,
 }
 

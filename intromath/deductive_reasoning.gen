@@ -1,12 +1,12 @@
 §template(
 
 )(
-  §hsection(chapter_deductive_reasoning)(Deductive Reasoning)(
+  §hsection["chapter_deductive_reasoning"](Deductive Reasoning)(
     §p(
       Mathematicians go about understanding the world in a very rigorous manner; they do not §em(guess) or §em(believe) things, but they §em(prove) them. Once a fact has been proven, it can be used for proving other facts. In this chapter, we take a close look at how to operate in this framework. As a human being, you are already adept at reasoning about the world, so some of what follows will likely be familiar to you already. Turning your intuitive understanding into explicit knowledge will improve your ability to reason this way.
     )
 
-    §hsection(section_deductive_reasoning)(Gathering Knowledge)(
+    §hsection["section_deductive_reasoning"](Gathering Knowledge)(
       §p(
         §define["deductive_reasoning"](deductive reasoning)(deductive reasonings)(Deductive reasoning) is the process of concluding facts from assumptions. If we assume that squirrels are always hungry, and that Alex is a squirrel, we can conclude that Alex is always hungry. A framework for §r(deductive reasoning) must provide clear rules on which deduction steps are valid. If, for example, we knew that Vic was always hungry, we should not be able to conclude that Vic is a squirrel; Vic could be a badger for all we know.
       )§p(
@@ -38,9 +38,9 @@
 
     )
 
-    §hsection(section_whirlwind_tour)(A Whirlwind Tour of Tiny Proofs)(
+    §hsection["section_whirlwind_tour"](A Whirlwind Tour of Tiny Proofs)(
       §p(
-        In order to formulate statements, we first need objects that the statements can talk about. For the coming examples, we will primarily use the natural numbers (§$(0, 1, 2, §$ldots)). To demonstrate that this mode of reasoning can be applied to anything really, we will also talk about a population of friendly (and hungry) squirrels: §$(§$value(Alex)), §$(§$value(Blake)), and §$(§$value(Charlie)).
+        In order to formulate statements, we first need objects that the statements can talk about. For the coming examples, we will use the natural numbers (§$(0, 1, 2, §$ldots)). To demonstrate that this mode of reasoning can be applied to anything really, we will also talk about a population of friendly (and hungry) squirrels: §$(§$value(Alex)), §$(§$value(Blake)), and §$(§$value(Charlie)).
       )§p(
         A squirrel by itself is not a statement; §$(§$value(Alex)) is neither true nor false, but merely an adorable object of interest. The same applies to the number §$(17), although arguably less adorable. We can bridge into the world of statements by comparing objects for equality:
       )§definition["eq"](Equality)()(
@@ -78,7 +78,7 @@
         Introducing §rs(term) still does not add any real depth however: after evaluating the §rs(term), their §r(equal)(equality) also either does or does not hold by definition. To formulate and prove more meaningful statements, we need the ability to define statements whose truth depends on the truth of other statements.
       )
 
-      §hsection(quantifiers)(Quantifiers)(
+      §hsection["quantifiers"](Quantifiers)(
         §p(
           The first such statements we examine are those of §definex["existential_quantification"](existential quantification)(
             §p(
@@ -149,7 +149,7 @@
 
       )
 
-      §hsection(definitions)(Definitions)(
+      §hsection["definitions"](Definitions)(
         §p(
           §R(existential quantification) and §r(universal quantification) enable us to define a more interesting relation between numbers than equality:
         )
@@ -238,7 +238,7 @@
 
       )
 
-      §hsection(utilizing_quantification)(Utilizing Quantifications)(
+      §hsection["utilizing_quantification"](Utilizing Quantifications)(
         §p(
           Once a statement of §r(universal quantification) has been proven, the acquired knowledge can be used in other proofs:
         )
@@ -289,7 +289,7 @@
 
       )
 
-      §hsection(names)(Names)(
+      §hsection["names"](Names)(
         §p(
           At this point, we should briefly discuss §definex["name"](name)(names)(names)(
             §p(
@@ -331,7 +331,7 @@
 
       )
 
-      §hsection(quantifier_order)(Quantifier Order)(
+      §hsection["quantifier_order"](Quantifier Order)(
         §p(
           Does it matter in which order the quantifications of a statement occur? It does not for nested §rs(existential quantification) such as those of §cref(tour_existential_quantification_nested): It makes no difference in which order we define the §rs(witness), so the same proofs still work if the order of the quantifications in the statement is swapped. The same is the case for nested statements of §r(universal quantification), the order in which we obtain the featureless values for which to prove the desired properties does not matter for the proof to be correct.
         )§p(
@@ -375,7 +375,7 @@
         )
       )
 
-      §hsection(negations)(Negations)(
+      §hsection["negations"](Negations)(
         §p(
           The §definex["negation"](negation)(
             §p(
@@ -479,7 +479,7 @@
 
       )
 
-      §hsection(conjunction_disjunction)(Conjunctions and Disjunctions)(
+      §hsection["conjunction_disjunction"](Conjunctions and Disjunctions)(
         §p(
           Between §r(existential quantification), §r(universal quantification), and §r(negation), we have covered the most complicated kinds of statements. What remains are a few statements which relate truth of other statements to each other.
         )§p(
@@ -577,7 +577,7 @@
 
       )
 
-      §hsection(utilizing_conjunction_disjunction)(Utilizing Conjunctions and Disjunctions)(
+      §hsection["utilizing_conjunction_disjunction"](Utilizing Conjunctions and Disjunctions)(
         §p(
           Once a §r(conjunction) is proven, both of its substatements can be assumed to be true:
         )
@@ -639,7 +639,7 @@
 
       )
 
-      §hsection(negating_conjunction_disjunction)(Negating Conjunctions and Disjunctions)(
+      §hsection["negating_conjunction_disjunction"](Negating Conjunctions and Disjunctions)(
         §p(
           The similarities to the behavior of quantifiers continues with the way that you prove the §rs(negation) of §rs(conjunction) and §rs(disjunction).
         )§p(
@@ -700,7 +700,7 @@
 
       )
 
-      §hsection(meta_conjunction_disjunction)(Meta Statements for Conjunctions And Disjunctions)(
+      §hsection["meta_conjunction_disjunction"](Meta Statements for Conjunctions And Disjunctions)(
         §p(
           We can observe some simple §rs(meta statement) for §rs(conjunction) and §rs(disjunction). The order of the two substatements of a §r(conjunction) or §r(disjunction) does not matter: §verbatim(§i(bla) and §i(blubb)) and §verbatim(§i(blubb) and §i(bla)) §r(mean the same), as do §verbatim(§i(bla) or §i(blubb)) and §verbatim(§i(blubb) or §i(bla)). These laws are called the §definex["conjunction_commutativity"](commutative conjunction)(blarg)(commutativity)(
             §p(
@@ -735,7 +735,7 @@
 
       )
 
-      §hsection(implications)(Implications)(
+      §hsection["implications"](Implications)(
         §p(
           §R(deductive reasoning) is about deriving statements from other statements. Whether some statement — the §definex["conclusion"](conclusion)(
             §p(
@@ -876,7 +876,7 @@
 
       )
 
-      §hsection(utilizing_implications)(Utilizing Implications)(
+      §hsection["utilizing_implications"](Utilizing Implications)(
         §p(
           Once an §r(implication) is proven, you can use it to show that its §r(conclusion) holds by proving its §r(premise):
         )
@@ -901,7 +901,7 @@
 
       )
 
-      §hsection(negating_implication)(Negating Implications)(
+      §hsection["negating_implication"](Negating Implications)(
         §p(
           An §r(implication) expresses that its §r(conclusion) cannot be false while its §r(premise) is a true. Consequently you disprove an §r(implication), or equivalently, you prove a §r(negation)(negated) §r(implication), by showing that its §r(premise) holds but its §r(conclusion) does not.
         )
@@ -962,7 +962,7 @@
 
       )
 
-      §hsection(absurd_implications)(Absurd Implications)(
+      §hsection["absurd_implications"](Absurd Implications)(
         §p(
           Any time you prove an §r(implication), you start by assuming its §r(premise) to be true. So what happens if the premise is a false statement? Perhaps surprisingly, the §r(implication) as a whole turns out to be true in that case. We demonstrate this with an example:
         )
@@ -999,7 +999,7 @@
 
       )
 
-      §hsection(contradictions)(Proofs by Contradiction)(
+      §hsection["contradictions"](Proofs by Contradiction)(
         §p(
           §Rs(implication) with a false §r(premise) always hold, but what about §rs(implication) with a false §r(conclusion)? If the §r(implication) is to hold, we must be able to prove its §r(conclusion), which should be impossible if the §r(conclusion) is false. Except, of course, if the §r(premise) is false as well. So we can observe the following: If an §r(implication) with a false §r(conclusion) holds, its §r(premise) must be false.
         )§p(
@@ -1024,7 +1024,7 @@
 
       )
 
-      §hsection(biimplications)(Bi-implications)(
+      §hsection["biimplications"](Bi-implications)(
         §p(
           When two statements §r(implication)(imply) each other, then either both of them or none of them have to hold. This is called a §definex["bi_implication"](bi-implication)(
             §p(
@@ -1103,7 +1103,7 @@
 
     )
 
-    §hsection(deductive_reasoning_conclusion)(Conclusion)(
+    §hsection["deductive_reasoning_conclusion"](Conclusion)(
       §p(
         This wraps up the overview of our system of §r(deductive reasoning). We denote objects of interest by §rs(term), combine §rs(term) into statements via §rs(predicate), and build up more complex statements from there. We acquire knowledge by proving statements, letting the types of statements determine how the proofs must work. §cref(summary_statements) summarizes the different types of statements that we use.
       )
@@ -1171,7 +1171,7 @@
         In this chapter, we have only looked at statements about numbers and squirrels, two fairly limited domains. The goal of the next chapter is to find a class of objects of interest such that they can express any subject we might want to study. Our system of §r(deductive reasoning) applied to such a universal class of objects: that's mathematics.
       )
 
-      §hsection(caution)(Words of Caution)(
+      §hsection["caution"](Words of Caution)(
         §p(
           §R(deductive reasoning) is a powerful tool. Knowing that some conclusions you reached are provably correct makes it easy to dismiss anyone who disagrees with you. But always remember that every proof ultimately rests on certain assumptions about the objects of interest.
         )§p(
@@ -1191,7 +1191,7 @@
 
     )
 
-    §hsection(exercises_deductive_reasoning)(Exercises)(
+    §hsection["exercises_deductive_reasoning"](Exercises)(
       §p(
         Every chapter of this book ends with a collection of exercises that recapitulate the contents of the chapter and have you develop related concepts on your own. Every chapter except this one that is, as you will practice your §r(deductive reasoning) skills throughout the whole book.
       )§p(
@@ -1200,11 +1200,11 @@
         To get the most out of these exercises, try to follow some principles:
       )§ul(
         §li(
-          Write down your solutions, you §em(will) miss crucial details if you do not. Giving written solutions to only some of the exercises will teach you more than solving all of them in your head.
+          Write down your solutions, you §em(will) miss crucial details if you do not. Giving written solutions to only some of the exercises will teach you more than solving all of them in your head. If you want to try digital typesetting, the most commonly used software is §link(LaTeX)(https://www.latex-project.org/).
         )§li(
           Find other learners and talk about exercises that give you trouble. Exchange your write-ups and help each other improve them. Consider writing down solutions together.
         )§li(
-          If at all possible, gather feedback on your written solutions from a more experienced. Ask them to be thorough and scrutinize your work mercilessly, in content and formal rigor as well as in style and presentation. You are not only learning new concepts, you are also getting to know a new mode of communication.
+          If at all possible, gather feedback on your written solutions from a more experienced mathematician. Ask them to be thorough and scrutinize your work mercilessly, in content and formal rigor as well as in style and presentation. You are not only learning new concepts, you are also getting to know a new mode of communication.
         )
       )§p(
         When writing down your solutions, try to adhere to the following guidelines:
@@ -1229,6 +1229,8 @@
       )
 
     )
+
+    §chapternav
 
   )
 

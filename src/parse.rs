@@ -260,6 +260,26 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Drop(t, p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"lorem" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, LOREM), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"symbol0" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol0"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$symbol0" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"symbol1" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol1"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$symbol1" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"symbol2" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol2"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$symbol2" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"symbol3" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol3"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$symbol3" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"symbol4" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol4"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$symbol4" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"hr" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, "<hr>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"br" {
@@ -272,6 +292,8 @@ impl<'a> Parser<'a> {
                         self.pm(OutInternal::Cases, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"case" {
                         self.pm(OutInternal::Case, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"chapternav" {
+                        self.pm(OutInternal::ChapterNav, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$" {
                         self.pm(|t, p, a| OutInternal::TeX(t, p, a, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$$" {
@@ -345,7 +367,9 @@ impl<'a> Parser<'a> {
                     } else if macro_name == b"verbatim" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="verbatim">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"video_container" {
-                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div><div class="video_container">"###, "</div></div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="slightlywide"><div class="video_container">"###, "</div></div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"nobr" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="nobr">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$tag" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\tag{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$p" {
