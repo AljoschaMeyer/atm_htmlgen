@@ -17,7 +17,7 @@
       )§p(
         While there are sophisticated ways of avoiding this problem, they require a good understanding of mathematics to begin with. So we instead follow the traditional approach in teaching: Our very first definition will be slightly informal, and we will simply pretend that it was sufficiently precise. Hence the §verbatim(naïve) in the chapter title §verbatim(naïve set theory).
       )§p(
-        In particular, we will talk about mathematical §verbatim(objects), without specifically stating what those are. For our purposes, we require that an object is §r(equal) to itself but not to anything else. The number §$(17), for example, is a mathematical object.
+        In particular, we will talk about mathematical §verbatim(objects), without specifically stating what those are. For our purposes, we require that an object is §r(equal) to itself but not to anything else. The number §$(17)(,) for example, is a mathematical object.
       )§p(
         Furthermore, an object must be §verbatim(well-defined), that is, it must be clear, for the purposes of determining §r(equal)(equality), which object you are talking about. For example, §verbatim(the most important composer of the 18th century) is not well-defined; whether the most important composer of the 18th century is §r(equal) to §link(Johann Sebastian Bach)(https://en.wikipedia.org/wiki/Johann_Sebastian_Bach) is a matter of personal opinion, not mathematical reasoning.
       )§p(
@@ -29,9 +29,9 @@
         §p(
           A §define(set) is a collection of objects, characterized solely by which objects belong to it, and which objects do not.
         )§p(
-          We denote a §r(set) by listing its objects within curly braces, separated by commas, for example: §$(§$set(§$symbol0)(§$symbol1)(§$symbol2)).
+          We denote a §r(set) by listing its objects within curly braces, separated by commas, for example: §$(§$set(§$symbol0)(§$symbol1)(§$symbol2))(.)
         )§p(
-          The §define(empty set) §$(§$set()) — the collection that contains no objects at all — is also written as §$(§$set).
+          The §define(empty set) §$(§$set()) — the collection that contains no objects at all — is also written as §$(§$set)(.)
         )
       )
 
@@ -45,14 +45,14 @@
         §set_math_id["in", "set_membership"]
         §set_math_id["notin", "set_membership"]
         §p(
-          To express that an object §$(x) occurs in a §r(set) §$(X), we write §$(x §$in X), and we say that §verbatim(§$(x) is an §define(element) of §$(X)), §verbatim(§$(x) is a §define(member) of §$(X)), or more simply that §verbatim(§$(x) §define(in) §$(X)).
+          To express that an object §$(x) occurs in a §r(set) §$(X)(,) we write §$(x §$in X)(,) and we say that §verbatim(§$(x) is an §define(element) of §$(X)), §verbatim(§$(x) is a §define(member) of §$(X)), or more simply that §verbatim(§$(x) §define(in) §$(X)).
         )§p(
-          If not §$(x §$in X), we write §$(x §$notin X).
+          If not §$(x §$in X)(,) we write §$(x §$notin X)(.)
         )
       )
 
       §example["example_set_membership"](
-        §$(§$symbol0 §$in §$set(§$symbol0)(§$symbol1)), §$(§$symbol1 §$in §$set(§$symbol0)(§$symbol1)), and §$(§$symbol2 §$notin §$set(§$symbol0)(§$symbol1)).
+        §$(§$symbol0 §$in §$set(§$symbol0)(§$symbol1))(,) §$(§$symbol1 §$in §$set(§$symbol0)(§$symbol1))(,) and §$(§$symbol2 §$notin §$set(§$symbol0)(§$symbol1))(.)
       )
 
       §p(
@@ -86,9 +86,9 @@
             Let §$(A) and §$(B) be §rs(set).
           )
           §p(
-            We say §$(A) and §$(B) are §define["", "sequal"](equal)(equal), written as §$(A §$seq B), if for all §$(x) we have §$(x §$in A) if and only if §$(x §$in B).
+            We say §$(A) and §$(B) are §define["", "sequal"](equal)(equal), written as §$(A §$seq B)(,) if for all §$(x) we have §$(x §$in A) if and only if §$(x §$in B)(.)
           )§p(
-             If not §$(A §$seq B), we write §$(A §$sneq B).
+             If not §$(A §$seq B)(,) we write §$(A §$sneq B)(.)
           )
         )
 
@@ -96,8 +96,8 @@
           Take a moment to consider some equivalent formulations to the §verbatim(if and only if) in §cref(set_eq):
         )
         §ul(
-          §li(§$(A §$seq B) if every §$(x §$in A) is §r(in) §$(B) and every §$(x §$in B) is §r(in) §$(A).)
-          §li(§$(A §$seq B) if every §$(x §$in A) is §r(in) §$(B) and every §$(x §$notin A) is not §r(in) §$(B).)
+          §li(§$(A §$seq B) if every §$(x §$in A) is §r(in) §$(B) and every §$(x §$in B) is §r(in) §$(A)(.))
+          §li(§$(A §$seq B) if every §$(x §$in A) is §r(in) §$(B) and every §$(x §$notin A) is not §r(in) §$(B)(.))
           §li(§$(A §$seq B) if every §$(x) is either §r(in) both §$(A) and §$(B) or §r(in) neither.)
         )
         §p(
@@ -128,9 +128,9 @@
         §proof["seq_is_equivalence"](
           §p(Claim:)
           §ol(
-            §li(§$(A §$seq A).)
-            §li(If §$(A §$seq B), then §$(B §$seq A).)
-            §li(If §$(A §$seq B) and §$(B §$seq C), then §$(A §$seq C).)
+            §li(§$(A §$seq A)(.))
+            §li(If §$(A §$seq B)(,) then §$(B §$seq A)(.))
+            §li(If §$(A §$seq B) and §$(B §$seq C)(,) then §$(A §$seq C)(.))
           )
           §p(Proof:)
           §ol(
@@ -139,29 +139,29 @@
                 §verbatim(§$(a §$in A §$implies a §$in A)):
               )(
                 §p(
-                  Let §$(a §$in A), then §$(a §$in A) by assumption.
+                  Let §$(a §$in A)(,) then §$(a §$in A) by assumption.
                 )
               )
               §proof_part(
                 §verbatim(§$(a §$notin A §$implies a §$notin A)):
               )(
                 §p(
-                  Let §$(a §$notin A), then §$(a §$notin A) by assumption.
+                  Let §$(a §$notin A)(,) then §$(a §$notin A) by assumption.
                 )
               )
             )
             §li(
-              Assume that §$(A §$seq B), that is, assume that §$(x §$in A) implies §$(x §$in B), and that §$(x §$in B) implies §$(x §$in A). Then we also have that §$(x §$in B) implies §$(x §$in A) and §$(x §$in A) implies §$(x §$in B), that is, §$(B §$seq A).
+              Assume that §$(A §$seq B)(,) that is, assume that §$(x §$in A) implies §$(x §$in B)(,) and that §$(x §$in B) implies §$(x §$in A)(.) Then we also have that §$(x §$in B) implies §$(x §$in A) and §$(x §$in A) implies §$(x §$in B)(,) that is, §$(B §$seq A)(.)
             )
             §li(
               §p(
-                Assume that §$(A §$seq B) and §$(B §$seq C).
+                Assume that §$(A §$seq B) and §$(B §$seq C)(.)
               )
               §proof_part(
                 §verbatim(§$(a §$in A §$implies a §$in C)):
               )(
                 §p(
-                  Let §$(x §$in A), then
+                  Let §$(x §$in A)(,) then
                 )§fleqn(
                   §$$align*(
                     && x &§$in A
@@ -176,7 +176,7 @@
                 §verbatim(§$(a §$notin A §$implies a §$notin C)):
               )(
                 §p(
-                  Let §$(x §$notin A), then
+                  Let §$(x §$notin A)(,) then
                 )§fleqn(
                   §$$align*(
                     && x &§$notin A
@@ -215,11 +215,11 @@
             Let §$(A) and §$(B) be §rs(set).
           )
           §p(
-            We say §$(A) is a §define(subset) of §$(B), written as §$(A §$subseteq B), if for all §$(x §$in A) we have §$(x §$in B). If furthermore §$(A §$sneq B), we say that §$(A) is a §define(strict subset)(strict subset) of §$(B), written as §$(A §$subset B).
+            We say §$(A) is a §define(subset) of §$(B)(,) written as §$(A §$subseteq B)(,) if for all §$(x §$in A) we have §$(x §$in B)(.) If furthermore §$(A §$sneq B)(,) we say that §$(A) is a §define(strict subset)(strict subset) of §$(B)(,) written as §$(A §$subset B)(.)
           )§p(
-            Conversely, we say that §$(B) is a §define(superset) of §$(A), written as §$(B §$supseteq A), if §$(A §$subseteq B), and we say that §$(B) is a §define(strict supset)(strict superset) of §$(A), written as §$(B §$supset A), if §$(A §$subset B).
+            Conversely, we say that §$(B) is a §define(superset) of §$(A)(,) written as §$(B §$supseteq A)(,) if §$(A §$subseteq B)(,) and we say that §$(B) is a §define(strict supset)(strict superset) of §$(A)(,) written as §$(B §$supset A)(,) if §$(A §$subset B)(.)
           )§p(
-            We further write §$(A §$nsubseteq B) if not §$(A §$subseteq B), §$(A §$nsubset B) if not §$(A §$subset B), §$(A §$nsupseteq B) if not §$(A §$supseteq B), and §$(A §$nsupset B) if not §$(A §$supset B).
+            We further write §$(A §$nsubseteq B) if not §$(A §$subseteq B)(,) §$(A §$nsubset B) if not §$(A §$subset B)(,) §$(A §$nsupseteq B) if not §$(A §$supseteq B)(,) and §$(A §$nsupset B) if not §$(A §$supset B)(.)
           )
         )
 
@@ -237,7 +237,7 @@
 
         §exercise["exercise_partial_subsets"](
           §p(
-            Give §rs(set) §$(A), §$(B), and §$(C), such that §$(A §$subseteq C) and §$(B §$subseteq C), but §$(A §$nsubseteq B) and §$(B §$nsubseteq A).
+            Give §rs(set) §$(A)(,) §$(B)(,) and §$(C)(,) such that §$(A §$subseteq C) and §$(B §$subseteq C)(,) but §$(A §$nsubseteq B) and §$(B §$nsubseteq A)(.)
           )
         )
 
@@ -246,21 +246,24 @@
         )
 
         §observation["sequality_and_subsets"](
-          §$(A §$seq B) if and only if §$(A §$subseteq B) and §$(A §$supseteq B).
+          §$(A §$seq B) if and only if §$(A §$subseteq B) and §$(A §$supseteq B)(.)
         )
 
         §p(
-          This alternate characterization of §r(sequal)(set equality) often proves useful when trying to show that two complex definitions of §rs(set) describe in fact the same §r(set). TODO
+          This alternate characterization of §r(sequal)(set equality) offers another way of proving §r(sequal)(set equality).
         )
 
 
 
-        - reprove A = A
 
 
-
-
-
+        - exercise: A subseteq A
+        - exercise: subseteq transitivity
+        - emptyset subseteq A (vacuous truth)
+        - subset transitivity
+        - exercise: A subset B subseteq C implies A sneq C
+        - exercise: subset antisymmetry
+        - exercise: no cyclic subsets
 
 
 
@@ -269,7 +272,7 @@
 
       §hsection["vacuous_truth"](Vacuous Truth)(
         §p(
-          If you played around a bit with §cref(example_subset), you may have noticed that the §r(empty set) is a §r(subset) of every set. To understand why, we need to take a close look at how §rs(subset) are defined. The §r(subset)(definition) talks about §verbatim(all §$(x §$in A)), so what happens if §$(A §$seq §$set)? There exists no §$(x) such that §$(x §$in §$set), so what does that mean for the §r(subset)(definition)?
+          If you played around a bit with §cref(example_subset), you may have noticed that the §r(empty set) is a §r(subset) of every set. To understand why, we need to take a close look at how §rs(subset) are defined. The §r(subset)(definition) talks about §verbatim(all §$(x §$in A)), so what happens if §$(A §$seq §$set)(?) There exists no §$(x) such that §$(x §$in §$set)(,) so what does that mean for the §r(subset)(definition)?
         )§p(
           On an intuitive level, you can say that in order to show that some §r(set) is a §r(subset) of another, you need to show that a certain property holds for each of its §rs(member). As the §r(empty set) has no §rs(member), you do not need to show anything.
         )§p(
@@ -279,14 +282,14 @@
         §theorem["empty_set_subset_everything"](
           §p(Let §$(A) be a set.)
           §p(
-            Then §$(§$set §$subseteq A).
+            Then §$(§$set §$subseteq A)(.)
           )
         )
         §proof["empty_set_subset_everything"](
           §p(
-            Let §$(x) be an object. We need to show that §$(x §$in §$set) implies §$(x §$in A), so assume that §$(x §$in §$set).
+            Let §$(x) be an object. We need to show that §$(x §$in §$set) implies §$(x §$in A)(,) so assume that §$(x §$in §$set)(.)
           )§p(
-            Because the §r(empty set) has no §rs(member), we know that §$(x §$notin §$set). As we cannot have §$(x §$in §$set) and §$(x §$notin §$set) simultaneously, §$(x §$in A) holds by the §r(principle of explosion).
+            Because the §r(empty set) has no §rs(member), we know that §$(x §$notin §$set)(.) As we cannot have §$(x §$in §$set) and §$(x §$notin §$set) simultaneously, §$(x §$in A) holds by the §r(principle of explosion).
           )
         )
 
@@ -303,12 +306,7 @@
 
 
 
-      - exercise: A subseteq A
-      - exercise: subseteq transitivity
-      - emptyset subseteq A (vacuous truth)
-      - subset transitivity
-      - exercise: A subset B subseteq C implies A sneq C
-      - exercise: subset antisymmetry
+
 
       - set comprehensions (first time that properties of objects matter, what about mismatches (natural numbers that are medalists in the 1986 olympic Games?))
 

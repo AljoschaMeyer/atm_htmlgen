@@ -40,13 +40,13 @@
 
     §hsection["section_whirlwind_tour"](A Whirlwind Tour of Tiny Proofs)(
       §p(
-        In order to formulate statements, we first need objects that the statements can talk about. For the coming examples, we will use the natural numbers (§$(0, 1, 2, §$ldots)). To demonstrate that this mode of reasoning can be applied to anything really, we will also talk about a population of friendly (and hungry) squirrels: §$(§$value(Alex)), §$(§$value(Blake)), and §$(§$value(Charlie)).
+        In order to formulate statements, we first need objects that the statements can talk about. For the coming examples, we will use the natural numbers §$(§()(0, 1, 2, §$ldots)(§).) To demonstrate that this mode of reasoning can be applied to anything really, we will also talk about a population of friendly (and hungry) squirrels: §$(§$value(Alex))(,) §$(§$value(Blake))(,) and §$(§$value(Charlie))(.)
       )§p(
-        A squirrel by itself is not a statement; §$(§$value(Alex)) is neither true nor false, but merely an adorable object of interest. The same applies to the number §$(17), although arguably less adorable. We can bridge into the world of statements by comparing objects for equality:
+        A squirrel by itself is not a statement; §$(§$value(Alex)) is neither true nor false, but merely an adorable object of interest. The same applies to the number §$(17)(,) although arguably less adorable. We can bridge into the world of statements by comparing objects for equality:
       )§definition["eq"](Equality)(
         §set_math_id["eq", "eq"]
         §p(
-          Two objects are considered §define["equal"](equal) if they are identical: everything is equal to itself, but not equal to anything else. Claiming that two objects are §r(equal) is a statement. We write §verbatim(§$(x §$eq y)) to compactly express that the object §$(x) is §r(equal) to the object §$(y).
+          Two objects are considered §define["equal"](equal) if they are identical: everything is equal to itself, but not equal to anything else. Claiming that two objects are §r(equal) is a statement. We write §verbatim(§$(x §$eq y)) to compactly express that the object §$(x) is §r(equal) to the object §$(y)(.)
         )
       )
 
@@ -55,7 +55,7 @@
       )
 
       §statement["tour_equality"](
-        §p(Claim: §$(17 §$eq 17).)
+        §p(Claim: §$(17 §$eq 17)(.))
       )
       §proof["tour_equality"](
         §p(The claim holds by the §r(equal)(definition of equality).)
@@ -66,14 +66,14 @@
       )§p(
         We can make things slightly more interesting by adding §definex["tour_def_term"](term)(terms)(terms)(
           A §rdef(term) denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §verbatim(§$(+)) denotes addition of two numbers.
-        ) such as §$(1 + 2) to our language of statements. A §r(term) always denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §verbatim(§$(+)) denotes addition of two numbers.
+        ) such as §$(1 + 2) to our language of statements. A §r(term) always denotes a way of obtaining objects of interest from other objects or other §rs(term)(.) In our examples, §verbatim(§$(+)) denotes addition of two numbers.
       )
 
       §statement["tour_terms"](
-        §p(Claim: §$(5 + 12 §$eq 17).)
+        §p(Claim: §$(5 + 12 §$eq 17)(.))
       )
       §proof["tour_terms"](
-        §p(§$(5 + 12) is §$(17), and §$(17 §$eq 17) by the §r(equal)(definition of equality).)
+        §p(§$(5 + 12) is §$(17)(,) and §$(17 §$eq 17) by the §r(equal)(definition of equality).)
       )
 
       §p(
@@ -86,16 +86,16 @@
             §p(
               A statement of §rdef(existential quantification) asserts that there exists at least one object satisfying a certain property: §verbatim(There exists a natural number §$(n) such that §$(n = 17)).
             )§p(
-              You prove a statement of §r(existential quantification) by presenting a §r(witness), that is, an object that satisfies the required property: §verbatim(Define §$(n §$defeq 17), then §$(n §$eq n)).
+              You prove a statement of §r(existential quantification) by presenting a §r(witness), that is, an object that satisfies the required property: §verbatim(Define §$(n §$defeq 17)(,) then §$(n §$eq n)).
             )
           ), which is just fancy terminology for stating that at least one object satisfying a certain property exists:
         )
 
         §statement["tour_existential_quantification"](
-          §p(There exists a squirrel §$(s) such that §$(s §$eq §$value(Alex)).)
+          §p(There exists a squirrel §$(s) such that §$(s §$eq §$value(Alex))(.))
         )
         §proof["tour_existential_quantification"](
-          §p(Define §$(s §$defeq §$value(Alex)), then §$(s §$eq §$value(Alex)).)
+          §p(Define §$(s §$defeq §$value(Alex))(,) then §$(s §$eq §$value(Alex))(.))
         )
 
         §p(
@@ -109,10 +109,10 @@
         )
 
         §statement["tour_existential_quantification_nested"](
-          §p(There exists a squirrel §$(s) such that there exists a squirrel §$(t) such that §$(s §$eq t).)
+          §p(There exists a squirrel §$(s) such that there exists a squirrel §$(t) such that §$(s §$eq t)(.))
         )
         §proof["tour_existential_quantification_nested"](
-          §p(Define §$(s §$defeq §$value(Charlie)) and §$(t §$defeq §$value(Charlie)), then §$(s §$eq t).)
+          §p(Define §$(s §$defeq §$value(Charlie)) and §$(t §$defeq §$value(Charlie))(,) then §$(s §$eq t)(.))
         )
 
         §exercise["tour_existential_quantification_atleast"](
@@ -132,7 +132,7 @@
         )
 
         §statement["tour_universal_quantification"](
-          §p(For all natural numbers §$(n) it holds that §$(n §$eq n).)
+          §p(For all natural numbers §$(n) it holds that §$(n §$eq n)(.))
         )
         §proof["tour_universal_quantification"](
           §p(Let §$(n) be a natural number. Then §$(n §$eq n) by the §r(equal)(definition of equality).)
@@ -146,7 +146,7 @@
 
         §statement["tour_assumptions"](
           §p(Let §$(n) be a natural number.)
-          §p(Then §$(n §$eq n).)
+          §p(Then §$(n §$eq n)(.))
         )
         §proof["tour_assumptions"](
           §p(Let §$(n) be a natural number. Then §$(n §$eq n) by the §r(equal)(definition of equality).)
@@ -165,7 +165,7 @@
             Let §$(n) and §$(m) be natural numbers.
           )
           §p(
-            We say that §$(n) is §define(less than or equal to) §$(m), written as §$(n §$leq m), if there exists a natural number §$(k) such that §$(n + k §$eq m).
+            We say that §$(n) is §define(less than or equal to) §$(m)(,) written as §$(n §$leq m)(,) if there exists a natural number §$(k) such that §$(n + k §$eq m)(.)
           )
         )
 
@@ -175,22 +175,22 @@
 
         §statement["tour_leq"](
           §p(
-            Claim: §$(12 §$leq 17).
+            Claim: §$(12 §$leq 17)(.)
           )
         )
         §proof["tour_leq"](
           §p(
-            Define §$(k §$defeq 5). Then §$$align*(12 + k &§$eq 12 + 5)(&§$eq 17,) and thus §$(12 §$leq 17).
+            Define §$(k §$defeq 5)(.) Then §$$align*(12 + k &§$eq 12 + 5)(&§$eq 17,) and thus §$(12 §$leq 17)(.)
           )
         )
 
         §statement["tour_leq2"](
           §p(Let §$(n) be a natural number.)
-          §p(Then §$(n §$leq n).)
+          §p(Then §$(n §$leq n)(.))
         )
         §proof["tour_leq2"](
           §p(
-            Define §$(k §$defeq 0). Then §$$align*(n + k &§$eq n + 0)(&§$eq n,) and thus §$(n §$leq n).
+            Define §$(k §$defeq 0)(.) Then §$$align*(n + k &§$eq n + 0)(&§$eq n,) and thus §$(n §$leq n)(.)
           )
         )
 
@@ -201,7 +201,7 @@
         )
 
         §exercise["exercise_tour_leq"](
-          §p(Prove that for all natural numbers §$(n) it holds that §$(0 §$leq n).)
+          §p(Prove that for all natural numbers §$(n) it holds that §$(0 §$leq n)(.))
         )
 
         §p(
@@ -222,17 +222,17 @@
             Let §$(n) be a natural number.
           )
           §p(
-            We denote by §$(§$twice(n)) the number §$(n + n).
+            We denote by §$(§$twice(n)) the number §$(n + n)(.)
           )
         )
         §statement["tour_twice"](
           §p(
-            There exists a natural number §$(n) such that §$(§$twice(n) §$eq n).
+            There exists a natural number §$(n) such that §$(§$twice(n) §$eq n)(.)
           )
         )
         §proof["tour_twice"](
           §p(
-            Define §$(n §$defeq 0), then §$$align*(
+            Define §$(n §$defeq 0)(,) then §$$align*(
               §$twice(n) &§$eq n + n
             )(
               &§$eq 0 + 0
@@ -252,14 +252,14 @@
         )
 
         §statement["use_universal"](
-          §p(Claim: §$(5 §$leq 5).)
+          §p(Claim: §$(5 §$leq 5)(.))
         )
         §proof["use_universal"](
-          §p(§$(5) is a natural number. Thus, by §cref(tour_leq2), §$(5 §$leq 5).)
+          §p(§$(5) is a natural number. Thus, by §cref(tour_leq2), §$(5 §$leq 5)(.))
         )
 
         §p(
-          It would not have been difficult to prove §cref(use_universal) directly, but utilizing §cref(tour_leq2) saved us the trouble of finding a suitable number §$(k) to add to §$(5). In fact, our proof works even if we have no idea how §verbatim(§$(§$leq)) is defined. This hints at one of the key strengths of §r(deductive reasoning): we can reason in terms of high-level concepts (§verbatim(§$(§$leq))) while still getting the guarantee that everything works because it can ultimately be broken down to simple and correct building blocks (§r(equal)(equality) and §r(existential quantification) in this case).
+          It would not have been difficult to prove §cref(use_universal) directly, but utilizing §cref(tour_leq2) saved us the trouble of finding a suitable number §$(k) to add to §$(5)(.) In fact, our proof works even if we have no idea how §verbatim(§$(§$leq)) is defined. This hints at one of the key strengths of §r(deductive reasoning): we can reason in terms of high-level concepts (§verbatim(§$(§$leq))) while still getting the guarantee that everything works because it can ultimately be broken down to simple and correct building blocks (§r(equal)(equality) and §r(existential quantification) in this case).
         )
 
         §p(
@@ -267,20 +267,20 @@
         )
 
         §statement["use_existential"](
-          §p(There exists a natural number §$(n) such that §$(n §$leq 18).)
+          §p(There exists a natural number §$(n) such that §$(n §$leq 18)(.))
         )
         §proof["use_existential"](
           §p(
-            From §cref(tour_leq) we obtain §$(n) such that §$(n §$leq 17). From the definition of §verbatim(§$(§$leq)) we obtain §$(k) such that §$(n + k §$eq 17).
+            From §cref(tour_leq) we obtain §$(n) such that §$(n §$leq 17)(.) From the definition of §verbatim(§$(§$leq)) we obtain §$(k) such that §$(n + k §$eq 17)(.)
           )§p(
-            If §$(n + k §$eq 17), then also §$(§$p(n + k) + 1 §$eq 17 + 1), then also §$(§$p(n + k) + 1 §$eq 18), and then also §$(n + §$p(k + 1) §$eq 18).
+            If §$(n + k §$eq 17)(,) then also §$(§$p(n + k) + 1 §$eq 17 + 1)(,) then also §$(§$p(n + k) + 1 §$eq 18)(,) and then also §$(n + §$p(k + 1) §$eq 18)(.)
           )§p(
-            §$(k + 1) is a natural number, so we have found a number that we can add to §$(n) to obtain §$(18). Or in other words, we have proven that §$(n §$leq 18).
+            §$(k + 1) is a natural number, so we have found a number that we can add to §$(n) to obtain §$(18)(.) Or in other words, we have proven that §$(n §$leq 18)(.)
           )
         )
 
         §p(
-          Compared to directly choosing a suitable §$(n), this proof is of course needlessly complicated. But it demonstrates how to work with this number §$(n) that we know very little about. There are 18 different numbers which are possible candidates for this §$(n), each of them with unique properties not shared by any other number. Most of these properties are completely unrelated to the proof at hand.
+          Compared to directly choosing a suitable §$(n)(,) this proof is of course needlessly complicated. But it demonstrates how to work with this number §$(n) that we know very little about. There are 18 different numbers which are possible candidates for this §$(n)(,) each of them with unique properties not shared by any other number. Most of these properties are completely unrelated to the proof at hand.
         )§p(
           If we worked with any specific number, we might be distracted by its properties. By working with the abstract value §$(n) that we obtained from §cref(tour_leq) however, only the relevant property of being §r(less than or equal to) §$(17) is available to our reasoning, which protects us from losing ourselves in irrelevant details.
         )
@@ -363,11 +363,11 @@
         )
 
         §statement["tour_order"](
-          §p(For all natural numbers §$(n) there exists a natural number §$(m) such that §$(n §$eq m).)
+          §p(For all natural numbers §$(n) there exists a natural number §$(m) such that §$(n §$eq m)(.))
         )
         §proof["tour_order"](
           §p(
-            Let §$(n) be a natural number. Define §$(m §$defeq n). Then §$(n §$eq m).
+            Let §$(n) be a natural number. Define §$(m §$defeq n)(.) Then §$(n §$eq m)(.)
           )
         )
 
@@ -376,7 +376,7 @@
         )
 
         §falsehood["tour_order2"](
-          §p(There exists a natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m).)
+          §p(There exists a natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m)(.))
         )
 
         §p(
@@ -396,7 +396,7 @@
         )
 
         §statement["tour_negation_eq"](
-          §p(It does not hold that §$(5 §$eq 6).)
+          §p(It does not hold that §$(5 §$eq 6)(.))
         )
         §proof["tour_negation_eq"](
           §p(§$(5 §$eq 6) does not hold by §r(equal)(the definition of equality), so the §r(negation) of §$(5 §$eq 6) does hold.)
@@ -407,11 +407,11 @@
         )
 
         §statement["tour_negation_negation"](
-          §p(It does not hold that it does not hold that §$(5 §$eq 5).)
+          §p(It does not hold that it does not hold that §$(5 §$eq 5)(.))
         )
         §proof["tour_negation_negation"](
           §p(
-            The statement that remains after eliminating the §r(double negation) is §$(5 §$eq 5), which holds by §r(equal)(the definition of equality).
+            The statement that remains after eliminating the §r(double negation) is §$(5 §$eq 5)(,) which holds by §r(equal)(the definition of equality).
           )
         )
 
@@ -420,11 +420,11 @@
         )
 
         §statement["tour_negation_universal"](
-          §p(It does not hold for all squirrels §$(s) that §$(s §$eq §$value(Alex)).)
+          §p(It does not hold for all squirrels §$(s) that §$(s §$eq §$value(Alex))(.))
         )
         §proof["tour_negation_universal"](
           §p(
-            We can prove the statement by showing that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq §$value(Alex)). Define §$(s §$defeq §$value(Blake)), then it does not hold that §$(s §$eq §$value(Alex)).
+            We can prove the statement by showing that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq §$value(Alex))(.) Define §$(s §$defeq §$value(Blake))(,) then it does not hold that §$(s §$eq §$value(Alex))(.)
           )
         )
 
@@ -433,31 +433,31 @@
         )
 
         §statement["tour_negation_existential"](
-          §p(It does not hold that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq s).)
+          §p(It does not hold that there exists a squirrel §$(s) such that it does not hold that §$(s §$eq s)(.))
         )
         §proof["tour_negation_existential"](
           §p(
-            We can prove the statement by showing that for all squirrels §$(s) it does not hold that it does (§$(s §$eq s).) Let §$(s) be a squirrel. Then §$(s §$eq s), which is exactly what remains to be proven after the §r(double negation) has been eliminated.
+            We can prove the statement by showing that for all squirrels §$(s) it does not hold that it does not hold that §$(s §$eq s)(.) Let §$(s) be a squirrel. Then §$(s §$eq s)(,) which is exactly what remains to be proven after the §r(double negation) has been eliminated.
           )
         )
 
         §p(
           §Rs(negation) are usually formulated less verbosely, for example §verbatim(It does not hold that there exist §$(x) such that…) would normally be written along the lines of §verbatim(There exists no §$(x) such that…). The negation of statements of §r(equal)(equality) even has its own symbol: if §$(x) and §$(y) are §definex["neq"](unequal)(
             §set_math_id["neq", "neq"]
-            §p(Two objects are §rdef(unequal), written as §$(x §$neq y), if they are not §r(equal).)
-          ), we write §$(x §$neq y).
+            §p(Two objects are §rdef(unequal), written as §$(x §$neq y)(,) if they are not §r(equal).)
+          ), we write §$(x §$neq y)(.)
         )§p(
           We can now disprove §cref(tour_order2) by proving its §r(negation):
         )
 
         §statement["tour_not_order2"](
-          §p(There exists no natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m).)
+          §p(There exists no natural number §$(m) such that for all natural numbers §$(n) we have §$(n §$eq m)(.))
         )
         §proof["tour_not_order2"](
           §p(
-            We can prove the statement by showing that for all natural numbers §$(m) it is not the case that for all natural numbers §$(n) we have §$(n §$eq m). This we can prove by showing that for all natural numbers §$(m) there exists a natural number §$(n) such that §$(n §$neq m).
+            We can prove the statement by showing that for all natural numbers §$(m) it is not the case that for all natural numbers §$(n) we have §$(n §$eq m)(.) This we can prove by showing that for all natural numbers §$(m) there exists a natural number §$(n) such that §$(n §$neq m)(.)
           )§p(
-            Let §$(m) be a natural number. Define §$(n §$defeq m + 1). Then §$(n §$neq m), because §$(m + 1 §$neq m).
+            Let §$(m) be a natural number. Define §$(n §$defeq m + 1)(.) Then §$(n §$neq m)(,) because §$(m + 1 §$neq m)(.)
           )
         )
 
@@ -475,7 +475,7 @@
 
         §exercise["exercise_tour_not"](
           §p(
-            Disprove that for all natural numbers §$(n) there exists a natural number number §$(m) such that §$(n) is not §r(less than or equal to) §$(m). Explicitly state the different stages of moving the §r(negation) through the statement to reach a statement you can prove.
+            Disprove that for all natural numbers §$(n) there exists a natural number number §$(m) such that §$(n) is not §r(less than or equal to) §$(m)(.) Explicitly state the different stages of moving the §r(negation) through the statement to reach a statement you can prove.
           )
         )§exercise["wrong_negation_existential"](
           §p(
@@ -507,7 +507,7 @@
         )
 
         §statement["tour_conjunction"](
-          §p(§$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Blake) §$eq §$value(Blake)).)
+          §p(Claim: §$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Blake) §$eq §$value(Blake))(.))
         )
         §proof["tour_conjunction"](
           §p(
@@ -528,7 +528,7 @@
         )
 
         §statement["tour_disjunction"](
-          §p(§$(§$value(Alex) §$eq §$value(Charlie)) or §$(§$value(Blake) §$eq §$value(Blake)).)
+          §p(Claim: §$(§$value(Alex) §$eq §$value(Charlie)) or §$(§$value(Blake) §$eq §$value(Blake))(.))
         )
         §proof["tour_disjunction"](
           §p(
@@ -541,7 +541,7 @@
         )
 
         §statement["tour_disjunction2"](
-          §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Charlie)).)
+          §p(Claim: §$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Charlie))(.))
         )
         §proof["tour_disjunction2"](
           §p(
@@ -550,7 +550,7 @@
         )
 
         §statement["tour_disjunction3"](
-          §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake)).)
+          §p(Claim: §$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake))(.))
         )
         §proof["tour_disjunction3"](
           §p(
@@ -563,7 +563,7 @@
         )
 
         §proof["tour_disjunction3", "Alternate ", "tour_disjunction3_other"](
-          §p(§$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake)).)
+          §p(Claim: §$(§$value(Alex) §$eq §$value(Alex)) or §$(§$value(Blake) §$eq §$value(Blake))(.))
           §p(
             §$(§$value(Blake) §$eq §$value(Blake)) holds by §r(equal)(the definition of equality), and so the full statement holds.
           )
@@ -602,7 +602,7 @@
 
         §statement["tour_use_conjunction"](
           §p(
-            §$(§$value(Alex) §$eq §$value(Alex)).
+            Claim: §$(§$value(Alex) §$eq §$value(Alex))(.)
           )
         )
         §proof["tour_use_conjunction"](
@@ -624,21 +624,21 @@
             Let §$(s) be a squirrel.
           )
           §p(
-            Then §$(s §$neq §$value(Alex)) or §$(s §$neq §$value(Blake)).
+            Then §$(s §$neq §$value(Alex)) or §$(s §$neq §$value(Blake))(.)
           )
         )
         §proof["tour_use_disjunction"](
           §p(
-            Let §$(s) be a squirrel. By the §r(law of excluded middle) we know that §$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex)). We do a §r(case distinction) on §verbatim(§$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex))):
+            Let §$(s) be a squirrel. By the §r(law of excluded middle) we know that §$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex))(.) We do a §r(case distinction) on §verbatim(§$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex))):
           )§cases(
             §case(§$(s §$eq §$value(Alex)))(
               §p(
-                If §$(s §$eq §$value(Alex)), then §$(s §$neq §$value(Blake)), so the claim holds.
+                If §$(s §$eq §$value(Alex))(,) then §$(s §$neq §$value(Blake))(,) so the claim holds.
               )
             )
             §case(§$(s §$neq §$value(Alex)))(
               §p(
-                If §$(s §$neq §$value(Alex)), the claim holds by assumption.
+                If §$(s §$neq §$value(Alex))(,) the claim holds by assumption.
               )
             )
           )§p(
@@ -667,12 +667,12 @@
 
         §statement["tour_negation_conjunction"](
           §p(
-            It does not hold that §$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Alex) §$eq §$value(Blake)).
+            It does not hold that §$(§$value(Alex) §$eq §$value(Alex)) and §$(§$value(Alex) §$eq §$value(Blake))(.)
           )
         )
         §proof["tour_negation_conjunction"](
           §p(
-            We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Alex)) or §$(§$value(Alex) §$neq §$value(Blake)). The latter holds by §r(equal)(the definition of equality).
+            We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Alex)) or §$(§$value(Alex) §$neq §$value(Blake))(.) The latter holds by §r(equal)(the definition of equality).
           )
         )
 
@@ -682,12 +682,12 @@
 
         §statement["tour_negation_disjunction"](
           §p(
-            It does not hold that §$(§$value(Alex) §$eq §$value(Blake)) or §$(§$value(Alex) §$eq §$value(Charlie)).
+            It does not hold that §$(§$value(Alex) §$eq §$value(Blake)) or §$(§$value(Alex) §$eq §$value(Charlie))(.)
           )
         )
         §proof["tour_negation_disjunction"](
           §p(
-            We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Blake)) and §$(§$value(Alex) §$neq §$value(Charlie)). Both hold by §r(equal)(the definition of equality).
+            We can prove the statement by showing that §$(§$value(Alex) §$neq §$value(Blake)) and §$(§$value(Alex) §$neq §$value(Charlie))(.) Both hold by §r(equal)(the definition of equality).
           )
         )
 
@@ -760,21 +760,21 @@
         §p(
           §R(deductive reasoning) is about deriving statements from other statements. Whether some statement — the §definex["conclusion"](conclusion)(
             §p(
-              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
+              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x)(,) then §$(x §$eq x)).
             )§p(
-              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
+              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x)(,) then §$(x §$eq x) by assumption).
             )
           ) — can be derived from some other statement — the §definex["premise"](premise)(
             §p(
-              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
+              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x)(,) then §$(x §$eq x)).
             )§p(
-              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
+              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x)(,) then §$(x §$eq x) by assumption).
             )
           ) — is in itself either true or false, that is, it is a statement itself. Such a statement is called an §definex["implication"](implication)(
             §p(
-              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x), then §$(x §$eq x)).
+              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x)(,) then §$(x §$eq x)).
             )§p(
-              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x), then §$(x §$eq x) by assumption).
+              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x)(,) then §$(x §$eq x) by assumption).
             )
           ).
         )
@@ -784,19 +784,19 @@
         §statement["tour_implication"](
           §p(Let §$(n) be a natural number.)
           §p(
-            If §$(n §$leq 5), then §$(n §$leq 7).
+            If §$(n §$leq 5)(,) then §$(n §$leq 7)(.)
           )
         )
         §proof["tour_implication"](
           §p(
-            Assume §$(n §$leq 5). From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5).
+            Assume §$(n §$leq 5)(.) From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5)(.)
           )§p(
-            If §$(n + k §$eq 5), then also §$(§$p(n + k) + 2 §$eq 5 + 2), then also §$(§$p(n + k) + 2 §$eq 7), then also §$(n + §$p(k + 2) §$eq 7), and thus, because §$(k + 2) is a natural number, §$(n §$leq 7).
+            If §$(n + k §$eq 5)(,) then also §$(§$p(n + k) + 2 §$eq 5 + 2)(,) then also §$(§$p(n + k) + 2 §$eq 7)(,) then also §$(n + §$p(k + 2) §$eq 7)(,) and thus, because §$(k + 2) is a natural number, §$(n §$leq 7)(.)
           )
         )
 
         §p(
-          You prove an §r(implication) by assuming the §r(premise) to hold and then proving the §r(conclusion). Note that the truth of an §r(implication) has no bearing on the truth of its §r(premise) or its §r(conclusion) in isolation. Considering §cref(tour_implication), there exist both numbers which are §r(less than or equal to) §$(5) as well as numbers that are not §r(less than or equal to) §$(5), same for §$(7). But we do know that there exist no numbers which are both §r(less than or equal to) §$(5) and not §r(less than or equal to) §$(7).
+          You prove an §r(implication) by assuming the §r(premise) to hold and then proving the §r(conclusion). Note that the truth of an §r(implication) has no bearing on the truth of its §r(premise) or its §r(conclusion) in isolation. Considering §cref(tour_implication), there exist both numbers which are §r(less than or equal to) §$(5) as well as numbers that are not §r(less than or equal to) §$(5)(,) same for §$(7)(.) But we do know that there exist no numbers which are both §r(less than or equal to) §$(5) and not §r(less than or equal to) §$(7)(.)
         )§p(
           The proof of §cref(tour_implication) consists primarily of a chain of §verbatim(if §i(bla), then also §i(blubb)) fragments, that is, it consists of many successive implications. A more readable way of writing such proofs is by separating those statements with double arrows (§verbatim(§$(§$implies))), particularly if the implications connect mathematical symbols rather than natural language statements:
         )
@@ -826,10 +826,10 @@
         §proof["tour_implication", "More Readable ", "tour_implication_readable"](
           §p(Let §$(n) be a natural number.)
           §p(
-            Claim: If §$(n §$leq 5), then §$(n §$leq 7).
+            Claim: If §$(n §$leq 5)(,) then §$(n §$leq 7)(.)
           )
           §p(
-            Assume §$(n §$leq 5). From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5). Then
+            Assume §$(n §$leq 5)(.) From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5)(.) Then
           )§$$align*(
             && n + k &§$eq 5
           )(
@@ -852,7 +852,7 @@
             Let §$(a, b, c) be natural numbers.
           )
           §p(
-            If §$(a §$leq b) and §$(b §$leq c), then §$(a §$leq c).
+            If §$(a §$leq b) and §$(b §$leq c)(,) then §$(a §$leq c)(.)
           )
         )
         §exercise["exercise_transitivity_leq"](
@@ -861,7 +861,7 @@
 
         §exercise["exercise_exactly_one"](
           §p(
-            Formulate a statement that expresses that exactly one squirrel is §r(equal) to §$(§$value(Alex)). It is possible to do this without using §rs(implication), but the arguably most elegant solution uses one.
+            Formulate a statement that expresses that exactly one squirrel is §r(equal) to §$(§$value(Alex))(.) It is possible to do this without using §rs(implication), but the arguably most elegant solution uses one.
           )
         )
 
@@ -888,12 +888,12 @@
 
         §statement["tour_use_implication"](
           §p(
-            §$(3 §$leq 7)
+            Claim: §$(3 §$leq 7)(.)
           )
         )
         §proof["tour_use_implication"](
           §p(
-            §$(3 §$leq 5) because §$(3 + 2 §$eq 5). With §cref(tour_implication) follows that §$(3 §$leq 7).
+            §$(3 §$leq 5) because §$(3 + 2 §$eq 5)(.) With §cref(tour_implication) follows that §$(3 §$leq 7)(.)
           )
         )
 
@@ -914,7 +914,7 @@
 
         §statement["tour_negation_implication"](
           §p(
-            §$(§$value(Alex) §$eq §$value(Alex)) does not imply that §$(§$value(Alex) §$eq §$value(Blake))
+            Claim: §$(§$value(Alex) §$eq §$value(Alex)) does not imply that §$(§$value(Alex) §$eq §$value(Blake))(.)
           )
         )
         §proof["tour_negation_implication"](
@@ -952,7 +952,7 @@
         §statement["tour_contraposition"](
           §p(Let §$(n) be a natural number.)
           §p(
-            If §$(n) is not §r(less than or equal to) §$(7), then §$(n) is not §r(less than or equal to) §$(5).
+            If §$(n) is not §r(less than or equal to) §$(7)(,) then §$(n) is not §r(less than or equal to) §$(5)(.)
           )
         )
         §proof["tour_contraposition"](
@@ -976,14 +976,14 @@
 
         §statement["absurd"](
           §p(
-            If §$(0 §$eq 1), then §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
+            If §$(0 §$eq 1)(,) then §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
           )
         )
         §proof["absurd"](
           §p(
-            Assume §$(0 §$eq 1). Further notice that §$(0 §$neq 1) holds by §r(equal)(the definition of equality). Thus also the §r(disjunction) §verbatim(§$(0 §$neq 1) or §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon) holds.
+            Assume §$(0 §$eq 1)(.) Further notice that §$(0 §$neq 1) holds by §r(equal)(the definition of equality). Thus also the §r(disjunction) §verbatim(§$(0 §$neq 1) or §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon) holds.
           )§p(
-            Because §$(0 §$eq 1), the first substatement of that §r(disjunction) cannot be true, so the second substatement has to be. Thus, we have shown that §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
+            Because §$(0 §$eq 1)(,) the first substatement of that §r(disjunction) cannot be true, so the second substatement has to be. Thus, we have shown that §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
           )
         )
 
@@ -1001,7 +1001,7 @@
 
         §exercise["exercise_absurd"](
           §p(
-            Prove that there exist a squirrel §$(s) such that §$(s §$eq §$value(Alex)) implies §$(s §$eq §$value(Blake)).
+            Prove that there exist a squirrel §$(s) such that §$(s §$eq §$value(Alex)) implies §$(s §$eq §$value(Blake))(.)
           )
         )
 
@@ -1020,14 +1020,14 @@
 
         §statement["tour_contradiction"](
           §p(
-            There is no squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t).
+            There is no squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t)(.)
           )
         )
         §proof["tour_contradiction"](
           §p(
-            Suppose toward a contradiction that there exists a squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t).
+            Suppose toward a contradiction that there exists a squirrel §$(s) such that for all squirrels §$(t) holds §$(s §$eq t)(.)
           )§p(
-            Then we know that both §$(s §$eq §$value(Alex)) and §$(s §$eq §$value(Blake)), and thus §$(§$value(Alex) §$eq §$value(Blake)). This is a contradiction, the assumption must have been false, and thus, the original statement must be true.
+            Then we know that both §$(s §$eq §$value(Alex)) and §$(s §$eq §$value(Blake))(,) and thus §$(§$value(Alex) §$eq §$value(Blake))(.) This is a contradiction, the assumption must have been false, and thus, the original statement must be true.
           )
         )
 
@@ -1046,7 +1046,7 @@
 
         §statement["tour_iff"](
           §p(
-            §$(5 §$eq 6) if and only if §$(6 §$eq 7)
+            Claim: §$(5 §$eq 6) if and only if §$(6 §$eq 7)(.)
           )
         )
         §proof["tour_iff"](
@@ -1054,14 +1054,14 @@
             §verbatim(§$(§$implies)):
           )(
             §p(
-              Assume §$(5 §$eq 6). Then, by the §r(principle of explosion), §$(6 §$eq 7).
+              Assume §$(5 §$eq 6)(.) Then, by the §r(principle of explosion), §$(6 §$eq 7)(.)
             )
           )
           §proof_part(
             §verbatim(§$(§$impliedby)):
           )(
             §p(
-              Assume §$(6 §$eq 7). Then, by the §r(principle of explosion), §$(5 §$eq 6).
+              Assume §$(6 §$eq 7)(.) Then, by the §r(principle of explosion), §$(5 §$eq 6)(.)
             )
           )
         )
@@ -1074,7 +1074,7 @@
 
         §statement["tour_iff2"](
           §p(
-            §$(5 §$eq 6) if and only if §$(6 §$eq 7)
+            Claim: §$(5 §$eq 6) if and only if §$(6 §$eq 7)(.)
           )
         )
         §proof["tour_iff2"](
@@ -1082,7 +1082,7 @@
             §verbatim(§$(5 §$eq 6 §$implies 6 §$eq 7)):
           )(
             §p(
-              Assume §$(5 §$eq 6). Then, by the §r(principle of explosion), §$(6 §$eq 7).
+              Assume §$(5 §$eq 6)(.) Then, by the §r(principle of explosion), §$(6 §$eq 7)(.)
             )
           )
           §proof_part(

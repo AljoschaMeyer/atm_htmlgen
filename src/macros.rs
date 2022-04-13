@@ -390,7 +390,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         }
 
         OutInternal::TeX(span, path, args, display) => {
-            arguments_exact(1, &args, &span)?;
+            arguments_gte(1, &args, &span)?;
+            arguments_lt(4, &args, &span)?;
 
             y.state.enable_mathmode(&span)?;
 
@@ -399,7 +400,22 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
                 #[cfg(unix)]
                 {
-                    let content = args[0].to_string();
+                    let pre = if args.len() == 3 {
+                        format!(r###"\text{{{}}}"###, args[0].to_string())
+                    } else {
+                        "".to_string()
+                    };
+                    let post = if args.len() > 1 {
+                        format!(r###"\text{{{}}}"###, args[args.len() - 1].to_string())
+                    } else {
+                        "".to_string()
+                    };
+                    let content = format!(
+                        r###"{}{}{}"###,
+                        pre,
+                        if args.len() == 1 {args[0].to_string()} else {args[args.len() - 2].to_string()},
+                        post,
+                    );
                     let opts = katex::Opts::builder()
                         .display_mode(display)
                         .throw_on_error(true)
