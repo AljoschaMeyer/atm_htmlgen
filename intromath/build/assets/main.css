@@ -34,7 +34,7 @@
 
 html {
     font-family: 'Roboto', sans-serif;
-    font-size: 17px;
+    font-size: 20px;
     line-height: 1.68;
     color: var(--color-text);
     text-align: justify;
@@ -114,7 +114,7 @@ h5 {
 }
 
 h6 {
-    font-size: 17px;
+    font-size: 20px;
     margin-top: 0.1rem;
     margin-bottom: 0rem;
 }
@@ -314,7 +314,7 @@ article {
   border-top: solid 1px;
   margin-top: 1rem;
   padding-top: 1rem;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .grouping_paren {
@@ -330,8 +330,9 @@ article {
 }
 
 /* Hack to prevent katex blocking mouse interaction with invisible rectangles */
-.vlist-r > .vlist:only-child {
-  display: none;
+.vlist-t.vlist-t2 > .vlist-r > .vlist:only-child {
+  pointer-events: none;
+  /* display: none; */
   /* background: rgba(255, 0, 0, 0.5); */
 }
 
@@ -405,4 +406,34 @@ tbody tr:nth-child(even) {
 .tocchapter > a:first-child::after {
   content: ":\a";
   white-space: pre;
+}
+
+button {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.35em 0.5em;
+  border: 0.1em solid var(--color-text);
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: var(--color-text);
+  background-color: var(--color-bg2);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.preview button {
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: var(--color-bg);
+}
+
+.preview button:hover {
+  background-color: var(--color-bg2);
+}
+
+.solution {
+  margin-top: 1rem;
 }

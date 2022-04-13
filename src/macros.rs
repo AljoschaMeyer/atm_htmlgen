@@ -199,6 +199,7 @@ pub(crate) enum OutInternal {
     Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String),
     Fact(Trace, BoxParams, Vec<OutInternal>, String, bool /*no numbering*/),
     Proof(Trace, Proof, Vec<OutInternal>),
+    Solution(Trace, Solution, Vec<OutInternal>),
     Define(Trace, Define, Vec<OutInternal>, bool /* is there custom definition text */),
     Cref(Trace, Cref, Vec<OutInternal>),
     TeX(Trace, TeX, Vec<OutInternal>, bool),
@@ -528,6 +529,29 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             y.state.sticky_state.hsections_structure.pop();
 
             return r;
+        }
+
+        OutInternal::Solution(trace, params, args) => {
+            arguments_exact(1, &args, &trace)?;
+            return down_macro(|p, _n, _y, _trace| {
+                return Ok(Out::Many(vec![
+                        Out::Text(format!(r###"<button class="btn_solution" id="btn_{}">Show a possible solution</button><div class="solution" style="display: none">"###, p.0[0]).into()),
+                        Out::Argument(0),
+                        Out::Text(format!(r###"</div>
+    <script>
+        (()=>{{
+            let shown = false;
+            const btn = document.querySelector("#btn_{}");
+            const sol = btn.nextSibling;
+            btn.addEventListener("click", e => {{
+                sol.style.display = shown ? "none" : "block";
+                btn.textContent = shown ? "Show a possible solution" : "Hide solution";
+                shown = !shown;
+            }});
+        }})()
+    </script>"###, p.0[0]).into()),
+                    ]))
+            }, &params, args, trace, y);
         }
 
         OutInternal::ChapterNav(trace, params, args) => {
@@ -1148,6 +1172,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 let id = &p.0[0];
                 let linkable = id != "";
                 let href = if linkable {
+                    y.state.sticky_state.cases.insert(id.to_string(), numbering.to_string());
                     y.state.register_id(id, CrefKind::Case, trace.clone())?
                 } else {
                     "".to_string()
@@ -1412,5 +1437,14 @@ pub struct MathMacro([bool; 1]);
 impl Default for MathMacro {
     fn default() -> Self {
         MathMacro([false])
+    }
+}
+
+#[derive(Deserialize, Clone)]
+pub struct Solution([String; 1]);
+
+impl Default for Solution {
+    fn default() -> Self {
+        Solution(["".to_string()])
     }
 }

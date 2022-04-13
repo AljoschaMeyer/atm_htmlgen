@@ -1,4 +1,17 @@
 <article class="exercise" id="exercise_wrong_negations_implication">
     <h6><a href="http://localhost:1234/deductive_reasoning.html#exercise_wrong_negations_implication">Exercise 1.17</a></h6>
     <p>How are the incorrect attempts at <a class="ref definition" href="http://localhost:1234/deductive_reasoning.html#negation" data-preview="http://localhost:1234/previews/negation.html">negating</a> <a class="ref definition" href="http://localhost:1234/deductive_reasoning.html#implication" data-preview="http://localhost:1234/previews/implication.html">implications</a> of <a class="ref exercise" href="http://localhost:1234/deductive_reasoning.html#wrong_negation_implication" data-preview="http://localhost:1234/previews/wrong_negation_implication.html">Exercise&nbsp;1.15</a> and <a class="ref exercise" href="http://localhost:1234/deductive_reasoning.html#wrong_negation_implication2" data-preview="http://localhost:1234/previews/wrong_negation_implication2.html">Exercise&nbsp;1.16</a> related?</p>
+          <button class="btn_solution" id="btn_exercise_wrong_negations_implication">Show a possible solution</button><div class="solution" style="display: none"><p><span class="verbatim">if not <i>bla</i> then not <i>blubb</i></span> is the <a class="ref definition" href="http://localhost:1234/deductive_reasoning.html#" data-preview="http://localhost:1234/previews/.html">contrapositive</a> of <span class="verbatim">if <i>blubb</i> then <i>bla</i></span>.</p></div>
+    <script>
+        (()=>{
+            let shown = false;
+            const btn = document.querySelector("#btn_exercise_wrong_negations_implication");
+            const sol = btn.nextSibling;
+            btn.addEventListener("click", e => {
+                sol.style.display = shown ? "none" : "block";
+                btn.textContent = shown ? "Show a possible solution" : "Hide solution";
+                shown = !shown;
+            });
+        })()
+    </script>
 </article>

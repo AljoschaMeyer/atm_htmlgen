@@ -370,6 +370,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="verbatim">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"video_container" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="slightlywide"><div class="video_container">"###, "</div></div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"solution" {
+                        self.pm(OutInternal::Solution, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"nobr" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="nobr">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$tag" {

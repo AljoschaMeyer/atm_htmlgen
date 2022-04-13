@@ -2,7 +2,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  font-size: 1.3rem
+  font-size: 1.1rem
 }
 
 .eulersvg {
@@ -45,31 +45,8 @@
 }
 
 .euler_toggle {
-  cursor: pointer;
-  display: inline-block;
-  padding: 0.35em 0.5em;
-  border: 0.1em solid var(--color-text);
   margin: 0 0.3em 0.3em 0;
-  border-radius: 0.12em;
-  box-sizing: border-box;
-  text-decoration: none;
-  color: var(--color-text);
-  background-color: var(--color-bg2);
-  text-align: center;
-  transition: all 0.2s;
   font-size: 1em;
-}
-
-.preview .euler_toggle {
-  cursor: not-allowed;
-}
-
-.euler_toggle:hover {
-  background-color: var(--color-bg);
-}
-
-.preview .euler_toggle:hover {
-  background-color: var(--color-bg2);
 }
 
 .euler_toggle.in {

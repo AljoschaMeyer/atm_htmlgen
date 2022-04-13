@@ -119,6 +119,11 @@
           §p(
             When mathematicians say §verbatim(there exists an object) they mean §verbatim(there exists at least one object, and there may or may not be more). Why is that, and why is it not necessary to say so explicitly?
           )
+          §solution["tour_existential_quantification_atleast"](
+            §p(
+              Presenting a single §r(witness) proves the statement. Whether there are multiple other §rs(witness) does not change that.
+            )
+          )
         )
 
         §p(
@@ -190,7 +195,7 @@
         )
         §proof["tour_leq2"](
           §p(
-            Define §$(k §$defeq 0)(.) Then §$$align*(n + k &§$eq n + 0)(&§$eq n,) and thus §$(n §$leq n)(.)
+            Let §$(n) be a natural number. Define §$(k §$defeq 0)(.) Then §$$align*(n + k &§$eq n + 0)(&§$eq n,) and thus §$(n §$leq n)(.)
           )
         )
 
@@ -202,6 +207,9 @@
 
         §exercise["exercise_tour_leq"](
           §p(Prove that for all natural numbers §$(n) it holds that §$(0 §$leq n)(.))
+          §solution["exercise_tour_leq"](
+            Let §$(n) be a natural number. Define §$(k §$defeq n)(.) Then §$$align*(0 + k &§$eq 0 + n)(&§$eq n,) and thus §$(0 §$leq n)(.)
+          )
         )
 
         §p(
@@ -475,19 +483,46 @@
 
         §exercise["exercise_tour_not"](
           §p(
-            Disprove that for all natural numbers §$(n) there exists a natural number number §$(m) such that §$(n) is not §r(less than or equal to) §$(m)(.) Explicitly state the different stages of moving the §r(negation) through the statement to reach a statement you can prove.
+            Disprove that for all natural numbers §$(n) there exists a natural number §$(m) such that §$(n) is not §r(less than or equal to) §$(m)(.) Explicitly state the different stages of moving the §r(negation) through the statement to reach a statement you can prove.
+          )
+          §solution["exercise_tour_not"](
+            §p(
+              To disprove the statement, we first formulate its negation: It does not hold for all natural numbers §$(n) that there exists a natural number §$(m) such that §$(n) is not §r(less than or equal to) §$(m)(.)
+            )§p(
+              Next, we move the §r(negation) through the §r(universal quantification): There exists a natural number §$(n) such that there exists no natural number §$(m) such that §$(n) is not §r(less than or equal to) §$(m)(.)
+            )§p(
+              We continue propagating the §r(negation): There exists a natural number §$(n) such that for all natural numbers §$(m) we do not have that §$(n) is not §r(less than or equal to) §$(m)(.)
+            )§p(
+              We can now eliminate the §r(double negation): There exists a natural number §$(n) such that for all natural numbers §$(m) we have that §$(n) is §r(less than or equal to) §$(m)(.)
+            )§p(
+              This statement we can prove: Define §$(n §$defeq 0)(,) then §$(n §$leq m) by §cref(exercise_tour_leq).
+            )
           )
         )§exercise["wrong_negation_existential"](
           §p(
             A common mistake when §r(negation)(negating) statements of §r(existential quantification) is to propagate the §r(negation) without swapping to §r(universal quantification).
           )§p(
-            Give a statement §verbatim(§i(bla)) such that §verbatim(there exists no squirrel §$(s) such that §i(bla)) and §verbatim(there exists a squirrel §$(s) such that not §i(bla)) do not §r(mean the same).
+            Give a §r(predicate) §verbatim(§i(bla)) such that §verbatim(there exists no squirrel §$(s) such that §i(bla)) and §verbatim(there exists a squirrel §$(s) such that not §i(bla)) do not §r(mean the same).
+          )
+          §solution["wrong_negation_existential"](
+            §p(
+              Consider the §r(predicate) of being §r(equal) to §$(§$value(Alex))(.) The statement that there exists no squirrel §$(s) such that §$(s §$eq §$value(Alex)) is false, because if we define §$(s §$defeq §$value(Alex))(,) then §$(s §$neq §$value(Alex)) does not hold.
+            )§p(
+              If we propagate the §r(negation) without swapping to §r(universal quantification) however, the statement becomes true: There exists a squirrel §$(s) such that §$(s §$neq §$value(Alex))(,) for example §$(s §$defeq §$value(Blake))(.)
+            )
           )
         )§exercise["wrong_negation_universal"](
           §p(
             A common mistake when §r(negation)(negating) statements of §r(universal quantification) is to propagate the §r(negation) without swapping to §r(existential quantification).
           )§p(
-            Give a statement §verbatim(§i(bla)) such that §verbatim(it does not hold that for all squirrels §$(s) holds §i(bla)) and §verbatim(for all squirrels §$(s) does not hold §i(bla)) do not §r(mean the same).
+            Give a §r(predicate) §verbatim(§i(bla)) such that §verbatim(it does not hold that for all squirrels §$(s) holds §i(bla)) and §verbatim(for all squirrels §$(s) does not hold §i(bla)) do not §r(mean the same).
+          )
+          §solution["wrong_negation_universal"](
+            §p(
+              Consider the §r(predicate) of being §r(equal) to §$(§$value(Alex))(.) It is true that we do not have for every squirrel §$(s) that §$(s §$eq §$value(Alex)), because if we define §$(s §$defeq §$value(Blake))(,) then §$(s §$neq §$value(Alex))(.)
+            )§p(
+              If we propagate the §r(negation) without swapping to §r(existential quantification) however, the statement becomes false: That every squirrel §$(s) is not §r(equal) to §$(§$value(Alex)) is refuted by choosing §$(s §$defeq §$value(Alex))(.)
+            )
           )
         )
 
@@ -579,9 +614,14 @@
 
         §exercise["tour_xor"](
           §p(
-            Using §r(negation), §r(conjunction), and §r(disjunction), construct a statement with the same meaning as §verbatim(Either §$(§$value(Alex)) is hungry or §$(§$value(Alex)) is asleep).
+            Using §r(negation), §r(conjunction), and §r(disjunction), construct a statement with §r(mean the same)(the same meaning) as §verbatim(Either §$(§$value(Alex)) is hungry or §$(§$value(Alex)) is asleep).
           )§p(
             Whenever you encounter an §r(exclusive or), you can prove it by first translating it into the equivalent statement that only uses §r(negation), §r(conjunction), and §r(disjunction).
+          )
+          §solution["tour_xor"](
+            §p(
+              §$(§$value(Alex)) is hungry and §$(§$value(Alex)) is not asleep, or §$(§$value(Alex)) is not hungry and §$(§$value(Alex)) is asleep.
+            )
           )
         )
 
@@ -650,6 +690,32 @@
           §p(
             Formulate a statement that expresses that no natural number is equal to all natural numbers, and prove it.
           )
+          §solution["exercise_tour_use_disjunction"](
+            §p(
+              Claim: There exists no natural number §$(n) such that for all natural numbers §$(m) we have §$(n §$eq m)(.)
+            )§p(
+              Proof: Let §$(n) be a natural number. It remains to show that there exists a a natural number §$(m) such that §$(n §$neq m)(.)  We do a §r(case distinction) on whether §$(n §$eq 0)(:)
+            )§cases(
+              §case["exercise_tour_use_disjunction_case1"](§$(n §$eq 0))(
+                §p(
+                  Define §$(m §$defeq 1)(,) then §$(m §$neq n)(.)
+                )
+              )
+              §case(§$(n §$neq 0))(
+                §p(
+                  Define §$(m §$defeq 0)(,) then §$(m §$neq n)(.)
+                )
+              )
+            )§p(
+              This concludes the proof.
+            )
+
+            §p(
+              A common mistake is to not provide a specific value in §cref(exercise_tour_use_disjunction_case1), but only write something along the lines of §verbatim(§$(m) can be any natural number other than §$(0)). That may be true, but it does not change the fact that the only way of proving an §r(existential quantification) is to give a concrete, well-defined §r(witness). §verbatim(Any natural number other than §$(0)) is not that.
+            )§p(
+              In a more complicated proof, it can be helpful to explicitly tell your reader that you chose a §r(witness) arbitrarily within certain constraints. But for mathematical correctness, you always have to specify a specific one.
+            )
+          )
         )
 
         §p(
@@ -711,11 +777,25 @@
           )§p(
             Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(not (§i(bla) and §i(blubb))) and §verbatim((not §i(bla)) and (not §i(blubb))) do not §r(mean the same).
           )
+          §solution["wrong_negation_conjunction"](
+            §p(
+              §verbatim(not §$(§()(0 §$eq 0)() and §$(0 §$eq 1)(§))) is true, because §verbatim(§$(0 §$eq 0) and §$(0 §$eq 1)) is not.
+            )§p(
+              §verbatim((not §$(0 §$eq 0)) and (not §$(0 §$eq 1))) however is false, because §verbatim(not §$(0 §$eq 0)) is false.
+            )
+          )
         )§exercise["wrong_negation_disjunction"](
           §p(
             A common mistake when §r(negation)(negating) §rs(disjunction) is to propagate the §r(negation) without swapping to a §r(conjunction).
           )§p(
-            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(not (§i(bla) anord §i(blubb))) and §verbatim((not §i(bla)) or (not §i(blubb))) do not §r(mean the same).
+            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(not (§i(bla) or §i(blubb))) and §verbatim((not §i(bla)) or (not §i(blubb))) do not §r(mean the same).
+          )
+          §solution["wrong_negation_disjunction"](
+            §p(
+              §verbatim(not §$(§()(0 §$eq 0)() or §$(0 §$eq 1)(§))) is false, because §verbatim(§$(0 §$eq 0)) is true.
+            )§p(
+              §verbatim((not §$(0 §$eq 0)) or (not §$(0 §$eq 1))) however is true, because §verbatim(not §$(0 §$eq 1)) is true.
+            )
           )
         )
 
@@ -747,11 +827,22 @@
         )
 
         §exercise["exercise_associativity_conjunction_disjunction"](
-          Show that the grouping of §rs(conjunction) and §rs(disjunction) does matter when they both occur, by giving two statements that only differ in that grouping, proving one of them, and disproving the other.
+          §p(
+            Show that the grouping of §rs(conjunction) and §rs(disjunction) does matter when they both occur, by giving two statements that only differ in that grouping, proving one of them, and disproving the other.
+          )
+          §solution["exercise_associativity_conjunction_disjunction"](
+            §p(
+              Claim: §$(§()(0 §$eq 1)() and §$(1 §$eq 2)(§)) or §$(0 §$eq 0)(.) This claim is true, because §verbatim(§$(0 §$eq 0)) holds.
+            )§p(
+              Claim: §$(0 §$eq 1) and §$(§()(1 §$eq 2)() or §$(0 §$eq 0)(§).) This claim is false, because §verbatim(§$(0 §$eq 1)) does not hold.
+            )
+          )
         )
 
         §exercise["exercise_analogies_conjunction_quantification"](
-          Find and summarize as many of the analogies between the properties of §r(conjunction)/§r(disjunction) and §r(universal quantification)(universal)/§r(existential quantification) as you can.
+          §p(
+            Find and summarize as many of the analogies between the properties of §r(conjunction)/§r(disjunction) and §r(universal quantification)(universal)/§r(existential quantification) as you can.
+          )
         )
 
       )
@@ -857,11 +948,37 @@
         )
         §exercise["exercise_transitivity_leq"](
           §p(Prove §cref(transitivity_leq).)
+          §solution["exercise_transitivity_leq"](
+            §p(
+              Let §$(a, b, c) be natural numbers.
+            )§p(
+              Assume that §$(a §$leq b) and obtain §$(k) such that §$(a + k §$eq b)(.) Furthermore, assume that §$(b §$leq c) and obtain §$(k') (pronounced §verbatim(k prime), a common way of generating new, uninventive names) such that §$(b + k' §$eq c)(.)
+            )§p(
+              Define §$(k'' §$defeq k + k')(.) Then
+            )§$$align*(
+              a + k'' &§$eq a + §$p(k + k'') §$tag(Definition $k''$)
+            )(
+              &§$eq §$p(a + k) + k' §$tag(§cref(tour_associativity_addition)(Associativity) $+$)
+            )(
+              &§$eq b + k' §$tag(Choice of $k$)
+            )(
+              &§$eq c, §$tag(Choice of $k'$)
+            )§p(
+              and thus §$(a §$leq c)(.)
+            )
+          )
         )
 
         §exercise["exercise_exactly_one"](
           §p(
-            Formulate a statement that expresses that exactly one squirrel is §r(equal) to §$(§$value(Alex))(.) It is possible to do this without using §rs(implication), but the arguably most elegant solution uses one.
+            Formulate a statement that expresses that exactly one natural number is §r(less than or equal to) §$(5Clinton zero)(.) The suggested solution makes elegant use of an §r(implication).
+          )
+          §solution["exercise_exactly_one"](
+            §p(
+              Stating that there exists §verbatim(exactly one) object with a certain property can be done by stating that there exists both §verbatim(at least one) and §verbatim(at most one). The §verbatim(at least) part is regular §r(existential quantification), the interesting part is expressing the §verbatim(at most) constraint:
+            )§p(
+              There exists a natural number §$(n) such that §$(n §$leq 0)(,) and for all natural numbers §$(x, y) holds that if both §$(x §$leq 0) and §$(y §$leq 0), then §$(x §$eq y).
+            )
           )
         )
 
@@ -923,20 +1040,6 @@
           )
         )
 
-        §exercise["wrong_negation_implication"](
-          §p(
-            A common mistake when §r(negation)(negating) §rs(implication) is to simply negate both the §r(premise) and the §r(conclusion) and call it a day.
-          )§p(
-            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(if §i(bla) then §i(blubb)) and §verbatim(if not §i(bla) then not §i(blubb)) do not §r(mean the same).
-          )
-        )§exercise["wrong_negation_implication2"](
-          §p(
-            A common mistake when §r(negation)(negating) §rs(implication) is to simply swap the §r(premise) and the §r(conclusion) and call it a day.
-          )§p(
-            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(if §i(bla) then §i(blubb)) and §verbatim(if §i(blubb) then §i(bla)) do not §r(mean the same).
-          )
-        )
-
         §p(
           From a similar line of reasoning we can derive another §r(meta statement). If the §r(conclusion) of an implication does not hold, then the §r(premise) of the implication cannot hold either. This reformulation of an §r(implication) is called its §definex(contrapositive)(
             §p(
@@ -961,9 +1064,41 @@
           )
         )
 
+        §exercise["wrong_negation_implication"](
+          §p(
+            A common mistake when §r(negation)(negating) §rs(implication) is to simply negate both the §r(premise) and the §r(conclusion) and call it a day.
+          )§p(
+            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(not if §i(bla) then §i(blubb)) and §verbatim(if not §i(bla) then not §i(blubb)) do not §r(mean the same).
+          )
+          §solution["wrong_negation_implication"](
+            §p(
+              §verbatim(not if §$(0 §$eq 1) then §$(1 §$eq 2)) is false, because §verbatim(if §$(0 §$eq 1) then §$(1 §$eq 2)) is true.
+            )§p(
+              §verbatim(if §$(0 §$neq 1) then §$(1 §$neq 2)) is true however, because both §verbatim(§$(0 §$neq 1)) and §verbatim(§$(1 §$neq 2)) are true.
+            )
+          )
+        )§exercise["wrong_negation_implication2"](
+          §p(
+            A common mistake when §r(negation)(negating) §rs(implication) is to simply swap the §r(premise) and the §r(conclusion) and call it a day.
+          )§p(
+            Give statements §verbatim(§i(bla)) and §verbatim(§i(blubb)) such that §verbatim(not if §i(bla) then §i(blubb)) and §verbatim(if §i(blubb) then §i(bla)) do not §r(mean the same).
+          )
+          §solution["wrong_negation_implication2"](
+            §p(
+              §verbatim(not if §$(0 §$eq 1) then §$(1 §$eq 2)) is false, because §verbatim(if §$(0 §$eq 1) then §$(1 §$eq 2)) is true.
+            )§p(
+              §verbatim(if §$(1 §$eq 2) then §$(0 §$eq 1)) is true however, because §verbatim(§$(1 §$eq 2)) is true.
+            )
+          )
+        )
         §exercise["exercise_wrong_negations_implication"](
           §p(
             How are the incorrect attempts at §r(negation)(negating) §rs(implication) of §cref(wrong_negation_implication) and §cref(wrong_negation_implication2) related?
+          )
+          §solution["exercise_wrong_negations_implication"](
+            §p(
+              §verbatim(if not §i(bla) then not §i(blubb)) is the §r(contrapositive) of §verbatim(if §i(blubb) then §i(bla)).
+            )
           )
         )
 
@@ -1002,6 +1137,11 @@
         §exercise["exercise_absurd"](
           §p(
             Prove that there exist a squirrel §$(s) such that §$(s §$eq §$value(Alex)) implies §$(s §$eq §$value(Blake))(.)
+          )
+          §solution["exercise_absurd"](
+            §p(
+              Define §$(s §$defeq §$value(Charlie))(,) then §$(s §$eq §$value(Alex)) is false, and the §r(implication) as a whole holds automatically.
+            )
           )
         )
 

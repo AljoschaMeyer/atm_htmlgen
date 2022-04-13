@@ -123,10 +123,14 @@
         §theorem["seq_is_equivalence"](
           §p(
             Let §$(A, B, C) be §rs(set). Then the following statements hold:
+          )§ol(
+            §li(§$(A §$seq A)(.))
+            §li(If §$(A §$seq B)(,) then §$(B §$seq A)(.))
+            §li(If §$(A §$seq B) and §$(B §$seq C)(,) then §$(A §$seq C)(.))
           )
         )
         §proof["seq_is_equivalence"](
-          §p(Claim:)
+          §p(Claims:)
           §ol(
             §li(§$(A §$seq A)(.))
             §li(If §$(A §$seq B)(,) then §$(B §$seq A)(.))
