@@ -126,6 +126,7 @@ pub(crate) struct State {
     pub cases: Vec<usize>,
 
     pub mathmode: bool,
+    pub fleqn: bool,
 }
 
 impl State {
@@ -162,6 +163,7 @@ impl State {
             cases: Vec::new(),
 
             mathmode: false,
+            fleqn: false,
         });
     }
 

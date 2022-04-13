@@ -298,6 +298,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::TeX(t, p, a, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$$" {
                         self.pm(|t, p, a| OutInternal::TeX(t, p, a, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"fleqn" {
+                        self.pm(|t, p, a| OutInternal::Fleqn(t, p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"cwd" {
                         self.pm(OutInternal::Cwd, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"set_domain" {
@@ -420,6 +422,10 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "nsubseteq".into(), r###"\nsubseteq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$nsupseteq" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "nsupseteq".into(), r###"\nsupseteq"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$nsubset" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "nsubset".into(), r###"\not\subset"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$nsupset" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "nsupset".into(), r###"\not\supset"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$twice" {
                         self.pm(|t, p, a| OutInternal::EncloseMath(t, p, a, "twice".into(), r###"\operatorname{twice}("###.into(), r###")"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {

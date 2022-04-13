@@ -202,6 +202,7 @@ pub(crate) enum OutInternal {
     Define(Trace, Define, Vec<OutInternal>, bool /* is there custom definition text */),
     Cref(Trace, Cref, Vec<OutInternal>),
     TeX(Trace, TeX, Vec<OutInternal>, bool),
+    Fleqn(Trace, (), Vec<OutInternal>),
     Cwd(Trace, (), Vec<OutInternal>),
     SetDomain(Trace, String, Vec<OutInternal>),
     ReferenceDefined(Trace, (), Vec<OutInternal>, bool /*capitalize*/, bool /*plural*/, bool /*fake define*/),
@@ -403,6 +404,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                         .display_mode(display)
                         .throw_on_error(true)
                         .trust(true)
+                        .fleqn(y.state.fleqn)
                         .build().unwrap();
 
                     return Ok(katex::render_with_opts(&content, &opts).map_err(|e| ExpansionError::TeX(e, span.clone()))?.into());
@@ -412,6 +414,17 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 {
                     return Ok("cannot render KaTeX on non-unix system".into());
                 }
+            }, &path, args, span, y);
+        }
+
+        OutInternal::Fleqn(span, path, args) => {
+            arguments_exact(1, &args, &span)?;
+
+            y.state.fleqn = !y.state.fleqn;
+
+            return up_macro(|_, args, y, _span| {
+                y.state.fleqn = !y.state.fleqn;
+                return Ok(args[0].clone());
             }, &path, args, span, y);
         }
 
@@ -544,7 +557,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
         OutInternal::Box(trace, params, args, kind, name) => {
             arguments_gte(1, &args, &trace)?;
-            arguments_lt(4, &args, &trace)?;
+            arguments_lt(3, &args, &trace)?;
 
             let (hsection_level, number) = match kind {
                 BoxKind::Exercise => {
@@ -582,24 +595,16 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
 
                 let box_html = format!(r###"<article class="{}" id="{}">
-    <h6><a href="{}">{} {}{}{}</a></h6>{}    {}
+    <h6><a href="{}">{} {}{}{}</a></h6>
+    {}
 </article>"###,
                     kind.class(),
                     id,
                     url,
                     name,
                     numbering,
-                    if args.len() == 3 { ": " } else { "" },
-                    if args.len() == 3 { args[0].clone() } else { Rope::new() },
-                    if args.len() >= 2 {
-                        format!(r###"
-                        <div class="assumptions">
-                            {}
-                        </div>
-"###, args[args.len() - 2])
-                    } else {
-                        "".to_string()
-                    },
+                    if args.len() == 2 { ": " } else { "" },
+                    if args.len() == 2 { args[0].clone() } else { Rope::new() },
                     args[args.len() - 1],
                 );
 
@@ -614,8 +619,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         }
 
         OutInternal::Fact(trace, params, args, name, no_numbering) => {
-            arguments_gte(2, &args, &trace)?;
-            arguments_lt(5, &args, &trace)?;
+            arguments_gte(1, &args, &trace)?;
+            arguments_lt(3, &args, &trace)?;
 
             if !no_numbering {
                 y.state.box_other_current_count += 1;
@@ -647,56 +652,22 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     kind: BoxKind::fact(),
                 });
 
-                let preview_html = format!(r###"<article class="{}" id="{}">
-    <h6><a href="{}">{}{}{}{}</a></h6>{}
-    <div class="claim">{}</div>
-</article>"###,
-                    BoxKind::fact().class(),
-                    id,
-                    url,
-                    name,
-                    numbering,
-                    if args.len() == 4 { ": " } else { "" },
-                    if args.len() == 4 { args[0].clone() } else { Rope::new() },
-                    if args.len() >= 3 {
-                        format!(r###"
-                        <div class="assumptions">
-                            {}
-                        </div>
-"###, args[args.len() - 3])
-                    } else {
-                        "".to_string()
-                    },
-                    args[args.len() - 2],
-                );
-
                 let box_html = format!(r###"<article class="{}" id="{}">
-    <h6><a href="{}">{}{}{}{}</a></h6>{}
-    <div class="claim">{}</div>
-    <div class="proof_body">{}</div>
+    <h6><a href="{}">{}{}{}{}</a></h6>
+    {}
 </article>"###,
                     BoxKind::fact().class(),
                     id,
                     url,
                     name,
                     numbering,
-                    if args.len() == 4 { ": " } else { "" },
-                    if args.len() == 4 { args[0].clone() } else { Rope::new() },
-                    if args.len() >= 3 {
-                        format!(r###"
-                        <div class="assumptions">
-                            {}
-                        </div>
-"###, args[args.len() - 3])
-                    } else {
-                        "".to_string()
-                    },
-                    args[args.len() - 2],
+                    if args.len() == 2 { ": " } else { "" },
+                    if args.len() == 2 { args[0].clone() } else { Rope::new() },
                     args[args.len() - 1],
                 );
 
-                y.state.create_preview(&id, &preview_html)?;
-                y.state.create_box_previews(&preview_html)?;
+                y.state.create_preview(&id, &box_html)?;
+                y.state.create_box_previews(&box_html)?;
                 return Ok(box_html.into());
             }, &params, args, trace, y);
 
@@ -706,13 +677,13 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         }
 
         OutInternal::Proof(trace, params, args) => {
-            arguments_gte(2, &args, &trace)?;
-            arguments_lt(4, &args, &trace)?;
+            arguments_gte(1, &args, &trace)?;
+            arguments_lt(2, &args, &trace)?;
 
             let kind = BoxKind::proof();
             let name = "Proof";
 
-            let id = format!("proof_{}", params.0[0]);
+            let id = if params.0.len() == 1 {format!("proof_{}", params.0[0])} else {params.0[2].to_string()};
             y.state.box_current = Some(id.to_string());
 
             let id_trace = Trace(None);
@@ -726,25 +697,14 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 let claim_name = y.state.claim_name(&params.0[0], id_trace.clone())?;
 
                 let box_html = format!(r###"<article class="{}" id="{}">
-    <h6><a href="{}">{}Proof of {}</a></h6>{}
-    <div class="claim">{}</div>
-    <div class="proof_body">{}</div>
+    <h6><a href="{}">{}Proof of {}</a></h6>
+    {}
 </article>"###,
                     kind.class(),
                     id,
                     url,
-                    p.0[1],
+                    if p.0.len() > 1 {&p.0[1]} else {""},
                     claim_name,
-                    if args.len() >= 3 {
-                        format!(r###"
-                        <div class="assumptions">
-                            {}
-                        </div>
-"###, args[0])
-                    } else {
-                        "".to_string()
-                    },
-                    &args[args.len() - 2],
                     &args[args.len() - 1],
                 );
 
@@ -1386,11 +1346,11 @@ impl Default for BoxParams {
 }
 
 #[derive(Deserialize, Clone)]
-pub struct Proof([String; 2]);
+pub struct Proof(Vec<String>);
 
 impl Default for Proof {
     fn default() -> Self {
-        Proof(["".to_string(), "".to_string()])
+        Proof(Vec::new())
     }
 }
 

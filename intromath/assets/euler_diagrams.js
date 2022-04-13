@@ -1,5 +1,4 @@
-import { tex, tex_string, defeq, set } from './tex.js';
-
+import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset } from './tex.js';
 
 const svgns = "http://www.w3.org/2000/svg";
 const PI = Math.PI;
@@ -43,7 +42,7 @@ function euler(container, compute_s3, render_results) {
   render_state();
 
   function render_state() {
-    const s3 = compute_s3 ? compute_s3(s1, s2) : [false, false, false, false, false];
+    const s3 = compute_s3 ? compute_s3(s1, s2) : empty_s();
 
     draw_set(s1, p1);
     draw_set(s2, p2);
@@ -66,6 +65,10 @@ function euler(container, compute_s3, render_results) {
       render_results(results, s1, s2, s3);
     }
   }
+}
+
+function empty_s() {
+  return [false, false, false, false, false];
 }
 
 function name_set(set) {
@@ -111,26 +114,70 @@ function set_symmetric_difference(s1, s2) {
   return s3;
 }
 
-function render_results_relation(container, s1, s2, s3, rel_tex_src, not_rel_tex_src) {
+function set_difference(s1, s2) {
+  const s3 = [];
+
+  for (let i = 0; i < 5; i++) {
+    s3.push(s1[i] && !s2[i]);
+  }
+
+  return s3;
+}
+
+function set_eq(a1, a2) {
+  if (a1.length != a2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < a1.length; i++) {
+    if (a1[i] != a2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+const container_vanilla = document.querySelector("#container_euler_vanilla");
+euler(container_vanilla, () => [false, false, false, false, false], () => {});
+
+const container_equality = document.querySelector("#container_euler_equality");
+euler(container_equality, set_symmetric_difference, (container, s1, s2, s3) => {
   const s1_name = name_set(1);
   const s2_name = name_set(2);
   const set1 = set_tex(s1, s3);
   const set2 = set_tex(s2, s3);
-  const rel = cardinality(s3) === 0 ? rel_tex_src : not_rel_tex_src;
+  const rel = cardinality(s3) === 0 ? seq : sneq;
 
-  tex(`${s1_name} = ${set1} ${rel} ${set2} = ${s2_name}`, container);
-}
-
-const container_vanilla = document.querySelector("#container_euler_vanilla");
-
-euler(container_vanilla, () => [false, false, false, false, false], () => {});
-
-const container_equality = document.querySelector("#container_euler_equality");
-
-euler(container_equality, set_symmetric_difference, (container, s1, s2, s3) => {
-  return render_results_relation(container, s1, s2, s3, "=", "\\neq");
+  return tex(`${s1_name} ${seq} ${set1} ${rel} ${set2} ${seq} ${s2_name}`, container);
 });
 
+const container_subset = document.querySelector("#container_euler_subset");
+euler(container_subset, () => [false, false, false, false, false], (container, s1, s2, s3) => {
+  const empty = empty_s();
+
+  const s1_name = name_set(1);
+  const s2_name = name_set(2);
+  const set1 = set_tex(s1, empty);
+  const set2 = set_tex(s2, empty);
+  const set1_2 = set_tex(s1, set_difference(s1, s2));
+  const set2_2 = set_tex(s2, set_difference(s2, s1));
+
+  let is_subseteq = true;
+  let is_supseteq = true;
+  for (let i = 0; i < s1.length; i++) {
+    if (s1[i] && !s2[i]) {
+      is_subseteq = false;
+    }
+    if (!s1[i] && s2[i]) {
+      is_supseteq = false;
+    }
+  }
+  const eq = set_eq(s1, s2);
+
+  tex(`${s1_name} ${seq} ${set1_2} ${is_subseteq ? (eq ? subseteq : subset) : nsubseteq} ${set2} ${seq} ${s2_name}`, container.children[0]);
+  tex(`${s1_name} ${seq} ${set1} ${is_supseteq ? (eq ? supseteq : supset) : nsupseteq} ${set2_2} ${seq} ${s2_name}`, container.children[1]);
+});
 
 function polar_to_cartesian([x, y], r, t) {
   return [r * Math.cos(t) + x, r * Math.sin(t) + y];

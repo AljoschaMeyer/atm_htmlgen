@@ -18,3 +18,13 @@ export function set(elems) {
 }
 
 export const defeq = String.raw`§$defeq§ `;
+export const seq = String.raw`§$seq§ `;
+export const sneq = String.raw`§$sneq§ `;
+export const subseteq = String.raw`§$subseteq§ `;
+export const subset = String.raw`§$subset§ `;
+export const supseteq = String.raw`§$supseteq§ `;
+export const supset = String.raw`§$supset§ `;
+export const nsubseteq = String.raw`§$nsubseteq§ `;
+export const nsubset = String.raw`§$nsubset§ `;
+export const nsupseteq = String.raw`§$nsupseteq§ `;
+export const nsupset = String.raw`§$nsupset§ `;
