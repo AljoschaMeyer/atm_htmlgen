@@ -199,7 +199,7 @@ pub(crate) enum OutInternal {
     Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String),
     Fact(Trace, BoxParams, Vec<OutInternal>, String, bool /*no numbering*/),
     Proof(Trace, Proof, Vec<OutInternal>),
-    Solution(Trace, Solution, Vec<OutInternal>),
+    Toggled(Trace, Toggled, Vec<OutInternal>, &'static str, &'static str),
     Define(Trace, Define, Vec<OutInternal>, bool /* is there custom definition text */),
     Cref(Trace, Cref, Vec<OutInternal>),
     TeX(Trace, TeX, Vec<OutInternal>, bool),
@@ -531,25 +531,27 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             return r;
         }
 
-        OutInternal::Solution(trace, params, args) => {
+        OutInternal::Toggled(trace, params, args, invisible, visible) => {
             arguments_exact(1, &args, &trace)?;
             return down_macro(|p, _n, _y, _trace| {
                 return Ok(Out::Many(vec![
-                        Out::Text(format!(r###"<button class="btn_solution" id="btn_{}">Show a possible solution</button><div class="solution" style="display: none">"###, p.0[0]).into()),
+                        Out::Text(format!(r###"<button class="btn_toggle no" id="btn_toggle_{}">{}</button><div class="toggled" style="display: none">"###, p.0[0], invisible).into()),
                         Out::Argument(0),
                         Out::Text(format!(r###"</div>
     <script>
         (()=>{{
             let shown = false;
-            const btn = document.querySelector("#btn_{}");
+            const btn = document.querySelector("#btn_toggle_{}");
             const sol = btn.nextSibling;
             btn.addEventListener("click", e => {{
                 sol.style.display = shown ? "none" : "block";
-                btn.textContent = shown ? "Show a possible solution" : "Hide solution";
+                btn.textContent = shown ? "{}" : "{}";
+                btn.classList.toggle("yes", shown);
+                btn.classList.toggle("no", !shown);
                 shown = !shown;
             }});
         }})()
-    </script>"###, p.0[0]).into()),
+    </script>"###, p.0[0], invisible, visible).into()),
                     ]))
             }, &params, args, trace, y);
         }
@@ -1441,10 +1443,10 @@ impl Default for MathMacro {
 }
 
 #[derive(Deserialize, Clone)]
-pub struct Solution([String; 1]);
+pub struct Toggled([String; 1]);
 
-impl Default for Solution {
+impl Default for Toggled {
     fn default() -> Self {
-        Solution(["".to_string()])
+        Toggled(["".to_string()])
     }
 }

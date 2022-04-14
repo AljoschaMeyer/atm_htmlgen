@@ -18,6 +18,12 @@
     --c1-transparent: rgba(0, 40, 255, 0.1);
     --c2-half: rgba(0, 170, 3, 0.7);
     --c2-transparent: rgba(0, 170, 3, 0.1);
+
+    --color-button-background-no: var(--color-bg2);
+    --color-button-background-yes: var(--color-bg3);
+    --color-button-border-no: var(--color-text);
+    --color-button-border-yes: var(--color-text);
+    --color-button-background-hover: var(--color-bg);
 }
 
 .c1 {
@@ -417,9 +423,18 @@ button {
   box-sizing: border-box;
   text-decoration: none;
   color: var(--color-text);
-  background-color: var(--color-bg2);
   text-align: center;
   transition: all 0.2s;
+}
+
+button.no {
+  background-color: var(--color-button-background-no);
+  border-color: var(--color-button-border-no);
+}
+
+button.yes {
+  background-color: var(--color-button-background-yes);
+  border-color: var(--color-button-border-yes);
 }
 
 .preview button {
@@ -427,13 +442,17 @@ button {
 }
 
 button:hover {
-  background-color: var(--color-bg);
+  background-color: var(--color-button-background-hover);
 }
 
-.preview button:hover {
-  background-color: var(--color-bg2);
+.preview button.no:hover {
+  background-color: var(--color-button-background-no);
 }
 
-.solution {
+.preview button.yes:hover {
+  background-color: var(--color-button-background-yes);
+}
+
+.toggled {
   margin-top: 1rem;
 }

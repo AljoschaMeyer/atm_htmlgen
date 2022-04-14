@@ -371,13 +371,17 @@ impl<'a> Parser<'a> {
                     } else if macro_name == b"video_container" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="slightlywide"><div class="video_container">"###, "</div></div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"solution" {
-                        self.pm(OutInternal::Solution, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Toggled(t, p, a, r###"Show a possible solution"###, "Hide solution"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"proof_as_exercise" {
+                        self.pm(|t, p, a| OutInternal::Toggled(t, p, a, r###"Prove it yourself, then click to compare"###, "Hide proof"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"nobr" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="nobr">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$tag" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\tag{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$p" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"\htmlClass{grouping_paren}{(}"###, r###"\htmlClass{grouping_paren}{)}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$text" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\text{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"link" {
                         self.pm(OutInternal::Link, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"captioned" {

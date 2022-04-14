@@ -205,9 +205,11 @@
           This book tries to make the unfolding of definitions as easy as possible: you can hover over any defined terminology (for example, §verbatim(§r(less than or equal to))) or symbol (for example, §verbatim(§$(§$leq))), and the definition will open in a tooltip. The terminology or symbol is also a hyperlink to its definition.
         )
 
-        §exercise["exercise_tour_leq"](
-          §p(Prove that for all natural numbers §$(n) it holds that §$(0 §$leq n)(.))
-          §solution["exercise_tour_leq"](
+        §statement["exercise_tour_leq"](
+          §p(For all natural numbers §$(n) it holds that §$(0 §$leq n)(.))
+        )
+        §proof["exercise_tour_leq"](
+          §proof_as_exercise["exercise_tour_leq"](
             Let §$(n) be a natural number. Define §$(k §$defeq n)(.) Then §$$align*(0 + k &§$eq 0 + n)(&§$eq n,) and thus §$(0 §$leq n)(.)
           )
         )
@@ -843,6 +845,33 @@
           §p(
             Find and summarize as many of the analogies between the properties of §r(conjunction)/§r(disjunction) and §r(universal quantification)(universal)/§r(existential quantification) as you can.
           )
+          §solution["exercise_analogies_conjunction_quantification"](
+            §ul(
+              §li(
+                §Rs(universal quantification) require something of §em(all) objects, and §rs(conjunction) of §em(all) substatements. §Rs(existential quantification) require something of §em(at least one) object, and §rs(disjunction) of §em(at least one) substatement.
+              )§li(
+                Changing a true §r(universal quantification) into an §r(existential quantification) preserves truth, as does changing a true §r(conjunction) into a §r(disjunction). Changing a false §r(existential quantification) into a §r(universal quantification) preserves falsehood, as does changing a false §r(disjunction) into a §r(conjunction).
+              )§li(
+                §R(negation) is propagated past a quantifier by swapping the quantifier and §r(negation)(negating) the substatement. §R(negation) is propagated past a §r(conjunction) or §r(disjunction) by swapping to the other and §r(negation)(negating) the substatements.
+              )§li(
+                §p(
+                  Proving §rs(universal quantification) and §rs(conjunction) requires more powerful arguments than proving §rs(existential quantification) and §rs(disjunction) respectively, because the prior talk about multiple substatements respectively objects at a time, whereas the latter only talk about individual ones.
+                )§p(
+                  Proving §rs(existential quantification) and §rs(disjunction) requires more intelligent choice however, because you need to choose a suitable object respectively substatement multiple options.
+                )
+              )§li(
+                §p(
+                  Using §rs(existential quantification) and §rs(disjunction) requires more powerful follow-up arguments than using §rs(universal quantification) and §rs(conjunction): §rs(existential quantification) give you a mostly featureless object whereas §rs(universal quantification) give you additional information about an arbitrary object, and §rs(disjunction) require you to solve multiple cases whereas §rs(conjunction) simply progress the proof.
+                )§p(
+                  Using §rs(universal quantification) and §rs(conjunction) requires more intelligent choice however: you need to choose which object respectively substatement to gain more information about.
+                )
+              )§li(
+                §p(
+                  The grouping amongst multiple, successive §rs(universal quantification) does not matter, neither does that of multiple, successive §rs(existential quantification). The same story holds for §rs(conjunction) and §rs(disjunction). But when interleaving §rs(universal quantification) and §rs(existential quantification), or when interleaving §rs(conjunction) and §rs(disjunction), different groupings can lead to statements that do not §r(mean the same).
+                )
+              )
+            )
+          )
         )
 
       )
@@ -946,9 +975,8 @@
             If §$(a §$leq b) and §$(b §$leq c)(,) then §$(a §$leq c)(.)
           )
         )
-        §exercise["exercise_transitivity_leq"](
-          §p(Prove §cref(transitivity_leq).)
-          §solution["exercise_transitivity_leq"](
+        §proof["transitivity_leq"](
+          §proof_as_exercise["exercise_transitivity_leq"](
             §p(
               Let §$(a, b, c) be natural numbers.
             )§p(
@@ -971,7 +999,7 @@
 
         §exercise["exercise_exactly_one"](
           §p(
-            Formulate a statement that expresses that exactly one natural number is §r(less than or equal to) §$(5Clinton zero)(.) The suggested solution makes elegant use of an §r(implication).
+            Formulate a statement that expresses that exactly one natural number is §r(less than or equal to) §$(0)(.) The suggested solution makes elegant use of an §r(implication).
           )
           §solution["exercise_exactly_one"](
             §p(
@@ -1351,16 +1379,18 @@
         To get the most out of these exercises, try to follow some principles:
       )§ul(
         §li(
-          Always prove that your solutions are correct. If the exercise asks you to give an object that satisfies certain properties, prove that it does indeed satisfy these properties.
+          You do not need to solve every single exercise. If an exercise bores you, you are probably not learning anything and you can safely skip it.
         )§li(
-          Write down your solutions, you §em(will) miss crucial details if you do not. Giving written solutions to only some of the exercises will teach you more than solving all of them in your head. If you want to try digital typesetting, the most commonly used software is §link(LaTeX)(https://www.latex-project.org/).
+          Always prove that your solutions are correct. If an exercise asks you to give an object that satisfies certain properties, prove that it does indeed satisfy these properties.
+        )§li(
+          Write down some of your solutions, you §em(will) miss crucial details if you do not. Giving written solutions to only some of the exercises will teach you more than solving all of them in your head. If you want to try digital typesetting, the most commonly used software is §link(LaTeX)(https://www.latex-project.org/). Writing by hand tends to be faster though.
         )§li(
           Find other learners and talk about exercises that give you trouble. Exchange your write-ups and help each other improve them. Consider writing down solutions together.
         )§li(
           If at all possible, gather feedback on your written solutions from a more experienced mathematician. Ask them to be thorough and scrutinize your work mercilessly, in content and formal rigor as well as in style and presentation. You are not only learning new concepts, you are also getting to know a new mode of communication.
         )
       )§p(
-        When writing down your solutions, try to adhere to the following guidelines:
+        When writing down solutions, try to adhere to the following guidelines:
       )§ul(
         §li(
           Help your reader understand you. If the exercise asks you to either prove or disprove a statement, begin by telling the reader which of the two you will do. The reader should never need to backtrack in order to understand your solution. Omit all information that is not directly relevant to your solution.

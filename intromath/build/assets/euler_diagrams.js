@@ -52,9 +52,11 @@ function euler(container, compute_s3, render_results) {
     }
 
     for (let i = 0; i < 5; i++) {
-      buttons1.children[i].classList.toggle("in", s1[i]);
+      buttons1.children[i].classList.toggle("yes", s1[i]);
+      buttons1.children[i].classList.toggle("no", !s1[i]);
       buttons1.children[i].innerHTML = button_text(i, 1, s1[i]);
-      buttons2.children[i].classList.toggle("in", s2[i]);
+      buttons2.children[i].classList.toggle("yes", s2[i]);
+      buttons2.children[i].classList.toggle("no", !s2[i]);
       buttons2.children[i].innerHTML = button_text(i, 2, s2[i]);
     }
 

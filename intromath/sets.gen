@@ -21,7 +21,7 @@
       )§p(
         Furthermore, an object must be §verbatim(well-defined), that is, it must be clear, for the purposes of determining §r(equal)(equality), which object you are talking about. For example, §verbatim(the most important composer of the 18th century) is not well-defined; whether the most important composer of the 18th century is §r(equal) to §link(Johann Sebastian Bach)(https://en.wikipedia.org/wiki/Johann_Sebastian_Bach) is a matter of personal opinion, not mathematical reasoning.
       )§p(
-        We will use squirrel-related iconography for our mathematical objects: §symbol0§ , §symbol1§ , §symbol2§ , §symbol3§ , and §symbol4§ . With that out of the way, we can now look at the one definition on which everything else in this book will build upon:
+        We will use squirrel-related iconography for our mathematical objects: §$(§$symbol0§ , §$symbol1§ , §$symbol2§ , §$symbol3)(,) and §$(§$symbol4)(.) But now it is high time to look at the one definition on which everything else in this book will build upon:
       )
 
       §definition["set"](Set)(
@@ -117,79 +117,78 @@
         )
 
         §p(
-          Equipped with a precise definition of §r(sequal)(set equality), we can now prove some foundational properties of §r(sequal) §rs(set).
+          Equipped with a precise definition of §r(sequal)(set equality), we can now prove some fundamental properties of §r(sequal) §rs(set).
         )
 
-        §theorem["seq_is_equivalence"](
+        §theorem["seq_reflexivity"](Reflexivity of §$(§$seq[true]))(
           §p(
-            Let §$(A, B, C) be §rs(set). Then the following statements hold:
-          )§ol(
-            §li(§$(A §$seq A)(.))
-            §li(If §$(A §$seq B)(,) then §$(B §$seq A)(.))
-            §li(If §$(A §$seq B) and §$(B §$seq C)(,) then §$(A §$seq C)(.))
+            Let §$(A) be a §r(set), then §$(A §$seq A).
           )
         )
-        §proof["seq_is_equivalence"](
-          §p(Claims:)
-          §ol(
-            §li(§$(A §$seq A)(.))
-            §li(If §$(A §$seq B)(,) then §$(B §$seq A)(.))
-            §li(If §$(A §$seq B) and §$(B §$seq C)(,) then §$(A §$seq C)(.))
+        §proof["seq_reflexivity"](
+          §proof_part(
+            §verbatim(§$(a §$in A §$implies a §$in A)):
+          )(
+            §p(
+              Let §$(a §$in A)(,) then §$(a §$in A) by assumption.
+            )
           )
-          §p(Proof:)
-          §ol(
-            §li(
-              §proof_part(
-                §verbatim(§$(a §$in A §$implies a §$in A)):
+          §proof_part(
+            §verbatim(§$(a §$notin A §$implies a §$notin A)):
+          )(
+            §p(
+              Let §$(a §$notin A)(,) then §$(a §$notin A) by assumption.
+            )
+          )
+        )
+
+        §theorem["seq_symmetry"](Symmetry of §$(§$seq[true]))(
+          §p(
+            Let §$(A, B) be §rs(set). If §$(A §$seq B)(,) then §$(B §$seq A)(.)
+          )
+        )
+        §proof["seq_symmetry"](
+          §p(
+            Assume that §$(A §$seq B)(,) that is, assume that §$(x §$in A) implies §$(x §$in B)(,) and that §$(x §$in B) implies §$(x §$in A)(.) Then we also have that §$(x §$in B) implies §$(x §$in A) and §$(x §$in A) implies §$(x §$in B)(,) that is, §$(B §$seq A)(.)
+          )
+        )
+
+        §theorem["seq_transitivity"](Transitivity of §$(§$seq[true]))(
+          §p(
+            Let §$(A, B, C) be §rs(set). If §$(A §$seq B) and §$(B §$seq C)(,) then §$(A §$seq C)(.)
+          )
+        )
+        §proof["seq_transitivity"](
+          §p(
+            Assume that §$(A §$seq B) and §$(B §$seq C)(.)
+          )
+          §proof_part(
+            §verbatim(§$(a §$in A §$implies a §$in C)):
+          )(
+            §p(
+              Let §$(x §$in A)(,) then
+            )§fleqn(
+              §$$align*(
+                && x &§$in A
               )(
-                §p(
-                  Let §$(a §$in A)(,) then §$(a §$in A) by assumption.
-                )
-              )
-              §proof_part(
-                §verbatim(§$(a §$notin A §$implies a §$notin A)):
+                §$implies {} && x &§$in B §$tag($A §$seq B$)
               )(
-                §p(
-                  Let §$(a §$notin A)(,) then §$(a §$notin A) by assumption.
-                )
+                §$implies {} && x &§$in C. §$tag($B §$seq C$)
               )
             )
-            §li(
-              Assume that §$(A §$seq B)(,) that is, assume that §$(x §$in A) implies §$(x §$in B)(,) and that §$(x §$in B) implies §$(x §$in A)(.) Then we also have that §$(x §$in B) implies §$(x §$in A) and §$(x §$in A) implies §$(x §$in B)(,) that is, §$(B §$seq A)(.)
-            )
-            §li(
-              §p(
-                Assume that §$(A §$seq B) and §$(B §$seq C)(.)
-              )
-              §proof_part(
-                §verbatim(§$(a §$in A §$implies a §$in C)):
+          )
+          §proof_part(
+            §verbatim(§$(a §$notin A §$implies a §$notin C)):
+          )(
+            §p(
+              Let §$(x §$notin A)(,) then
+            )§fleqn(
+              §$$align*(
+                && x &§$notin A
               )(
-                §p(
-                  Let §$(x §$in A)(,) then
-                )§fleqn(
-                  §$$align*(
-                    && x &§$in A
-                  )(
-                    §$implies {} && x &§$in B §$tag($A §$seq B$)
-                  )(
-                    §$implies {} && x &§$in C. §$tag($B §$seq C$)
-                  )
-                )
-              )
-              §proof_part(
-                §verbatim(§$(a §$notin A §$implies a §$notin C)):
+                §$implies {} && x &§$notin B §$tag($A §$seq B$)
               )(
-                §p(
-                  Let §$(x §$notin A)(,) then
-                )§fleqn(
-                  §$$align*(
-                    && x &§$notin A
-                  )(
-                    §$implies {} && x &§$notin B §$tag($A §$seq B$)
-                  )(
-                    §$implies {} && x &§$notin C. §$tag($B §$seq C$)
-                  )
-                )
+                §$implies {} && x &§$notin C. §$tag($B §$seq C$)
               )
             )
           )
@@ -197,6 +196,17 @@
 
         §p(
           These properties might feel so self-evidently true (just picture the §rs(Euler diagram)) that it can initially be hard to know where to even begin proving them. So while these proofs might not be the most flashy ones, it is quite remarkable that we can rigorously reason about such fundamental properties rather than having to blindly accept them as true.
+        )
+
+        §exercise["transitivity_sneq"](
+          §p(
+            Let §$(A, B, C) be §rs(set). Prove or disprove: if §$(A §$sneq B) and §$(B §$sneq C)(,) then §$(A §$sneq C)(.)
+          )
+          §solution["transitivity_sneq"](
+            §p(
+              We disprove the statement by giving a counterexample. Define §$(A §$defeq §$set(§$symbol0), B §$defeq §$set(§$symbol1))(,) and §$(C §$defeq §$set(§$symbol0))(.) Then §$(A §$sneq B) (because §$(§$symbol0 §$in A) but §$(§$symbol0 §$notin B)), §$(B §$sneq C) (because §$(§$symbol1 §$in B) but §$(§$symbol1 §$notin C)), but §$(A §$seq C)(.)
+            )
+          )
         )
 
       )
@@ -239,12 +249,6 @@
           )
         )
 
-        §exercise["exercise_partial_subsets"](
-          §p(
-            Give §rs(set) §$(A)(,) §$(B)(,) and §$(C)(,) such that §$(A §$subseteq C) and §$(B §$subseteq C)(,) but §$(A §$nsubseteq B) and §$(B §$nsubseteq A)(.)
-          )
-        )
-
         §p(
           If you compare the definitions of §r(sequal)(set equality) and §rs(subset), you can see that the definition of §rs(subset) is essentially one direction of the §r(bi-implication) in the definition of §r(sequal)(set equality). In other words, two §rs(set) are §r(sequal) if they are both §rs(subset) and §rs(superset) of each other. Formally:
         )
@@ -252,29 +256,43 @@
         §observation["sequality_and_subsets"](
           §$(A §$seq B) if and only if §$(A §$subseteq B) and §$(A §$supseteq B)(.)
         )
-
-        §p(
-          This alternate characterization of §r(sequal)(set equality) offers another way of proving §r(sequal)(set equality).
+        §proof["sequality_and_subsets"](
+          §proof_as_exercise["sequality_and_subsets"](
+            §proof_part(
+              §verbatim(§$(A §$seq B §$implies A §$subseteq B) and §$(A §$supseteq B)):
+            )(
+              §p(
+                Assume §$(A §$seq B)(.) We now show that §$(A §$subseteq B) and §$(A §$supseteq B)(.)
+              )§p(
+                Let §$(a §$in A)(,) then §$(a §$in B)(,) because §$(A §$seq B)(.) Thus, §$(A §$subseteq B)(.)
+              )§p(
+                Analogously, let §$(b §$in B)(,) then §$(b §$in A)(,) because §$(A §$seq B)(.) Thus, §$(A §$supseteq B)(.)
+              )
+            )
+            §proof_part(
+              §verbatim(§$(A §$subseteq B) and §$(A §$supseteq B §$implies A §$seq B)):
+            )(
+              §p(
+                Assume that §$(A §$subseteq B) and §$(A §$supseteq B)(.) We now show that §$(A §$seq B)(.)
+              )
+              §proof_part(
+                §verbatim(§$(a §$in A §$implies a §$in B)):
+              )(
+                Let §$(a §$in A)(,) then §$(a §$in B)(,) because §$(A §$subseteq B)(.)
+              )
+              §proof_part(
+                §verbatim(§$(b §$in B §$implies b §$in A)):
+              )(
+                Let §$(b §$in B)(,) then §$(b §$in A)(,) because §$(A §$supseteq B)(.)
+              )
+            )
+          )
         )
 
+        §p(
+          This alternate characterization offers yet another way of proving §r(sequal)(set equality).
+        )
 
-
-
-
-        - exercise: A subseteq A
-        - exercise: subseteq transitivity
-        - emptyset subseteq A (vacuous truth)
-        - subset transitivity
-        - exercise: A subset B subseteq C implies A sneq C
-        - exercise: subset antisymmetry
-        - exercise: no cyclic subsets
-
-
-
-
-      )
-
-      §hsection["vacuous_truth"](Vacuous Truth)(
         §p(
           If you played around a bit with §cref(example_subset), you may have noticed that the §r(empty set) is a §r(subset) of every set. To understand why, we need to take a close look at how §rs(subset) are defined. The §r(subset)(definition) talks about §verbatim(all §$(x §$in A)), so what happens if §$(A §$seq §$set)(?) There exists no §$(x) such that §$(x §$in §$set)(,) so what does that mean for the §r(subset)(definition)?
         )§p(
@@ -284,10 +302,7 @@
         )
 
         §theorem["empty_set_subset_everything"](
-          §p(Let §$(A) be a set.)
-          §p(
-            Then §$(§$set §$subseteq A)(.)
-          )
+          §p(Let §$(A) be a §r(set), then §$(§$set §$subseteq A)(.))
         )
         §proof["empty_set_subset_everything"](
           §p(
@@ -305,16 +320,141 @@
           §p(
             Based on your knowledge about §r(negation)(negating) §rs(universal quantification), give a full picture of how statements like §verbatim(there exists §$(x §$in §$set) such that §i(bla)) work out.
           )
+          §solution["vacuous_nontruth"](
+            §p(
+              Such a statement is always false; intuitively it is impossible to find a §r(witness) that is §r(in) the §r(empty set).
+            )
+            §p(
+              §verbatim(There exists §$(x §$in §$set) such that §i(bla)) is §r(bi-implication)(equivalent) to its §r(double negation) §verbatim(it does not hold that there exists no §$(x §$in §$set) such that §i(bla)). This in turn is §r(bi-implication)(equivalent) to §verbatim(it does not hold that for all §$(x §$in §$set) §i(not bla)), which is the §r(negation) of a §r(vacuously) true statement, and thus false.
+            )
+          )
+        )
+
+        §p(
+          The concept of §rs(subset) is ubiquitous in mathematics, so use the following exercises and theorems to familiarize yourself with it. They also present a good opportunity to practice your §r(deductive reasoning) skills.
+        )
+
+        §exercise["exercise_partial_subsets"](
+          §p(
+            Give §rs(set) §$(A)(,) §$(B)(,) and §$(C)(,) such that §$(A §$subseteq C) and §$(B §$subseteq C)(,) but §$(A §$nsubseteq B) and §$(B §$nsubseteq A)(.)
+          )
+          §solution["exercise_partial_subsets"](
+            §p(
+              Define §$(A §$defeq §$set(§$symbol0), B §$defeq §$set(§$symbol1))(,) and §$(C §$defeq §$set(§$symbol0)(§$symbol1))(.) Then §$(A §$subseteq C) and §$(B §$subseteq C)(,) but §$(A §$nsubseteq B) (because §$(§$symbol0 §$in A) but §$(§$symbol0 §$in B)) and §$(B §$nsubseteq A) (because §$(§$symbol1 §$in B) but §$(§$symbol1 §$in A)).
+            )
+          )
+        )
+
+        §theorem["subseteq_reflexivity"](Reflexivity of §$(§$subseteq[true]))(
+          §p(
+            Let §$(A) be a §r(set), then §$(A §$subseteq A)(.)
+          )
+        )
+        §proof["subseteq_reflexivity"](
+          §proof_as_exercise["subseteq_reflexivity"](
+            §p(
+              Let §$(A) be a §r(set), and let §$(a §$in A). Then §$(a §$in A), and thus §$(A §$subseteq A)(.)
+            )
+          )
+        )
+
+        §theorem["subseteq_transitivity"](Transitivity of §$(§$subseteq[true]))(
+          §p(
+            Let §$(A, B, C) be §rs(set). If §$(A §$subseteq B) and §$(B §$subseteq C)(,) then §$(A §$subseteq C)(.)
+          )
+        )
+        §proof["subseteq_transitivity"](
+          §proof_as_exercise["subseteq_transitivity"](
+            §p(
+              Let §$(A, B, C) be §rs(set). Assume that §$(A §$subseteq B) and §$(B §$subseteq C)(.)
+            )§p(
+              Let §$(a §$in A)(,) then
+            )§fleqn(
+              §$$align*(
+                && a &§$in A
+              )(
+                §$implies {} && a &§$in B §$tag($A §$subseteq B$)
+              )(
+                §$implies {} && a &§$in C, §$tag($B §$subseteq C$)
+              )
+            )§p(
+              and thus §$(A §$subseteq C)(.)
+            )
+          )
+        )
+
+        §theorem["subset_transitivity"](Transitivity of §$(§$subset[true]))(
+          §p(
+            Let §$(A, B, C) be §rs(set). If §$(A §$subset B) and §$(B §$subset C)(,) then §$(A §$subset C)(.)
+          )
+        )
+        §proof["subset_transitivity"](
+          §proof_as_exercise["subset_transitivity"](
+            §p(
+              Let §$(A, B, C) be §rs(set). Assume that §$(A §$subset B) and §$(B §$subset C)(.)
+            )§p(
+              As every §r(strict subset) of a §r(set) is also a (not necessarily strict) §r(subset), §cref(subseteq_transitivity) gives us that §$(A §$subseteq C)(.) It remains to show that §$(A §$sneq C)(.)
+            )§p(
+              Since §$(A §$sneq B) but every §r(member) of §$(A) is a §r(member) of §$(B) (both because §$(A §$subset B)), there exists some §$(x §$in B) with §$(x §$notin A)(.) Because §$(x §$in B) and §$(B §$subset C)(,) we know that §$(x §$in C). And since §$(x §$notin A)(,) we get that §$(A §$sneq C)(.)
+            )
+          )
+        )
+
+        §exercise["subset_antisymmetry"](
+          §p(
+            Let §$(A, B) be §rs(set). Prove or disprove: if §$(A §$subset B) and §$(B §$subset A)(,) then §$(A §$seq B)(.)
+          )
+          §solution["subset_antisymmetry"](
+            §p(
+              The statement holds. Its §r(premise) can never be fulfilled. We formally prove the statement by assuming the §r(premise) to hold, deriving a contradiction, and applying the §r(principle of explosion) to show the §r(conclusion).
+            )§p(
+              Assume that §$(A §$subset B) and §$(B §$subset A)(.) Then §$(a §$in A) implies §$(a §$in B) (because §$(A §$subset B)), and furthermore §$(b §$in B) implies §$(b §$in A) (because §$(B §$subset A)), that is, §$(A §$seq B)(.)
+            )§p(
+              By assumption we also have §$(A §$sneq B) as well however, a contradiction. By the §r(principle of explosion), we can follow that §$(A §$seq B)(,) and have thus proven the statement.
+            )§p(
+              We could have also ended the proof at the end of its second paragraph, as we have already proven the §r(conclusion) at that point. The third paragraph merely demonstrates how we can show anything from an impossible §r(premise).
+            )
+          )
+        )
+
+        §exercise["subseteq_cyclic"](
+          §p(
+            Prove or disprove: there exist §rs(set) §$(A, B, C) such that §$(A §$subseteq B)(,) §$(B §$subseteq C)(,) and §$(C §$subseteq A)(.)
+          )
+          §solution["subseteq_cyclic"](
+            §p(
+              The statement holds. Define §$(A §$defeq §$set)(,) §$(B §$defeq §$set)(,) and §$(C §$defeq §$set)(.) Then §$(A §$subseteq B)(,) §$(B §$subseteq C)(,) and §$(C §$subseteq A) by §cref(subseteq_reflexivity).
+            )§p(
+              Bonus exercise: show that for all §rs(set) §$(A, B, C) we have that §$(A §$subseteq B)(,) §$(B §$subseteq C) and §$(C §$subseteq A) if and only if §$(A §$seq B) and §$(B §$seq C)(.)
+            )
+          )
+        )
+
+        §exercise["subset_cyclic"](
+          §p(
+            Prove or disprove: there exist §rs(set) §$(A, B, C) such that §$(A §$subset B)(,) §$(B §$subset C)(,) and §$(C §$subset A)(.)
+          )
+          §solution["subset_cyclic"](
+            §p(
+              The statement does not hold, so we prove its §r(negation). Let §$(A, B, C) be §rs(set), and suppose toward a contradiction that §$(A §$subset B)(,) §$(B §$subset C)(,) and §$(C §$subset A)(.)
+            )§p(
+              Because §$(A §$subset B)(,) there exists §$(x §$in B) such that §$(x §$notin A)(.) Then §$(x §$in C)(,) because §$(x §$in B) and §$(B §$subset C)(.) But then also §$(x §$in A)(,) because §$(x §$in C) and §$(C §$subset A)(,) a contradiction.
+            )
+          )
         )
 
 
 
 
 
+        - exercise: no cyclic subset(eq)s?
 
-      - set comprehensions (first time that properties of objects matter, what about mismatches (natural numbers that are medalists in the 1986 olympic Games?))
+
+- set comprehensions (first time that properties of objects matter, what about mismatches (natural numbers that are medalists in the 1986 olympic Games?))
+- exercise: every powerset contains at least two members?
 
       )
+
 
 
     )

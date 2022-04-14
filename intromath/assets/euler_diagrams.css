@@ -2,7 +2,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  font-size: 1.1rem
+  font-size: 0.95rem
 }
 
 .eulersvg {
@@ -44,23 +44,22 @@
   flex: 1;
 }
 
+.euler_toggles > div:nth-child(1) > .euler_toggle {
+  --color-button-background-yes: var(--c1-transparent);
+  --color-button-border-no: var(--c1-half);
+  --color-button-border-yes: var(--c1-half);
+}
+
+.euler_toggles > div:nth-child(2) > .euler_toggle {
+  --color-button-background-yes: var(--c2-transparent);
+  --color-button-border-no: var(--c2-half);
+  --color-button-border-yes: var(--c2-half);
+}
+
 .euler_toggle {
   margin: 0 0.3em 0.3em 0;
   font-size: 1em;
 }
-
-.euler_toggle.in {
-  background-color: var(--color-bg3);
-}
-
-.euler_toggle.in:hover {
-  background-color: var(--color-bg);
-}
-
-.preview .euler_toggle.in:hover {
-  background-color: var(--color-bg3);
-}
-
 .the_sets {
   margin: 1rem 0;
 }
