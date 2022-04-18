@@ -1,11 +1,17 @@
 const tex_options = {trust: true};
 
-export function tex_string(str) {
-  return katex.renderToString(str, tex_options);
+export function tex_string(str, opts) {
+  if (opts) {
+    opts.trust = true;
+  }
+  return katex.renderToString(str, opts ? opts : tex_options);
 }
 
-export function tex(str, elem) {
-  return katex.render(str, elem, tex_options);
+export function tex(str, elem, opts) {
+  if (opts) {
+    opts.trust = true;
+  }
+  return katex.render(str, elem, opts ? opts : tex_options);
 }
 
 // elems is an array containing the tex source of the elements of the set
@@ -14,6 +20,22 @@ export function set(elems) {
     return String.raw`§$set§ `;
   } else {
     return String.raw`§$set(${elems.join(", ")})§ `;
+  }
+}
+
+export function p(inner_tex, level) {
+  if (level === 0) {
+    return String.raw`§$p(${inner_tex})§ `;
+  } else if (level === 1) {
+    return String.raw`§$p[1](${inner_tex})§ `;
+  } else if (level === 2) {
+    return String.raw`§$p[2](${inner_tex})§ `;
+  } else if (level === 3) {
+    return String.raw`§$p[3](${inner_tex})§ `;
+  } else if (level === 4) {
+    return String.raw`§$p[4](${inner_tex})§ `;
+  } else {
+    throw "unimplemented level of paren sizing";
   }
 }
 
@@ -28,3 +50,5 @@ export const nsubseteq = String.raw`§$nsubseteq§ `;
 export const nsubset = String.raw`§$nsubset§ `;
 export const nsupseteq = String.raw`§$nsupseteq§ `;
 export const nsupset = String.raw`§$nsupset§ `;
+export const intersection = String.raw`§$intersection§ `;
+export const union = String.raw`§$union§ `;

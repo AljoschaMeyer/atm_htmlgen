@@ -206,6 +206,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "ul".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"ol" {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "ol".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"button" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "button".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"a" {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "a".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"abbr" {
@@ -260,6 +262,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Drop(t, p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"lorem" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, LOREM), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$mid" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\mid"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"symbol0" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol0"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$symbol0" {
@@ -379,9 +383,23 @@ impl<'a> Parser<'a> {
                     } else if macro_name == b"$tag" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\tag{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$p" {
-                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"\htmlClass{grouping_paren}{(}"###, r###"\htmlClass{grouping_paren}{)}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(OutInternal::MathGroupingParens, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$text" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\text{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlight" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc1}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlight2" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc2}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlight3" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc3}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlight_direct" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmathdirect highlightc1}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlight2_direct" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmathdirect highlightc2}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlight3_direct" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmathdirect highlightc3}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$class" {
+                        self.pm(|t, p, a| OutInternal::Enclose2(t, p, a, "\\htmlClass{", "}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"link" {
                         self.pm(OutInternal::Link, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"captioned" {
@@ -390,6 +408,8 @@ impl<'a> Parser<'a> {
                         self.pm(OutInternal::SetMathId, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$set" {
                         self.pm(OutInternal::MathSet, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$set_builder" {
+                        self.pm(OutInternal::MathSetBuilder, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$$align*" {
                         self.pm(|t, p, a| OutInternal::MathEnv(t, p, a, "align*".into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$eq" {
@@ -432,6 +452,10 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "nsubset".into(), r###"\not\subset"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$nsupset" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "nsupset".into(), r###"\not\supset"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$intersection" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "intersection".into(), r###"\cap"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$union" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "union".into(), r###"\cup"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$twice" {
                         self.pm(|t, p, a| OutInternal::EncloseMath(t, p, a, "twice".into(), r###"\operatorname{twice}("###.into(), r###")"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {

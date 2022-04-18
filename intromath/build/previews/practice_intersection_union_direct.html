@@ -1,0 +1,21 @@
+<article class="exercise" id="practice_intersection_union_direct">
+    <h6><a href="http://localhost:1234/sets.html#practice_intersection_union_direct">Exercise 2.8</a></h6>
+    <p>Compute <span id="practice_intersection_union_direct_text" class=""></span></p>
+
+          <button class="btn_toggle no" id="btn_toggle_practice_intersection_union_direct">Show a possible solution</button><div class="toggled" style="display: none"><div id="practice_intersection_union_direct_solution" class=""></div></div>
+    <script>
+        (()=>{
+            let shown = false;
+            const btn = document.querySelector("#btn_toggle_practice_intersection_union_direct");
+            const sol = btn.nextSibling;
+            btn.addEventListener("click", e => {
+                sol.style.display = shown ? "none" : "block";
+                btn.textContent = shown ? "Show a possible solution" : "Hide solution";
+                btn.classList.toggle("yes", !shown);
+                btn.classList.toggle("no", shown);
+                shown = !shown;
+            });
+        })()
+    </script>
+          <p><button id="practice_intersection_union_direct_new" class="">Generate new exercise</button></p>
+</article>

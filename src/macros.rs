@@ -209,11 +209,14 @@ pub(crate) enum OutInternal {
     ReferenceDefined(Trace, (), Vec<OutInternal>, bool /*capitalize*/, bool /*plural*/, bool /*fake define*/),
     SetMathId(Trace, SetMathId, Vec<OutInternal>),
     MathMacro(Trace, MathMacro, Vec<OutInternal>, String /* id */, String /* tex */),
-    MathSet(Trace, (), Vec<OutInternal>),
+    MathSet(Trace, MathSet, Vec<OutInternal>),
+    MathGroupingParens(Trace, MathSet, Vec<OutInternal>),
+    MathSetBuilder(Trace, MathSetBuilder, Vec<OutInternal>),
     MathEnv(Trace, (), Vec<OutInternal>, &'static str /*environment name*/),
     Link(Trace, (), Vec<OutInternal>),
     Captioned(Trace, (), Vec<OutInternal>),
     Enclose(Trace, (), Vec<OutInternal>, &'static str, &'static str),
+    Enclose2(Trace, (), Vec<OutInternal>, &'static str, &'static str, &'static str),
     EncloseMath(Trace, (), Vec<OutInternal>, &'static str /* id */, &'static str, &'static str),
     Cases(Trace, (), Vec<OutInternal>),
     Case(Trace, Case, Vec<OutInternal>),
@@ -546,8 +549,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             btn.addEventListener("click", e => {{
                 sol.style.display = shown ? "none" : "block";
                 btn.textContent = shown ? "{}" : "{}";
-                btn.classList.toggle("yes", shown);
-                btn.classList.toggle("no", !shown);
+                btn.classList.toggle("yes", !shown);
+                btn.classList.toggle("no", shown);
                 shown = !shown;
             }});
         }})()
@@ -998,6 +1001,20 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }, &params, args, trace, y);
         }
 
+        OutInternal::Enclose2(trace, params, args, pre, mid, post) => {
+            arguments_exact(2, &args, &trace)?;
+
+            return down_macro(|_p, _n, _y, _trace| {
+                return Ok(Out::Many(vec![
+                        Out::Text(pre.into()),
+                        Out::Argument(0),
+                        Out::Text(mid.into()),
+                        Out::Argument(1),
+                        Out::Text(post.into()),
+                    ]));
+            }, &params, args, trace, y);
+        }
+
         OutInternal::Link(trace, params, args) => {
             arguments_exact(2, &args, &trace)?;
 
@@ -1089,7 +1106,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         }
 
         OutInternal::MathSet(trace, params, args) => {
-            return down_macro(|_p, n, y, trace| {
+            return down_macro(|p, n, y, trace| {
                 if y.state.second_iteration {
                     match y.state.sticky_state.math_definitions.get("set") {
                         None => return Err(ExpansionError::UnknownMathId(trace, "set".to_string())),
@@ -1099,8 +1116,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                             if n == 0 {
                                 return Ok(Out::Text(format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\emptyset}}}}"###, preview_url, url).into()));
                             } else {
-                                let left_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\lbrace}}}}"###, preview_url, url);
-                                let right_delimiter = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{\rbrace}}}}"###, preview_url, url);
+                                let (sizing_left, sizing_right) = sizing_level(p.0[0]);
+                                let left_delimiter = format!(r###" {}\lbrace "###, sizing_left);
+                                let right_delimiter = format!(r###" {}\rbrace "###, sizing_right);
 
                                 let mut outs = vec![Out::Text(left_delimiter.into())];
                                 for i in 0..n {
@@ -1122,6 +1140,34 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     }
                     return Ok(Out::Many(outs));
                 }
+            }, &params, args, trace, y);
+        }
+
+        OutInternal::MathSetBuilder(trace, params, args) => {
+            arguments_exact(2, &args, &trace)?;
+
+            let (sizing_left, sizing_right) = sizing_level(params.0[0]);
+            return down_macro(|_p, _n, _y, _trace| Ok(Out::Many(vec![
+                    Out::Text(format!(r###"{}\lbrace "###, sizing_left).into()),
+                    Out::Argument(0),
+                    Out::Text(r###"\mid"###.into()),
+                    Out::Argument(1),
+                    Out::Text(format!(r###" {}\rbrace "###, sizing_right).into()),
+                ])), &params, args, trace, y);
+        }
+
+        OutInternal::MathGroupingParens(trace, params, args) => {
+            arguments_exact(1, &args, &trace)?;
+            return down_macro(|p, n, y, trace| {
+                let (sizing_left, sizing_right) = sizing_level(p.0[0]);
+                let left_delimiter = format!(r###" {}( "###, sizing_left);
+                let right_delimiter = format!(r###" {}) "###, sizing_right);
+
+                return Ok(Out::Many(vec![
+                        Out::Text(left_delimiter.into()),
+                        Out::Argument(0),
+                        Out::Text(right_delimiter.into()),
+                    ]));
             }, &params, args, trace, y);
         }
 
@@ -1352,6 +1398,18 @@ fn some_kind_of_uppercase_first_letter(s: &str) -> String {
     }
 }
 
+fn sizing_level(level: u8) -> (String, String) {
+    match level {
+        99 => (r###"\left"###.to_string(), r###"\right"###.to_string()),
+        0 => ("".to_string(), "".to_string()),
+        1 => (r###"\big"###.to_string(), r###"\big"###.to_string()),
+        2 => (r###"\Big"###.to_string(), r###"\Big"###.to_string()),
+        3 => (r###"\bigg"###.to_string(), r###"\bigg"###.to_string()),
+        4 => (r###"\Bigg"###.to_string(), r###"\Bigg"###.to_string()),
+        _ => panic!("invalid delimiter sizing"),
+    }
+}
+
 #[derive(Deserialize, Clone)]
 pub struct Template;
 
@@ -1448,5 +1506,23 @@ pub struct Toggled([String; 1]);
 impl Default for Toggled {
     fn default() -> Self {
         Toggled(["".to_string()])
+    }
+}
+
+#[derive(Deserialize, Clone)]
+pub struct MathSet([u8; 1]);
+
+impl Default for MathSet {
+    fn default() -> Self {
+        MathSet([99])
+    }
+}
+
+#[derive(Deserialize, Clone)]
+pub struct MathSetBuilder([u8; 1]);
+
+impl Default for MathSetBuilder {
+    fn default() -> Self {
+        MathSetBuilder([99])
     }
 }

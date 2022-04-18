@@ -1,3 +1,11 @@
+:root {
+  --color-s3: var(--color-success);
+}
+
+.s3_obstruction {
+  --color-s3: var(--color-obstruction);
+}
+
 .euler_diagram {
   text-align: center;
   display: flex;
@@ -23,18 +31,24 @@
   fill: var(--c2-transparent);
 }
 
+.euler.clip {
+  stroke: none;
+  fill: white;
+}
+
+.euler.mask {
+  stroke: black;
+  fill: none;
+}
+
 .s3 {
-  color: var(--color-obstruction);
-  fill: var(--color-obstruction);
+  color: var(--color-s3);
+  fill: var(--color-s3);
 }
 
 .s3 .symbol0, .s3 .symbol1, .s3 .symbol2, .s3 .symbol3, .s3 .symbol4 {
-  background-color: var(--color-obstruction);
+  background-color: var(--color-s3);
 }
-
-/* .euler_toggle .symbol_container {
-  margin-right: 0.2rem;
-} */
 
 .euler_toggles, .the_sets {
   display: flex;
@@ -66,8 +80,8 @@
 
 .symbol_container {
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: 1rem;
+  height: 1rem;
   margin-left: 0.2rem;
   margin-right: 0.2rem;
 }
@@ -104,4 +118,33 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='646.521' height='646.521' viewBox='0 0 484.891 484.891'%3E%3Cdefs%3E%3CclipPath id='A'%3E%3Cpath d='M139.21 168h473.58v297H139.21z'/%3E%3C/clipPath%3E%3CclipPath id='B'%3E%3Cpath d='M464 494h90v118.79h-90z'/%3E%3C/clipPath%3E%3CclipPath id='C'%3E%3Cpath d='M331 494h90v118.79h-90z'/%3E%3C/clipPath%3E%3CclipPath id='D'%3E%3Cpath d='M198 494h90v118.79h-90z'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg transform='translate(-134.02 -134.95)'%3E%3Cg clip-path='url(%23A)'%3E%3Cpath d='M524 287.2l-2.902.031c-13.793-68.461-73.789-118.43-145.09-118.43-59.227 0-112.39 35.254-135.68 88.828-55.973 1.332-101.11 47.27-101.11 103.57 0 57.125 46.469 103.59 103.6 103.59h281.19c48.957 0 88.797-39.84 88.797-88.797s-39.84-88.797-88.797-88.797z'/%3E%3C/g%3E%3Cg clip-path='url(%23B)'%3E%3Cpath d='M497.03 500.79c-9.68 14-32.234 48.66-32.234 67.605 0 24.477 19.922 44.398 44.398 44.398s44.398-19.922 44.398-44.398c0-18.941-22.555-53.602-32.234-67.605-5.473-7.992-18.852-7.992-24.328 0z'/%3E%3C/g%3E%3Cg clip-path='url(%23C)'%3E%3Cpath d='M363.84 500.79c-9.707 14-32.234 48.66-32.234 67.605 0 24.477 19.922 44.398 44.398 44.398s44.398-19.922 44.398-44.398c0-18.941-22.523-53.602-32.234-67.605-5.504-7.992-18.824-7.992-24.328 0z'/%3E%3C/g%3E%3Cg clip-path='url(%23D)'%3E%3Cpath d='M230.64 500.79c-9.707 14-32.23 48.66-32.23 67.605 0 24.477 19.918 44.398 44.398 44.398s44.395-19.922 44.395-44.398c0-18.941-22.523-53.602-32.234-67.605-5.504-7.992-18.82-7.992-24.328 0z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") no-repeat 50% 50%;
   /* mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='543.819' height='543.819' viewBox='0 0 407.864 407.864'%3E%3Cpath d='M215.178 404.369c53.438 0 96.848-43.41 96.848-96.848 0-50.91-86.664-178.3-90.297-183.75-3-4.262-10.102-4.262-13.102 0-3.629 5.445-90.297 132.84-90.297 183.75.004 53.438 43.492 96.848 96.848 96.848zm12-48.855c20.285-5.13 35.203-22.496 37.254-43.176.394-4.34 4.34-7.657 8.602-7.106 4.34.395 7.5 4.262 7.105 8.602-2.684 27.39-22.418 50.277-49.094 56.988-.71.156-1.344.238-1.973.238-3.472 0-6.71-2.445-7.656-6-1.027-4.258 1.5-8.52 5.762-9.547zm-64.57-236.715c0-29.281-46.332-97.875-51.621-105.61-2.922-4.34-10.102-4.34-13.023 0-5.29 7.734-51.543 76.324-51.543 105.61 0 32.047 26.047 58.094 58.094 58.094 32.047-.004 58.094-26.051 58.094-58.094zm170.73-26.68c-2.606 0-5.05 1.343-6.55 3.472-4.817 7.024-47.122 69.773-47.122 96.688 0 29.598 24.074 53.594 53.672 53.594 29.598 0 53.594-23.996 53.594-53.594 0-26.914-42.227-89.664-47.12-96.688-1.423-2.129-3.868-3.472-6.474-3.472Z'/%3E%3C/svg%3E") no-repeat 50% 50%; */
   mask-size: cover;
+}
+
+.venn2_container > svg {
+  max-height: 10rem;
+}
+
+.venn * {
+  stroke: var(--color-text);
+  fill: none;
+}
+
+.venn .venn_yay {
+  fill: var(--color-success);
+  /* fill: url("#pattern_striped"); */
+}
+
+.euler_yay {
+  /* fill: var(--color-success); */
+  fill: url("#pattern_striped");
+}
+
+.venn text {
+  text-anchor: middle;
+  dominant-baseline: middle;
+  stroke: none;
+  fill: var(--color-text);
+  font-family: KaTeX_Math;
+  font-style: italic;
+  font-size: 0.8rem;
 }

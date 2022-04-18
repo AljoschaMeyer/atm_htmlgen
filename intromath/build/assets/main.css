@@ -1,4 +1,4 @@
-/* typography shamelessly stolen from https://ssbc.github.io/scuttlebutt-protocol-guide/ */
+/* typography adapted from https://ssbc.github.io/scuttlebutt-protocol-guide/ */
 
 :root {
     --color-bg: #fff;
@@ -13,11 +13,14 @@
     --color-proof: rgb(0, 173, 126);
 
     --color-obstruction: rgb(237, 7, 71);
+    --color-success: rgb(180, 0, 237);
 
     --c1-half: rgba(0, 40, 255, 0.7);
     --c1-transparent: rgba(0, 40, 255, 0.1);
     --c2-half: rgba(0, 170, 3, 0.7);
     --c2-transparent: rgba(0, 170, 3, 0.1);
+    --c3-half: rgba(195, 14, 210, 0.7);
+    --c3-transparent: rgba(195, 14, 210, 0.1);
 
     --color-button-background-no: var(--color-bg2);
     --color-button-background-yes: var(--color-bg3);
@@ -455,4 +458,21 @@ button:hover {
 
 .toggled {
   margin-top: 1rem;
+}
+
+.highlightmath .mbin, .highlightmath .minner, .highlightmathdirect {
+  padding: 0.1rem;
+  border-radius: 0.4rem;
+}
+
+.highlightc1 .mbin, .highlightc1 .minner, .highlightmathdirect.highlightc1 {
+  background-color: var(--c1-transparent)
+}
+
+.highlightc2 .mbin, .highlightc2 .minner, .highlightmathdirect.highlightc2 {
+  background-color: var(--c2-transparent)
+}
+
+.highlightc3 .mbin, .highlightc3 .minner, .highlightmathdirect.highlightc3 {
+  background-color: var(--c3-transparent)
 }

@@ -10,8 +10,8 @@
             btn.addEventListener("click", e => {
                 sol.style.display = shown ? "none" : "block";
                 btn.textContent = shown ? "Prove it yourself, then click to compare" : "Hide proof";
-                btn.classList.toggle("yes", shown);
-                btn.classList.toggle("no", !shown);
+                btn.classList.toggle("yes", !shown);
+                btn.classList.toggle("no", shown);
                 shown = !shown;
             });
         })()

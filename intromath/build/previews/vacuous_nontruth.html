@@ -11,8 +11,8 @@
             btn.addEventListener("click", e => {
                 sol.style.display = shown ? "none" : "block";
                 btn.textContent = shown ? "Show a possible solution" : "Hide solution";
-                btn.classList.toggle("yes", shown);
-                btn.classList.toggle("no", !shown);
+                btn.classList.toggle("yes", !shown);
+                btn.classList.toggle("no", shown);
                 shown = !shown;
             });
         })()

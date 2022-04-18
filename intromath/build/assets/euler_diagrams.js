@@ -1,10 +1,10 @@
-import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset } from './tex.js';
+import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, p } from './tex.js';
 
 const svgns = "http://www.w3.org/2000/svg";
 const PI = Math.PI;
 const R = 10;
 
-function euler(container, compute_s3, render_results) {
+function euler(container, compute_s3, render_results, prefix) {
   const s1 = [false, true, true, false, true];
   const s2 = [false, true, false, true, false];
 
@@ -14,8 +14,8 @@ function euler(container, compute_s3, render_results) {
   const p2 = svg.children[1];
 
   const svg_elements = [];
-  for (let i = 0; i < 5; i++) {
-    svg_elements.push(svg.children[2 + i]);
+  for (let i = 5; i > 0; i--) {
+    svg_elements.push(svg.children[svg.children.length - i]);
   }
 
   const buttons = container.children[1];
@@ -33,6 +33,11 @@ function euler(container, compute_s3, render_results) {
       render_state();
     });
   }
+
+  const clip1 = prefix ? document.querySelector(`#${prefix}_clip1_euler_path`) : null;
+  const clip2 = prefix ? document.querySelector(`#${prefix}_clip2_euler_path`) : null;
+  const mask1 = prefix ? document.querySelector(`#${prefix}_mask1_euler_path`) : null;
+  const mask2 = prefix ? document.querySelector(`#${prefix}_mask2_euler_path`) : null;
 
   const set1 = container.children[2].children[0];
   const set2 = container.children[2].children[1];
@@ -65,6 +70,19 @@ function euler(container, compute_s3, render_results) {
 
     if (render_results) {
       render_results(results, s1, s2, s3);
+    }
+
+    if (clip1) {
+      draw_set(s1, clip1);
+    }
+    if (clip2) {
+      draw_set(s2, clip2);
+    }
+    if (mask1) {
+      draw_set(s1, mask1);
+    }
+    if (mask2) {
+      draw_set(s2, mask2);
     }
   }
 }
@@ -102,6 +120,17 @@ function set_tex(s, s3_) {
   return set(elements);
 }
 
+function set_tex_vanilla(s) {
+  const elements = s.reduce((acc, element, i) => {
+    if (element) {
+      acc.push(`${i}`);
+    }
+    return acc;
+  }, []);
+
+  return set(elements);
+}
+
 function tex_symbol(i) {
   return `\\htmlClass{symbol_container}{\\htmlClass{symbol${i}}{}}`;
 }
@@ -121,6 +150,26 @@ function set_difference(s1, s2) {
 
   for (let i = 0; i < 5; i++) {
     s3.push(s1[i] && !s2[i]);
+  }
+
+  return s3;
+}
+
+function set_intersection(s1, s2) {
+  const s3 = [];
+
+  for (let i = 0; i < 5; i++) {
+    s3.push(s1[i] && s2[i]);
+  }
+
+  return s3;
+}
+
+function set_union(s1, s2) {
+  const s3 = [];
+
+  for (let i = 0; i < 5; i++) {
+    s3.push(s1[i] || s2[i]);
   }
 
   return s3;
@@ -154,8 +203,8 @@ euler(container_equality, set_symmetric_difference, (container, s1, s2, s3) => {
   return tex(`${s1_name} ${seq} ${set1} ${rel} ${set2} ${seq} ${s2_name}`, container);
 });
 
-const container_subset = document.querySelector("#container_euler_subset");
-euler(container_subset, () => [false, false, false, false, false], (container, s1, s2, s3) => {
+const container_subseteq = document.querySelector("#container_euler_subseteq");
+euler(container_subseteq, () => [false, false, false, false, false], (container, s1, s2, s3) => {
   const empty = empty_s();
 
   const s1_name = name_set(1);
@@ -175,11 +224,32 @@ euler(container_subset, () => [false, false, false, false, false], (container, s
       is_supseteq = false;
     }
   }
-  const eq = set_eq(s1, s2);
 
-  tex(`${s1_name} ${seq} ${set1_2} ${is_subseteq ? (eq ? subseteq : subset) : nsubseteq} ${set2} ${seq} ${s2_name}`, container.children[0]);
-  tex(`${s1_name} ${seq} ${set1} ${is_supseteq ? (eq ? supseteq : supset) : nsupseteq} ${set2_2} ${seq} ${s2_name}`, container.children[1]);
+  tex(`${s1_name} ${seq} ${set1_2} ${is_subseteq ? subseteq : nsubseteq} ${set2} ${seq} ${s2_name}`, container.children[0]);
+  tex(`${s1_name} ${seq} ${set1} ${is_supseteq ? supseteq : nsupseteq} ${set2_2} ${seq} ${s2_name}`, container.children[1]);
 });
+
+const container_intersection = document.querySelector("#container_euler_intersection");
+euler(container_intersection, set_intersection, (container, s1, s2, s3) => {
+  const s1_name = name_set(1);
+  const s2_name = name_set(2);
+  const set1 = set_tex(s1, s3);
+  const set2 = set_tex(s2, s3);
+  const set3 = set_tex(s3, s3);
+
+  return tex(`${s1_name} ${intersection} ${s2_name} ${seq} ${set1} ${intersection} ${set2} ${seq} ${set3}`, container);
+}, "intersection");
+
+const container_union = document.querySelector("#container_euler_union");
+euler(container_union, set_union, (container, s1, s2, s3) => {
+  const s1_name = name_set(1);
+  const s2_name = name_set(2);
+  const set1 = set_tex(s1, s3);
+  const set2 = set_tex(s2, s3);
+  const set3 = set_tex(s3, s3);
+
+  return tex(`${s1_name} ${union} ${s2_name} ${seq} ${set1} ${union} ${set2} ${seq} ${set3}`, container);
+}, "union");
 
 function polar_to_cartesian([x, y], r, t) {
   return [r * Math.cos(t) + x, r * Math.sin(t) + y];
@@ -202,9 +272,9 @@ function svg_label(label, [x, y]) {
 };
 
 function svg_path(clazz) {
-  const p = document.createElementNS(svgns, "path");
-  p.setAttribute("class", clazz);
-  return p;
+  const path = document.createElementNS(svgns, "path");
+  path.setAttribute("class", clazz);
+  return path;
 }
 
 function cardinality(s) {
@@ -295,3 +365,172 @@ function describe_arc([x, y], radius, startAngle, endAngle, do_move){
   const d = !!do_move ? ["M", start_x, start_y] : [];
   return d.concat(["A", radius, radius, 0, largeArcFlag, 0, end_x, end_y]).join(" ");
 }
+
+function random_bin_tree(target_inner, gen_leaf, gen_inner, state) {
+  if (target_inner === 0) {
+    return gen_leaf(state);
+  } else {
+    const left = random_int(target_inner, state);
+    return {
+      "inner": [
+        random_bin_tree(left, gen_leaf, gen_inner, state),
+        gen_inner(state),
+        random_bin_tree(target_inner - (left + 1), gen_leaf, gen_inner, state),
+      ],
+    };
+  }
+}
+
+function random_int(max_exclusive) {
+  return Math.floor(Math.random() * max_exclusive);
+}
+
+function coin_flip() {
+  return Math.random() < 0.5;
+}
+
+function random_set_5(state) {
+  return [coin_flip(state), coin_flip(state), coin_flip(state), coin_flip(state), coin_flip(state)];
+}
+
+function random_from_array(arr, state) {
+  return arr[random_int(arr.length, state)];
+}
+
+function dfs(inner_pre, inner_post, leaf, node, parent_pre) {
+  if (node["inner"]) {
+    const pre = inner_pre ? inner_pre(node.inner[1], parent_pre) : undefined;
+    const left = dfs(inner_pre, inner_post, leaf, node.inner[0], pre);
+    const right = dfs(inner_pre, inner_post, leaf, node.inner[2], pre);
+    return inner_post ? inner_post(node.inner[0], node.inner[1], node.inner[2], left, pre, right) : undefined;
+  } else {
+    return leaf ? leaf(node) : node;
+  }
+}
+
+function eval_op(op, left, right) {
+  switch (op) {
+    case "intersection": return set_intersection(left, right);
+    case "union": return set_union(left, right);
+    case "difference": return set_difference(left, right);
+    case "symmetric_difference": return set_symmetric_difference(left, right);
+
+    default: throw "unknown operator";
+  }
+}
+
+function eval_node(node) {
+  return dfs(null, (_l, op, _r, l, _p, r) => {return eval_op(op, l, r)}, null, node);
+}
+
+function has_all_operators(node, ops) {
+  const found_ops = {};
+
+  dfs(op => {found_ops[op] = true}, null, null, node);
+
+  let all = true;
+  ops.forEach(op => {
+    all = all && !!found_ops[op];
+  });
+
+  return all;
+}
+
+function height(node) {
+  return dfs(null, (_l, _op, _r, l, _p, r) => {
+    return 1 + Math.max(l, r);
+  }, () => 0, node);
+}
+
+function eval_one_step(node) {
+  return dfs(null, (lnode, op, rnode, l, _p, r) => {
+    if (!lnode["inner"] && !rnode["inner"]) {
+      return eval_op(op, l, r);
+    } else {
+      return {
+        "inner": [l, op, r],
+      };
+    }
+  }, null, node);
+}
+
+function practice_intersection_union_tree() {
+  while (true) {
+    const expr = random_bin_tree(3, random_set_5, () => {return random_from_array(["intersection", "union"]);});
+    if (!has_all_operators(expr, ["intersection", "union"])) {
+      continue
+    }
+
+    let interesting = true;
+
+    dfs(null, (_l, op, _r, left, _p, right) => {
+      const result = eval_op(op, left, right);
+      if (set_eq(result, left) && Math.random() <= 0.7) {
+        interesting = false;
+      }
+      if (set_eq(result, right) && Math.random() <= 0.7) {
+        interesting = false;
+      }
+      return result;
+    }, null, expr);
+
+    if (interesting) {
+      return expr;
+    }
+  }
+}
+
+function tex_op(op) {
+  switch (op) {
+    case "intersection": return intersection;
+    case "union": return union;
+    case "difference": return "TODO";
+    case "symmetric_difference": return "TODO";
+
+    default: throw "unknown operator";
+  }
+}
+
+function expr_to_tex(expr) {
+  const h = height(expr);
+  return dfs((_, level) => {return level + 1;}, (lnode, op, rnode, left, pre, right) => {
+    if (pre === -1) {
+      return `${left} ${tex_op(op)} ${right}`;
+    } else {
+      return p(`${left} ${tex_op(op)} ${right}`, h - (pre + 1));
+    }
+  }, set_tex_vanilla, expr, -2);
+}
+
+function expr_to_solution_tex(expr_) {
+  let expr = expr_;
+  const lines = [`&${expr_to_tex(expr)}\\\\`];
+
+  while (true) {
+    expr = eval_one_step(expr);
+    lines.push(`${seq} {} &${expr_to_tex(expr)}\\\\`);
+    if (!expr["inner"]) {
+      break
+    }
+  }
+
+  return `\\begin{align*}${lines.join("\n")}\\end{align*}`;
+}
+
+const practice_intersection_union_direct_text = document.querySelector("#practice_intersection_union_direct_text");
+const practice_intersection_union_direct_solution = document.querySelector("#practice_intersection_union_direct_solution");
+const practice_intersection_union_direct_new = document.querySelector("#practice_intersection_union_direct_new");
+
+function new_practice_intersection_union_direct() {
+  const expr = practice_intersection_union_tree();
+  tex(`${expr_to_tex(expr)}.`, practice_intersection_union_direct_text);
+  tex(`${expr_to_solution_tex(expr)}`, practice_intersection_union_direct_solution, {displayMode: true});
+
+  const btn_toggle_practice_intersection_union_direct = document.querySelector("#btn_toggle_practice_intersection_union_direct");
+  if (btn_toggle_practice_intersection_union_direct.classList.contains("yes")) {
+    btn_toggle_practice_intersection_union_direct.click()
+  }
+}
+
+new_practice_intersection_union_direct();
+practice_intersection_union_direct_new.addEventListener("click", new_practice_intersection_union_direct);
