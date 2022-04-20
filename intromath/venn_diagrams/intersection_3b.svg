@@ -1,0 +1,26 @@
+<svg class="venn" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
+  <rect x="-54" y="-59" width="108" height="108"/>
+
+  <clipPath id="clip1_intersection3_b">
+    <circle cx="-17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <clipPath id="clip2_intersection3_b" clip-path="url('#clip1_intersection3_b')">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <clipPath id="clip3_intersection3_b" clip-path="url('#clip2_intersection3_b')">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <rect class="venn_yay" clip-path="url('#clip3_intersection3_b')" x="-55" y="-60" width="110" height="110"/>
+
+  <circle cx="-17.3205" cy="10" r="30"/>
+  <text x="-25.9807" y="15">A</text>
+
+  <circle cx="0" cy="-20" r="30"/>
+  <text x="0" y="-30">B</text>
+
+  <circle cx="17.3205" cy="10" r="30"/>
+  <text x="25.9807" y="15">C</text>
+</svg>

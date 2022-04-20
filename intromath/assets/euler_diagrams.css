@@ -124,6 +124,10 @@
   max-height: 10rem;
 }
 
+.venn3_container > svg {
+  max-height: 10rem;
+}
+
 .venn * {
   stroke: var(--color-text);
   fill: none;
@@ -131,6 +135,16 @@
 
 .venn .venn_yay {
   fill: var(--color-success);
+  /* fill: url("#pattern_striped"); */
+}
+
+.venn .venn_yay_a {
+  fill: var(--c1-transparent);
+  /* fill: url("#pattern_striped"); */
+}
+
+.venn .venn_yay_b {
+  fill: var(--c2-transparent);
   /* fill: url("#pattern_striped"); */
 }
 
@@ -147,4 +161,9 @@
   font-family: KaTeX_Math;
   font-style: italic;
   font-size: 0.8rem;
+}
+
+.three_venns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }

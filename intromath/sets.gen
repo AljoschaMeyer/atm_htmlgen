@@ -596,11 +596,35 @@
           )
         )
 
-        §exercise["exercise_intersection_union_parens"](
+        §p(
+          Computing such expressions is the bread-and-butter operation of set theory, just like addition and multiplication are for arithmetic. The next exercise gives you ample opportunities to practice, you can generate new expressions and solutions with the click of a button.
+        )
+
+        §exercise["practice_intersection_union_direct"](
           §p(
-            Give §rs(set) §$(A, B, C) such that §$(§$p(A §$intersection B) §$union C §$sneq A §$intersection §$p(B §$union C))(.)
+            Compute §span(practice_intersection_union_direct_text)()()
           )
-          §solution["exercise_intersection_union_parens1"](
+
+          §solution["practice_intersection_union_direct"](
+            §div(practice_intersection_union_direct_solution)()()
+          )
+          §p(
+            §button(practice_intersection_union_direct_new)()(Generate new exercise)
+          )
+        )
+
+        §p(
+          Grouping these expressions with parentheses is necessary in general, because there are expressions for which the exact grouping makes a difference in the result:
+        )
+
+        §statement["intersection_union_parens"](
+          §p(
+            There exist §rs(set) §$(A, B, C) such that §$(§$p(A §$intersection B) §$union C §$sneq A §$intersection §$p(B §$union C))(.)
+          )
+        )
+
+        §proof["intersection_union_parens"](
+          §proof_as_exercise["intersection_union_parens"](
             §fleqn(
               §p(
                 Define §$(A §$defeq §$set§ , B §$defeq §$set§ , C §$defeq §$set(§$symbol0))(.) Then §$$align*(
@@ -621,47 +645,98 @@
           )
         )
 
-
-
-
-        §exercise["practice_intersection_union_direct"](
-          §p(
-            Compute §span(practice_intersection_union_direct_text)()()
-          )
-
-          §solution["practice_intersection_union_direct"](
-            §div(practice_intersection_union_direct_solution)()()
-          )
-          §p(
-            §button(practice_intersection_union_direct_new)()(Generate new exercise)
-          )
-        )
-
-
-
         §p(
-          §R(intersection) and §r(union) are the simplest ways of combining §rs(set), so it is worth practicing them with the following exercise. Remember that you can hover over symbols such as §verbatim(§$(§$intersection)) or §verbatim(§$(§$union)) to see their definition, getting used to new symbols and terminology can take a while.
+          The grouping does not affect the result when they are only §rs(intersection) or only §rs(union) involved.
         )
 
-        §exercise["concrete_intersections_unions"](
-          §ol(
-            §li(
-              §p(
-                Compute §$(§$p(§$set(0)(1)(2) §$intersection §$p(§$set(1)(3) §$union §$set(1)(2)(3))) §$union §$set)(.)
+        §div(slightlywide)(
+          §theorem["associative_intersection"](Associativity of §$(§$intersection§ ))(
+            §p(
+              Let §$(A, B, C) be §rs(set). Then §$(§$p(A §$intersection B) §$intersection C §$seq A §$intersection §$p(B §$intersection C))(.)
+            )
+            §div(three_venns centered)(
+              §div(venn3_container)(
+                §input["venn_diagrams/intersection_3a.svg"]
               )
-              §solution["concrete_intersections_unions_1"](
-                §$$align*(
-                  & §$p(§$set(0)(1)(2) §$intersection §$p(§$set(1)(3) §$highlight(§$union) §$set(1)(2)(3))) §$union §$set
+              §div(venn3_container)(
+                §input["venn_diagrams/intersection_3b.svg"]
+              )
+              §div(venn3_container)(
+                §input["venn_diagrams/intersection_3c.svg"]
+              )
+            )
+          )
+          §proof["associative_intersection"](
+            §fleqn(
+              §p(
+                Let §$(A, B, C) be §rs(set). Then §$$align*(
+                  &(A §$intersection B) §$intersection C
                 )(
-                  §$seq {} & §$p(§$set(0)(1)(2) §$highlight2(§$intersection) §$highlight(§$set(1)(2)(3))) §$union §$set §$tag(Definition $§$union§ $)
+                  §$seq {} & §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)) §$intersection C §$tag(Definition $§$intersection§ $)
                 )(
-                  §$seq {} & §$highlight2(§$set(1)(2)) §$highlight3(§$union) §$set §$tag(Definition $§$intersection§ $)
+                  §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ and $x §$in B$))$ and $y §$in C$)) §$tag(Definition $§$intersection§ $)
                 )(
-                  §$seq {} & §$highlight3(§$set(1)(2)) §$tag(Definition $§$union§ $)
+                  §$seq {} & §$set_builder(x)(§$text(($x §$in A$ and $x §$in B$) and $x §$in C$)) §$tag(§R(set builder notation))
+                )(
+                  §$seq {} & §$set_builder(x)(§$text($x §$in A$ and ($x §$in B$ and $x §$in C$))) §$tag(§r(associative conjunction)(Associativity) §r(conjunction))
+                )(
+                  §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ and $y §$in §$set_builder(x)(§$text($x §$in B$ and $x §$in C$))$)) §$tag(§R(set builder notation))
+                )(
+                  §$seq {} & A §$intersection §$set_builder(x)(§$text($x §$in B$ and $x §$in C$)) §$tag(Definition $§$intersection§ $)
+                )(
+                  §$seq {} & A §$intersection §$p(B §$intersection C). §$tag(Definition $§$intersection§ $)
                 )
               )
             )
           )
+        )
+
+        §div(slightlywide)(
+          §theorem["associative_union"](Associativity of §$(§$union§ ))(
+            §p(
+              Let §$(A, B, C) be §rs(set). Then §$(§$p(A §$union B) §$union C §$seq A §$union §$p(B §$union C))(.)
+            )
+            §div(three_venns centered)(
+              §div(venn3_container)(
+                §input["venn_diagrams/union_3a.svg"]
+              )
+              §div(venn3_container)(
+                §input["venn_diagrams/union_3b.svg"]
+              )
+              §div(venn3_container)(
+                §input["venn_diagrams/union_3c.svg"]
+              )
+            )
+          )
+          §proof["associative_union"](
+            §proof_as_exercise["associative_union"](
+              §fleqn(
+                §p(
+                  Let §$(A, B, C) be §rs(set). Then §$$align*(
+                    &(A §$union B) §$union C
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)) §$union C §$tag(Definition $§$union§ $)
+                  )(
+                    §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ or $x §$in B$))$ or $y §$in C$)) §$tag(Definition $§$union§ $)
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text(($x §$in A$ or $x §$in B$) or $x §$in C$)) §$tag(§R(set builder notation))
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ or ($x §$in B$ or $x §$in C$))) §$tag(§r(associative disjunction)(Associativity) §r(disjunction))
+                  )(
+                    §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ or $y §$in §$set_builder(x)(§$text($x §$in B$ or $x §$in C$))$)) §$tag(§R(set builder notation))
+                  )(
+                    §$seq {} & A §$union §$set_builder(x)(§$text($x §$in B$ or $x §$in C$)) §$tag(Definition $§$union§ $)
+                  )(
+                    §$seq {} & A §$union §$p(B §$union C). §$tag(Definition $§$union§ $)
+                  )
+                )
+              )
+            )
+          )
+        )
+
+        §p(
+          We call operators for which the grouping makes no difference §define(associative), and we don't require explicit grouping via parentheses for §r(associative) operators, so it is fine to write, for example, §verbatim(§$(A §$union B §$union C)). In general, you must always provide parentheses with any §r(binary operator), unless the operator in question has been proven to be §r(associative).
         )
 
 
@@ -709,7 +784,7 @@
         §solution["nested_sets_predicates"](
           §ol(
             §li(
-              §$(B §$defeq §$set(§$symbol1))(.)
+              §$(B §$defeq §$set)(.)
             )
             §li(
               §$(B §$defeq §$set[1](§$set(§$symbol0)))(.)
@@ -740,11 +815,22 @@
 
     §chapternav
 
-    - set comprehensions (first time that properties of objects matter, what about mismatches (natural numbers that are medalists in the 1986 olympic Games?))
     - exercise: every powerset contains at least two members?
     - big operators?
 
     - detailed set builder notation?
+
+    Final exercises:
+
+    - compute some expression
+    - solve an expression for a set variable
+    - cardinality puzzle
+
+    - distributivity of union and intersection
+
+    - symmetric difference
+
+    - complement
 
   )
 )

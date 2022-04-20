@@ -974,12 +974,22 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                                     name,
                                 ).into());
                             } else {
-                                return Ok(format!(
-                                    r###"<a class="ref definition" href="{}" data-preview="{}">{}</a>"###,
-                                    info.href,
-                                    y.state.resolve_defined_to_preview_url(id, id_trace.clone())?,
-                                    name,
-                                ).into());
+                                if y.state.mathmode {
+                                    return Ok(format!(
+                                        r###"\href{{{}}}{{\htmlClass{{ref definition}}{{\htmlData{{preview={}}}{{{}}}}}}}"###,
+                                        // r###"<a class="ref definition" href="{}" data-preview="{}">{}</a>"###,
+                                        info.href,
+                                        y.state.resolve_defined_to_preview_url(id, id_trace.clone())?,
+                                        name,
+                                    ).into());
+                                } else {
+                                    return Ok(format!(
+                                        r###"<a class="ref definition" href="{}" data-preview="{}">{}</a>"###,
+                                        info.href,
+                                        y.state.resolve_defined_to_preview_url(id, id_trace.clone())?,
+                                        name,
+                                    ).into());
+                                }
                             }
                         }
                     }
