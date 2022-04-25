@@ -1,0 +1,21 @@
+<article class="exercise" id="practice_set_difference_direct">
+    <h6><a href="http://localhost:1234/sets.html#practice_set_difference_direct">Exercise 2.10</a></h6>
+    <p>Compute <span id="practice_set_difference_direct_text" class=""></span></p>
+
+          <button class="btn_toggle no" id="btn_toggle_practice_set_difference_direct">Show a possible solution</button><div class="toggled" style="display: none"><div id="practice_set_difference_direct_solution" class=""></div></div>
+    <script>
+        (()=>{
+            let shown = false;
+            const btn = document.querySelector("#btn_toggle_practice_set_difference_direct");
+            const sol = btn.nextSibling;
+            btn.addEventListener("click", e => {
+                sol.style.display = shown ? "none" : "block";
+                btn.textContent = shown ? "Show a possible solution" : "Hide solution";
+                btn.classList.toggle("yes", !shown);
+                btn.classList.toggle("no", shown);
+                shown = !shown;
+            });
+        })()
+    </script>
+          <p><button id="practice_set_difference_direct_new" class="">Generate new exercise</button></p>
+</article>

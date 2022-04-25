@@ -1,0 +1,112 @@
+<article class="exercise" id="arbitrary_venn">
+    <h6><a href="http://localhost:1234/sets.html#arbitrary_venn">Exercise 2.12</a></h6>
+    <p>Give an expression that denotes exactly the highlighted areas of the <a class="ref definition" href="http://localhost:1234/sets.html#venn_diagram" data-preview="http://localhost:1234/previews/venn_diagram.html">Venn diagram</a> below. You will need at least <span id="arbitrary_venn_text" class=""></span> operators.</p>
+
+            <div class="venn3_container centered"><svg class="venn" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
+  <rect x="-54" y="-59" width="108" height="108"/>
+
+  <!-- A -->
+  <clipPath id="clip_a_exercise_arbitrary">
+    <circle cx="-17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- B -->
+  <clipPath id="clip_b_exercise_arbitrary">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <!-- C -->
+  <clipPath id="clip_c_exercise_arbitrary">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- A intersect B -->
+  <clipPath id="clip_aib_exercise_arbitrary" clip-path="url('#clip_a_exercise_arbitrary')">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <!-- A intersect C -->
+  <clipPath id="clip_aic_exercise_arbitrary" clip-path="url('#clip_a_exercise_arbitrary')">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- B intersect C -->
+  <clipPath id="clip_bic_exercise_arbitrary" clip-path="url('#clip_c_exercise_arbitrary')">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <!-- A intersect B intersect C -->
+  <clipPath id="clip_aibic_exercise_arbitrary" clip-path="url('#clip_aib_exercise_arbitrary')">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- a intersect B intersect C -->
+  <mask id="mask_aibic_exercise_arbitrary" >
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <rect clip-path="url('#clip_aibic_exercise_arbitrary')" x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+  </mask>
+
+  <!-- A union B -->
+  <mask id="mask_aub_exercise_arbitrary">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <circle cx="-17.3205" cy="10" r="30" style="fill: black;"/>
+    <circle cx="0" cy="-20" r="30" style="fill: black;"/>
+  </mask>
+
+  <!-- A union C -->
+  <mask id="mask_auc_exercise_arbitrary">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <circle cx="-17.3205" cy="10" r="30" style="fill: black;"/>
+    <circle cx="17.3205" cy="10" r="30" style="fill: black;"/>
+  </mask>
+
+  <!-- B union C -->
+  <mask id="mask_buc_exercise_arbitrary">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <circle cx="0" cy="-20" r="30" style="fill: black;"/>
+    <circle cx="17.3205" cy="10" r="30" style="fill: black;"/>
+  </mask>
+
+  <!-- just A -->
+  <rect class="venn_yay" clip-path="url('#clip_a_exercise_arbitrary')" mask="url(#mask_buc_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <!-- just B -->
+  <rect class="venn_yay" clip-path="url('#clip_b_exercise_arbitrary')" mask="url(#mask_auc_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <!-- just C -->
+  <rect class="venn_yay" clip-path="url('#clip_c_exercise_arbitrary')" mask="url(#mask_aub_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <!-- A intersect B without C -->
+  <rect class="venn_yay" clip-path="url('#clip_aib_exercise_arbitrary')" mask="url(#mask_aibic_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <!-- A intersect C without B -->
+  <rect class="venn_yay" clip-path="url('#clip_aic_exercise_arbitrary')" mask="url(#mask_aibic_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <!-- B intersect C without A -->
+  <rect class="venn_yay" clip-path="url('#clip_bic_exercise_arbitrary')" mask="url(#mask_aibic_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <!-- A intersect B intersect C -->
+  <rect class="venn_yay" clip-path="url('#clip_aibic_exercise_arbitrary')" x="-55" y="-60" width="110" height="110"/>
+
+
+  <circle cx="-17.3205" cy="10" r="30"/>
+  <text x="-25.9807" y="15">A</text>
+
+  <circle cx="0" cy="-20" r="30"/>
+  <text x="0" y="-30">B</text>
+
+  <circle cx="17.3205" cy="10" r="30"/>
+  <text x="25.9807" y="15">C</text>
+</svg></div>
+
+            <button class="btn_toggle no" id="btn_toggle_arbitrary_venn">Show a possible solution</button><div class="toggled" style="display: none"><div id="arbitrary_venn_solution" class=""></div></div>
+    <script>
+        (()=>{
+            let shown = false;
+            const btn = document.querySelector("#btn_toggle_arbitrary_venn");
+            const sol = btn.nextSibling;
+            btn.addEventListener("click", e => {
+                sol.style.display = shown ? "none" : "block";
+                btn.textContent = shown ? "Show a possible solution" : "Hide solution";
+                btn.classList.toggle("yes", !shown);
+                btn.classList.toggle("no", shown);
+                shown = !shown;
+            });
+        })()
+    </script>
+            <p><button id="arbitrary_venn_new" class="">Generate new exercise</button></p>
+</article>

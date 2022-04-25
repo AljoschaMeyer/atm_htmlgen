@@ -52,3 +52,4 @@ export const nsupseteq = String.raw`§$nsupseteq§ `;
 export const nsupset = String.raw`§$nsupset§ `;
 export const intersection = String.raw`§$intersection§ `;
 export const union = String.raw`§$union§ `;
+export const setminus = String.raw`§$setminus§ `;

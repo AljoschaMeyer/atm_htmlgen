@@ -456,6 +456,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "intersection".into(), r###"\cap"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$union" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "union".into(), r###"\cup"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$setminus" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "setminus".into(), r###"\setminus"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$twice" {
                         self.pm(|t, p, a| OutInternal::EncloseMath(t, p, a, "twice".into(), r###"\operatorname{twice}("###.into(), r###")"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {

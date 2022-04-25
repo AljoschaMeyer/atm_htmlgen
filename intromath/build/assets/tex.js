@@ -52,3 +52,4 @@ export const nsupseteq = String.raw`\htmlData{preview=http://localhost:1234/prev
 export const nsupset = String.raw`\htmlData{preview=http://localhost:1234/previews/subset.html}{\href{http://localhost:1234/sets.html#subset}{\not\supset}}`;
 export const intersection = String.raw`\htmlData{preview=http://localhost:1234/previews/intersection.html}{\href{http://localhost:1234/sets.html#intersection}{\cap}}`;
 export const union = String.raw`\htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}}`;
+export const setminus = String.raw`\htmlData{preview=http://localhost:1234/previews/set_difference.html}{\href{http://localhost:1234/sets.html#set_difference}{\setminus}}`;

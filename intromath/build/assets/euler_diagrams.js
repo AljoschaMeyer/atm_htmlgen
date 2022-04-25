@@ -1,4 +1,4 @@
-import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, p } from './tex.js';
+import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, p } from './tex.js';
 
 const svgns = "http://www.w3.org/2000/svg";
 const PI = Math.PI;
@@ -251,6 +251,17 @@ euler(container_union, set_union, (container, s1, s2, s3) => {
   return tex(`${s1_name} ${union} ${s2_name} ${seq} ${set1} ${union} ${set2} ${seq} ${set3}`, container);
 }, "union");
 
+const container_setminus = document.querySelector("#container_euler_setminus");
+euler(container_setminus, set_difference, (container, s1, s2, s3) => {
+  const s1_name = name_set(1);
+  const s2_name = name_set(2);
+  const set1 = set_tex(s1, s3);
+  const set2 = set_tex(s2, s3);
+  const set3 = set_tex(s3, s3);
+
+  return tex(`${s1_name} ${setminus} ${s2_name} ${seq} ${set1} ${setminus} ${set2} ${seq} ${set3}`, container);
+}, "setminus");
+
 function polar_to_cartesian([x, y], r, t) {
   return [r * Math.cos(t) + x, r * Math.sin(t) + y];
 }
@@ -436,10 +447,28 @@ function has_all_operators(node, ops) {
   return all;
 }
 
+function has_two_differences(node) {
+  let differences = 0;
+
+  dfs(op => {
+    if (op === "difference") {
+      differences += 1;
+    }
+  }, null, null, node);
+
+  return differences >= 2;
+}
+
 function height(node) {
   return dfs(null, (_l, _op, _r, l, _p, r) => {
     return 1 + Math.max(l, r);
   }, () => 0, node);
+}
+
+function leaves(node) {
+  let n = 0;
+  dfs(null, null, () => {n += 1;}, node);
+  return n;
 }
 
 function eval_one_step(node) {
@@ -480,18 +509,47 @@ function practice_intersection_union_tree() {
   }
 }
 
+function practice_set_difference_tree() {
+  while (true) {
+    const expr = random_bin_tree(3, random_set_5, () => {return random_from_array(["intersection", "union", "difference"]);});
+    if (!has_two_differences(expr)) {
+      continue
+    }
+
+    let interesting = true;
+
+    dfs(null, (_l, op, _r, left, _p, right) => {
+      const result = eval_op(op, left, right);
+      if (set_eq(result, left) && Math.random() <= 0.7) {
+        interesting = false;
+      }
+      if (set_eq(result, right) && Math.random() <= 0.7) {
+        interesting = false;
+      }
+      if (set_eq(result, empty_s()) && Math.random() <= 0.8) {
+        interesting = false;
+      }
+      return result;
+    }, null, expr);
+
+    if (interesting) {
+      return expr;
+    }
+  }
+}
+
 function tex_op(op) {
   switch (op) {
     case "intersection": return intersection;
     case "union": return union;
-    case "difference": return "TODO";
+    case "difference": return setminus;
     case "symmetric_difference": return "TODO";
 
     default: throw "unknown operator";
   }
 }
 
-function expr_to_tex(expr) {
+function expr_to_tex(expr, not_a_set) {
   const h = height(expr);
   return dfs((_, level) => {return level + 1;}, (lnode, op, rnode, left, pre, right) => {
     if (pre === -1) {
@@ -499,7 +557,7 @@ function expr_to_tex(expr) {
     } else {
       return p(`${left} ${tex_op(op)} ${right}`, h - (pre + 1));
     }
-  }, set_tex_vanilla, expr, -2);
+  }, not_a_set ? x => x : set_tex_vanilla, expr, -2);
 }
 
 function expr_to_solution_tex(expr_) {
@@ -534,3 +592,80 @@ function new_practice_intersection_union_direct() {
 
 new_practice_intersection_union_direct();
 practice_intersection_union_direct_new.addEventListener("click", new_practice_intersection_union_direct);
+
+
+
+const practice_set_difference_direct_text = document.querySelector("#practice_set_difference_direct_text");
+const practice_set_difference_direct_solution = document.querySelector("#practice_set_difference_direct_solution");
+const practice_set_difference_direct_new = document.querySelector("#practice_set_difference_direct_new");
+
+function new_practice_set_difference_direct() {
+  const expr = practice_set_difference_tree();
+  tex(`${expr_to_tex(expr)}.`, practice_set_difference_direct_text);
+  tex(`${expr_to_solution_tex(expr)}`, practice_set_difference_direct_solution, {displayMode: true});
+
+  const btn_toggle_practice_set_difference_direct = document.querySelector("#btn_toggle_practice_set_difference_direct");
+  if (btn_toggle_practice_set_difference_direct.classList.contains("yes")) {
+    btn_toggle_practice_set_difference_direct.click()
+  }
+}
+
+new_practice_set_difference_direct();
+practice_set_difference_direct_new.addEventListener("click", new_practice_set_difference_direct);
+
+const exercise_arbitrary_venn_text = document.querySelector("#exercise_arbitrary_venn_text");
+const exercise_arbitrary_venn_solution = document.querySelector("#exercise_arbitrary_venn_solution");
+const exercise_arbitrary_venn_new = document.querySelector("#exercise_arbitrary_venn_new");
+
+const exercise_arbitrary_venn_sections = [];
+for (let i = 0; i < 7; i++) {
+  exercise_arbitrary_venn_sections.push(document.querySelector(`#arbitrary_venn${i}`));
+}
+
+const arbitrary_venn_solutions = [[120,2,120],[27,2,126],[46,0,3],[27,2,120],[46,2,123],[63,2,122],[46,2,120],[63,2,120],[120,0,10],[27,2,86],[46,0,27],[27,2,80],[46,2,99],[125,2,112],[46,2,96],[63,2,112],[120,0,17],[27,2,46],[126,0,19],[27,2,40],[126,2,106],[63,2,42],[126,2,104],[63,2,40],[120,0,27],[27,2,6],[126,0,27],null,[124,2,96],[31,2,2],[126,2,96],[27,1,6],[120,0,36],[123,2,90],[123,0,38],[123,2,88],[46,2,27],[63,2,26],[46,2,24],[63,2,24],[120,0,46],[121,2,80],[123,0,46],[123,2,80],[46,2,3],[47,2,2],null,[46,1,3],[120,0,53],[63,2,14],[126,0,51],[59,2,8],[63,2,11],[63,2,10],[62,2,8],[63,2,8],[120,0,63],[63,2,6],[126,0,59],[40,1,27],[63,2,3],[63,2,2],[46,1,24],[46,1,27],[120,2,63],[123,2,62],[126,2,60],[123,2,56],[126,2,59],[127,2,58],[126,2,56],[127,2,56],[120,2,53],[123,2,54],[110,2,36],[91,2,16],[126,2,51],[125,2,48],[110,2,32],[127,2,48],[120,2,46],[123,2,46],[126,2,44],[123,2,40],[126,2,42],[127,2,42],[126,2,40],[127,2,40],[120,2,36],[123,2,38],[126,2,36],[80,1,27],[124,2,32],[127,2,34],[126,2,32],[91,1,6],[120,2,27],[123,2,26],[123,2,25],[123,2,24],[126,2,27],[127,2,26],[126,2,24],[127,2,24],[120,2,17],[121,2,16],[123,2,17],[123,2,16],[126,2,19],[127,2,18],[96,1,46],[110,1,3],[120,2,10],[123,2,10],[122,2,8],[123,2,8],[126,2,10],[127,2,10],[126,2,8],[127,2,8],null,[120,1,17],[120,1,10],[120,1,27],[120,1,36],[124,1,17],[120,1,46],[126,1,27]];
+
+function arbitrary_venn_index_to_term(i) {
+  if (i === 27) {
+    return "C";
+  } else if (i === 46) {
+    return "B";
+  } else if (i === 120) {
+    return "A";
+  } else {
+    const op = arbitrary_venn_solutions[i][1];
+    return {
+      "inner": [
+        arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][0]),
+        op === 0 ? "intersection" : (op === 1 ? "union" : "difference"),
+        arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][2]),
+      ],
+    };
+  }
+}
+
+function new_arbitrary_venn() {
+  while (true) {
+    const i = random_int(128);
+    const expr = arbitrary_venn_index_to_term(i);
+    const size = leaves(expr);
+
+    if (size >= 4) {
+      exercise_arbitrary_venn_text.textContent = `${size - 1}`;
+      tex(`${expr_to_tex(expr, true)}.`, exercise_arbitrary_venn_solution);
+
+      const btn_toggle_exercise_arbitrary_venn = document.querySelector("#btn_toggle_exercise_arbitrary_venn");
+      if (btn_toggle_exercise_arbitrary_venn.classList.contains("yes")) {
+        btn_toggle_exercise_arbitrary_venn.click()
+      }
+
+      for (let j = 0; j < 7; j++) {
+        exercise_arbitrary_venn_sections[j].classList.toggle("venn_yay", (i & (1 << j)) != 0);
+      }
+
+      return;
+    }
+  }
+}
+
+new_arbitrary_venn();
+exercise_arbitrary_venn_new.addEventListener("click", new_arbitrary_venn);
