@@ -1025,7 +1025,15 @@
           )
         )
 
+        §p(
+          An interesting observation is that §rs(intersection) can be expressed purely in terms of §rs(set difference):
+        )
 
+        §theorem["intersection_via_set_difference"](
+          §p(
+            Let §$(A) and §$(B) be §rs(set). Then §$(A §$intersection B §$seq A §$setminus §$p[1](A §$setminus B))(.)
+          )
+        )
 
 
 
@@ -1051,6 +1059,8 @@
             §button(exercise_arbitrary_venn_new)()(Generate new exercise)
           )
         )
+
+        TODO render terms with associativity
 
 
 

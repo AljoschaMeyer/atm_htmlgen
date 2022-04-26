@@ -1,0 +1,117 @@
+<svg class="venn" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- A -->
+  <clipPath id="clip_a">
+    <circle cx="-17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- B -->
+  <clipPath id="clip_b">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <!-- C -->
+  <clipPath id="clip_c">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- A intersect B -->
+  <clipPath id="clip_aib" clip-path="url('#clip_a')">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <!-- A intersect C -->
+  <clipPath id="clip_aic" clip-path="url('#clip_a')">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- B intersect C -->
+  <clipPath id="clip_bic" clip-path="url('#clip_c')">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <!-- A intersect B intersect C -->
+  <clipPath id="clip_aibic" clip-path="url('#clip_aib')">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+
+
+  <!-- a intersect B intersect C -->
+  <mask id="mask_aibic" >
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <rect clip-path="url('#clip_aibic')" x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+  </mask>
+
+  <!-- A union B -->
+  <mask id="mask_aub">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <circle cx="-17.3205" cy="10" r="30" style="fill: black;"/>
+    <circle cx="0" cy="-20" r="30" style="fill: black;"/>
+  </mask>
+
+  <!-- A union C -->
+  <mask id="mask_auc">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <circle cx="-17.3205" cy="10" r="30" style="fill: black;"/>
+    <circle cx="17.3205" cy="10" r="30" style="fill: black;"/>
+  </mask>
+
+  <!-- B union C -->
+  <mask id="mask_buc">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <circle cx="0" cy="-20" r="30" style="fill: black;"/>
+    <circle cx="17.3205" cy="10" r="30" style="fill: black;"/>
+  </mask>
+
+  <!-- just B -->
+  <rect id="arbitrary_venn2" clip-path="url('#clip_b')" mask="url(#mask_auc)" x="-55" y="-60" width="110" height="110"/>
+  <!-- just C -->
+  <rect id="arbitrary_venn0" clip-path="url('#clip_c')" mask="url(#mask_aub)" x="-55" y="-60" width="110" height="110"/>
+  <!-- A intersect B without C -->
+  <rect id="arbitrary_venn5" clip-path="url('#clip_aib')" mask="url(#mask_aibic)" x="-55" y="-60" width="110" height="110"/>
+  <!-- A intersect C without B -->
+  <rect id="arbitrary_venn4" clip-path="url('#clip_aic')" mask="url(#mask_aibic)" x="-55" y="-60" width="110" height="110"/>
+  <!-- B intersect C without A -->
+  <rect id="arbitrary_venn1" clip-path="url('#clip_bic')" mask="url(#mask_aibic)" x="-55" y="-60" width="110" height="110"/>
+  <!-- A intersect B intersect C -->
+  <rect id="arbitrary_venn3" clip-path="url('#clip_aibic')" x="-55" y="-60" width="110" height="110"/>
+
+
+  <mask id="mask_master_a">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+
+    <rect id="pretty_a" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_a')" mask="url(#mask_buc)"/>
+    <rect id="pretty_aibdc_a" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aib')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_ciadb_a" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aic')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_aibic_a" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aibic')"/>
+  </mask>
+
+  <mask id="mask_master_b">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+
+    <rect id="pretty_b" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_b')" mask="url(#mask_auc)"/>
+    <rect id="pretty_aibdc_b" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aib')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_bicda_b" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_bic')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_aibic_b" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aibic')"/>
+  </mask>
+
+  <mask id="mask_master_c">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+
+    <rect id="pretty_c" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_c')" mask="url(#mask_aub)"/>
+    <rect id="pretty_ciadb_c" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aic')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_bicda_c" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_bic')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_aibic_c" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aibic')"/>
+  </mask>
+
+
+
+  <circle class="venn_a" cx="-17.3205" cy="10" r="30" mask="url(#mask_master_a)"/>
+  <circle class="venn_b" cx="0" cy="-20" r="30" mask="url(#mask_master_b)"/>
+  <circle class="venn_c" cx="17.3205" cy="10" r="30" mask="url(#mask_master_c)"/>
+
+  <circle class="venn_stroke" cx="-17.3205" cy="10" r="30"/>
+  <circle class="venn_stroke" cx="0" cy="-20" r="30"/>
+  <circle class="venn_stroke" cx="17.3205" cy="10" r="30"/>
+</svg>

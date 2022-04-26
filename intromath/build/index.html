@@ -6,10 +6,785 @@
         <link rel="stylesheet" href="./assets/fonts.css">
         <link rel="stylesheet" href="./assets/main.css">
         <script src="./assets/floating-ui.core.min.js"></script>
-        <script src="./assets/floating-ui.dom.min.js"></script>
+        <script src="./assets/floating-ui.dom.min.js"></script><style>.venn * {
+      stroke: none;
+      fill: none;
+    }
+
+    .venn_a {
+      fill: rgba(255, 0, 0, 0.2);
+    }
+
+    .venn_b {
+      fill: rgba(0, 255, 0, 0.2);
+    }
+
+    .venn_c {
+      fill: rgba(0, 0, 255, 0.2);
+    }
+
+    .venn > .venn_stroke {
+      stroke: var(--color-bg);
+    }
+
+    #pretty_a, #pretty_b, #pretty_c, #pretty_aibdc_a, #pretty_aibdc_b, #pretty_bicda_b, #pretty_bicda_c, #pretty_ciadb_c, #pretty_ciadb_a, #pretty_aibic_a, #pretty_aibic_b, #pretty_aibic_c {
+      fill: white;
+    }
+
+    #pretty_a {
+      animation: anim_pretty_a 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_a {
+      0% {
+        fill: black;
+      }
+      4.16% {
+        fill: black;
+      }
+      8.33% {
+        fill: white;
+      }
+      12.5% {
+        fill: white;
+      }
+      16.66% {
+        fill: black;
+      }
+      20.83% {
+        fill: black;
+      }
+      25% {
+        fill: white;
+      }
+      29.16% {
+        fill: white;
+      }
+      33.33% {
+        fill: black;
+      }
+      45.83% {
+        fill: black;
+      }
+      50% {
+        fill: white;
+      }
+      54.16% {
+        fill: white;
+      }
+      58.33% {
+        fill: black;
+      }
+      79.16% {
+        fill: black;
+      }
+      83.33% {
+        fill: white;
+      }
+      87.5% {
+        fill: white;
+      }
+      91.66% {
+        fill: black;
+      }
+      100% {
+        fill: black;
+      }
+    }
+
+    #pretty_b {
+      animation: anim_pretty_b 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_b {
+      0% {
+        fill: black;
+      }
+      12.5% {
+        fill: black;
+      }
+      16.66% {
+        fill: white;
+      }
+      20.83% {
+        fill: white;
+      }
+      25% {
+        fill: black;
+      }
+      37.5% {
+        fill: black;
+      }
+      41.66% {
+        fill: white;
+      }
+      45.83 {
+        fill: white;
+      }
+      50% {
+        fill: black;
+      }
+      54.16% {
+        fill: black;
+      }
+      58.33% {
+        fill: white;
+      }
+      62.5% {
+        fill: white;
+      }
+      66.66% {
+        fill: black;
+      }
+      79.16% {
+        fill: black;
+      }
+      83.33% {
+        fill: white;
+      }
+      87.5% {
+        fill: white;
+      }
+      91.66% {
+        fill: black;
+      }
+      100% {
+        fill: black;
+      }
+    }
+
+    #pretty_c {
+      animation: anim_pretty_c 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_c {
+      0% {
+        fill: black;
+      }
+      12.5% {
+        fill: black;
+      }
+      16.66% {
+        fill: white;
+      }
+      20.83% {
+        fill: white;
+      }
+      25% {
+        fill: black;
+      }
+      45.83% {
+        fill: black;
+      }
+      50% {
+        fill: white;
+      }
+      54.16% {
+        fill: white;
+      }
+      58.33% {
+        fill: black;
+      }
+      70.83% {
+        fill: black;
+      }
+      75% {
+        fill: white;
+      }
+      79.16% {
+        fill: white;
+      }
+      83.33% {
+        fill: black;
+      }
+      87.5% {
+        fill: black;
+      }
+      91.66% {
+        fill: white;
+      }
+      95.83% {
+        fill: white;
+      }
+      100% {
+        fill: black;
+      }
+    }
+
+    #pretty_aibdc_a {
+      animation: anim_pretty_aibdc_a 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_aibdc_a {
+      0% {
+        fill: black;
+      }
+      4.16% {
+        fill: black;
+      }
+      8.33% {
+        fill: white;
+      }
+      12.5% {
+        fill: white;
+      }
+      16.66% {
+        fill: black;
+      }
+      20.83% {
+        fill: black;
+      }
+      25% {
+        fill: white;
+      }
+      29.16% {
+        fill: white;
+      }
+      33.33% {
+        fill: black;
+      }
+      45.83% {
+        fill: black;
+      }
+      50% {
+        fill: white;
+      }
+      54.16% {
+        fill: white;
+      }
+      58.33% {
+        fill: black;
+      }
+      70.83% {
+        fill: black;
+      }
+      75% {
+        fill: white;
+      }
+      95.83% {
+        fill: white;
+      }
+      100% {
+        fill: black;
+      }
+    }
+
+    #pretty_aibdc_b {
+      animation: anim_pretty_aibdc_b 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_aibdc_b {
+      0% {
+        fill: black;
+      }
+      12.5% {
+        fill: black;
+      }
+      16.66% {
+        fill: white;
+      }
+      20.83% {
+        fill: white;
+      }
+      25% {
+        fill: black;
+      }
+      37.5% {
+        fill: black;
+      }
+      41.66% {
+        fill: white;
+      }
+      45.83% {
+        fill: white;
+      }
+      50% {
+        fill: black;
+      }
+      54.16% {
+        fill: black;
+      }
+      58.33% {
+        fill: white;
+      }
+      62.5% {
+        fill: white;
+      }
+      66.66% {
+        fill: black;
+      }
+      70.83% {
+        fill: black;
+      }
+      75% {
+        fill: white;
+      }
+      95.83% {
+        fill: white;
+      }
+      100% {
+        fill: black;
+      }
+    }
+
+    #pretty_bicda_b {
+      animation: anim_pretty_bicda_b 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_bicda_b {
+      0% {
+        fill: black;
+      }
+      4.16% {
+        fill: black;
+      }
+      8.33% {
+        fill: white;
+      }
+      29.16% {
+        fill: white;
+      }
+      33.33% {
+        fill: black;
+      }
+      37.5% {
+        fill: black;
+      }
+      41.66% {
+        fill: white;
+      }
+      45.83% {
+        fill: white;
+      }
+      50% {
+        fill: black;
+      }
+      54.16% {
+        fill: black;
+      }
+      58.33% {
+        fill: white;
+      }
+      62.5% {
+        fill: white;
+      }
+      66.66% {
+        fill: black;
+      }
+      79.16% {
+        fill: black;
+      }
+      83.33% {
+        fill: white;
+      }
+      87.5% {
+        fill: white;
+      }
+      91.66% {
+        fill: black;
+      }
+      100% {
+        fill: black;
+      }
+    }
+
+    #pretty_bicda_c {
+      animation: anim_pretty_bicda_c 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_bicda_c {
+      0% {
+        fill: black;
+      }
+      4.16% {
+        fill: black;
+      }
+      8.33% {
+        fill: white;
+      }
+      29.16% {
+        fill: white;
+      }
+      33.33% {
+        fill: black;
+      }
+      45.83% {
+        fill: black;
+      }
+      50% {
+        fill: white;
+      }
+      54.16% {
+        fill: white;
+      }
+      58.33% {
+        fill: black;
+      }
+      70.83% {
+        fill: black;
+      }
+      75% {
+        fill: white;
+      }
+      79.16% {
+        fill: white;
+      }
+      83.33% {
+        fill: black;
+      }
+      87.5% {
+        fill: black;
+      }
+      91.66% {
+        fill: white;
+      }
+      95.83% {
+        fill: white;
+      }
+      100% {
+        fill: black;
+      }
+    }
+
+    #pretty_ciadb_c {
+      animation: anim_pretty_ciadb_c 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_ciadb_c {
+      0% {
+        fill: black;
+      }
+      12.5% {
+        fill: black;
+      }
+      16.66% {
+        fill: white;
+      }
+      20.83% {
+        fill: white;
+      }
+      25% {
+        fill: black;
+      }
+      37.5% {
+        fill: black;
+      }
+      41.66% {
+        fill: white;
+      }
+      62.5% {
+        fill: white;
+      }
+      66.66% {
+        fill: black;
+      }
+      70.83% {
+        fill: black;
+      }
+      75% {
+        fill: white;
+      }
+      79.16% {
+        fill: white;
+      }
+      83.33% {
+        fill: black;
+      }
+      87.5% {
+        fill: black;
+      }
+      91.66% {
+        fill: white;
+      }
+      95.83% {
+        fill: white;
+      }
+      100% {
+        fill: black;
+      }
+    }
+
+    #pretty_ciadb_a {
+      animation: anim_pretty_ciadb_a 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_ciadb_a {
+      0% {
+        fill: black;
+      }
+      4.16% {
+        fill: black;
+      }
+      8.33% {
+        fill: white;
+      }
+      12.5% {
+        fill: white;
+      }
+      16.66% {
+        fill: black;
+      }
+      20.83% {
+        fill: black;
+      }
+      25% {
+        fill: white;
+      }
+      29.16% {
+        fill: white;
+      }
+      33.33% {
+        fill: black;
+      }
+      37.5% {
+        fill: black;
+      }
+      41.66% {
+        fill: white;
+      }
+      62.5% {
+        fill: white;
+      }
+      66.66% {
+        fill: black;
+      }
+      79.16% {
+        fill: black;
+      }
+      83.3% {
+        fill: white;
+      }
+      87.5% {
+        fill: white;
+      }
+      91.66% {
+        fill: black;
+      }
+      100% {
+        fill: black;
+      }
+    }
+
+    #pretty_aibic_a {
+      animation: anim_pretty_aibic_a 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_aibic_a {
+      0% {
+        fill: white;
+      }
+      12.5% {
+        fill: white;
+      }
+      16.66% {
+        fill: black;
+      }
+      20.83% {
+        fill: black;
+      }
+      25% {
+        fill: white;
+      }
+      100% {
+        fill: white;
+      }
+    }
+
+    #pretty_aibic_b {
+      animation: anim_pretty_aibic_b 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_aibic_b {
+      0% {
+        fill: white;
+      }
+      45.83% {
+        fill: white;
+      }
+      50% {
+        fill: black;
+      }
+      54.16% {
+        fill: black;
+      }
+      58.3% {
+        fill: white;
+      }
+      100% {
+        fill: white;
+      }
+    }
+
+    #pretty_aibic_c {
+      animation: anim_pretty_aibic_c 60s ease 0s infinite normal forwards;
+    }
+
+    @keyframes anim_pretty_aibic_c {
+      0% {
+        fill: white;
+      }
+      79.16% {
+        fill: white;
+      }
+      83.33% {
+        fill: black;
+      }
+      87.5% {
+        fill: black;
+      }
+      91.66% {
+        fill: white;
+      }
+      100% {
+        fill: white;
+      }
+    }
+
+
+
+
+    #container_title {
+      display: grid;
+      margin-top: calc(-5% - 6rem);
+    }
+
+    #title_text, #title_background {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    #title_background {
+      display: grid;
+    }
+
+    #title_text {
+      display: table;
+    }
+
+    #title_text > h1 {
+      vertical-align: middle;
+      display: table-cell;
+    }</style>
     </head>
     <body>
-<div class="wide"><h1><span style="font-size: 40px">An Opinionated</span><br>Introduction to<br>Mathematics</h1></div>
+<div id="container_title" class="wide"><div id="title_background" class=""><div style="max-width: 41rem; grid-column: 1; grid-row: 1; margin: auto"><svg class="venn" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- A -->
+  <clipPath id="clip_a">
+    <circle cx="-17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- B -->
+  <clipPath id="clip_b">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <!-- C -->
+  <clipPath id="clip_c">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- A intersect B -->
+  <clipPath id="clip_aib" clip-path="url('#clip_a')">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <!-- A intersect C -->
+  <clipPath id="clip_aic" clip-path="url('#clip_a')">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+  <!-- B intersect C -->
+  <clipPath id="clip_bic" clip-path="url('#clip_c')">
+    <circle cx="0" cy="-20" r="30"/>
+  </clipPath>
+
+  <!-- A intersect B intersect C -->
+  <clipPath id="clip_aibic" clip-path="url('#clip_aib')">
+    <circle cx="17.3205" cy="10" r="30"/>
+  </clipPath>
+
+
+
+  <!-- a intersect B intersect C -->
+  <mask id="mask_aibic" >
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <rect clip-path="url('#clip_aibic')" x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+  </mask>
+
+  <!-- A union B -->
+  <mask id="mask_aub">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <circle cx="-17.3205" cy="10" r="30" style="fill: black;"/>
+    <circle cx="0" cy="-20" r="30" style="fill: black;"/>
+  </mask>
+
+  <!-- A union C -->
+  <mask id="mask_auc">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <circle cx="-17.3205" cy="10" r="30" style="fill: black;"/>
+    <circle cx="17.3205" cy="10" r="30" style="fill: black;"/>
+  </mask>
+
+  <!-- B union C -->
+  <mask id="mask_buc">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+    <circle cx="0" cy="-20" r="30" style="fill: black;"/>
+    <circle cx="17.3205" cy="10" r="30" style="fill: black;"/>
+  </mask>
+
+  <!-- just B -->
+  <rect id="arbitrary_venn2" clip-path="url('#clip_b')" mask="url(#mask_auc)" x="-55" y="-60" width="110" height="110"/>
+  <!-- just C -->
+  <rect id="arbitrary_venn0" clip-path="url('#clip_c')" mask="url(#mask_aub)" x="-55" y="-60" width="110" height="110"/>
+  <!-- A intersect B without C -->
+  <rect id="arbitrary_venn5" clip-path="url('#clip_aib')" mask="url(#mask_aibic)" x="-55" y="-60" width="110" height="110"/>
+  <!-- A intersect C without B -->
+  <rect id="arbitrary_venn4" clip-path="url('#clip_aic')" mask="url(#mask_aibic)" x="-55" y="-60" width="110" height="110"/>
+  <!-- B intersect C without A -->
+  <rect id="arbitrary_venn1" clip-path="url('#clip_bic')" mask="url(#mask_aibic)" x="-55" y="-60" width="110" height="110"/>
+  <!-- A intersect B intersect C -->
+  <rect id="arbitrary_venn3" clip-path="url('#clip_aibic')" x="-55" y="-60" width="110" height="110"/>
+
+
+  <mask id="mask_master_a">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+
+    <rect id="pretty_a" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_a')" mask="url(#mask_buc)"/>
+    <rect id="pretty_aibdc_a" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aib')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_ciadb_a" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aic')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_aibic_a" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aibic')"/>
+  </mask>
+
+  <mask id="mask_master_b">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+
+    <rect id="pretty_b" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_b')" mask="url(#mask_auc)"/>
+    <rect id="pretty_aibdc_b" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aib')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_bicda_b" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_bic')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_aibic_b" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aibic')"/>
+  </mask>
+
+  <mask id="mask_master_c">
+    <rect x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+
+    <rect id="pretty_c" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_c')" mask="url(#mask_aub)"/>
+    <rect id="pretty_ciadb_c" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aic')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_bicda_c" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_bic')" mask="url(#mask_aibic)"/>
+    <rect id="pretty_aibic_c" x="-55" y="-60" width="110" height="110" clip-path="url('#clip_aibic')"/>
+  </mask>
+
+
+
+  <circle class="venn_a" cx="-17.3205" cy="10" r="30" mask="url(#mask_master_a)"/>
+  <circle class="venn_b" cx="0" cy="-20" r="30" mask="url(#mask_master_b)"/>
+  <circle class="venn_c" cx="17.3205" cy="10" r="30" mask="url(#mask_master_c)"/>
+
+  <circle class="venn_stroke" cx="-17.3205" cy="10" r="30"/>
+  <circle class="venn_stroke" cx="0" cy="-20" r="30"/>
+  <circle class="venn_stroke" cx="17.3205" cy="10" r="30"/>
+</svg></div></div>
+    <div id="title_text" class=""><h1><span style="font-size: 40px">An Opinionated</span><br>Introduction to<br>Mathematics</h1></div></div>
 
   <p>Doing mathematics is a lot like playing the violin: not particularly pragmatic at first glance, pretty frustrating in the beginning, and yet quite a few people say that learning to do it changed their life for the better.</p>
 
