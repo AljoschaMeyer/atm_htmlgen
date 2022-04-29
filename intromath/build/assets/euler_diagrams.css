@@ -18,7 +18,7 @@
 }
 
 .euler {
-  stroke-width: 2;
+  stroke-width: 1;
 }
 
 .euler.c1 {
@@ -86,12 +86,16 @@
   margin-right: 0.2rem;
 }
 
-.symbol0, .symbol1, .symbol2, .symbol3, .symbol4 {
+.symbol_container > span {
   display: inline-block;
   background-size: 100% 100%;
   background-color: var(--color-text);
   height: 100%;
   width: 100%;
+}
+
+.symbol0, .symbol1, .symbol2, .symbol3, .symbol4 {
+
 }
 
 .symbol0 {
@@ -128,10 +132,10 @@
   max-height: 10rem;
 }
 
-.venn * {
+/* .venn * {
   stroke: var(--color-text);
   fill: none;
-}
+} */
 
 .venn .venn_yay {
   fill: var(--color-success);

@@ -266,6 +266,9 @@ function polar_to_cartesian([x, y], r, t) {
   return [r * Math.cos(t) + x, r * Math.sin(t) + y];
 }
 
+// let [xfoo, yfoo] = polar_to_cartesian([0, 0], 20, (PI + PI * 1.5) + ((2 * PI * 2) / 3));
+// console.log(`x="${xfoo - 15}" y="${yfoo - 15}"`);
+
 function element_cartesian(i) {
   return polar_to_cartesian([0, 0], 70, (PI * 1.5) + ((2 * PI * i) / 5));
 }

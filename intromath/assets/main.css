@@ -476,3 +476,40 @@ button:hover {
 .highlightc3 .mbin, .highlightc3 .minner, .highlightmathdirect.highlightc3 {
   background-color: var(--c3-transparent)
 }
+
+.cancel_symbol {
+  position: relative;
+}
+
+.cancel_symbol:before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 45%;
+  right: 0;
+  border-top: 0.15rem solid;
+  border-color: var(--color-obstruction);
+  transform: rotate(-60deg);
+  z-index: 1;
+}
+
+.both_c1 {
+  color: var(--c1-half);
+  background-color: var(--c1-transparent);
+  stroke: var(--c1-half);
+  fill: var(--c1-transparent);
+}
+
+.both_c2 {
+  color: var(--c2-half);
+  background-color: var(--c2-transparent);
+  stroke: var(--c2-half);
+  fill: var(--c2-transparent);
+}
+
+.both_c3 {
+  color: var(--c3-half);
+  background-color: var(--c3-transparent);
+  stroke: var(--c3-half);
+  fill: var(--c3-transparent);
+}

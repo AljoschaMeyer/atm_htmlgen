@@ -3,6 +3,26 @@
   <script defer src="./assets/katex.min.js"></script/>
 
   <script defer src="./assets/euler_diagrams.js" type="module"></script>
+
+  <style>
+    #first_venn > circle {
+      stroke: var(--color-text);
+      fill: none;
+    }
+
+    #first_venn > foreignObject {
+      pointer-events: none;
+    }
+
+    .first_venn_region {
+      stroke: none;
+      fill: rgba(0, 0, 0, 0);
+    }
+
+    .first_venn_region:hover {
+      fill: url("#pattern_striped");
+    }
+  </style>
 )(
   §hsection["chapter_sets"](Naïve Set Theory)(
     §p(
@@ -472,35 +492,35 @@
 
     §hsection["combining_sets"](Combining Sets)(
       §p(
-        With a solid understanding of the basic §rs(predicate) of set theory — §r(member)(membership), §r(sequal)(equality), and being a (§r(strict subset)(strict)) §r(subset) — under our belt, we can now examine different ways of constructing new §rs(set) from old ones.
-      )§p(
-        Suppose we are given the §r(set) of all animal species that eat plants, and the §r(set) of all animal species that eat meat. How do we obtain the §r(set) of omnivores (species that can eat either)? This question is of vital importance, as the omnivores include the squirrels!
-      )§p(
-        The answer is the §r(set) of all species that occur in both §rs(set). §cref(my_first_venn_diagram) visualizes the situation in a §definex["venn_diagram"](Venn diagram)(
+        When considering multiple §rs(set), some objects might be §r(in) exactly one of them, while others might be §r(in) multiple of them. Take, for example, the three §rs(set) of species of animals that can walk, swim, or fly respectively. We might be interested in the set of all species that can walk and swim but cannot fly. In this section, we introduce terminology for deriving such §rs(set) from other §rs(set).
+      )
+
+      §p(
+        §cref(my_first_venn_diagram) visualizes the example in a §definex["venn_diagram"](Venn diagram)(
           §p(
             A §rdef(Venn diagram) visualizes all possible ways in which a number of §rs(set) can overlap:
           )
-          §div(venn2_container centered)(
-            §input["venn_diagrams/first_venn.svg"]
+          §div(venn3_container centered)(
+            §input["venn_diagrams/definition_venn.svg"]
           )
-        ), a special type of §r(Euler diagram) that shows the ways in which §rs(set) can overlap. The omnivores correspond exactly to the overlap between the plant eaters and meat eaters.
+        ), a special type of §r(Euler diagram) that shows all possible ways in which some §rs(set) can overlap.
       )
 
       §figure["my_first_venn_diagram"](
         §captioned(
-          §div(venn2_container centered)(
+          §div(centered)(
             §input["venn_diagrams/first_venn.svg"]
           )
         )(
           §p(
-            If the two circles symbolize the §rs(set) of animals that eat plants and meet respectively, their overlap symbolizes the omnivorous animals.
+            A §r(Venn diagram) showing the §rs(set) of animal species that can walk (top), fly (left), and swim (right). Each region shows an icon of a species that belongs to it.
           )
         )
       )
 
-      §p(
-        This is only one way of combining two §rs(set) into a new one, and there are several other ways that we will consider in this section, all of which are common enough that we introduce succinct terminology and notation for them.
-      )
+
+
+
 
       §p(
         So far, we have only denoted §rs(set) by explicitly enumerating their §rs(member), which does not help us when trying to define a §r(set) in terms of other §rs(set). For that reason, we introduce the §definex["set_builder_notation"](set builder notation)(
@@ -790,6 +810,34 @@
         )
 
         §p(
+          Two further simple but useful observations are that §rs(intersection) never add elements, and §rs(union) never remove elements:
+        )
+
+        §theorem["intersection_nonincreasing"](
+          §p(
+            Let §$(A, B) be §rs(set). Then §$(A §$intersection B §$subseteq A)(.)
+          )
+        )
+        §proof["intersection_nonincreasing"](
+          §p(
+            Let §$(A, B) be §rs(set), and let §$(x §$in A §$intersection B). Then also §$(x §$in A) by definition of §$(§$intersection)(,) and thus §$(A §$intersection B §$subseteq A)(.)
+          )
+        )
+
+        §theorem["union_nondecreasing"](
+          §p(
+            Let §$(A, B) be §rs(set). Then §$(A §$subseteq A §$union B)(.)
+          )
+        )
+        §proof["union_nondecreasing"](
+          §proof_as_exercise["union_nondecreasing"](
+            §p(
+              Let §$(A, B) be §rs(set), and let §$(x §$in A). Then also §$(x §$in A §$union B) by definition of §$(§$union)(,) and thus §$(A §$subseteq A §$union B)(.)
+            )
+          )
+        )
+
+        §p(
           The following exercises give you some more opportunities to practice proofs like this.
         )
 
@@ -978,6 +1026,44 @@
         )
 
         §p(
+          Equipped with the notions of §r(intersection), §r(union), and §r(set difference), we can describe all the possible ways in which multiple §rs(set) can relate to each other:
+        )
+
+        §exercise["exercise_arbitrary_venn"](
+          §p(
+            Give an expression that denotes exactly the highlighted areas of the §r(Venn diagram) below. You will need at least §span(exercise_arbitrary_venn_text)()() operators.
+          )
+
+          §div(venn3_container centered)(
+            §input["venn_diagrams/exercise_arbitrary.svg"]
+          )
+
+          §solution["exercise_arbitrary_venn"](
+            §div(exercise_arbitrary_venn_solution)()()
+          )
+          §p(
+            §button(exercise_arbitrary_venn_new)()(Generate new exercise)
+          )
+        )
+
+        TODO render terms with associativity
+
+        §p(
+          An immediate observation we can make general properties of the §r(set difference) operation is that removing elements from a §r(set) always results in a (not necessarily strict) §r(subset):
+        )
+
+        §theorem["set_difference_nonincreasing"](
+          §p(
+            Let §$(A) and §$(B) be §rs(set). Then §$(A §$setminus B §$subseteq A)(.)
+          )
+        )
+        §proof["set_difference_nonincreasing"](
+          §p(
+            Let §$(A) and §$(B) be §rs(set), and let §$(x §$in A §$setminus B). Then also §$(x §$in A) by definition of §$(§$setminus)(,) and thus §$(A §$setminus B §$subseteq A)(.)
+          )
+        )
+
+        §p(
           Unlike §r(intersection) and §r(union), §r(set difference) is sensitive to both the order of the two §rs(set) to be combined, and the grouping of multiple §rs(set difference).
         )
 
@@ -1026,7 +1112,11 @@
         )
 
         §p(
-          An interesting observation is that §rs(intersection) can be expressed purely in terms of §rs(set difference):
+          When computing §rs(intersection) by hand, a helpful technique is to write down one of the §rs(set) and to then cross out the §rs(element) that do not occur in the other §r(set). An example: §$$(
+            §$set(§$symbol0)(§$symbol1)(§$symbol3)(§$symbol4) §$intersection §$set(§$symbol0)(§$symbol2)(§$symbol3) §$seq §$set(§$symbol0)(§$cancel_symbol(§$symbol1))(§$symbol3)(§$cancel_symbol(§$symbol4)) §$seq §$set(§$symbol0)(§$symbol3).
+          )
+
+          We can prove that this technique always yields the correct result — take a moment to think through how the §cref(intersection_via_set_difference)(following theorem) relates to the technique:
         )
 
         §theorem["intersection_via_set_difference"](
@@ -1034,33 +1124,72 @@
             Let §$(A) and §$(B) be §rs(set). Then §$(A §$intersection B §$seq A §$setminus §$p[1](A §$setminus B))(.)
           )
         )
+        §proof["intersection_via_set_difference"](
+          §proof_as_exercise["intersection_via_set_difference"](
+            §p(
+              Let §$(A) and §$(B) be §rs(set).
+            )
 
-
-
-
-
-
-
-
-
-        §exercise["exercise_arbitrary_venn"](
-          §p(
-            Give an expression that denotes exactly the highlighted areas of the §r(Venn diagram) below. You will need at least §span(exercise_arbitrary_venn_text)()() operators.
-          )
-
-          §div(venn3_container centered)(
-            §input["venn_diagrams/exercise_arbitrary.svg"]
-          )
-
-          §solution["exercise_arbitrary_venn"](
-            §div(exercise_arbitrary_venn_solution)()()
-          )
-          §p(
-            §button(exercise_arbitrary_venn_new)()(Generate new exercise)
+            §proof_part(
+              §verbatim(§$(A §$intersection B §$subseteq A §$setminus §$p[1](A §$setminus B))):
+            )(
+              §p(
+                Let §$(x §$in A §$intersection B)(.) Then §$(x §$in B)(,) and thus §$(x §$notin A §$setminus B)(.) Since §$(x §$in A) (because §$(x §$in A §$intersection B)) and §$(x §$notin A §$setminus B)(,) we have that §$(x §$in A §$setminus §$p[1](A §$setminus B)) (by definition of §$(§$setminus)).
+              )
+            )
+            §proof_part(
+              §verbatim(§$(A §$intersection B §$supseteq A §$setminus §$p[1](A §$setminus B))):
+            )(
+              §p(
+                Let §$(x §$in A §$setminus §$p[1](A §$setminus B))(.) Then §$(x §$in A) by §cref(set_difference_nonincreasing), so it remains to show that §$(x §$in B)(.)
+              )§p(
+                Suppose toward a contradiction that §$(x §$notin B)(.) Then §$(x §$in A §$setminus B)(,) and thus §$(x §$notin A §$setminus §$p[1](A §$setminus B))(,) contradicting our initial assumption that §$(x §$in A §$setminus §$p[1](A §$setminus B))(.)
+              )
+            )
           )
         )
 
-        TODO render terms with associativity
+        §p(
+          We conclude the section with a few exercises on §r(set difference).
+        )
+
+        §exercise["exercise_set_difference0"](
+          §p(
+            Let §$(A, B, C) be §rs(set). Prove that if §$(A §$subset B)(,) then §$(C §$setminus B §$subset C §$setminus A)(.)
+          )
+
+          §solution["exercise_set_difference0"](
+            §p(
+              bla
+            )
+          )
+        )
+
+        §exercise["exercise_set_difference1"](
+          §p(
+            Let §$(A, B, C) be §rs(set). Prove that §$(B §$setminus A §$subseteq C) if and only if §$(B §$setminus C §$subseteq A)(.)
+          )
+        )
+
+        §exercise["exercise_set_difference2"](
+          §ol(
+            §li(
+              Let §$(A, B, C) be §rs(set). Prove that §$(C §$setminus §$p(B §$setminus A) §$seq §$p(C §$intersection A) §$union §$p(C §$setminus B))(.)
+            )§li(
+              How does this relate to §cref(intersection_via_set_difference)?
+            )
+          )
+        )
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1135,7 +1264,7 @@
 
       )
 
-      §exercise["exercise_union_intersection_extremes"](
+      §exercise["exercise_set_operations_extremes"](
         §p(
           Let §$(A) be a §r(set). For each of the following equations, give a §r(set) §$(B) that satisfies the equation, or prove that no such §$(B) exists.
         )
@@ -1153,6 +1282,38 @@
           §li(
             §$(A §$union B §$seq §$set)
           )
+          §li(
+            §$(A §$setminus B §$seq A)
+          )
+          §li(
+            §$(A §$setminus B §$seq §$set)
+          )
+        )
+      )
+
+      §theorem["distributivity_intersection_union"](Distributivity of §$(§$intersection[true]) and §$(§$union[true]))(
+        §p(
+          Let §$(A, B, C) be §rs(set). Then
+        )
+
+        §ol(
+          §li(
+            §$(A §$intersection §$p(B §$union C) §$seq §$p(A §$union B) §$intersection §$p(A §$union C))(,) and
+          )§li(
+            §$(A §$union §$p(B §$intersection C) §$seq §$p(A §$intersection B) §$union §$p(A §$intersection C))(.)
+          )
+        )
+      )
+
+      §exercise["exercise_distributivity_intersection_union"](
+        §p(
+          Prove §cref(distributivity_intersection_union).
+        )
+      )
+
+      §exercise["exercise_set_difference3"](
+        §p(
+          Let §$(A, B, C) be §rs(set). Prove that §$(§$p(B §$setminus A) §$union C §$seq §$p(B §$union C) §$setminus §$p(A §$setminus C))(.)
         )
       )
 
@@ -1174,8 +1335,6 @@
     - distributivity of union and intersection
 
     - symmetric difference
-
-    - complement
 
   )
 )
