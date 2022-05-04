@@ -470,8 +470,12 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "union".into(), r###"\cup"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$setminus" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "setminus".into(), r###"\setminus"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$symdif" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "symdif".into(), r###"\operatorname{\triangle}"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$twice" {
                         self.pm(|t, p, a| OutInternal::EncloseMath(t, p, a, "twice".into(), r###"\operatorname{twice}("###.into(), r###")"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$powerset" {
+                        self.pm(|t, p, a| OutInternal::EncloseFunctionApplication(t, p, a, "powerset".into(), r###"\operatorname{\mathcal{P}}"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {
                         let trace_end = source_offset + self.p.position() - initial_position;
                         let trace = Trace(Some((trace_start, trace_end)));

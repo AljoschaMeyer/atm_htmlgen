@@ -1257,7 +1257,7 @@
             §verbatim(§$(5 §$neq 6 §$implies 6 §$neq 7)):
           )(
             §p(
-              §$(5 §$neq 6) by §r(equal)(the definition of equality).
+              §$(6 §$neq 7) by §r(equal)(the definition of equality).
             )
           )
         )

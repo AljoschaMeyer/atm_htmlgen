@@ -1,14 +1,18 @@
 <svg class="venn" version="1.1" viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg">
-  <mask id="clip4">
-    <rect x="0" y="0" width="110" height="80" style="fill: white;"/>
-    <circle cx="70" cy="40" r="30" style="fill: black;"/>
-  </mask>
-
-  <clipPath id="clip5">
+  <clipPath id="clip6">
     <circle cx="40" cy="40" r="30"/>
   </clipPath>
+  <mask id="clip7">
+    <rect x="0" y="0" width="110" height="80" style="fill: white;"/>
+    <circle clip-path="url(#clip6)" cx="70" cy="40" r="30" style="fill: black;"/>
+  </mask>
 
-  <rect class="venn_yay" clip-path="url(#clip5)" mask="url(#clip4)" x="0" y="0" width="110" height="80"/>
+  <clipPath id="clip8">
+    <circle cx="40" cy="40" r="30"/>
+    <circle cx="70" cy="40" r="30"/>
+  </clipPath>
+
+  <rect class="venn_yay" clip-path="url(#clip8)" mask="url(#clip7)" x="0" y="0" width="110" height="80"/>
 
   <circle cx="40" cy="40" r="30"/>
   <text x="30" y="40">A</text>

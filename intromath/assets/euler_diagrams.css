@@ -171,3 +171,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
+
+.powersetsvg {
+  stroke: var(--c1-half);
+  fill: var(--c1-transparent);
+}
+
+#powerset_result {
+  text-align: left;
+  padding-left: 2rem;
+  overflow-x: auto;
+}

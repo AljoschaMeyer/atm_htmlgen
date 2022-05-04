@@ -1,4 +1,4 @@
-import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, p } from './tex.js';
+import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, powerset, p } from './tex.js';
 
 const svgns = "http://www.w3.org/2000/svg";
 const PI = Math.PI;
@@ -261,6 +261,139 @@ euler(container_setminus, set_difference, (container, s1, s2, s3) => {
 
   return tex(`${s1_name} ${setminus} ${s2_name} ${seq} ${set1} ${setminus} ${set2} ${seq} ${set3}`, container);
 }, "setminus");
+
+const container_powerset = document.querySelector("#container_euler_powerset");
+(() => {
+  const container = container_powerset;
+  const s = [false, true, true, false, false];
+
+  const svg = container.children[0];
+
+  const svg_elements = [];
+  for (let i = 5; i > 0; i--) {
+    svg_elements.push(svg.children[svg.children.length - i]);
+  }
+
+  const buttons = container.children[1];
+  const buttons1 = buttons.children[0];
+
+  for (let i = 0; i < 5; i++) {
+    buttons1.children[i].addEventListener("click", () => {
+      s[i] = !s[i];
+      render_state();
+    });
+  }
+
+  const set1 = container.children[2].children[0];
+
+  const results = container.children[3];
+
+  render_state();
+
+  function render_state() {
+    for (let i0 = 0; i0 < 2; i0++) {
+      for (let i1 = 0; i1 < 2; i1++) {
+        for (let i2 = 0; i2 < 2; i2++) {
+          for (let i3 = 0; i3 < 2; i3++) {
+            for (let i4 = 0; i4 < 2; i4++) {
+              const b0 = i0 === 1;
+              const b1 = i1 === 1;
+              const b2 = i2 === 1;
+              const b3 = i3 === 1;
+              const b4 = i4 === 1;
+
+              const i = (0 |
+                (b0 ? 1 : 0) |
+                (b1 ? 2 : 0) |
+                (b2 ? 4 : 0) |
+                (b3 ? 8 : 0) |
+                (b4 ? 16 : 0)) - 1;
+
+              if (
+                (!b0 || s[0]) &&
+                (!b1 || s[1]) &&
+                (!b2 || s[2]) &&
+                (!b3 || s[3]) &&
+                (!b4 || s[4]) &&
+                (b0 || b1 || b2 || b3 || b4)
+              ) {
+                draw_set([b0, b1, b2, b3, b4], svg.children[i]);
+              } else {
+                if (b0 || b1 || b2 || b3 || b4) {
+                  draw_set(empty_s(), svg.children[i]);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    for (let i = 0; i < 5; i++) {
+      buttons1.children[i].classList.toggle("yes", s[i]);
+      buttons1.children[i].classList.toggle("no", !s[i]);
+      buttons1.children[i].innerHTML = button_text(i, 1, s[i]);
+    }
+
+    set1.innerHTML = render_set_def(1, s);
+
+    const results_texs = [set([])];
+    const results_by_size = [[], [], [], [], []];
+    for (let j = 1; j < 6; j++) {
+      for (let i0 = 0; i0 < 2; i0++) {
+        for (let i1 = 0; i1 < 2; i1++) {
+          for (let i2 = 0; i2 < 2; i2++) {
+            for (let i3 = 0; i3 < 2; i3++) {
+              for (let i4 = 0; i4 < 2; i4++) {
+                const b0 = i0 === 1;
+                const b1 = i1 === 1;
+                const b2 = i2 === 1;
+                const b3 = i3 === 1;
+                const b4 = i4 === 1;
+
+                const i = (0 |
+                  (b0 ? 1 : 0) |
+                  (b1 ? 2 : 0) |
+                  (b2 ? 4 : 0) |
+                  (b3 ? 8 : 0) |
+                  (b4 ? 16 : 0)) - 1;
+
+                if (
+                  (!b0 || s[0]) &&
+                  (!b1 || s[1]) &&
+                  (!b2 || s[2]) &&
+                  (!b3 || s[3]) &&
+                  (!b4 || s[4]) &&
+                  (i0 + i1 + i2 + i3 + i4 === j)
+                ) {
+                  const subset = [b0, b1, b2, b3, b4];
+                  results_texs.push(set_tex(subset));
+                  results_by_size[cardinality(subset) - 1].push(subset);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (cardinality(s) <= 1) {
+      tex(`${powerset(name_set(1))} ${seq} ${set(results_texs, 1)}`, results);
+    } else {
+      const lines = [[set([])]];
+      for (let i = 1; i <= cardinality(s); i++) {
+        lines.push(results_by_size[i - 1].map(set_tex));
+      }
+
+      const actual_lines = lines.map(sets => sets.join(", "));
+
+      tex(`${powerset(name_set(1))} ${seq} \\big\\{\\\\ \\hspace{2em}
+  ${actual_lines.join(", \\\\ \\hspace{2em}")}
+\\\\\\big\\}`, results, {display: true, fleqn: true});
+    }
+
+  }
+})();
 
 function polar_to_cartesian([x, y], r, t) {
   return [r * Math.cos(t) + x, r * Math.sin(t) + y];
@@ -672,3 +805,16 @@ function new_arbitrary_venn() {
 
 new_arbitrary_venn();
 exercise_arbitrary_venn_new.addEventListener("click", new_arbitrary_venn);
+
+
+
+
+
+const duck_container = document.querySelector("#duck_container");
+const duck_region = document.querySelector("#duck_region");
+duck_region.addEventListener("click", () => {
+  duck_container.classList.toggle("active_duck");
+  setTimeout(() => {
+    duck_container.classList.toggle("active_duck");
+  }, 8000);
+});

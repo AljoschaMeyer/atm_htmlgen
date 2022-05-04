@@ -180,6 +180,7 @@ pub enum Out {
     Input([PathBuf; 1], Vec<Out>),
     Output([PathBuf; 1], Vec<Out>, bool),
     Cref(Cref, Vec<Out>),
+    MathFunctionParens(MathSet, Vec<Out>),
 }
 
 #[derive(Clone)]
@@ -211,6 +212,7 @@ pub(crate) enum OutInternal {
     MathMacro(Trace, MathMacro, Vec<OutInternal>, String /* id */, String /* tex */),
     MathSet(Trace, MathSet, Vec<OutInternal>),
     MathGroupingParens(Trace, MathSet, Vec<OutInternal>),
+    MathFunctionParens(Trace, MathSet, Vec<OutInternal>),
     MathSetBuilder(Trace, MathSetBuilder, Vec<OutInternal>),
     MathEnv(Trace, (), Vec<OutInternal>, &'static str /*environment name*/),
     Link(Trace, (), Vec<OutInternal>),
@@ -218,6 +220,7 @@ pub(crate) enum OutInternal {
     Enclose(Trace, (), Vec<OutInternal>, &'static str, &'static str),
     Enclose2(Trace, (), Vec<OutInternal>, &'static str, &'static str, &'static str),
     EncloseMath(Trace, (), Vec<OutInternal>, &'static str /* id */, &'static str, &'static str),
+    EncloseFunctionApplication(Trace, MathSet, Vec<OutInternal>, String /* id */, &'static str /* id */),
     Cases(Trace, (), Vec<OutInternal>),
     Case(Trace, Case, Vec<OutInternal>),
     Drop(Trace, (), Vec<OutInternal>),
@@ -1115,6 +1118,31 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }, &params, args, trace, y);
         }
 
+        OutInternal::EncloseFunctionApplication(trace, params, args, math_id, name) => {
+            let len = args.len();
+            return down_macro(|p, _n, y, trace| {
+                if y.state.second_iteration {
+                    match y.state.sticky_state.math_definitions.get(&math_id) {
+                        None => return Err(ExpansionError::UnknownMathId(trace, math_id.to_string())),
+                        Some(id) => {
+                            let url = y.state.resolve_id_to_url(id, trace)?;
+                            let preview_url = y.state.id_to_preview_url(id);
+
+                            let name_tex = format!(r###"\htmlData{{preview={}}}{{\href{{{}}}{{{}}}}}"###, preview_url, url, name);
+
+                            let outs = (0..len).map(|i| Out::Argument(i)).collect();
+                            return Ok(Out::Many(vec![
+                                    Out::Text(name_tex.into()),
+                                    Out::MathFunctionParens(p.clone(), outs)
+                                ]));
+                        }
+                    }
+                } else {
+                    return Ok(Out::Argument(0));
+                }
+            }, &params, args, trace, y);
+        }
+
         OutInternal::MathSet(trace, params, args) => {
             return down_macro(|p, n, y, trace| {
                 if y.state.second_iteration {
@@ -1133,7 +1161,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                                 let mut outs = vec![Out::Text(left_delimiter.into())];
                                 for i in 0..n {
                                     if i != 0 {
-                                        outs.push(Out::Text(", ".into()));
+                                        outs.push(Out::Text(r###", \allowbreak"###.into()));
                                     }
                                     outs.push(Out::Argument(i));
                                 }
@@ -1166,7 +1194,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 ])), &params, args, trace, y);
         }
 
-        OutInternal::MathGroupingParens(trace, params, args) => {
+        OutInternal::MathGroupingParens(trace, params, args)
+        | OutInternal::MathFunctionParens(trace, params, args) => {
             arguments_exact(1, &args, &trace)?;
             return down_macro(|p, n, y, trace| {
                 let (sizing_left, sizing_right) = sizing_level(p.0[0]);
@@ -1325,6 +1354,8 @@ fn out_to_internal(out: Out, args: Vec<OutInternal>) -> Result<OutInternal, usiz
         Out::Cref(params, a) => return Ok(OutInternal::Cref(Trace(None), params, outs_to_internals(a, args)?)),
 
         Out::TeX(path, a, display) => return Ok(OutInternal::TeX(Trace(None), path, outs_to_internals(a, args)?, display)),
+
+        Out::MathFunctionParens(params, a) => return Ok(OutInternal::MathFunctionParens(Trace(None), params, outs_to_internals(a, args)?)),
     }
 }
 

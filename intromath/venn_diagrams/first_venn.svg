@@ -74,7 +74,7 @@
   <!-- B intersect C without A -->
   <rect class="first_venn_region" clip-path="url('#clip_bic_first_venn')" mask="url(#mask_aibic_first_venn)" x="-55" y="-60" width="110" height="110"/>
   <!-- A intersect B intersect C -->
-  <rect class="first_venn_region" clip-path="url('#clip_aibic_first_venn')" x="-55" y="-60" width="110" height="110"/>
+  <rect id="duck_region" class="first_venn_region" clip-path="url('#clip_aibic_first_venn')" x="-55" y="-60" width="110" height="110"/>
 
   <circle cx="-17.3205" cy="10" r="30"/>
   <foreignObject x="-40.9807" y="0" width="30" height="30">

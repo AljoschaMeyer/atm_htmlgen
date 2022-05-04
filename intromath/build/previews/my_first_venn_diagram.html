@@ -1,6 +1,6 @@
 <article class="example" id="my_first_venn_diagram">
     <h6><a href="http://localhost:1234/sets.html#my_first_venn_diagram">Figure 2.18</a></h6>
-    <div class="captioned"><div class="centered"><svg id="first_venn" class="venn" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
+    <div class="captioned"><div style="grid-column: 1; grid-row: 1"><svg id="first_venn" class="venn" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
   <!-- A -->
   <clipPath id="clip_a_first_venn">
     <circle cx="-17.3205" cy="10" r="30.5"/>
@@ -76,7 +76,7 @@
   <!-- B intersect C without A -->
   <rect class="first_venn_region" clip-path="url('#clip_bic_first_venn')" mask="url(#mask_aibic_first_venn)" x="-55" y="-60" width="110" height="110"/>
   <!-- A intersect B intersect C -->
-  <rect class="first_venn_region" clip-path="url('#clip_aibic_first_venn')" x="-55" y="-60" width="110" height="110"/>
+  <rect id="duck_region" class="first_venn_region" clip-path="url('#clip_aibic_first_venn')" x="-55" y="-60" width="110" height="110"/>
 
   <circle cx="-17.3205" cy="10" r="30"/>
   <foreignObject x="-40.9807" y="0" width="30" height="30">
@@ -122,5 +122,6 @@
     <span class="symbol_container"><span style="mask: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtNTkwLjY0IDIwMS40MWMtNC43NzczLTEuMzU5NC0xMS4wMi0xLjk4NDQtMTcuMjU4LTYuNTI3My0xMS43NjItOC41NzQyLTMxLjI5Ny0zMy44OTgtNDcuMjUtMzcuMjg1LTE1Ljk1My0zLjM5MDYtNTEuMjQyIDIuMTkxNC02MS42MDUgNzUuOTYxLTEwLjM3MSA3My43NzMtOS45Njg4IDcwLjk4OC0yNy41MTYgNjUuMDA0LTE3LjU0Ny01Ljk4MDUtNzQuOTY1LTE3Ljk0OS0xNDMuNTUgMjYuNzExLTY4LjU4NiA0NC42NjQtMTMwLjggMzguMjgxLTEzMC44IDM4LjI4MWw0My40NjkgMTguMzQ4LTU1LjQzNCA1MS4wMzkgNjguNTk0LTkuNTcwM3MyOS44NTIgMTUuMjkzIDcwLjE2IDI1LjQzOGwtMjguMDc4IDQyLjQ2MSA0MS43ODUgNTguMjczLTkuNTg1OSAxNS4zMzYgODMuOTY1IDMwLjI4OSAxMC4zNTUtMTkuNTU1czM5LjQ5Mi0xMS44ODcgNDcuNTM5LTMwLjI4OWwtMTAwLjQ1LTYuMTI4OS00Mi45NDEtNDcuNTQzIDM3LjM3MS0zNS41MDhjMTguNTE2IDIuMDQ2OSAzNy43ODkgMi4xNDA2IDU2LjQ2MS0xLjE0MDZsMzIuMzA5IDQ3Ljc3LTkuNTg1OSAxNS4zMzYgODMuOTY1IDMwLjI4OSAxMC4zNTUtMTkuNTU1czM5LjQ5Mi0xMS44ODcgNDcuNTM5LTMwLjI4OWwtMTAwLjQ1LTYuMTI4OS0zNS4wMTYtNDUuNzYyYzEwLjEyNS00LjE4MzYgMTkuODE2LTkuNzI2NiAyOC44MTItMTYuOTEgODIuOTQ1LTY2LjE5OSA4MS4zNTItNzguNTYyIDc0LjE3Ni0xMTMuNjUtNy4xNzU4LTM1LjA5NC0xMC45MTgtNzcuNTQzIDcuMTc1OC05Mi41MTYgMTguMDk0LTE0Ljk3MyA1OS44MTYtNy4xNzE5IDcwLjU4Ni01LjE3OTcgMTEuNzQyIDIuMTcxOSAyLjQ3MjctMTQuODM2LTUuMDg5OC0xNi45OTJ6bS0yMjkuNzggMjE2LjYgMC40MTAxNiAwLjYwNTQ3LTI3LjY3NiAwLjcwMzEyIDE0LjAyNy0xMS44MjRzLTI1LjgyIDEwLjI1OC0zNC4zMDUgNi4wMTE3Yy04LjQ5MjItNC4yMzgzLTExLjUtMTMuNDQxLTExLjUtMTMuNDQxbDIzLjg3OS01LjgzNTlzLTI1LjExMyAwLjM1MTU2LTM0LjQ4NC02LjM2NzJjLTkuMzc1LTYuNzIyNy0xMy4yNy0yMy4zNDgtMTMuMjctMjMuMzQ4IDM1LjAxNiAwIDUyLjcwMy0xNy4zMjggNzcuNDYxLTI1LjEwOSAyNC43NTgtNy43ODEyIDQ5Ljg3MSAxNS41NjIgNDkuODcxIDQwLjY3MiAwIDE1Ljg3OS04LjA1ODYgMjkuODUyLTIwLjUxNiAzNy45M2gtMjMuODk1em0zLjM5MDYgNS4wMTU2IDEuMzI0MiAxLjk1N2MtMS4yMjY2IDAuMTUyMzQtMi40NjA5IDAuMjYxNzItMy43MTg4IDAuMzIwMzF6bTE2My4yNS0yNTEuOTZjMy45OTIyIDAgNy4yMjY2IDQuNzQyMiA3LjIyNjYgMTAuNTk0IDAgNS44NDM4LTMuMjM0NCAxMC41OS03LjIyNjYgMTAuNTlzLTcuMjI2Ni00Ljc0MjItNy4yMjY2LTEwLjU5YzAtNS44NTE2IDMuMjM0NC0xMC41OTQgNy4yMjY2LTEwLjU5NHoiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K&quot;) no-repeat 50% 50%;
     mask-size: cover;"></span></span>
   </foreignObject>
-</svg></div><div class="caption"><p>A <a class="ref definition" href="http://localhost:1234/sets.html#venn_diagram" data-preview="http://localhost:1234/previews/venn_diagram.html">Venn diagram</a> showing the <a class="ref definition" href="http://localhost:1234/sets.html#set" data-preview="http://localhost:1234/previews/set.html">sets</a> of animal species that can walk (top), fly (left), and swim (right). Each region shows an icon of a species that belongs to it.</p></div></div>
+</svg></div>
+          <div id="duck_container" class=""><div class="img_container"><img src="./assets/images/duck.png"></div></div><div class="caption"><p>A <a class="ref definition" href="http://localhost:1234/sets.html#venn_diagram" data-preview="http://localhost:1234/previews/venn_diagram.html">Venn diagram</a> showing the <a class="ref definition" href="http://localhost:1234/sets.html#set" data-preview="http://localhost:1234/previews/set.html">sets</a> of animal species that can walk (top), fly (left), and swim (right). Each region shows an icon of a species that belongs to it.</p></div></div>
 </article>

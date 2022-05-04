@@ -15,16 +15,28 @@ export function tex(str, elem, opts) {
 }
 
 // elems is an array containing the tex source of the elements of the set
-export function set(elems) {
+export function set(elems, level) {
   if (elems.length === 0) {
     return String.raw`\htmlData{preview=http://localhost:1234/previews/set.html}{\href{http://localhost:1234/sets.html#set}{\emptyset}}`;
   } else {
-    return String.raw` \left\lbrace ${elems.join(", ")} \right\rbrace `;
+    if (level === 0 || !level) {
+      return String.raw` \left\lbrace ${elems.join(", ")} \right\rbrace `;
+    } else if (level === 1) {
+      return String.raw` \big\lbrace ${elems.join(", ")} \big\rbrace `;
+    } else if (level === 2) {
+      return String.raw` \Big\lbrace ${elems.join(", ")} \Big\rbrace `;
+    } else if (level === 3) {
+      return String.raw` \bigg\lbrace ${elems.join(", ")} \bigg\rbrace `;
+    } else if (level === 4) {
+      return String.raw` \Bigg\lbrace ${elems.join(", ")} \Bigg\rbrace `;
+    } else {
+      throw "unimplemented level of paren sizing";
+    }
   }
 }
 
 export function p(inner_tex, level) {
-  if (level === 0) {
+  if (level === 0 || !level) {
     return String.raw` \left( ${inner_tex} \right) `;
   } else if (level === 1) {
     return String.raw` \big( ${inner_tex} \big) `;
@@ -34,6 +46,22 @@ export function p(inner_tex, level) {
     return String.raw` \bigg( ${inner_tex} \bigg) `;
   } else if (level === 4) {
     return String.raw` \Bigg( ${inner_tex} \Bigg) `;
+  } else {
+    throw "unimplemented level of paren sizing";
+  }
+}
+
+export function powerset(inner_tex, level) {
+  if (level === 0 || !level) {
+    return String.raw`\htmlData{preview=http://localhost:1234/previews/powerset.html}{\href{http://localhost:1234/sets.html#powerset}{\operatorname{\mathcal{P}}}} \left( ${inner_tex} \right) `;
+  } else if (level === 1) {
+    return String.raw`\htmlData{preview=http://localhost:1234/previews/powerset.html}{\href{http://localhost:1234/sets.html#powerset}{\operatorname{\mathcal{P}}}} \big( ${inner_tex} \big) `;
+  } else if (level === 2) {
+    return String.raw`\htmlData{preview=http://localhost:1234/previews/powerset.html}{\href{http://localhost:1234/sets.html#powerset}{\operatorname{\mathcal{P}}}} \Big( ${inner_tex} \Big) `;
+  } else if (level === 3) {
+    return String.raw`\htmlData{preview=http://localhost:1234/previews/powerset.html}{\href{http://localhost:1234/sets.html#powerset}{\operatorname{\mathcal{P}}}} \bigg( ${inner_tex} \bigg) `;
+  } else if (level === 4) {
+    return String.raw`\htmlData{preview=http://localhost:1234/previews/powerset.html}{\href{http://localhost:1234/sets.html#powerset}{\operatorname{\mathcal{P}}}} \Bigg( ${inner_tex} \Bigg) `;
   } else {
     throw "unimplemented level of paren sizing";
   }
