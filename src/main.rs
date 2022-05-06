@@ -460,6 +460,7 @@ pub(crate) struct BoxInfo {
     pub name: String, // "Theorem", "Lemma", etc.
     pub numbering: String,
     pub kind: BoxKind,
+    pub classes: String,
 }
 
 #[derive(Clone)]

@@ -1287,61 +1287,59 @@
         This wraps up the overview of our system of §r(deductive reasoning). We denote objects of interest by §rs(term), combine §rs(term) into statements via §rs(predicate), and build up more complex statements from there. We acquire knowledge by proving statements, letting the types of statements determine how the proofs must work. §cref(summary_statements) summarizes the different types of statements that we use.
       )
 
-      §div(wide)(
-        §figure["summary_statements"](Table of Statements)(
-          §captioned(
-            §table(
-              §thead(
-                §tr(
-                  §th(Statement)
-                  §th(Proving)
-                  §th(Using)
-                  §th(Handling Negation)
-                )
-              )
-              §tbody(
-                §tr(
-                  §td(§R(existential quantification):§br§ §verbatim(There exists §$(x) such that §i(bla)))
-                  §td(Provide a §r(witness):§br§verbatim(Define §$(x §$defeq §$ldots)).)
-                  §td(Can obtain §r(witness).)
-                  §td(Swap to §r(universal quantification), move §r(negation) inside.)
-                )§tr(
-                  §td(§R(universal quantification):§br§ §verbatim(For all §$(x) holds §i(bla)))
-                  §td(Prove for arbitrary object:§br§verbatim(Let §$(x) be something, then…).)
-                  §td(Can assume §verbatim(§i(bla)) for all objects.)
-                  §td(Swap to §r(existential quantification), move §r(negation) inside.)
-                )§tr(
-                  §td(§R(negation):§br § §verbatim(It does not hold that §i(bla)))
-                  §td(Varies by type of §r(negation)(negated) statement.)
-                  §td(Can use the statement obtained by moving the §r(negation) inside.)
-                  §td(§R(double negation) can be dropped.)
-                )§tr(
-                  §td(§R(conjunction):§br§ §verbatim(§i(bla) and §i(blubb)))
-                  §td(Prove both §verbatim(§i(bla)) and §verbatim(§i(blubb)).)
-                  §td(Can assume either statement.)
-                  §td(Swap to §r(disjunction), move §r(negation) inside.)
-                )§tr(
-                  §td(§R(disjunction):§br§ §verbatim(§i(bla) or §i(blubb)))
-                  §td(Prove §verbatim(§i(bla)) or §verbatim(§i(blubb)).)
-                  §td(Can do a §r(case distinction).)
-                  §td(Swap to §r(conjunction), move §r(negation) inside.)
-                )§tr(
-                  §td(§R(implication):§br§ §verbatim(If §i(bla) then §i(blubb).))
-                  §td(Assume §verbatim(§i(bla)) and prove §verbatim(§i(blubb)).)
-                  §td(Can prove §verbatim(§i(bla)) to prove §verbatim(§i(blubb)).)
-                  §td(Prove §verbatim(§i(bla)) and disprove §verbatim(§i(blubb)).)
-                )§tr(
-                  §td(§R(bi-implication):§br§ §verbatim(§i(bla) if and only if §i(blubb)))
-                  §td(Prove §verbatim(§i(bla) §$(§$implies) §i(blubb)) and§br§ §verbatim(§i(blubb) §$(§$implies) §i(bla)).)
-                  §td(Proving/disproving either statement also proves/disproves the other.)
-                  §td(Disprove either §r(implication).)
-                )
+      §figure["summary_statements", "wide"](Table of Statements)(
+        §captioned(
+          §table(
+            §thead(
+              §tr(
+                §th(Statement)
+                §th(Proving)
+                §th(Using)
+                §th(Handling Negation)
               )
             )
-          )(
-            §p(
-              The different types of statements in our system of §r(deductive reasoning), summarized as a table.
+            §tbody(
+              §tr(
+                §td(§R(existential quantification):§br§ §verbatim(There exists §$(x) such that §i(bla)))
+                §td(Provide a §r(witness):§br§verbatim(Define §$(x §$defeq §$ldots)).)
+                §td(Can obtain §r(witness).)
+                §td(Swap to §r(universal quantification), move §r(negation) inside.)
+              )§tr(
+                §td(§R(universal quantification):§br§ §verbatim(For all §$(x) holds §i(bla)))
+                §td(Prove for arbitrary object:§br§verbatim(Let §$(x) be something, then…).)
+                §td(Can assume §verbatim(§i(bla)) for all objects.)
+                §td(Swap to §r(existential quantification), move §r(negation) inside.)
+              )§tr(
+                §td(§R(negation):§br § §verbatim(It does not hold that §i(bla)))
+                §td(Varies by type of §r(negation)(negated) statement.)
+                §td(Can use the statement obtained by moving the §r(negation) inside.)
+                §td(§R(double negation) can be dropped.)
+              )§tr(
+                §td(§R(conjunction):§br§ §verbatim(§i(bla) and §i(blubb)))
+                §td(Prove both §verbatim(§i(bla)) and §verbatim(§i(blubb)).)
+                §td(Can assume either statement.)
+                §td(Swap to §r(disjunction), move §r(negation) inside.)
+              )§tr(
+                §td(§R(disjunction):§br§ §verbatim(§i(bla) or §i(blubb)))
+                §td(Prove §verbatim(§i(bla)) or §verbatim(§i(blubb)).)
+                §td(Can do a §r(case distinction).)
+                §td(Swap to §r(conjunction), move §r(negation) inside.)
+              )§tr(
+                §td(§R(implication):§br§ §verbatim(If §i(bla) then §i(blubb).))
+                §td(Assume §verbatim(§i(bla)) and prove §verbatim(§i(blubb)).)
+                §td(Can prove §verbatim(§i(bla)) to prove §verbatim(§i(blubb)).)
+                §td(Prove §verbatim(§i(bla)) and disprove §verbatim(§i(blubb)).)
+              )§tr(
+                §td(§R(bi-implication):§br§ §verbatim(§i(bla) if and only if §i(blubb)))
+                §td(Prove §verbatim(§i(bla) §$(§$implies) §i(blubb)) and§br§ §verbatim(§i(blubb) §$(§$implies) §i(bla)).)
+                §td(Proving/disproving either statement also proves/disproves the other.)
+                §td(Disprove either §r(implication).)
+              )
             )
+          )
+        )(
+          §p(
+            The different types of statements in our system of §r(deductive reasoning), summarized as a table.
           )
         )
       )

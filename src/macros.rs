@@ -632,21 +632,22 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             y.state.box_current = Some(id.to_string());
 
             let id_trace = Trace(None);
-            let r = up_macro(|_p, args, y, _trace| {
+            let r = up_macro(|p, args, y, _trace| {
                 let url = y.state.register_id(&id.clone(), CrefKind::Box, id_trace.clone())?;
+                let classes = p.0.get(1).map(|s| s.to_string()).unwrap_or(String::new());
                 y.state.sticky_state.boxes.insert(id.to_string(), crate::BoxInfo {
                     name: name.clone(),
                     numbering: numbering.clone(),
                     kind: kind.clone(),
+                    classes: classes.clone(),
                 });
 
-
-
-                let box_html = format!(r###"<article class="{}" id="{}">
+                let box_html = format!(r###"<article class="{} {}" id="{}">
     <h6><a href="{}">{} {}{}{}</a></h6>
     {}
 </article>"###,
                     kind.class(),
+                    classes,
                     id,
                     url,
                     name,
@@ -698,6 +699,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     name: name.clone(),
                     numbering: numbering.clone(),
                     kind: BoxKind::fact(),
+                    classes: "".to_string(),
                 });
 
                 let box_html = format!(r###"<article class="{}" id="{}">
@@ -741,6 +743,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     name: name.to_string(),
                     numbering: "".to_string(),
                     kind: kind.clone(),
+                    classes: "".to_string(),
                 });
                 let claim_name = y.state.claim_name(&params.0[0], id_trace.clone())?;
 
@@ -846,10 +849,11 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                                                 };
 
                                                 let tex = format!(
-                                                    r###"\href{{{}}}{{\htmlClass{{ref {}}}{{\htmlData{{preview={}}}{{{}}}}}}}"###,
+                                                    r###"\href{{{}}}{{\htmlClass{{ref {}}}{{\htmlData{{preview={}, width={}}}{{{}}}}}}}"###,
                                                     url,
                                                     box_info.kind.class(),
                                                     y.state.id_to_preview_url(id),
+                                                    box_info.classes,
                                                     label,
                                                 );
                                                 return Ok(tex.into());
@@ -861,10 +865,11 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                                                 };
 
                                                 let tag = format!(
-                                                    r###"<a class="ref {}" href="{}" data-preview="{}">{}</a>"###,
+                                                    r###"<a class="ref {}" href="{}" data-preview="{}" data-width="{}">{}</a>"###,
                                                     box_info.kind.class(),
                                                     url,
                                                     y.state.id_to_preview_url(id),
+                                                    box_info.classes,
                                                     label,
                                                 );
                                                 return Ok(tag.into());
@@ -980,7 +985,6 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                                 if y.state.mathmode {
                                     return Ok(format!(
                                         r###"\href{{{}}}{{\htmlClass{{ref definition}}{{\htmlData{{preview={}}}{{{}}}}}}}"###,
-                                        // r###"<a class="ref definition" href="{}" data-preview="{}">{}</a>"###,
                                         info.href,
                                         y.state.resolve_defined_to_preview_url(id, id_trace.clone())?,
                                         name,
@@ -1479,11 +1483,11 @@ impl Default for Cref {
 }
 
 #[derive(Deserialize, Clone)]
-pub struct BoxParams([String; 1]);
+pub struct BoxParams(Vec<String>);
 
 impl Default for BoxParams {
     fn default() -> Self {
-        BoxParams(["".to_string()])
+        BoxParams(vec!["".to_string()])
     }
 }
 

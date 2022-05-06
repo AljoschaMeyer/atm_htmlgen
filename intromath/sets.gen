@@ -2,6 +2,9 @@
   <link rel="stylesheet" href="./assets/euler_diagrams.css">
   <script defer src="./assets/katex.min.js"></script/>
 
+  <script defer src="./assets/geometry.js" type="module"></script>
+  <script defer src="./assets/bitvec.js" type="module"></script>
+  <script defer src="./assets/svg.js" type="module"></script>
   <script defer src="./assets/euler_diagrams.js" type="module"></script>
 
   <style>
@@ -79,9 +82,11 @@
       )§p(
         In particular, we will talk about mathematical §verbatim(objects), without specifically stating what those are. For our purposes, we require that an object is §r(equal) to itself but not to anything else. The number §$(17)(,) for example, is a mathematical object.
       )§p(
-        Furthermore, an object must be §verbatim(well-defined), that is, it must be clear, for the purposes of determining §r(equal)(equality), which object you are talking about. For example, §verbatim(the most important composer of the 18th century) is not well-defined; whether the most important composer of the 18th century is §r(equal) to §link(Johann Sebastian Bach)(https://en.wikipedia.org/wiki/Johann_Sebastian_Bach) is a matter of personal opinion, not mathematical reasoning.
+        Furthermore, an object must be §verbatim(well-defined), that is, it must be clear, for the purposes of determining §r(equal)(equality), which object you are talking about. For example, §verbatim(the most important composer of the 18th century) is not well-defined; whether the most important composer of the 18th century is §r(equal) to §link(Johann Sebastian Bach)(https://en.wikipedia.org/wiki/Johann_Sebastian_Bach) is a matter of personal opinion, not of mathematical reasoning.
       )§p(
-        We will use squirrel-related iconography for our mathematical objects: §$(§$symbol0§ , §$symbol1§ , §$symbol2§ , §$symbol3)(,) and §$(§$symbol4)(.) But now it is high time to look at the one definition on which everything else in this book will build upon:
+        We will use squirrel-related iconography for our mathematical objects: §$(§$symbol0§ , §$symbol1§ , §$symbol2§ , §$symbol3)(,) and §$(§$symbol4)(.) We know that §$(§$symbol0 §$eq §$symbol0§ , §$symbol0 §$neq §$symbol1)(,) and so on, and these are the only properties we ascribe to those symbols.
+      )§p(
+        With that out of the way, it is time to look at the one definition upon which everything else in this book will build:
       )
 
       §definition["set"](Set)(
@@ -98,7 +103,7 @@
       §p(
         Because a §r(set) is characterized by the objects that belong to it, §$(§$set(§$symbol0)(§$symbol1)) and §$(§$set(§$symbol1)(§$symbol0)) are two different ways of denoting the same §r(set). Informally speaking, §rs(set) ignore the order of their objects. Furthermore, §$(§$set(§$symbol0)(§$symbol1)(§$symbol0)) and §$(§$set(§$symbol0)(§$symbol1)) also denote the same §r(set), you could say that §rs(set) ignore duplicates. All three expressions are simply different ways of denoting the unique mathematical object characterized by the fact that §$(§$symbol0) and §$(§$symbol1) belong to it, but nothing else does.
       )§p(
-        After the build-up about the foundational concept that is able to express anything you could possibly dream up, the notion of §rs(set) might be a bit of a letdown at first glance. We will get to the reasons for why §rs(set) are a very powerful concept soon enough, but first, we define and inspect some elementary terminology and notions.
+        After the build-up about the foundational concept that is able to express anything you could possibly dream up, the notion of §rs(set) might be a bit of a letdown at first glance. We will get to the reasons for why §rs(set) are a very powerful concept soon enough, but first, we define and inspect some elementary terminology and notation.
       )
 
       §definition["set_membership"](Set Membership)(
@@ -124,13 +129,11 @@
         ). Note how the idea of a §r(set) containing §rs(element) multiple times or in a particular order cannot even be expressed in these depictions, making §rs(Euler diagram) a more faithful representations of §rs(set) than our written notation.
       )
 
-      §div(slightlywide)(
-        §example["example_euler_diagram"](Euler Diagram)(
-          §captioned(
-            §input["euler_diagrams/vanilla.html"]
-          )(
-            §p(An interactive §r(Euler diagram) showing two §rs(set). Toggle the buttons to change the depicted §rs(set).)
-          )
+      §example["example_euler_diagram", "slightlywide"](Euler Diagram)(
+        §captioned(
+          §input["euler_diagrams/vanilla.html"]
+        )(
+          §p(An interactive §r(Euler diagram) showing two §rs(set). Toggle the buttons to change the depicted §rs(set).)
         )
       )
 
@@ -164,14 +167,12 @@
           All of these ways of looking at §r(sequal)(set equality) can come in handy when trying to prove that two complex descriptions of §rs(set) actually describe the same one. §cref(example_seq) visualizes the third interpretation.
         )
 
-        §div(slightlywide)(
-          §example["example_seq"](Set Equality)(
-            §captioned(
-              §input["euler_diagrams/equality.html"]
-            )(
-              §p(
-                Two §rs(set), the §rs(element) that occur in exactly one of them are §span{"class": "s3"}(highlighted). You can change the §rs(set), note how the §rs(set) are §r(sequal) exactly if no such §span{"class": "s3"}(highlighted) §rs(element) remain.
-              )
+        §example["example_seq", "slightlywide"](Set Equality)(
+          §captioned(
+            §input["euler_diagrams/equality.html"]
+          )(
+            §p(
+              Two §rs(set), the §rs(element) that occur in exactly one of them are §span{"class": "s3"}(highlighted). You can change the §rs(set), note how the §rs(set) are §r(sequal) exactly if no such §span{"class": "s3"}(highlighted) §rs(element) remain.
             )
           )
         )
@@ -300,14 +301,12 @@
           Explore §cref(example_subseteq) for a bit. What do you expect to happen if both §rs(set) are §r(sequal)? What if one of them is §r(empty set)(empty)?
         )
 
-        §div(slightlywide)(
-          §example["example_subseteq"](Subsets and Supersets)(
-            §captioned(
-              §input["euler_diagrams/subseteq.html"]
-            )(
-              §p(
-                Two §rs(set) and the §r(subset) and §r(superset) relations between them.
-              )
+        §example["example_subseteq", "slightlywide"](Subsets and Supersets)(
+          §captioned(
+            §input["euler_diagrams/subseteq.html"]
+          )(
+            §p(
+              Two §rs(set) and the §r(subset) and §r(superset) relations between them.
             )
           )
         )
@@ -615,10 +614,8 @@
           )
         )
 
-        §div(slightlywide)(
-          §example["example_intersection"](Intersection)(
-            §input["euler_diagrams/intersection.html"]
-          )
+        §example["example_intersection", "slightlywide"](Intersection)(
+          §input["euler_diagrams/intersection.html"]
         )
 
         §p(
@@ -639,10 +636,8 @@
           )
         )
 
-        §div(slightlywide)(
-          §example["example_union"](Union)(
-            §input["euler_diagrams/union.html"]
-          )
+        §example["example_union", "slightlywide"](Union)(
+          §input["euler_diagrams/union.html"]
         )
 
         §p(
@@ -1055,10 +1050,8 @@
           )
         )
 
-        §div(slightlywide)(
-          §example["example_set_difference"](Set Difference)(
-            §input["euler_diagrams/setminus.html"]
-          )
+        §example["example_set_difference", "slightlywide"](Set Difference)(
+          §input["euler_diagrams/setminus.html"]
         )
 
         §exercise["practice_set_difference_direct"](
@@ -1318,10 +1311,8 @@
           )
         )
 
-        §div(slightlywide)(
-          §example["example_powerset"](Power Set)(
-            §input["euler_diagrams/powerset.html"]
-          )
+        §example["example_powerset", "slightlywide"](Power Set)(
+          §input["euler_diagrams/powerset.html"]
         )
 
         §p(

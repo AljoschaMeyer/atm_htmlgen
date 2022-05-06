@@ -27,6 +27,13 @@
     --color-button-border-no: var(--color-text);
     --color-button-border-yes: var(--color-text);
     --color-button-background-hover: var(--color-bg);
+
+
+
+
+    --width-default: 41rem;
+    --width-wide: 86.26rem;
+    --width-slightlywide: 52rem;
 }
 
 .c1 {
@@ -50,31 +57,30 @@ html {
 }
 
 body {
-    margin:5% auto;
-    /* max-width: 41em; */
-    padding:0 .6em;
+    margin: 5% auto;
+    padding: 0 .6em;
     background: var(--color-bg);
     overflow-x: hidden;
 }
 
 body > *, section > * {
-  max-width: 41rem;
+  max-width: var(--width-default);
   margin-left: auto;
   margin-right: auto;
 }
 
 body > section, section > section {
-  max-width: 86.26rem;
+  max-width: var(--width-wide);
 }
 
 body > .wide, section > .wide {
-  max-width: 86.26rem;
+  max-width: var(--width-wide);
   margin-top: 4rem;
   margin-bottom: 4rem;
 }
 
 body > .slightlywide, section > .slightlywide {
-  max-width: 52rem;
+  max-width: var(--width-slightlywide);
   margin-top: 4rem;
   margin-bottom: 4rem;
 }
@@ -89,6 +95,7 @@ h1 {
     color: #000;
     line-height: 1.2;
     text-align: center;
+    padding-top: 4rem;
     margin-bottom: 4rem;
 }
 
@@ -96,6 +103,7 @@ h2 {
     font-size: 44px;
     line-height: 1.1;
     text-align: center;
+    padding-top: 4rem;
     margin-bottom: 4rem;
 }
 
@@ -255,49 +263,23 @@ article {
 
   border-width: 4px;
   border-style: solid;
-  border-color: var(--color-text);
+  border-color: var(--color-definition);
 }
 
 .exercise {
   border-color: var(--color-exercise);
 }
 
-.proof {
-  border-color: var(--color-proof);
-}
-
 .fact {
   border-color: var(--color-fact);
 }
 
-.definition {
-  border-color: var(--color-definition);
+.proof {
+  border-color: var(--color-proof);
 }
 
 .example {
   border-color: var(--color-example);
-}
-
-/* .assumptions > *:first-child::before {
-  content: "Assumptions: ";
-  font-style: italic;
-  display: block;
-}
-
-.claim > *:first-child::before {
-  content: "Claim: ";
-  font-style: italic;
-  display: block;
-} */
-
-.proof_body > *:first-child::before {
-  content: "Proof: ";
-  font-style: italic;
-  display: block;
-}
-
-.proof_body > :only-child::before, .claim > *:only-child::before, .assumptions > *:only-child::before {
-  display: inline;
 }
 
 .preview {
@@ -305,10 +287,45 @@ article {
   background: rgba(255, 255, 255, 30);
   box-shadow: 0px 0px 3px 4px #DDDDDD;
   padding: 4px;
+  max-width: calc(var(--width-default) + 8px);
+  animation-duration: 0.2s;
+  animation-name: preview_fadein;
+  animation-timing-function: ease-in-out;
 }
 
-.preview_content {
-  max-width: 41em;
+@keyframes preview_fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.previewfadeout {
+  animation-duration: 0.2s;
+  animation-name: preview_fadeout;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes preview_fadeout {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.preview.previewwide {
+  max-width: calc(var(--width-wide) + 8px);
+}
+
+.preview.previewslightlywide {
+  max-width: calc(var(--width-slightlywide) + 8px);
+  min-width: calc(var(--width-slightlywide) + 8px);
 }
 
 .preview_content > * {
@@ -326,9 +343,9 @@ article {
   font-size: 18px;
 }
 
-.grouping_paren {
+/* .grouping_paren {
   color: #757575;
-}
+} */
 
 .case_name {
   font-weight: 700;

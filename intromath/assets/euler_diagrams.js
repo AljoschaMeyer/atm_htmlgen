@@ -1,7 +1,24 @@
 import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, powerset, p } from './tex.js';
 
+import {
+  bitvec_count,
+  bitvec_first,
+  bitvec_previous,
+} from "./bitvec.js";
+
+import {
+  convex_path_description,
+  PI,
+  polar_to_cartesian,
+  lerp,
+  lerp_poly,
+} from "./geometry.js";
+
+import {
+  convex_path_string
+} from "./svg.js";
+
 const svgns = "http://www.w3.org/2000/svg";
-const PI = Math.PI;
 const R = 10;
 
 function euler(container, compute_s3, render_results, prefix) {
@@ -395,10 +412,6 @@ const container_powerset = document.querySelector("#container_euler_powerset");
   }
 })();
 
-function polar_to_cartesian([x, y], r, t) {
-  return [r * Math.cos(t) + x, r * Math.sin(t) + y];
-}
-
 // let [xfoo, yfoo] = polar_to_cartesian([0, 0], 20, (PI + PI * 1.5) + ((2 * PI * 2) / 3));
 // console.log(`x="${xfoo - 15}" y="${yfoo - 15}"`);
 
@@ -469,31 +482,126 @@ function draw_set(s, p) {
     const [x, y] = element_cartesian(i);
     p.setAttribute("d", `${describe_arc([x, y], r, 0, PI, true)} ${describe_arc([x, y], r, PI, 0, false)}`);
   } else {
-    const segments = [];
-    let current = set_first(s);
+    // const segments = [];
+    // let current = set_first(s);
+    //
+    const poly = bitvec_to_poly(s, r);
+    //
+    // const path_string = convex_path_string(convex_path_description(poly, r));
+    // p.setAttribute("d", path_string);
 
-    for (let i = 0; i < c; i++) {
-      current = set_previous(s, current);
-      const previous = set_previous(s, current);
-      const next = set_next(s, current);
+    animate(p, make_set_morph(p, poly, r), 700);
+    // function make_set_morph(elem, target_poly, target_r) {
+  }
+}
 
-      const previous_cartesian = element_cartesian(previous);
-      const current_cartesian = element_cartesian(current);
-      const next_cartesian = element_cartesian(next);
+export function bitvec_to_poly(bs, r, center_) {
+  const c = bitvec_count(bs);
+  if (c === 0) {
+    return [];
+  } else {
+    const center = center_ ? center_ : [0, 0];
+    const poly = [];
 
-      const angle_current_out = angle_to_y([next_cartesian, current_cartesian]);
-      const angle_current_in = angle_to_y([current_cartesian, previous_cartesian]);
+    const first = bitvec_first(bs);
+    if (c === 1) {
+      for (let i = 0; i < bs.length; i++) {
+        poly.push(polar_to_cartesian(center, r, (PI * 1.5) + ((2 * PI * first) / bs.length)));
+      }
+    } else {
+      let previous = bitvec_previous(bs, first);
+      for (let i = 0; i < bs.length; i++) {
+        if (bs[i % bs.length]) {
+          previous = i;
+        }
 
-      segments.push(describe_arc(current_cartesian, r, angle_current_in, angle_current_out, i == 0));
+        poly.push(polar_to_cartesian(center, 70, (PI * 1.5) + ((2 * PI * (previous % bs.length)) / bs.length)));
+      }
 
-      const angle_previous_out = angle_to_y([current_cartesian, previous_cartesian]);
-      const previous_out_cartesian = polar_to_cartesian(previous_cartesian, r, angle_previous_out);
-
-      segments.push(`L ${previous_out_cartesian[0]}, ${previous_out_cartesian[1]}`);
+      console.log(JSON.stringify(poly));
     }
 
-    p.setAttribute("d", segments.join(" "));
+    return poly;
   }
+}
+
+function animate(elem, cb, duration) {
+  window.cancelAnimationFrame(elem.atm_animate_id);
+  elem.atm_animate_start = undefined;
+  elem.atm_animate_id = window.requestAnimationFrame(fun);
+
+  function fun(time_) {
+    let time = time_;
+    if (!elem.atm_animate_start) {
+      elem.atm_animate_start = time;
+    }
+
+    let last = false;
+    if (time >= elem.atm_animate_start + duration) {
+      time = elem.atm_animate_start + duration;
+      last = true;
+    }
+
+    if (!last) {
+      elem.atm_animate_id = window.requestAnimationFrame(fun);
+    }
+
+    cb(elem, (time - elem.atm_animate_start) / duration);
+  }
+}
+
+function ease_out_bounce(x) {
+  const n1 = 7.5625;
+  const d1 = 2.75;
+
+  if (x < 1 / d1) {
+      return n1 * x * x;
+  } else if (x < 2 / d1) {
+      return n1 * (x -= 1.5 / d1) * x + 0.75;
+  } else if (x < 2.5 / d1) {
+      return n1 * (x -= 2.25 / d1) * x + 0.9375;
+  } else {
+      return n1 * (x -= 2.625 / d1) * x + 0.984375;
+  }
+}
+
+function ease_in_bounce(x) {
+  return 1 - ease_out_bounce(1 - x);
+}
+
+function ease_in_out_quad(x) {
+  return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+}
+
+function ease_in_out_cubic(x) {
+  return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+}
+
+function make_set_morph(elem, target_poly, target_r) {
+  const start_poly = elem.atm_poly ? elem.atm_poly : target_poly;
+  const start_r = elem.atm_poly_r ? elem.atm_poly_r : target_r;
+
+  const tween = ease_in_out_cubic;
+  // const tween = start_r < target_r ? ease_out_bounce : ease_in_bounce;
+
+  // const tween = (t) => t;
+  // const tween = (x) => {
+  //   // return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+  //   const c1 = 1.70158;
+  //   const c3 = c1 + 1;
+  //
+  //   return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+  // };
+  const poly = (t) => lerp_poly(start_poly, target_poly, tween(t));
+  const r = (t) => lerp(start_r, target_r, tween(t));
+
+  return (elem, t) => {
+    elem.atm_poly = poly(t);
+    elem.atm_poly_r = r(t);
+
+    const path_string = convex_path_string(convex_path_description(elem.atm_poly, elem.atm_poly_r));
+    elem.setAttribute("d", path_string);
+  };
 }
 
 function angle_to_x([[x1, y1], [x2, y2]]) {

@@ -32,9 +32,14 @@ function clean_stack() {
 
   while (preview != null && !preview.hovered) {
     if (preview.node) {
-      preview.node.remove();
       preview.ref.removeEventListener("mouseenter", preview.ref_onmouseenter);
       preview.ref.removeEventListener("mouseleave", preview.ref_onmouseleave);
+      const node = preview.node;
+      node.classList.add("previewfadeout");
+      node.style["pointer-events"] = "none";
+      setTimeout(() => {
+        node.remove();
+      }, 200);
     }
 
     if (preview.parent) {
@@ -143,6 +148,7 @@ body.addEventListener("mouseover", (evt) => {
 
         const preview_node = document.createElement("div");
         preview_node.classList.add("preview");
+        preview_node.classList.add(`preview${evt.target.dataset.width}`);
         preview_node.addEventListener('mouseenter', () => {
           preview.hovered = true;
         });
