@@ -69,6 +69,16 @@
 )(
   §hsection["chapter_sets"](Naïve Set Theory)(
     §p(
+      §div(
+        §span(cll1 bgcll1)(mmmmmmmmmmmm)§span(cl1 bgcl1)(mmmmmmmmmmmm)§span(c1 bgc1)(mmmmmmmmmmmm)§span(cd1 bgcd1)(mmmmmmmmmmmm)§span(cdd1 bgcdd1)(mmmmmmmmmmmm)
+        §span(cll2 bgcll2)(mmmmmmmmmmmm)§span(cl2 bgcl2)(mmmmmmmmmmmm)§span(c2 bgc2)(mmmmmmmmmmmm)§span(cd2 bgcd2)(mmmmmmmmmmmm)§span(cdd2 bgcdd2)(mmmmmmmmmmmm)
+        §span(cll3 bgcll3)(mmmmmmmmmmmm)§span(cl3 bgcl3)(mmmmmmmmmmmm)§span(c3 bgc3)(mmmmmmmmmmmm)§span(cd3 bgcd3)(mmmmmmmmmmmm)§span(cdd3 bgcdd3)(mmmmmmmmmmmm)
+        §span(cll4 bgcll4)(mmmmmmmmmmmm)§span(cl4 bgcl4)(mmmmmmmmmmmm)§span(c4 bgc4)(mmmmmmmmmmmm)§span(cd4 bgcd4)(mmmmmmmmmmmm)§span(cdd4 bgcdd4)(mmmmmmmmmmmm)
+        §span(cll5 bgcll5)(mmmmmmmmmmmm)§span(cl5 bgcl5)(mmmmmmmmmmmm)§span(c5 bgc5)(mmmmmmmmmmmm)§span(cd5 bgcd5)(mmmmmmmmmmmm)§span(cdd5 bgcdd5)(mmmmmmmmmmmm)
+        §span(cll6 bgcll6)(mmmmmmmmmmmm)§span(cl6 bgcl6)(mmmmmmmmmmmm)§span(c6 bgc6)(mmmmmmmmmmmm)§span(cd6 bgcd6)(mmmmmmmmmmmm)§span(cdd6 bgcdd6)(mmmmmmmmmmmm)
+      )
+    )
+    §p(
       In the §cref(chapter_deductive_reasoning)(previous chapter) we examined how to formulate, prove, and disprove statements. The example statements we looked at talked about numbers and squirrel, but the principles we examined apply regardless of which objects the statements talk about. In this chapter, we examine a class of objects that is so powerful that we can express everything from numbers to computers to proofs themselves in it. This class of objects will provide the foundation for everything we will study throughout this book.
     )§p(
       Such a universal domain will allow us to apply very general concepts to arbitrarily specific situations. And yet you will find that the objects our statements will talk about are in themselves very simple. Striking that balance between simplicity and universality of foundational objects was arguably one of the key achievements of the 20th century: the development of §em(set theory).

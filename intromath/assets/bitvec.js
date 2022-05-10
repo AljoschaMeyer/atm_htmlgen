@@ -3,6 +3,14 @@ import {
   polar_to_cartesian,
 } from "./geometry.js";
 
+export function bitvec_singleton(i, n) {
+  const ret = [];
+  for (let j = 0; j < n; j++) {
+    ret.push(j === i);
+  }
+  return ret;
+}
+
 export function bitvec_count(s) {
   let count = 0;
   s.forEach(x => {
@@ -35,4 +43,58 @@ export function bitvec_previous(s, i) {
   }
 
   throw "empty bitvec has no previous element";
+}
+
+export function bitvec_xor(s1, s2) {
+  const s3 = [];
+
+  for (let i = 0; i < 5; i++) {
+    s3.push(s1[i] != s2[i]);
+  }
+
+  return s3;
+}
+
+export function bitvec_without(s1, s2) {
+  const s3 = [];
+
+  for (let i = 0; i < 5; i++) {
+    s3.push(s1[i] && !s2[i]);
+  }
+
+  return s3;
+}
+
+export function bitvec_and(s1, s2) {
+  const s3 = [];
+
+  for (let i = 0; i < 5; i++) {
+    s3.push(s1[i] && s2[i]);
+  }
+
+  return s3;
+}
+
+export function bitvec_or(s1, s2) {
+  const s3 = [];
+
+  for (let i = 0; i < 5; i++) {
+    s3.push(s1[i] || s2[i]);
+  }
+
+  return s3;
+}
+
+export function bitvec_eq(a1, a2) {
+  if (a1.length != a2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < a1.length; i++) {
+    if (a1[i] != a2[i]) {
+      return false;
+    }
+  }
+
+  return true;
 }

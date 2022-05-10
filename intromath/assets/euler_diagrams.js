@@ -1,9 +1,14 @@
 import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, powerset, p } from './tex.js';
 
 import {
+  bitvec_singleton,
   bitvec_count,
   bitvec_first,
   bitvec_previous,
+  bitvec_next,
+  bitvec_without,
+  bitvec_and,
+  bitvec_or,
 } from "./bitvec.js";
 
 import {
@@ -12,6 +17,7 @@ import {
   polar_to_cartesian,
   lerp,
   lerp_poly,
+  closest_point_on_line,
 } from "./geometry.js";
 
 import {
@@ -20,6 +26,8 @@ import {
 
 const svgns = "http://www.w3.org/2000/svg";
 const R = 10;
+const DIAGRAM_R = 70;
+const SET_ANIMATION_DURATION = 700;
 
 function euler(container, compute_s3, render_results, prefix) {
   const s1 = [false, true, true, false, true];
@@ -42,12 +50,12 @@ function euler(container, compute_s3, render_results, prefix) {
   for (let i = 0; i < 5; i++) {
     buttons1.children[i].addEventListener("click", () => {
       s1[i] = !s1[i];
-      render_state();
+      render_state(i, true);
     });
 
     buttons2.children[i].addEventListener("click", () => {
       s2[i] = !s2[i];
-      render_state();
+      render_state(i, false);
     });
   }
 
@@ -61,13 +69,37 @@ function euler(container, compute_s3, render_results, prefix) {
 
   const results = container.children[3];
 
-  render_state();
+  initialize_set_path(p1, s1);
+  initialize_set_path(p2, s2);
 
-  function render_state() {
+  render_state(0);
+
+  function render_state(change, set1_changed) {
     const s3 = compute_s3 ? compute_s3(s1, s2) : empty_s();
 
-    draw_set(s1, p1);
-    draw_set(s2, p2);
+    const old1 = s1.map(x => x);
+    const old2 = s2.map(x => x);
+    if (set1_changed) {
+      old1[change] = !s1[change];
+      draw_set2(old1, s1, p1);
+
+      if (clip1) {
+        draw_set2(old1, s1, clip1);
+      }
+      if (mask1) {
+        draw_set2(old1, s1, mask1);
+      }
+    } else {
+      old2[change] = !s2[change];
+      draw_set2(old2, s2, p2);
+
+      if (clip2) {
+        draw_set2(old2, s2, clip2);
+      }
+      if (mask2) {
+        draw_set2(old2, s2, mask2);
+      }
+    }
 
     for (let i = 0; i < 5; i++) {
       svg_elements[i].classList.toggle("s3", s3[i]);
@@ -88,19 +120,6 @@ function euler(container, compute_s3, render_results, prefix) {
     if (render_results) {
       render_results(results, s1, s2, s3);
     }
-
-    if (clip1) {
-      draw_set(s1, clip1);
-    }
-    if (clip2) {
-      draw_set(s2, clip2);
-    }
-    if (mask1) {
-      draw_set(s1, mask1);
-    }
-    if (mask2) {
-      draw_set(s2, mask2);
-    }
   }
 }
 
@@ -109,7 +128,15 @@ function empty_s() {
 }
 
 function name_set(set) {
-  return `\\htmlClass{c${set}}{${set === 1 ? "A" : "B"}}`;
+  return set_tex_class(set, set === 1 ? "A" : "B");
+}
+
+function set_tex_class(set, tex) {
+  return `\\htmlClass{cd${set === 1 ? 1 : 3}}{${tex}}`;
+}
+
+function set_tex_class_bg(set, tex) {
+  return `\\htmlClass{bgmclll${set === 1 ? 1 : 3}}{${tex}}`;
 }
 
 function button_text(element, set, is_in) {
@@ -117,7 +144,7 @@ function button_text(element, set, is_in) {
 }
 
 function render_set_def(set, s, s3) {
-  return tex_string(`${name_set(set)} ${defeq} ${set_tex(s, s3)}`);
+  return tex_string(`${name_set(set)} ${defeq} ${set_tex_class(set, set_tex_class_bg(set, set_tex(s, s3)))}`);
 }
 
 function set_tex(s, s3_) {
@@ -246,43 +273,60 @@ euler(container_subseteq, () => [false, false, false, false, false], (container,
   tex(`${s1_name} ${seq} ${set1} ${is_supseteq ? supseteq : nsupseteq} ${set2_2} ${seq} ${s2_name}`, container.children[1]);
 });
 
-const container_intersection = document.querySelector("#container_euler_intersection");
-euler(container_intersection, set_intersection, (container, s1, s2, s3) => {
-  const s1_name = name_set(1);
-  const s2_name = name_set(2);
-  const set1 = set_tex(s1, s3);
-  const set2 = set_tex(s2, s3);
-  const set3 = set_tex(s3, s3);
+function handle_binop(op_name, op_tex, op_bitvec) {
+  const container = document.querySelector(`#container_euler_${op_name}`);
+  euler(container, op_bitvec, (container, s1, s2, s3) => {
+    const s1_name = name_set(1);
+    const s2_name = name_set(2);
+    const set1 = set_tex_class(1, set_tex_class_bg(1, set_tex(s1)));
+    const set2 = set_tex_class(2, set_tex_class_bg(2, set_tex(s2)));
+    const set3 = set_tex(s3);
 
-  return tex(`${s1_name} ${intersection} ${s2_name} ${seq} ${set1} ${intersection} ${set2} ${seq} ${set3}`, container);
-}, "intersection");
+    return tex(`${s1_name} ${op_tex} ${s2_name} ${seq} ${set1} ${op_tex} ${set2} ${seq} ${set3}`, container);
+  }, op_name);
+}
 
-const container_union = document.querySelector("#container_euler_union");
-euler(container_union, set_union, (container, s1, s2, s3) => {
-  const s1_name = name_set(1);
-  const s2_name = name_set(2);
-  const set1 = set_tex(s1, s3);
-  const set2 = set_tex(s2, s3);
-  const set3 = set_tex(s3, s3);
+handle_binop("intersection", intersection, bitvec_and);
+handle_binop("union", union, bitvec_or);
+handle_binop("setminus", setminus, bitvec_without);
 
-  return tex(`${s1_name} ${union} ${s2_name} ${seq} ${set1} ${union} ${set2} ${seq} ${set3}`, container);
-}, "union");
-
-const container_setminus = document.querySelector("#container_euler_setminus");
-euler(container_setminus, set_difference, (container, s1, s2, s3) => {
-  const s1_name = name_set(1);
-  const s2_name = name_set(2);
-  const set1 = set_tex(s1, s3);
-  const set2 = set_tex(s2, s3);
-  const set3 = set_tex(s3, s3);
-
-  return tex(`${s1_name} ${setminus} ${s2_name} ${seq} ${set1} ${setminus} ${set2} ${seq} ${set3}`, container);
-}, "setminus");
+// const container_intersection = document.querySelector("#container_euler_intersection");
+// euler(container_intersection, set_intersection, (container, s1, s2, s3) => {
+//   const s1_name = name_set(1);
+//   const s2_name = name_set(2);
+//   const set1 = set_tex_class(1, set_tex_class_bg(1, set_tex(s1)));
+//   const set2 = set_tex_class(2, set_tex_class_bg(2, set_tex(s2)));
+//   const set3 = set_tex(s3);
+//
+//   return tex(`${s1_name} ${intersection} ${s2_name} ${seq} ${set1} ${intersection} ${set2} ${seq} ${set3}`, container);
+// }, "intersection");
+//
+// const container_union = document.querySelector("#container_euler_union");
+// euler(container_union, set_union, (container, s1, s2, s3) => {
+//   const s1_name = name_set(1);
+//   const s2_name = name_set(2);
+//   const set1 = set_tex(s1, s3);
+//   const set2 = set_tex(s2, s3);
+//   const set3 = set_tex(s3, s3);
+//
+//   return tex(`${s1_name} ${union} ${s2_name} ${seq} ${set1} ${union} ${set2} ${seq} ${set3}`, container);
+// }, "union");
+//
+// const container_setminus = document.querySelector("#container_euler_setminus");
+// euler(container_setminus, set_difference, (container, s1, s2, s3) => {
+//   const s1_name = name_set(1);
+//   const s2_name = name_set(2);
+//   const set1 = set_tex(s1, s3);
+//   const set2 = set_tex(s2, s3);
+//   const set3 = set_tex(s3, s3);
+//
+//   return tex(`${s1_name} ${setminus} ${s2_name} ${seq} ${set1} ${setminus} ${set2} ${seq} ${set3}`, container);
+// }, "setminus");
 
 const container_powerset = document.querySelector("#container_euler_powerset");
 (() => {
   const container = container_powerset;
-  const s = [false, true, true, false, false];
+  const s = [false, false, false, false, false];
 
   const svg = container.children[0];
 
@@ -297,7 +341,7 @@ const container_powerset = document.querySelector("#container_euler_powerset");
   for (let i = 0; i < 5; i++) {
     buttons1.children[i].addEventListener("click", () => {
       s[i] = !s[i];
-      render_state();
+      render_state(i);
     });
   }
 
@@ -305,39 +349,49 @@ const container_powerset = document.querySelector("#container_euler_powerset");
 
   const results = container.children[3];
 
-  render_state();
+  function render_state(j) {
+    const grew = s[j];
 
-  function render_state() {
-    for (let i0 = 0; i0 < 2; i0++) {
-      for (let i1 = 0; i1 < 2; i1++) {
-        for (let i2 = 0; i2 < 2; i2++) {
-          for (let i3 = 0; i3 < 2; i3++) {
-            for (let i4 = 0; i4 < 2; i4++) {
-              const b0 = i0 === 1;
-              const b1 = i1 === 1;
-              const b2 = i2 === 1;
-              const b3 = i3 === 1;
-              const b4 = i4 === 1;
+    let delay = 0;
+    for (let car = 0; car < 6; car++) {
+      for (let i0 = 0; i0 < 2; i0++) {
+        for (let i1 = 0; i1 < 2; i1++) {
+          for (let i2 = 0; i2 < 2; i2++) {
+            for (let i3 = 0; i3 < 2; i3++) {
+              for (let i4 = 0; i4 < 2; i4++) {
+                const b0 = i0 === 1;
+                const b1 = i1 === 1;
+                const b2 = i2 === 1;
+                const b3 = i3 === 1;
+                const b4 = i4 === 1;
+                const b = [b0, b1, b2, b3, b4];
 
-              const i = (0 |
-                (b0 ? 1 : 0) |
-                (b1 ? 2 : 0) |
-                (b2 ? 4 : 0) |
-                (b3 ? 8 : 0) |
-                (b4 ? 16 : 0)) - 1;
+                if (bitvec_count(b) === car) {
+                  const i = (0 |
+                    (b0 ? 1 : 0) |
+                    (b1 ? 2 : 0) |
+                    (b2 ? 4 : 0) |
+                    (b3 ? 8 : 0) |
+                    (b4 ? 16 : 0)) - 1;
 
-              if (
-                (!b0 || s[0]) &&
-                (!b1 || s[1]) &&
-                (!b2 || s[2]) &&
-                (!b3 || s[3]) &&
-                (!b4 || s[4]) &&
-                (b0 || b1 || b2 || b3 || b4)
-              ) {
-                draw_set([b0, b1, b2, b3, b4], svg.children[i]);
-              } else {
-                if (b0 || b1 || b2 || b3 || b4) {
-                  draw_set(empty_s(), svg.children[i]);
+                    if (b.reduce(
+                      (acc, bk, k) => acc && (!bk || s[k]),
+                      true,
+                    )) {
+                      if (grew && b[j]) {
+                        setTimeout(() => animate_power_set_grow(b, j, svg.children[i]), delay);
+                      }
+                      delay += 300;
+                    }
+
+                    if (b.reduce(
+                      (acc, bk, k) => acc && (!bk || s[k] || (k === j)),
+                      true,
+                    )) {
+                      if (!grew && b[j]) {
+                        animate_power_set_shrink(b, j, svg.children[i]);
+                      }
+                    }
                 }
               }
             }
@@ -412,8 +466,27 @@ const container_powerset = document.querySelector("#container_euler_powerset");
   }
 })();
 
-// let [xfoo, yfoo] = polar_to_cartesian([0, 0], 20, (PI + PI * 1.5) + ((2 * PI * 2) / 3));
-// console.log(`x="${xfoo - 15}" y="${yfoo - 15}"`);
+function animate_power_set_grow(b, i, p) {
+  const c_to = cardinality(b);
+  const r_to = set_margin(c_to);
+
+  const [poly_from, poly_to] = morpheable_polys(bitvec_singleton(i, b.length), b);
+
+  // const poly_from = set_to_poly(bitvec_singleton(i, b.length));
+  // const poly_to = set_to_poly(b);
+  animate(p, make_set_morph2(poly_from, 0, poly_to, r_to), SET_ANIMATION_DURATION);
+}
+
+function animate_power_set_shrink(b, i, p) {
+  const c_from = cardinality(b);
+  const r_from = set_margin(c_from);
+
+  const [poly_from, poly_to] = morpheable_polys(b, bitvec_singleton(i, b.length));
+
+  // const poly_from = set_to_poly(b);
+  // const poly_to = set_to_poly(bitvec_singleton(i, b.length));
+  animate(p, make_set_morph2(poly_from, r_from, poly_to, 0), SET_ANIMATION_DURATION);
+}
 
 function element_cartesian(i) {
   return polar_to_cartesian([0, 0], 70, (PI * 1.5) + ((2 * PI * i) / 5));
@@ -471,31 +544,98 @@ function set_previous(s, i) {
   throw "empty set has no previous element";
 }
 
+function set_margin(cardinality) {
+  return cardinality === 0 ? 0 : R + (2.5 * cardinality);
+}
+
 function draw_set(s, p) {
   const c = cardinality(s);
-  const r = R + (2.5*c);
+  const r = set_margin(c);
 
   if (c === 0) {
-    p.setAttribute("d", "M0,0");
-  } else if (c === 1) {
-    const i = set_first(s);
-    const [x, y] = element_cartesian(i);
-    p.setAttribute("d", `${describe_arc([x, y], r, 0, PI, true)} ${describe_arc([x, y], r, PI, 0, false)}`);
+    const poly = p.atm_poly ? p.atm_poly : [];
+    animate(p, make_set_morph(p, poly, r), SET_ANIMATION_DURATION);
   } else {
-    // const segments = [];
-    // let current = set_first(s);
-    //
     const poly = bitvec_to_poly(s, r);
-    //
-    // const path_string = convex_path_string(convex_path_description(poly, r));
-    // p.setAttribute("d", path_string);
-
-    animate(p, make_set_morph(p, poly, r), 700);
-    // function make_set_morph(elem, target_poly, target_r) {
+    animate(p, make_set_morph(p, poly, r), SET_ANIMATION_DURATION);
   }
 }
 
-export function bitvec_to_poly(bs, r, center_) {
+function initialize_set_path(p, s) {
+  const r = set_margin(bitvec_count(s));
+  p.atm_poly_r = r;
+  p.atm_poly = bitvec_to_poly(s, r);
+}
+
+function regular_polygon_point(center, r, i, n) {
+  return polar_to_cartesian(center, r, (PI * 1.5) + ((2 * PI * i) / n));
+}
+
+function draw_set2(s_from, s_to, p) {
+  const c_from = cardinality(s_from);
+  const r_from = set_margin(c_from);
+  const c_to = cardinality(s_to);
+  const r_to = set_margin(c_to);
+
+  let poly_from = null;
+  let poly_to = null;
+
+  if (c_from === 0) {
+    const poly_from = set_to_poly(s_to);
+    const poly_to = set_to_poly(s_to);
+    animate(p, make_set_morph2(poly_from, r_from, poly_to, r_to), SET_ANIMATION_DURATION);
+  } else if (c_to === 0) {
+    const poly_from = set_to_poly(s_from);
+    const poly_to = set_to_poly(s_from);
+    // console.log(`${s_from}`);
+    // console.log(`from: ${poly_from.length}: [${poly_from}]\nto: ${poly_to.length}: [${poly_to}]`);
+    animate(p, make_set_morph2(poly_from, r_from, poly_to, r_to), SET_ANIMATION_DURATION);
+  } else {
+    const [poly_from, poly_to] = morpheable_polys(s_from, s_to);
+    // console.log(`from: ${poly_from.length}: [${poly_from}]\nto: ${poly_to.length}: [${poly_to}]`);
+    animate(p, make_set_morph2(poly_from, r_from, poly_to, r_to), SET_ANIMATION_DURATION);
+  }
+}
+
+function set_to_poly(bs) {
+  const poly = [];
+  bs.forEach((b, i) => {
+    if (b) {
+      poly.push(regular_polygon_point([0, 0], DIAGRAM_R, i, bs.length));
+    }
+  });
+  return poly;
+}
+
+function morpheable_polys(bs1, bs2) {
+  const poly_bs1 = [];
+  bs1.forEach((b, i) => {
+    const p = regular_polygon_point([0, 0], DIAGRAM_R, i, bs1.length);
+    if (b) {
+      poly_bs1.push(p);
+    } else if (bs2[i]) {
+      const previous = regular_polygon_point([0, 0], DIAGRAM_R, bitvec_previous(bs1, i), bs1.length);
+      const next = regular_polygon_point([0, 0], DIAGRAM_R, bitvec_next(bs1, i), bs1.length);
+      poly_bs1.push(closest_point_on_line([previous, next], p));
+    }
+  });
+
+  const poly_bs2 = [];
+  bs2.forEach((b, i) => {
+    const p = regular_polygon_point([0, 0], DIAGRAM_R, i, bs2.length);
+    if (b) {
+      poly_bs2.push(p);
+    } else if (bs1[i]) {
+      const previous = regular_polygon_point([0, 0], DIAGRAM_R, bitvec_previous(bs2, i), bs2.length);
+      const next = regular_polygon_point([0, 0], DIAGRAM_R, bitvec_next(bs2, i), bs2.length);
+      poly_bs2.push(closest_point_on_line([previous, next], p));
+    }
+  });
+
+  return [poly_bs1, poly_bs2];
+}
+
+function bitvec_to_poly(bs, r, center_) {
   const c = bitvec_count(bs);
   if (c === 0) {
     return [];
@@ -506,19 +646,27 @@ export function bitvec_to_poly(bs, r, center_) {
     const first = bitvec_first(bs);
     if (c === 1) {
       for (let i = 0; i < bs.length; i++) {
-        poly.push(polar_to_cartesian(center, r, (PI * 1.5) + ((2 * PI * first) / bs.length)));
+        poly.push(regular_polygon_point(center, DIAGRAM_R, first, bs.length));
       }
     } else {
-      let previous = bitvec_previous(bs, first);
+      // let previous = bitvec_previous(bs, first);
+      // for (let i = 0; i < bs.length; i++) {
+      //   if (bs[i % bs.length]) {
+      //     previous = i;
+      //   }
+      //
+      //   poly.push(polar_to_cartesian(center, DIAGRAM_R, (PI * 1.5) + ((2 * PI * (previous % bs.length)) / bs.length)));
+      // }
       for (let i = 0; i < bs.length; i++) {
-        if (bs[i % bs.length]) {
-          previous = i;
+        const p = regular_polygon_point(center, DIAGRAM_R, i, bs.length);
+        if (bs[i]) {
+          poly.push(p);
+        } else {
+          const previous = regular_polygon_point(center, DIAGRAM_R, bitvec_previous(bs, i), bs.length);
+          const next = regular_polygon_point(center, DIAGRAM_R, bitvec_next(bs, i), bs.length);
+          poly.push(closest_point_on_line([previous, next], p));
         }
-
-        poly.push(polar_to_cartesian(center, 70, (PI * 1.5) + ((2 * PI * (previous % bs.length)) / bs.length)));
       }
-
-      console.log(JSON.stringify(poly));
     }
 
     return poly;
@@ -578,8 +726,8 @@ function ease_in_out_cubic(x) {
 }
 
 function make_set_morph(elem, target_poly, target_r) {
-  const start_poly = elem.atm_poly ? elem.atm_poly : target_poly;
-  const start_r = elem.atm_poly_r ? elem.atm_poly_r : target_r;
+  const start_r = elem.atm_poly_r ? elem.atm_poly_r : 0;
+  const start_poly = (start_r != 0 && elem.atm_poly) ? elem.atm_poly : target_poly;
 
   const tween = ease_in_out_cubic;
   // const tween = start_r < target_r ? ease_out_bounce : ease_in_bounce;
@@ -600,6 +748,17 @@ function make_set_morph(elem, target_poly, target_r) {
     elem.atm_poly_r = r(t);
 
     const path_string = convex_path_string(convex_path_description(elem.atm_poly, elem.atm_poly_r));
+    elem.setAttribute("d", path_string);
+  };
+}
+
+function make_set_morph2(poly_from, r_from, poly_to, r_to) {
+  const tween = ease_in_out_cubic;
+  const poly = (t) => lerp_poly(poly_from, poly_to, tween(t));
+  const r = (t) => lerp(r_from, r_to, tween(t));
+
+  return (elem, t) => {
+    const path_string = convex_path_string(convex_path_description(poly(t), r(t)));
     elem.setAttribute("d", path_string);
   };
 }

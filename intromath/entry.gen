@@ -14,3 +14,4 @@
 §output["higher_order_logic.html"](§input["higher_order_logic.gen"])
 
 §output["assets/tex.js"](§input["tex.js"])
+§output["assets/main.css"](§input["main.css"])

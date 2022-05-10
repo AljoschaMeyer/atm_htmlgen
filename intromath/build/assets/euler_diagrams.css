@@ -15,6 +15,11 @@
 
 .eulersvg {
   max-height: 20rem;
+  isolation: isolate;
+}
+
+.eulersvg > path {
+  mix-blend-mode: multiply;
 }
 
 .euler {
@@ -40,14 +45,14 @@
   stroke: black;
   fill: none;
 }
-
+/*
 .s3 {
   color: var(--color-s3);
   fill: var(--color-s3);
-}
+} */
 
-.s3 .symbol0, .s3 .symbol1, .s3 .symbol2, .s3 .symbol3, .s3 .symbol4 {
-  background-color: var(--color-s3);
+.s3_obstruction .s3 .symbol0, .s3_obstruction .s3 .symbol1, .s3_obstruction .s3 .symbol2, .s3_obstruction .s3 .symbol3, .s3_obstruction .s3 .symbol4 {
+  background-color: var(--color-obstruction);
 }
 
 .euler_toggles, .the_sets {
@@ -58,19 +63,7 @@
   flex: 1;
 }
 
-.euler_toggles > div:nth-child(1) > .euler_toggle {
-  --color-button-background-yes: var(--c1-transparent);
-  --color-button-border-no: var(--c1-half);
-  --color-button-border-yes: var(--c1-half);
-}
-
-.euler_toggles > div:nth-child(2) > .euler_toggle {
-  --color-button-background-yes: var(--c2-transparent);
-  --color-button-border-no: var(--c2-half);
-  --color-button-border-yes: var(--c2-half);
-}
-
-.euler_toggle {
+.euler_toggles > div > button {
   margin: 0 0.3em 0.3em 0;
   font-size: 1em;
 }

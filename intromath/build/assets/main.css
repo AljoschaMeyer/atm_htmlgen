@@ -1,6 +1,569 @@
 /* typography adapted from https://ssbc.github.io/scuttlebutt-protocol-guide/ */
 
 :root {
+  --c1: rgb(56.009999999999934%, 47.61%, 100%);
+  --cl1: rgb(71.79992449353965%, 61.69594087156424%, 100%);
+  --cll1: rgb(87.78732098953029%, 76.35464321854123%, 100%);
+  --clll1: rgb(100%, 89.26620128815465%, 100%);
+  --clllg1: rgb(98.62046771336995%, 96.83126769655647%, 100%);
+  --cd1: rgb(33.22908009448392%, 28.638030578082983%, 77.85878592636809%);
+  --cdd1: rgb(0.6211082418813757%, 11.211234114492905%, 56.708551157638176%);
+  --c2: rgb(100%, 24.790682230115635%, 54.83846955696256%);
+  --cl2: rgb(100%, 42.23004066888075%, 69.04702456495664%);
+  --cll2: rgb(100%, 58.41363350992087%, 83.83507865437365%);
+  --clll2: rgb(100%, 72.07943135237481%, 96.85764771174347%);
+  --clllg2: rgb(100%, 95.66232964475088%, 97.55979472736313%);
+  --cd2: rgb(76.10318829298447%, 0%, 35.73534097462429%);
+  --cdd2: rgb(52.5145193962007%, 0%, 18.399233688297116%);
+  --c3: rgb(85.45372536953441%, 44.51564575350132%, 0%);
+  --cl3: rgb(100%, 58.649255164191985%, 19.359311137157164%);
+  --cll3: rgb(100%, 73.30923167037804%, 34.07377886664606%);
+  --clll3: rgb(100%, 86.20392740721383%, 46.42035253439025%);
+  --clllg3: rgb(100%, 96.5387024524285%, 92.37721658485803%);
+  --cd3: rgb(61.60233531320406%, 25.21800435924763%, 0%);
+  --cdd3: rgb(40.06173908946437%, 4.7058491165339%, 0%);
+  --c4: rgb(38.66872568756159%, 61.70083929384907%, 0%);
+  --cl4: rgb(53.77780500343319%, 76.37639324214007%, 17.638647097629942%);
+  --cll4: rgb(69.11887507114226%, 91.56324959100077%, 33.357498107052606%);
+  --clll4: rgb(82.4616080680858%, 100%, 46.080881811963586%);
+  --clllg4: rgb(96.5850666209536%, 98.48265791293225%, 92.47497374229116%);
+  --cd4: rgb(16.78814937417991%, 41.73489474718604%, 0%);
+  --cdd4: rgb(2.5605444925788508%, 22.867350800703324%, 0%);
+  --c5: rgb(0%, 66.89437044558755%, 56.59294531599846%);
+  --cl5: rgb(0%, 82.3043456606858%, 70.89002481396035%);
+  --cll5: rgb(0%, 98.12985807635577%, 85.75417999919533%);
+  --clll5: rgb(0%, 100%, 98.8345496819098%);
+  --clllg5: rgb(90.89192744650364%, 99.55044570603543%, 97.77133662108179%);
+  --cd5: rgb(0%, 45.66262071505542%, 37.32786628384731%);
+  --cdd5: rgb(0%, 25.70391393317355%, 19.71010720879705%);
+  --c6: rgb(0%, 64.31108711426623%, 100%);
+  --cl6: rgb(0%, 79.04273033112229%, 100%);
+  --cll6: rgb(0%, 94.29203800400468%, 100%);
+  --clll6: rgb(0%, 100%, 100%);
+  --clllg6: rgb(91.81457936423371%, 98.77265918122454%, 100%);
+  --cd6: rgb(0%, 44.31129289346036%, 79.34328884890802%);
+  --cdd6: rgb(0%, 25.803075099993972%, 58.19764492170145%);
+
+}
+.c1 {
+    color: var(--c1);
+    stroke: var(--c1);
+}
+.bgc1 {
+    background-color: var(--c1);
+    fill: var(--c1);
+}
+.borderc1 {
+    border-color: var(--c1);
+}
+.cl1 {
+    color: var(--cl1);
+    stroke: var(--cl1);
+}
+.bgcl1 {
+    background-color: var(--cl1);
+    fill: var(--cl1);
+}
+.bordercl1 {
+    border-color: var(--cl1);
+}
+.cll1 {
+    color: var(--cll1);
+    stroke: var(--cll1);
+}
+.bgcll1 {
+    background-color: var(--cll1);
+    fill: var(--cll1);
+}
+.bordercll1 {
+    border-color: var(--cll1);
+}
+.clll1 {
+    color: var(--clll1);
+    stroke: var(--clll1);
+}
+.bgclll1 {
+    background-color: var(--clll1);
+    fill: var(--clll1);
+}
+.borderclll1 {
+    border-color: var(--clll1);
+}
+.clllg1 {
+    color: var(--clllg1);
+    stroke: var(--clllg1);
+}
+.bgclllg1 {
+    background-color: var(--clllg1);
+    fill: var(--clllg1);
+}
+.borderclllg1 {
+    border-color: var(--clllg1);
+}
+.cd1 {
+    color: var(--cd1);
+    stroke: var(--cd1);
+}
+.bgcd1 {
+    background-color: var(--cd1);
+    fill: var(--cd1);
+}
+.bordercd1 {
+    border-color: var(--cd1);
+}
+.cdd1 {
+    color: var(--cdd1);
+    stroke: var(--cdd1);
+}
+.bgcdd1 {
+    background-color: var(--cdd1);
+    fill: var(--cdd1);
+}
+.bordercdd1 {
+    border-color: var(--cdd1);
+}
+.no.bgclll1 {
+    background-color: var(--clllg1);
+    fill: var(--cclllg1);
+}
+.bgmclll1 .mbin, .bgmclll1 .minner {
+    background-color: var(--clll1);
+    padding: 0.1rem;
+    border-radius: 0.4rem;
+}
+.c2 {
+    color: var(--c2);
+    stroke: var(--c2);
+}
+.bgc2 {
+    background-color: var(--c2);
+    fill: var(--c2);
+}
+.borderc2 {
+    border-color: var(--c2);
+}
+.cl2 {
+    color: var(--cl2);
+    stroke: var(--cl2);
+}
+.bgcl2 {
+    background-color: var(--cl2);
+    fill: var(--cl2);
+}
+.bordercl2 {
+    border-color: var(--cl2);
+}
+.cll2 {
+    color: var(--cll2);
+    stroke: var(--cll2);
+}
+.bgcll2 {
+    background-color: var(--cll2);
+    fill: var(--cll2);
+}
+.bordercll2 {
+    border-color: var(--cll2);
+}
+.clll2 {
+    color: var(--clll2);
+    stroke: var(--clll2);
+}
+.bgclll2 {
+    background-color: var(--clll2);
+    fill: var(--clll2);
+}
+.borderclll2 {
+    border-color: var(--clll2);
+}
+.clllg2 {
+    color: var(--clllg2);
+    stroke: var(--clllg2);
+}
+.bgclllg2 {
+    background-color: var(--clllg2);
+    fill: var(--clllg2);
+}
+.borderclllg2 {
+    border-color: var(--clllg2);
+}
+.cd2 {
+    color: var(--cd2);
+    stroke: var(--cd2);
+}
+.bgcd2 {
+    background-color: var(--cd2);
+    fill: var(--cd2);
+}
+.bordercd2 {
+    border-color: var(--cd2);
+}
+.cdd2 {
+    color: var(--cdd2);
+    stroke: var(--cdd2);
+}
+.bgcdd2 {
+    background-color: var(--cdd2);
+    fill: var(--cdd2);
+}
+.bordercdd2 {
+    border-color: var(--cdd2);
+}
+.no.bgclll2 {
+    background-color: var(--clllg2);
+    fill: var(--cclllg2);
+}
+.bgmclll2 .mbin, .bgmclll2 .minner {
+    background-color: var(--clll2);
+    padding: 0.1rem;
+    border-radius: 0.4rem;
+}
+.c3 {
+    color: var(--c3);
+    stroke: var(--c3);
+}
+.bgc3 {
+    background-color: var(--c3);
+    fill: var(--c3);
+}
+.borderc3 {
+    border-color: var(--c3);
+}
+.cl3 {
+    color: var(--cl3);
+    stroke: var(--cl3);
+}
+.bgcl3 {
+    background-color: var(--cl3);
+    fill: var(--cl3);
+}
+.bordercl3 {
+    border-color: var(--cl3);
+}
+.cll3 {
+    color: var(--cll3);
+    stroke: var(--cll3);
+}
+.bgcll3 {
+    background-color: var(--cll3);
+    fill: var(--cll3);
+}
+.bordercll3 {
+    border-color: var(--cll3);
+}
+.clll3 {
+    color: var(--clll3);
+    stroke: var(--clll3);
+}
+.bgclll3 {
+    background-color: var(--clll3);
+    fill: var(--clll3);
+}
+.borderclll3 {
+    border-color: var(--clll3);
+}
+.clllg3 {
+    color: var(--clllg3);
+    stroke: var(--clllg3);
+}
+.bgclllg3 {
+    background-color: var(--clllg3);
+    fill: var(--clllg3);
+}
+.borderclllg3 {
+    border-color: var(--clllg3);
+}
+.cd3 {
+    color: var(--cd3);
+    stroke: var(--cd3);
+}
+.bgcd3 {
+    background-color: var(--cd3);
+    fill: var(--cd3);
+}
+.bordercd3 {
+    border-color: var(--cd3);
+}
+.cdd3 {
+    color: var(--cdd3);
+    stroke: var(--cdd3);
+}
+.bgcdd3 {
+    background-color: var(--cdd3);
+    fill: var(--cdd3);
+}
+.bordercdd3 {
+    border-color: var(--cdd3);
+}
+.no.bgclll3 {
+    background-color: var(--clllg3);
+    fill: var(--cclllg3);
+}
+.bgmclll3 .mbin, .bgmclll3 .minner {
+    background-color: var(--clll3);
+    padding: 0.1rem;
+    border-radius: 0.4rem;
+}
+.c4 {
+    color: var(--c4);
+    stroke: var(--c4);
+}
+.bgc4 {
+    background-color: var(--c4);
+    fill: var(--c4);
+}
+.borderc4 {
+    border-color: var(--c4);
+}
+.cl4 {
+    color: var(--cl4);
+    stroke: var(--cl4);
+}
+.bgcl4 {
+    background-color: var(--cl4);
+    fill: var(--cl4);
+}
+.bordercl4 {
+    border-color: var(--cl4);
+}
+.cll4 {
+    color: var(--cll4);
+    stroke: var(--cll4);
+}
+.bgcll4 {
+    background-color: var(--cll4);
+    fill: var(--cll4);
+}
+.bordercll4 {
+    border-color: var(--cll4);
+}
+.clll4 {
+    color: var(--clll4);
+    stroke: var(--clll4);
+}
+.bgclll4 {
+    background-color: var(--clll4);
+    fill: var(--clll4);
+}
+.borderclll4 {
+    border-color: var(--clll4);
+}
+.clllg4 {
+    color: var(--clllg4);
+    stroke: var(--clllg4);
+}
+.bgclllg4 {
+    background-color: var(--clllg4);
+    fill: var(--clllg4);
+}
+.borderclllg4 {
+    border-color: var(--clllg4);
+}
+.cd4 {
+    color: var(--cd4);
+    stroke: var(--cd4);
+}
+.bgcd4 {
+    background-color: var(--cd4);
+    fill: var(--cd4);
+}
+.bordercd4 {
+    border-color: var(--cd4);
+}
+.cdd4 {
+    color: var(--cdd4);
+    stroke: var(--cdd4);
+}
+.bgcdd4 {
+    background-color: var(--cdd4);
+    fill: var(--cdd4);
+}
+.bordercdd4 {
+    border-color: var(--cdd4);
+}
+.no.bgclll4 {
+    background-color: var(--clllg4);
+    fill: var(--cclllg4);
+}
+.bgmclll4 .mbin, .bgmclll4 .minner {
+    background-color: var(--clll4);
+    padding: 0.1rem;
+    border-radius: 0.4rem;
+}
+.c5 {
+    color: var(--c5);
+    stroke: var(--c5);
+}
+.bgc5 {
+    background-color: var(--c5);
+    fill: var(--c5);
+}
+.borderc5 {
+    border-color: var(--c5);
+}
+.cl5 {
+    color: var(--cl5);
+    stroke: var(--cl5);
+}
+.bgcl5 {
+    background-color: var(--cl5);
+    fill: var(--cl5);
+}
+.bordercl5 {
+    border-color: var(--cl5);
+}
+.cll5 {
+    color: var(--cll5);
+    stroke: var(--cll5);
+}
+.bgcll5 {
+    background-color: var(--cll5);
+    fill: var(--cll5);
+}
+.bordercll5 {
+    border-color: var(--cll5);
+}
+.clll5 {
+    color: var(--clll5);
+    stroke: var(--clll5);
+}
+.bgclll5 {
+    background-color: var(--clll5);
+    fill: var(--clll5);
+}
+.borderclll5 {
+    border-color: var(--clll5);
+}
+.clllg5 {
+    color: var(--clllg5);
+    stroke: var(--clllg5);
+}
+.bgclllg5 {
+    background-color: var(--clllg5);
+    fill: var(--clllg5);
+}
+.borderclllg5 {
+    border-color: var(--clllg5);
+}
+.cd5 {
+    color: var(--cd5);
+    stroke: var(--cd5);
+}
+.bgcd5 {
+    background-color: var(--cd5);
+    fill: var(--cd5);
+}
+.bordercd5 {
+    border-color: var(--cd5);
+}
+.cdd5 {
+    color: var(--cdd5);
+    stroke: var(--cdd5);
+}
+.bgcdd5 {
+    background-color: var(--cdd5);
+    fill: var(--cdd5);
+}
+.bordercdd5 {
+    border-color: var(--cdd5);
+}
+.no.bgclll5 {
+    background-color: var(--clllg5);
+    fill: var(--cclllg5);
+}
+.bgmclll5 .mbin, .bgmclll5 .minner {
+    background-color: var(--clll5);
+    padding: 0.1rem;
+    border-radius: 0.4rem;
+}
+.c6 {
+    color: var(--c6);
+    stroke: var(--c6);
+}
+.bgc6 {
+    background-color: var(--c6);
+    fill: var(--c6);
+}
+.borderc6 {
+    border-color: var(--c6);
+}
+.cl6 {
+    color: var(--cl6);
+    stroke: var(--cl6);
+}
+.bgcl6 {
+    background-color: var(--cl6);
+    fill: var(--cl6);
+}
+.bordercl6 {
+    border-color: var(--cl6);
+}
+.cll6 {
+    color: var(--cll6);
+    stroke: var(--cll6);
+}
+.bgcll6 {
+    background-color: var(--cll6);
+    fill: var(--cll6);
+}
+.bordercll6 {
+    border-color: var(--cll6);
+}
+.clll6 {
+    color: var(--clll6);
+    stroke: var(--clll6);
+}
+.bgclll6 {
+    background-color: var(--clll6);
+    fill: var(--clll6);
+}
+.borderclll6 {
+    border-color: var(--clll6);
+}
+.clllg6 {
+    color: var(--clllg6);
+    stroke: var(--clllg6);
+}
+.bgclllg6 {
+    background-color: var(--clllg6);
+    fill: var(--clllg6);
+}
+.borderclllg6 {
+    border-color: var(--clllg6);
+}
+.cd6 {
+    color: var(--cd6);
+    stroke: var(--cd6);
+}
+.bgcd6 {
+    background-color: var(--cd6);
+    fill: var(--cd6);
+}
+.bordercd6 {
+    border-color: var(--cd6);
+}
+.cdd6 {
+    color: var(--cdd6);
+    stroke: var(--cdd6);
+}
+.bgcdd6 {
+    background-color: var(--cdd6);
+    fill: var(--cdd6);
+}
+.bordercdd6 {
+    border-color: var(--cdd6);
+}
+.no.bgclll6 {
+    background-color: var(--clllg6);
+    fill: var(--cclllg6);
+}
+.bgmclll6 .mbin, .bgmclll6 .minner {
+    background-color: var(--clll6);
+    padding: 0.1rem;
+    border-radius: 0.4rem;
+}
+
+
+:root {
     --color-bg: #fff;
     --color-bg2: #eee;
     --color-bg3: #ddd;
@@ -15,18 +578,12 @@
     --color-obstruction: rgb(237, 7, 71);
     --color-success: rgb(180, 0, 237);
 
-    --c1-half: rgba(0, 40, 255, 0.7);
-    --c1-transparent: rgba(0, 40, 255, 0.1);
-    --c2-half: rgba(0, 170, 3, 0.7);
-    --c2-transparent: rgba(0, 170, 3, 0.1);
-    --c3-half: rgba(195, 14, 210, 0.7);
-    --c3-transparent: rgba(195, 14, 210, 0.1);
-
-    --color-button-background-no: var(--color-bg2);
-    --color-button-background-yes: var(--color-bg3);
-    --color-button-border-no: var(--color-text);
-    --color-button-border-yes: var(--color-text);
-    --color-button-background-hover: var(--color-bg);
+    --c1-half: rgba(0, 40, 255, 1);
+    --c1-transparent: rgba(177, 189, 255, 1);
+    --c2-half: rgba(0, 170, 3, 1);
+    --c2-transparent: rgba(135, 238, 137, 1);
+    --c3-half: rgba(195, 14, 210, 1);
+    --c3-transparent: rgba(241, 145, 249, 1);
 
 
 
@@ -34,14 +591,6 @@
     --width-default: 41rem;
     --width-wide: 86.26rem;
     --width-slightlywide: 52rem;
-}
-
-.c1 {
-  color: var(--c1-half);
-}
-
-.c2 {
-  color: var(--c2-half);
 }
 
 * {
@@ -438,7 +987,8 @@ button {
   cursor: pointer;
   display: inline-block;
   padding: 0.35em 0.5em;
-  border: 0.1em solid var(--color-text);
+  border-width: 0.1em;
+  border-style: solid;
   border-radius: 0.12em;
   box-sizing: border-box;
   text-decoration: none;
@@ -447,30 +997,12 @@ button {
   transition: all 0.2s;
 }
 
-button.no {
-  background-color: var(--color-button-background-no);
-  border-color: var(--color-button-border-no);
-}
-
-button.yes {
-  background-color: var(--color-button-background-yes);
-  border-color: var(--color-button-border-yes);
+button.toggle:hover {
+  background-color: var(--color-bg);
 }
 
 .preview button {
   cursor: not-allowed;
-}
-
-button:hover {
-  background-color: var(--color-button-background-hover);
-}
-
-.preview button.no:hover {
-  background-color: var(--color-button-background-no);
-}
-
-.preview button.yes:hover {
-  background-color: var(--color-button-background-yes);
 }
 
 .toggled {

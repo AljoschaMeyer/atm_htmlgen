@@ -1,4 +1,3 @@
-use sourcefile::SourceFile;
 use std::io;
 use std::fs;
 use std::collections::BTreeMap;
@@ -6,7 +5,9 @@ use std::path::PathBuf;
 
 use ropey::Rope;
 use thiserror::Error;
+use sourcefile::SourceFile;
 use serde::Deserialize;
+use palette::{FromColor, Lch, Srgb, Shade};
 
 use crate::{Yatt, print_trace, CrefKind, BoxKind};
 use crate::parse;
@@ -225,6 +226,7 @@ pub(crate) enum OutInternal {
     Case(Trace, Case, Vec<OutInternal>),
     Drop(Trace, (), Vec<OutInternal>),
     ProofPart(Trace, (), Vec<OutInternal>),
+    CssColors(Trace, (), Vec<OutInternal>),
 }
 
 impl OutInternal {
@@ -1304,8 +1306,98 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 ])), &params, args, trace, y);
         }
 
+        OutInternal::CssColors(trace, _params, args) => {
+            arguments_exact(0, &args, &trace)?;
+
+            let mut s = ":root {\n".to_string();
+
+            let n = 6;
+            let base_color = Srgb::new(0.5601, 0.4761, 1.0);
+            for i in 0..n {
+                let mut c = Lch::from_color(base_color);
+                c.hue = c.hue + ((360.0 / (n as f64)) * (i as f64));
+                let cl = c.lighten(0.333);
+                let cll = c.lighten(0.666);
+                let clll = c.lighten(0.95);
+                let cd = c.darken(0.333);
+                let cdd = c.darken(0.666);
+                let mut clllg = clll.clone();
+                clllg.chroma = 8.0;
+
+                let rgbs = [Srgb::from_color(c), Srgb::from_color(cl), Srgb::from_color(cll), Srgb::from_color(clll), Srgb::from_color(clllg), Srgb::from_color(cd), Srgb::from_color(cdd)];
+
+                for j in 0..7 {
+                    s.push_str(&format!(
+                        "  --c{}{}: rgb({}%, {}%, {}%);\n",
+                        SHADES[j], i + 1, rgbs[j].red * 100.0, rgbs[j].green * 100.0, rgbs[j].blue * 100.0,
+                    ));
+                }
+            }
+
+            s.push_str("\n}\n");
+
+            for i in 0..n {
+                for j in 0..7 {
+                    s.push_str(&format!(
+                        ".c{}{} {{
+    color: var(--c{}{});
+    stroke: var(--c{}{});
+}}
+",
+                        SHADES[j], i + 1, SHADES[j], i + 1, SHADES[j], i + 1,
+                    ));
+                    s.push_str(&format!(
+                        ".bgc{}{} {{
+    background-color: var(--c{}{});
+    fill: var(--c{}{});
+}}
+",
+                        SHADES[j], i + 1, SHADES[j], i + 1, SHADES[j], i + 1,
+                    ));
+                    s.push_str(&format!(
+                        ".borderc{}{} {{
+    border-color: var(--c{}{});
+}}
+",
+                        SHADES[j], i + 1, SHADES[j], i + 1,
+                    ));
+                }
+
+                s.push_str(&format!(
+                    ".no.bgclll{} {{
+    background-color: var(--clllg{});
+    fill: var(--cclllg{});
+}}
+",
+                    i + 1, i + 1, i + 1,
+                ));
+
+                s.push_str(&format!(
+                    ".bgmclll{} .mbin, .bgmclll{} .minner {{
+    background-color: var(--clll{});
+    padding: 0.1rem;
+    border-radius: 0.4rem;
+}}
+",
+                    i + 1, i + 1, i + 1,
+                ));
+            }
+
+            return Ok(s.into());
+        }
+
     }
 }
+
+static SHADES: [&'static str; 7] = ["", "l", "ll", "lll", "lllg", "d", "dd"];
+
+// .bgclllg1, .no.bgclll1 {
+//   background-color: var(--clllg1);
+//   fill: var(--clllg1);
+// }
+//
+// .bgmclll1 .mbin, .bgmclll1 .minner {
+// }
 
 fn arguments_exact(n: usize, args: &[OutInternal], span: &Trace) -> Result<(), ExpansionError> {
     if args.len() != n {

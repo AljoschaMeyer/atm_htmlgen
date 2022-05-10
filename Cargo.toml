@@ -14,4 +14,5 @@ atm_parser_helper = "1.0.0"
 valuable_value = "1.0.0"
 fs_extra = "1.2.0"
 katex = { version = "0.4.3", default-features = false, features = ["duktape"] }
+palette = "0.6.0"
 # unix_path = "1.0.1"
