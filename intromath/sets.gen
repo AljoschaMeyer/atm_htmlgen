@@ -70,12 +70,12 @@
   §hsection["chapter_sets"](Naïve Set Theory)(
     §p(
       §div(
-        §span(cll1 bgcll1)(mmmmmmmmmmmm)§span(cl1 bgcl1)(mmmmmmmmmmmm)§span(c1 bgc1)(mmmmmmmmmmmm)§span(cd1 bgcd1)(mmmmmmmmmmmm)§span(cdd1 bgcdd1)(mmmmmmmmmmmm)
-        §span(cll2 bgcll2)(mmmmmmmmmmmm)§span(cl2 bgcl2)(mmmmmmmmmmmm)§span(c2 bgc2)(mmmmmmmmmmmm)§span(cd2 bgcd2)(mmmmmmmmmmmm)§span(cdd2 bgcdd2)(mmmmmmmmmmmm)
-        §span(cll3 bgcll3)(mmmmmmmmmmmm)§span(cl3 bgcl3)(mmmmmmmmmmmm)§span(c3 bgc3)(mmmmmmmmmmmm)§span(cd3 bgcd3)(mmmmmmmmmmmm)§span(cdd3 bgcdd3)(mmmmmmmmmmmm)
-        §span(cll4 bgcll4)(mmmmmmmmmmmm)§span(cl4 bgcl4)(mmmmmmmmmmmm)§span(c4 bgc4)(mmmmmmmmmmmm)§span(cd4 bgcd4)(mmmmmmmmmmmm)§span(cdd4 bgcdd4)(mmmmmmmmmmmm)
-        §span(cll5 bgcll5)(mmmmmmmmmmmm)§span(cl5 bgcl5)(mmmmmmmmmmmm)§span(c5 bgc5)(mmmmmmmmmmmm)§span(cd5 bgcd5)(mmmmmmmmmmmm)§span(cdd5 bgcdd5)(mmmmmmmmmmmm)
-        §span(cll6 bgcll6)(mmmmmmmmmmmm)§span(cl6 bgcl6)(mmmmmmmmmmmm)§span(c6 bgc6)(mmmmmmmmmmmm)§span(cd6 bgcd6)(mmmmmmmmmmmm)§span(cdd6 bgcdd6)(mmmmmmmmmmmm)
+        §span(clll1 bgclll1)(mmmmmmmmmmmm)§span(cll1 bgcll1)(mmmmmmmmmmmm)§span(cl1 bgcl1)(mmmmmmmmmmmm)§span(c1 bgc1)(mmmmmmmmmmmm)§span(cd1 bgcd1)(mmmmmmmmmmmm)§span(cdd1 bgcdd1)(mmmmmmmmmmmm)
+        §span(clll2 bgclll2)(mmmmmmmmmmmm)§span(cll2 bgcll2)(mmmmmmmmmmmm)§span(cl2 bgcl2)(mmmmmmmmmmmm)§span(c2 bgc2)(mmmmmmmmmmmm)§span(cd2 bgcd2)(mmmmmmmmmmmm)§span(cdd2 bgcdd2)(mmmmmmmmmmmm)
+        §span(clll3 bgclll3)(mmmmmmmmmmmm)§span(cll3 bgcll3)(mmmmmmmmmmmm)§span(cl3 bgcl3)(mmmmmmmmmmmm)§span(c3 bgc3)(mmmmmmmmmmmm)§span(cd3 bgcd3)(mmmmmmmmmmmm)§span(cdd3 bgcdd3)(mmmmmmmmmmmm)
+        §span(clll4 bgclll4)(mmmmmmmmmmmm)§span(cll4 bgcll4)(mmmmmmmmmmmm)§span(cl4 bgcl4)(mmmmmmmmmmmm)§span(c4 bgc4)(mmmmmmmmmmmm)§span(cd4 bgcd4)(mmmmmmmmmmmm)§span(cdd4 bgcdd4)(mmmmmmmmmmmm)
+        §span(clll5 bgclll5)(mmmmmmmmmmmm)§span(cll5 bgcll5)(mmmmmmmmmmmm)§span(cl5 bgcl5)(mmmmmmmmmmmm)§span(c5 bgc5)(mmmmmmmmmmmm)§span(cd5 bgcd5)(mmmmmmmmmmmm)§span(cdd5 bgcdd5)(mmmmmmmmmmmm)
+        §span(clll6 bgclll6)(mmmmmmmmmmmm)§span(cll6 bgcll6)(mmmmmmmmmmmm)§span(cl6 bgcl6)(mmmmmmmmmmmm)§span(c6 bgc6)(mmmmmmmmmmmm)§span(cd6 bgcd6)(mmmmmmmmmmmm)§span(cdd6 bgcdd6)(mmmmmmmmmmmm)
       )
     )
     §p(
@@ -159,14 +159,14 @@
             Let §$(A) and §$(B) be §rs(set).
           )
           §p(
-            We say §$(A) and §$(B) are §define["", "sequal"](equal)(equal), written as §$(A §$seq B)(,) if for all §$(x) we have §$(x §$in A) if and only if §$(x §$in B)(.)
+            We say §$(A) and §$(B) are §define["", "sequal"](equal)(equal), written as §$(A §$seq B)(,) if for each §$(x) holds that §$(x §$in A) if and only if §$(x §$in B)(.)
           )§p(
              If not §$(A §$seq B)(,) we write §$(A §$sneq B)(.)
           )
         )
 
         §p(
-          Take a moment to consider some equivalent formulations to the §verbatim(if and only if) in §cref(set_eq):
+          Take a moment to consider some equivalent formulations for the §verbatim(if and only if) in §cref(set_eq):
         )
         §ul(
           §li(§$(A §$seq B) if every §$(x §$in A) is §r(in) §$(B) and every §$(x §$in B) is §r(in) §$(A)(.))
@@ -182,7 +182,7 @@
             §input["euler_diagrams/equality.html"]
           )(
             §p(
-              Two §rs(set), the §rs(element) that occur in exactly one of them are §span{"class": "s3"}(highlighted). You can change the §rs(set), note how the §rs(set) are §r(sequal) exactly if no such §span{"class": "s3"}(highlighted) §rs(element) remain.
+              Two §rs(set), with the §rs(element) that occur in exactly one of them are §span(obstruction)(highlighted). You can change the §rs(set), note how the §rs(set) are §r(sequal) exactly if no such §span(obstruction)(highlighted) §rs(element) remain.
             )
           )
         )
@@ -191,75 +191,81 @@
           Equipped with a precise definition of §r(sequal)(set equality), we can now prove some fundamental properties of §r(sequal) §rs(set).
         )
 
-        §theorem["seq_reflexivity"](Reflexivity of §$(§$seq[true]))(
-          §p(
-            Let §$(A) be a §r(set), then §$(A §$seq A).
-          )
-        )
-        §proof["seq_reflexivity"](
-          §proof_part(
-            §verbatim(§$(a §$in A §$implies a §$in A)):
-          )(
+        §proven_fact(
+          §theorem["seq_reflexivity"](Reflexivity of §$(§$seq[true]))(
             §p(
-              Let §$(a §$in A)(,) then §$(a §$in A) by assumption.
+              Let §$(A) be a §r(set), then §$(A §$seq A).
             )
           )
-          §proof_part(
-            §verbatim(§$(a §$notin A §$implies a §$notin A)):
-          )(
-            §p(
-              Let §$(a §$notin A)(,) then §$(a §$notin A) by assumption.
+          §proof["seq_reflexivity"](
+            §proof_part(
+              §verbatim(§$(a §$in A §$implies a §$in A)):
+            )(
+              §p(
+                Let §$(a §$in A)(,) then §$(a §$in A) by assumption.
+              )
             )
-          )
-        )
-
-        §theorem["seq_symmetry"](Symmetry of §$(§$seq[true]))(
-          §p(
-            Let §$(A, B) be §rs(set). If §$(A §$seq B)(,) then §$(B §$seq A)(.)
-          )
-        )
-        §proof["seq_symmetry"](
-          §p(
-            Assume that §$(A §$seq B)(,) that is, assume that §$(x §$in A) implies §$(x §$in B)(,) and that §$(x §$in B) implies §$(x §$in A)(.) Then by the §r(commutative conjunction)(commutativity of conjunctions) we also have that §$(x §$in B) implies §$(x §$in A) and §$(x §$in A) implies §$(x §$in B)(,) that is, §$(B §$seq A)(.)
-          )
-        )
-
-        §theorem["seq_transitivity"](Transitivity of §$(§$seq[true]))(
-          §p(
-            Let §$(A, B, C) be §rs(set). If §$(A §$seq B) and §$(B §$seq C)(,) then §$(A §$seq C)(.)
-          )
-        )
-        §proof["seq_transitivity"](
-          §p(
-            Assume that §$(A §$seq B) and §$(B §$seq C)(.)
-          )
-          §proof_part(
-            §verbatim(§$(a §$in A §$implies a §$in C)):
-          )(
-            §p(
-              Let §$(x §$in A)(,) then
-            )§fleqn(
-              §$$align*(
-                && x &§$in A
-              )(
-                §$implies {} && x &§$in B §$tag($A §$seq B$)
-              )(
-                §$implies {} && x &§$in C. §$tag($B §$seq C$)
+            §proof_part(
+              §verbatim(§$(a §$notin A §$implies a §$notin A)):
+            )(
+              §p(
+                Let §$(a §$notin A)(,) then §$(a §$notin A) by assumption.
               )
             )
           )
-          §proof_part(
-            §verbatim(§$(a §$notin A §$implies a §$notin C)):
-          )(
+        )
+
+        §proven_fact(
+          §theorem["seq_symmetry"](Symmetry of §$(§$seq[true]))(
             §p(
-              Let §$(x §$notin A)(,) then
-            )§fleqn(
-              §$$align*(
-                && x &§$notin A
-              )(
-                §$implies {} && x &§$notin B §$tag($A §$seq B$)
-              )(
-                §$implies {} && x &§$notin C. §$tag($B §$seq C$)
+              Let §$(A, B) be §rs(set). If §$(A §$seq B)(,) then §$(B §$seq A)(.)
+            )
+          )
+          §proof["seq_symmetry"](
+            §p(
+              Assume that §$(A §$seq B)(,) that is, assume that §$(x §$in A) implies §$(x §$in B)(,) and that §$(x §$in B) implies §$(x §$in A)(.) Then by the §r(commutative conjunction)(commutativity of conjunctions) we also have that §$(x §$in B) implies §$(x §$in A) and §$(x §$in A) implies §$(x §$in B)(,) that is, §$(B §$seq A)(.)
+            )
+          )
+        )
+
+        §proven_fact(
+          §theorem["seq_transitivity"](Transitivity of §$(§$seq[true]))(
+            §p(
+              Let §$(A, B, C) be §rs(set). If §$(A §$seq B) and §$(B §$seq C)(,) then §$(A §$seq C)(.)
+            )
+          )
+          §proof["seq_transitivity"](
+            §p(
+              Assume that §$(A §$seq B) and §$(B §$seq C)(.)
+            )
+            §proof_part(
+              §verbatim(§$(a §$in A §$implies a §$in C)):
+            )(
+              §p(
+                Let §$(x §$in A)(,) then
+              )§fleqn(
+                §$$align*(
+                  && x &§$in A
+                )(
+                  §$implies {} && x &§$in B §$tag($A §$seq B$)
+                )(
+                  §$implies {} && x &§$in C. §$tag($B §$seq C$)
+                )
+              )
+            )
+            §proof_part(
+              §verbatim(§$(a §$notin A §$implies a §$notin C)):
+            )(
+              §p(
+                Let §$(x §$notin A)(,) then
+              )§fleqn(
+                §$$align*(
+                  && x &§$notin A
+                )(
+                  §$implies {} && x &§$notin B §$tag($A §$seq B$)
+                )(
+                  §$implies {} && x &§$notin C. §$tag($B §$seq C$)
+                )
               )
             )
           )
@@ -299,7 +305,7 @@
           §p(
             Let §$(A) and §$(B) be §rs(set).
           )§p(
-            We say §$(A) is a §define(subset) of §$(B)(,) written as §$(A §$subseteq B)(,) if for all §$(x §$in A) we have §$(x §$in B)(.)
+            We say §$(A) is a §define(subset) of §$(B)(,) written as §$(A §$subseteq B)(,) if for each §$(x §$in A) holds §$(x §$in B)(.)
           )§p(
             Conversely, we say that §$(B) is a §define(superset) of §$(A)(,) written as §$(B §$supseteq A)(,) if §$(A §$subseteq B)(.)
           )§p(
@@ -325,37 +331,39 @@
           If you compare the definitions of §r(sequal)(set equality) and §rs(subset), you can see that the definition of §rs(subset) is essentially one direction of the §r(bi-implication) in the definition of §r(sequal)(set equality). In other words, two §rs(set) are §r(sequal) if they are both §rs(subset) and §rs(superset) of each other. Formally:
         )
 
-        §observation["sequality_and_subsets"](
-          §$(A §$seq B) if and only if §$(A §$subseteq B) and §$(A §$supseteq B)(.)
-        )
-        §proof["sequality_and_subsets"](
-          §proof_as_exercise["sequality_and_subsets"](
-            §proof_part(
-              §verbatim(§$(A §$seq B §$implies A §$subseteq B) and §$(A §$supseteq B)):
-            )(
-              §p(
-                Assume §$(A §$seq B)(.) We now show that §$(A §$subseteq B) and §$(A §$supseteq B)(.)
-              )§p(
-                Let §$(a §$in A)(,) then §$(a §$in B)(,) because §$(A §$seq B)(.) Thus, §$(A §$subseteq B)(.)
-              )§p(
-                Analogously, let §$(b §$in B)(,) then §$(b §$in A)(,) because §$(A §$seq B)(.) Thus, §$(A §$supseteq B)(.)
-              )
-            )
-            §proof_part(
-              §verbatim(§$(A §$subseteq B) and §$(A §$supseteq B §$implies A §$seq B)):
-            )(
-              §p(
-                Assume that §$(A §$subseteq B) and §$(A §$supseteq B)(.) We now show that §$(A §$seq B)(.)
+        §proven_fact(
+          §observation["sequality_and_subsets"](
+            §$(A §$seq B) if and only if §$(A §$subseteq B) and §$(A §$supseteq B)(.)
+          )
+          §proof["sequality_and_subsets"](
+            §proof_as_exercise["sequality_and_subsets"](
+              §proof_part(
+                §verbatim(§$(A §$seq B §$implies A §$subseteq B) and §$(A §$supseteq B)):
+              )(
+                §p(
+                  Assume §$(A §$seq B)(.) We now show that §$(A §$subseteq B) and §$(A §$supseteq B)(.)
+                )§p(
+                  Let §$(a §$in A)(,) then §$(a §$in B)(,) because §$(A §$seq B)(.) Thus, §$(A §$subseteq B)(.)
+                )§p(
+                  Analogously, let §$(b §$in B)(,) then §$(b §$in A)(,) because §$(A §$seq B)(.) Thus, §$(A §$supseteq B)(.)
+                )
               )
               §proof_part(
-                §verbatim(§$(a §$in A §$implies a §$in B)):
+                §verbatim(§$(A §$subseteq B) and §$(A §$supseteq B §$implies A §$seq B)):
               )(
-                Let §$(a §$in A)(,) then §$(a §$in B)(,) because §$(A §$subseteq B)(.)
-              )
-              §proof_part(
-                §verbatim(§$(b §$in B §$implies b §$in A)):
-              )(
-                Let §$(b §$in B)(,) then §$(b §$in A)(,) because §$(A §$supseteq B)(.)
+                §p(
+                  Assume that §$(A §$subseteq B) and §$(A §$supseteq B)(.) We now show that §$(A §$seq B)(.)
+                )
+                §proof_part(
+                  §verbatim(§$(a §$in A §$implies a §$in B)):
+                )(
+                  Let §$(a §$in A)(,) then §$(a §$in B)(,) because §$(A §$subseteq B)(.)
+                )
+                §proof_part(
+                  §verbatim(§$(b §$in B §$implies b §$in A)):
+                )(
+                  Let §$(b §$in B)(,) then §$(b §$in A)(,) because §$(A §$supseteq B)(.)
+                )
               )
             )
           )
@@ -370,17 +378,19 @@
         )§p(
           On an intuitive level, you can say that in order to show that some §r(set) is a §r(subset) of another, you need to show that a certain property holds for each of its §rs(member). As the §r(empty set) has no §rs(member), you do not need to show anything.
         )§p(
-          More formally, the phrase §verbatim(for all §$(x §$in A) holds §i(bla)) is a shorthand for §verbatim(for all objects §$(x) holds that §$(x §$in A) implies §i(bla)). With that knowledge, we can formally prove that the §r(empty set) is a §r(subset) of every set:
+          More formally, the phrase §verbatim(for each §$(x §$in A) holds §i(bla)) is a shorthand for §verbatim(for each object §$(x) holds that §$(x §$in A) implies §i(bla)). With that knowledge, we can formally prove that the §r(empty set) is a §r(subset) of every set:
         )
 
-        §theorem["empty_set_subset_everything"](
-          §p(Let §$(A) be a §r(set), then §$(§$set §$subseteq A)(.))
-        )
-        §proof["empty_set_subset_everything"](
-          §p(
-            Let §$(x) be an object. We need to show that §$(x §$in §$set) implies §$(x §$in A)(,) so assume that §$(x §$in §$set)(.)
-          )§p(
-            Because the §r(empty set) has no §rs(member), we know that §$(x §$notin §$set)(.) As we cannot have §$(x §$in §$set) and §$(x §$notin §$set) simultaneously, §$(x §$in A) holds by the §r(principle of explosion).
+        §proven_fact(
+          §theorem["empty_set_subset_everything"](
+            §p(Let §$(A) be a §r(set), then §$(§$set §$subseteq A)(.))
+          )
+          §proof["empty_set_subset_everything"](
+            §p(
+              Let §$(x) be an object. We need to show that §$(x §$in §$set) implies §$(x §$in A)(,) so assume that §$(x §$in §$set)(.)
+            )§p(
+              Because the §r(empty set) has no §rs(member), we know that §$(x §$notin §$set)(.) As we cannot have §$(x §$in §$set) and §$(x §$notin §$set) simultaneously, §$(x §$in A) holds by the §r(principle of explosion).
+            )
           )
         )
 
@@ -397,7 +407,7 @@
               Such a statement is always false; intuitively it is impossible to find a §r(witness) that is §r(in) the §r(empty set).
             )
             §p(
-              §verbatim(There exists §$(x §$in §$set) such that §i(bla)) is §r(bi-implication)(equivalent) to its §r(double negation) §verbatim(it does not hold that there exists no §$(x §$in §$set) such that §i(bla)). This in turn is §r(bi-implication)(equivalent) to §verbatim(it does not hold that for all §$(x §$in §$set) §i(not bla)), which is the §r(negation) of a §r(vacuously) true statement, and thus false.
+              §verbatim(There exists §$(x §$in §$set) such that §i(bla)) is §r(bi-implication)(equivalent) to its §r(double negation) §verbatim(it does not hold that there exists no §$(x §$in §$set) such that §i(bla)). This in turn is §r(bi-implication)(equivalent) to §verbatim(it does not hold that for each §$(x §$in §$set) §i(not bla)), which is the §r(negation) of a §r(vacuously) true statement, and thus false.
             )
           )
         )
@@ -417,40 +427,44 @@
           )
         )
 
-        §theorem["subseteq_reflexivity"](Reflexivity of §$(§$subseteq[true]))(
-          §p(
-            Let §$(A) be a §r(set), then §$(A §$subseteq A)(.)
-          )
-        )
-        §proof["subseteq_reflexivity"](
-          §proof_as_exercise["subseteq_reflexivity"](
+        §proven_fact(
+          §theorem["subseteq_reflexivity"](Reflexivity of §$(§$subseteq[true]))(
             §p(
-              Let §$(A) be a §r(set), and let §$(a §$in A). Then §$(a §$in A), and thus §$(A §$subseteq A)(.)
+              Let §$(A) be a §r(set), then §$(A §$subseteq A)(.)
+            )
+          )
+          §proof["subseteq_reflexivity"](
+            §proof_as_exercise["subseteq_reflexivity"](
+              §p(
+                Let §$(A) be a §r(set), and let §$(a §$in A). Then §$(a §$in A), and thus §$(A §$subseteq A)(.)
+              )
             )
           )
         )
 
-        §theorem["subseteq_transitivity"](Transitivity of §$(§$subseteq[true]))(
-          §p(
-            Let §$(A, B, C) be §rs(set). If §$(A §$subseteq B) and §$(B §$subseteq C)(,) then §$(A §$subseteq C)(.)
-          )
-        )
-        §proof["subseteq_transitivity"](
-          §proof_as_exercise["subseteq_transitivity"](
+        §proven_fact(
+          §theorem["subseteq_transitivity"](Transitivity of §$(§$subseteq[true]))(
             §p(
-              Let §$(A, B, C) be §rs(set). Assume that §$(A §$subseteq B) and §$(B §$subseteq C)(.)
-            )§p(
-              Let §$(a §$in A)(,) then
-            )§fleqn(
-              §$$align*(
-                && a &§$in A
-              )(
-                §$implies {} && a &§$in B §$tag($A §$subseteq B$)
-              )(
-                §$implies {} && a &§$in C, §$tag($B §$subseteq C$)
+              Let §$(A, B, C) be §rs(set). If §$(A §$subseteq B) and §$(B §$subseteq C)(,) then §$(A §$subseteq C)(.)
+            )
+          )
+          §proof["subseteq_transitivity"](
+            §proof_as_exercise["subseteq_transitivity"](
+              §p(
+                Let §$(A, B, C) be §rs(set). Assume that §$(A §$subseteq B) and §$(B §$subseteq C)(.)
+              )§p(
+                Let §$(a §$in A)(,) then
+              )§fleqn(
+                §$$align*(
+                  && a &§$in A
+                )(
+                  §$implies {} && a &§$in B §$tag($A §$subseteq B$)
+                )(
+                  §$implies {} && a &§$in C, §$tag($B §$subseteq C$)
+                )
+              )§p(
+                and thus §$(A §$subseteq C)(.)
               )
-            )§p(
-              and thus §$(A §$subseteq C)(.)
             )
           )
         )
@@ -463,7 +477,7 @@
             §p(
               The statement holds. Define §$(A §$defeq §$set)(,) §$(B §$defeq §$set)(,) and §$(C §$defeq §$set)(.) Then §$(A §$subseteq B)(,) §$(B §$subseteq C)(,) and §$(C §$subseteq A) by §cref(subseteq_reflexivity).
             )§p(
-              Bonus exercise: show that for all §rs(set) §$(A, B, C) we have that §$(A §$subseteq B)(,) §$(B §$subseteq C) and §$(C §$subseteq A) if and only if §$(A §$seq B) and §$(B §$seq C)(.)
+              Bonus exercise: show that for all §rs(set) §$(A, B, C) holds that §$(A §$subseteq B)(,) §$(B §$subseteq C) and §$(C §$subseteq A) if and only if §$(A §$seq B) and §$(B §$seq C)(.)
             )
           )
         )
@@ -492,19 +506,21 @@
           §Rs(strict subset) behave similar to (possibly non-strict) §rs(subset), but the following exercises also highlight some differences.
         )
 
-        §theorem["subset_transitivity"](Transitivity of §$(§$subset[true]))(
-          §p(
-            Let §$(A, B, C) be §rs(set). If §$(A §$subset B) and §$(B §$subset C)(,) then §$(A §$subset C)(.)
-          )
-        )
-        §proof["subset_transitivity"](
-          §proof_as_exercise["subset_transitivity"](
+        §proven_fact(
+          §theorem["subset_transitivity"](Transitivity of §$(§$subset[true]))(
             §p(
-              Let §$(A, B, C) be §rs(set). Assume that §$(A §$subset B) and §$(B §$subset C)(.)
-            )§p(
-              As every §r(strict subset) of a §r(set) is also a (not necessarily strict) §r(subset), §cref(subseteq_transitivity) gives us that §$(A §$subseteq C)(.) It remains to show that §$(A §$sneq C)(.)
-            )§p(
-              Since §$(A §$sneq B) but every §r(member) of §$(A) is a §r(member) of §$(B) (both because §$(A §$subset B)), there exists some §$(x §$in B) with §$(x §$notin A)(.) Because §$(x §$in B) and §$(B §$subset C)(,) we know that §$(x §$in C). And since §$(x §$notin A)(,) we get that §$(A §$sneq C)(.)
+              Let §$(A, B, C) be §rs(set). If §$(A §$subset B) and §$(B §$subset C)(,) then §$(A §$subset C)(.)
+            )
+          )
+          §proof["subset_transitivity"](
+            §proof_as_exercise["subset_transitivity"](
+              §p(
+                Let §$(A, B, C) be §rs(set). Assume that §$(A §$subset B) and §$(B §$subset C)(.)
+              )§p(
+                As every §r(strict subset) of a §r(set) is also a (not necessarily strict) §r(subset), §cref(subseteq_transitivity) gives us that §$(A §$subseteq C)(.) It remains to show that §$(A §$sneq C)(.)
+              )§p(
+                Since §$(A §$sneq B) but every §r(member) of §$(A) is a §r(member) of §$(B) (both because §$(A §$subset B)), there exists some §$(x §$in B) with §$(x §$notin A)(.) Because §$(x §$in B) and §$(B §$subset C)(,) we know that §$(x §$in C). And since §$(x §$notin A)(,) we get that §$(A §$sneq C)(.)
+              )
             )
           )
         )
@@ -600,8 +616,9 @@
       §hsection["intersection_and_union"](Intersection and Union)(
         <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
         	<defs>
-        		<pattern id="pattern_striped" patternUnits="userSpaceOnUse" width="13.5" height="13.5" patternTransform="rotate(45)">
-        			<line x1="0" y="0" x2="0" y2="13.5" stroke="#EB88ED" stroke-width="9" />
+        		<pattern id="pattern_euler_yay" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">
+        			<line x1="0" y="0" x2="0" y2="10" stroke-width="6" style="stroke: var(--cll2)"/>
+              <line x1="0" y="0" x2="10" y2="0" stroke-width="6" style="stroke: var(--cll2"/>
         		</pattern>
         	</defs>
         </svg>
@@ -691,29 +708,30 @@
           Grouping these expressions with parentheses is necessary in general, because there are expressions for which the exact grouping makes a difference in the result:
         )
 
-        §statement["intersection_union_parens"](
-          §p(
-            There exist §rs(set) §$(A, B, C) such that §$(§$p(A §$intersection B) §$union C §$sneq A §$intersection §$p(B §$union C))(.)
+        §proven_fact(
+          §statement["intersection_union_parens"](
+            §p(
+              There exist §rs(set) §$(A, B, C) such that §$(§$p(A §$intersection B) §$union C §$sneq A §$intersection §$p(B §$union C))(.)
+            )
           )
-        )
-
-        §proof["intersection_union_parens"](
-          §proof_as_exercise["intersection_union_parens"](
-            §fleqn(
-              §p(
-                Define §$(A §$defeq §$set§ , B §$defeq §$set§ , C §$defeq §$set(§$symbol0))(.) Then §$$align*(
-                  §$p(A §$intersection B) §$union C &§$seq §$p(§$set §$intersection §$set) §$union §$set(§$symbol0) §$tag(Definition $A, B, C$)
-                )(
-                  &§$seq §$set §$union §$set(§$symbol0) §$tag(Definition $§$intersection§ $)
-                )(
-                  &§$seq §$set(§$symbol0), §$tag(Definition $§$union§ $)
-                ) but §$$align*(
-                  A §$intersection §$p(B §$union C) &§$seq §$set §$intersection §$p(§$set §$union §$set(§$symbol0)) §$tag(Definition $A, B, C$)
-                )(
-                  &§$seq §$set §$intersection §$set(§$symbol0) §$tag(Definition $§$union§ $)
-                )(
-                  &§$seq §$set§ , §$tag(Definition $§$intersection§ $)
-                ) and §$(§$set(§$symbol0) §$sneq §$set)(.)
+          §proof["intersection_union_parens"](
+            §proof_as_exercise["intersection_union_parens"](
+              §fleqn(
+                §p(
+                  Define §$(A §$defeq §$set§ , B §$defeq §$set§ , C §$defeq §$set(§$symbol0))(.) Then §$$align*(
+                    §$p(A §$intersection B) §$union C &§$seq §$p(§$set §$intersection §$set) §$union §$set(§$symbol0) §$tag(Definition $A, B, C$)
+                  )(
+                    &§$seq §$set §$union §$set(§$symbol0) §$tag(Definition $§$intersection§ $)
+                  )(
+                    &§$seq §$set(§$symbol0), §$tag(Definition $§$union§ $)
+                  ) but §$$align*(
+                    A §$intersection §$p(B §$union C) &§$seq §$set §$intersection §$p(§$set §$union §$set(§$symbol0)) §$tag(Definition $A, B, C$)
+                  )(
+                    &§$seq §$set §$intersection §$set(§$symbol0) §$tag(Definition $§$union§ $)
+                  )(
+                    &§$seq §$set§ , §$tag(Definition $§$intersection§ $)
+                  ) and §$(§$set(§$symbol0) §$sneq §$set)(.)
+                )
               )
             )
           )
@@ -724,41 +742,43 @@
         )
 
         §div(slightlywide)(
-          §theorem["associative_intersection"](Associativity of §$(§$intersection[true]§ ))(
-            §p(
-              Let §$(A, B, C) be §rs(set). Then §$(§$p(A §$intersection B) §$intersection C §$seq A §$intersection §$p(B §$intersection C))(.)
-            )
-            §div(three_venns centered)(
-              §div(venn3_container)(
-                §input["venn_diagrams/intersection_3a.svg"]
-              )
-              §div(venn3_container)(
-                §input["venn_diagrams/intersection_3b.svg"]
-              )
-              §div(venn3_container)(
-                §input["venn_diagrams/intersection_3c.svg"]
-              )
-            )
-          )
-          §proof["associative_intersection"](
-            §fleqn(
+          §proven_fact(
+            §theorem["associative_intersection"](Associativity of §$(§$intersection[true]§ ))(
               §p(
-                Let §$(A, B, C) be §rs(set). Then §$$align*(
-                  &§$p(A §$intersection B) §$intersection C
-                )(
-                  §$seq {} & §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)) §$intersection C §$tag(Definition $§$intersection§ $)
-                )(
-                  §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ and $x §$in B$))$ and $y §$in C$)) §$tag(Definition $§$intersection§ $)
-                )(
-                  §$seq {} & §$set_builder(x)(§$text(($x §$in A$ and $x §$in B$) and $x §$in C$)) §$tag(§R(set builder notation))
-                )(
-                  §$seq {} & §$set_builder(x)(§$text($x §$in A$ and ($x §$in B$ and $x §$in C$))) §$tag(§r(associative conjunction)(Associativity) §r(conjunction))
-                )(
-                  §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ and $y §$in §$set_builder(x)(§$text($x §$in B$ and $x §$in C$))$)) §$tag(§R(set builder notation))
-                )(
-                  §$seq {} & A §$intersection §$set_builder(x)(§$text($x §$in B$ and $x §$in C$)) §$tag(Definition $§$intersection§ $)
-                )(
-                  §$seq {} & A §$intersection §$p(B §$intersection C). §$tag(Definition $§$intersection§ $)
+                Let §$(A, B, C) be §rs(set). Then §$(§$p(A §$intersection B) §$intersection C §$seq A §$intersection §$p(B §$intersection C))(.)
+              )
+              §div(three_venns centered)(
+                §div(venn3_container)(
+                  §input["venn_diagrams/intersection_3a.svg"]
+                )
+                §div(venn3_container)(
+                  §input["venn_diagrams/intersection_3b.svg"]
+                )
+                §div(venn3_container)(
+                  §input["venn_diagrams/intersection_3c.svg"]
+                )
+              )
+            )
+            §proof["associative_intersection"](
+              §fleqn(
+                §p(
+                  Let §$(A, B, C) be §rs(set). Then §$$align*(
+                    &§$p(A §$intersection B) §$intersection C
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)) §$intersection C §$tag(Definition $§$intersection§ $)
+                  )(
+                    §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ and $x §$in B$))$ and $y §$in C$)) §$tag(Definition $§$intersection§ $)
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text(($x §$in A$ and $x §$in B$) and $x §$in C$)) §$tag(§R(set builder notation))
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ and ($x §$in B$ and $x §$in C$))) §$tag(§r(associative conjunction)(Associativity) §r(conjunction))
+                  )(
+                    §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ and $y §$in §$set_builder(x)(§$text($x §$in B$ and $x §$in C$))$)) §$tag(§R(set builder notation))
+                  )(
+                    §$seq {} & A §$intersection §$set_builder(x)(§$text($x §$in B$ and $x §$in C$)) §$tag(Definition $§$intersection§ $)
+                  )(
+                    §$seq {} & A §$intersection §$p(B §$intersection C). §$tag(Definition $§$intersection§ $)
+                  )
                 )
               )
             )
@@ -766,42 +786,44 @@
         )
 
         §div(slightlywide)(
-          §theorem["associative_union"](Associativity of §$(§$union[true]§ ))(
-            §p(
-              Let §$(A, B, C) be §rs(set). Then §$(§$p(A §$union B) §$union C §$seq A §$union §$p(B §$union C))(.)
+          §proven_fact(
+            §theorem["associative_union"](Associativity of §$(§$union[true]§ ))(
+              §p(
+                Let §$(A, B, C) be §rs(set). Then §$(§$p(A §$union B) §$union C §$seq A §$union §$p(B §$union C))(.)
+              )
+              §div(three_venns centered)(
+                §div(venn3_container)(
+                  §input["venn_diagrams/union_3a.svg"]
+                )
+                §div(venn3_container)(
+                  §input["venn_diagrams/union_3b.svg"]
+                )
+                §div(venn3_container)(
+                  §input["venn_diagrams/union_3c.svg"]
+                )
+              )
             )
-            §div(three_venns centered)(
-              §div(venn3_container)(
-                §input["venn_diagrams/union_3a.svg"]
-              )
-              §div(venn3_container)(
-                §input["venn_diagrams/union_3b.svg"]
-              )
-              §div(venn3_container)(
-                §input["venn_diagrams/union_3c.svg"]
-              )
-            )
-          )
-          §proof["associative_union"](
-            §proof_as_exercise["associative_union"](
-              §fleqn(
-                §p(
-                  Let §$(A, B, C) be §rs(set). Then §$$align*(
-                    &§$p(A §$union B) §$union C
-                  )(
-                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)) §$union C §$tag(Definition $§$union§ $)
-                  )(
-                    §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ or $x §$in B$))$ or $y §$in C$)) §$tag(Definition $§$union§ $)
-                  )(
-                    §$seq {} & §$set_builder(x)(§$text(($x §$in A$ or $x §$in B$) or $x §$in C$)) §$tag(§R(set builder notation))
-                  )(
-                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ or ($x §$in B$ or $x §$in C$))) §$tag(§r(associative disjunction)(Associativity) §r(disjunction))
-                  )(
-                    §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ or $y §$in §$set_builder(x)(§$text($x §$in B$ or $x §$in C$))$)) §$tag(§R(set builder notation))
-                  )(
-                    §$seq {} & A §$union §$set_builder(x)(§$text($x §$in B$ or $x §$in C$)) §$tag(Definition $§$union§ $)
-                  )(
-                    §$seq {} & A §$union §$p(B §$union C). §$tag(Definition $§$union§ $)
+            §proof["associative_union"](
+              §proof_as_exercise["associative_union"](
+                §fleqn(
+                  §p(
+                    Let §$(A, B, C) be §rs(set). Then §$$align*(
+                      &§$p(A §$union B) §$union C
+                    )(
+                      §$seq {} & §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)) §$union C §$tag(Definition $§$union§ $)
+                    )(
+                      §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ or $x §$in B$))$ or $y §$in C$)) §$tag(Definition $§$union§ $)
+                    )(
+                      §$seq {} & §$set_builder(x)(§$text(($x §$in A$ or $x §$in B$) or $x §$in C$)) §$tag(§R(set builder notation))
+                    )(
+                      §$seq {} & §$set_builder(x)(§$text($x §$in A$ or ($x §$in B$ or $x §$in C$))) §$tag(§r(associative disjunction)(Associativity) §r(disjunction))
+                    )(
+                      §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ or $y §$in §$set_builder(x)(§$text($x §$in B$ or $x §$in C$))$)) §$tag(§R(set builder notation))
+                    )(
+                      §$seq {} & A §$union §$set_builder(x)(§$text($x §$in B$ or $x §$in C$)) §$tag(Definition $§$union§ $)
+                    )(
+                      §$seq {} & A §$union §$p(B §$union C). §$tag(Definition $§$union§ $)
+                    )
                   )
                 )
               )
@@ -817,46 +839,50 @@
           The proofs for §cref(associative_intersection) and §cref(associative_union) are very typical for proving properties about freshly defined concepts: you unfold the definition of the concept until you are only working with older concepts, you use their known properties to prove what you need, and finally you translate it back into the new terminology. In this particular case, §r(intersection) and §r(union) inherit the §r(associative conjunction)(associativity) of §r(conjunction) and §r(disjunction) respectively fairly directly. Using structurally similar proofs, we can show that they inherit §r(commutative conjunction)(commutativity) as well:
         )
 
-        §theorem["commutative_intersection"](Commutativity of §$(§$intersection[true]§ ))(
-          §p(
-            Let §$(A, B) be §rs(set). Then §$(A §$intersection B §$seq B §$intersection A)(.)
+        §proven_fact(
+          §theorem["commutative_intersection"](Commutativity of §$(§$intersection[true]§ ))(
+            §p(
+              Let §$(A, B) be §rs(set). Then §$(A §$intersection B §$seq B §$intersection A)(.)
+            )
           )
-        )
-        §proof["commutative_intersection"](
-          §proof_as_exercise["commutative_intersection"](
-            §fleqn(
-              §p(
-                Let §$(A, B) be §rs(set). Then §$$align*(
-                  &A §$intersection B
-                )(
-                  §$seq {} & §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)) §$tag(Definition $§$intersection§ $)
-                )(
-                  §$seq {} & §$set_builder(x)(§$text($x §$in B$ and $x §$in A$)) §$tag(§r(commutative conjunction)(Commutativity) §r(conjunction))
-                )(
-                  §$seq {} & B §$intersection A §$tag(Definition $§$intersection§ $)
+          §proof["commutative_intersection"](
+            §proof_as_exercise["commutative_intersection"](
+              §fleqn(
+                §p(
+                  Let §$(A, B) be §rs(set). Then §$$align*(
+                    &A §$intersection B
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)) §$tag(Definition $§$intersection§ $)
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text($x §$in B$ and $x §$in A$)) §$tag(§r(commutative conjunction)(Commutativity) §r(conjunction))
+                  )(
+                    §$seq {} & B §$intersection A §$tag(Definition $§$intersection§ $)
+                  )
                 )
               )
             )
           )
         )
 
-        §theorem["commutative_union"](Commutativity of §$(§$union[true]§ ))(
-          §p(
-            Let §$(A, B) be §rs(set). Then §$(A §$union B §$seq B §$union A)(.)
+        §proven_fact(
+          §theorem["commutative_union"](Commutativity of §$(§$union[true]§ ))(
+            §p(
+              Let §$(A, B) be §rs(set). Then §$(A §$union B §$seq B §$union A)(.)
+            )
           )
-        )
-        §proof["commutative_union"](
-          §proof_as_exercise["commutative_union"](
-            §fleqn(
-              §p(
-                Let §$(A, B) be §rs(set). Then §$$align*(
-                  &A §$union B
-                )(
-                  §$seq {} & §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)) §$tag(Definition $§$union§ $)
-                )(
-                  §$seq {} & §$set_builder(x)(§$text($x §$in B$ or $x §$in A$)) §$tag(§r(commutative disjunction)(Commutativity) §r(disjunction))
-                )(
-                  §$seq {} & B §$union A §$tag(Definition $§$union§ $)
+          §proof["commutative_union"](
+            §proof_as_exercise["commutative_union"](
+              §fleqn(
+                §p(
+                  Let §$(A, B) be §rs(set). Then §$$align*(
+                    &A §$union B
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)) §$tag(Definition $§$union§ $)
+                  )(
+                    §$seq {} & §$set_builder(x)(§$text($x §$in B$ or $x §$in A$)) §$tag(§r(commutative disjunction)(Commutativity) §r(disjunction))
+                  )(
+                    §$seq {} & B §$union A §$tag(Definition $§$union§ $)
+                  )
                 )
               )
             )
@@ -867,26 +893,30 @@
           Two further simple but useful observations are that §rs(intersection) never add elements, and §rs(union) never remove elements:
         )
 
-        §theorem["intersection_nonincreasing"](
-          §p(
-            Let §$(A, B) be §rs(set). Then §$(A §$intersection B §$subseteq A)(.)
+        §proven_fact(
+          §theorem["intersection_nonincreasing"](
+            §p(
+              Let §$(A, B) be §rs(set). Then §$(A §$intersection B §$subseteq A)(.)
+            )
           )
-        )
-        §proof["intersection_nonincreasing"](
-          §p(
-            Let §$(A, B) be §rs(set), and let §$(x §$in A §$intersection B). Then also §$(x §$in A) by definition of §$(§$intersection)(,) and thus §$(A §$intersection B §$subseteq A)(.)
+          §proof["intersection_nonincreasing"](
+            §p(
+              Let §$(A, B) be §rs(set), and let §$(x §$in A §$intersection B). Then also §$(x §$in A) by definition of §$(§$intersection)(,) and thus §$(A §$intersection B §$subseteq A)(.)
+            )
           )
         )
 
-        §theorem["union_nondecreasing"](
-          §p(
-            Let §$(A, B) be §rs(set). Then §$(A §$subseteq A §$union B)(.)
-          )
-        )
-        §proof["union_nondecreasing"](
-          §proof_as_exercise["union_nondecreasing"](
+        §proven_fact(
+          §theorem["union_nondecreasing"](
             §p(
-              Let §$(A, B) be §rs(set), and let §$(x §$in A). Then also §$(x §$in A §$union B) by definition of §$(§$union)(,) and thus §$(A §$subseteq A §$union B)(.)
+              Let §$(A, B) be §rs(set). Then §$(A §$subseteq A §$union B)(.)
+            )
+          )
+          §proof["union_nondecreasing"](
+            §proof_as_exercise["union_nondecreasing"](
+              §p(
+                Let §$(A, B) be §rs(set), and let §$(x §$in A). Then also §$(x §$in A §$union B) by definition of §$(§$union)(,) and thus §$(A §$subseteq A §$union B)(.)
+              )
             )
           )
         )
@@ -961,76 +991,78 @@
         )
 
         §div(slightlywide)(
-          §theorem["exercise_intersection_union_absorption"](Absorption of §$(§$intersection[true]) and §$(§$union[true]))(
-            §p(
-              Let §$(A, B) be §rs(set). Then
-            )§ol(
-              §li(
-                §$(A §$intersection §$p(A §$union B) §$seq A)(,) and
-              )§li(
-                §$(A §$union §$p(A §$intersection B) §$seq A)(.)
-              )
-            )
-          )
-          §proof["exercise_intersection_union_absorption"](
-            §fleqn(
+          §proven_fact(
+            §theorem["exercise_intersection_union_absorption"](Absorption of §$(§$intersection[true]) and §$(§$union[true]))(
               §p(
-                Let §$(A, B) be §rs(set).
+                Let §$(A, B) be §rs(set). Then
               )§ol(
                 §li(
-                  §proof_as_exercise["exercise_intersection_union_absorption_1"](
-                    §p(
-                      §$$align*(
-                        & A §$intersection §$p(A §$union B)
-                      )(
-                        §$seq {} & A §$intersection §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)) §$tag(Definition $§$union§ $)
-                      )(
-                        §$seq {} & §$set_builder(y)(§$text($y §$in A$ and $y §$in §$set_builder(x)(§$text($x §$in A$ or $x §$in B$))$)) §$tag(Definition $§$intersection§ $)
-                      )(
-                        §$seq {} & §$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))) §$tag(§R(set builder notation))
+                  §$(A §$intersection §$p(A §$union B) §$seq A)(,) and
+                )§li(
+                  §$(A §$union §$p(A §$intersection B) §$seq A)(.)
+                )
+              )
+            )
+            §proof["exercise_intersection_union_absorption"](
+              §fleqn(
+                §p(
+                  Let §$(A, B) be §rs(set).
+                )§ol(
+                  §li(
+                    §proof_as_exercise["exercise_intersection_union_absorption_1"](
+                      §p(
+                        §$$align*(
+                          & A §$intersection §$p(A §$union B)
+                        )(
+                          §$seq {} & A §$intersection §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)) §$tag(Definition $§$union§ $)
+                        )(
+                          §$seq {} & §$set_builder(y)(§$text($y §$in A$ and $y §$in §$set_builder(x)(§$text($x §$in A$ or $x §$in B$))$)) §$tag(Definition $§$intersection§ $)
+                        )(
+                          §$seq {} & §$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))) §$tag(§R(set builder notation))
+                        )
+                      )§p(
+                        We now show that this set is §r(sequal) to §$(A)(,) that is, we show that an object is §r(in) this set if and only if it is §r(in) §$(A)(.)
                       )
-                    )§p(
-                      We now show that this set is §r(sequal) to §$(A)(,) that is, we show that an object is §r(in) this set if and only if it is §r(in) §$(A)(.)
-                    )
 
-                    §proof_part(
-                      §verbatim(§$(x §$in A §$implies x §$in §$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))))):
-                    )(
-                      If §$(x §$in A)(,) then §$(§$set_builder(x)(§$text($x §$in A$ or $x §$in B$)))(,) and then §$(§$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))))(.)
-                    )
-                    §proof_part(
-                      §verbatim(§$(x §$in A §$impliedby x §$in §$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))))):
-                    )(
-                      If §$(x §$in §$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))))(,) then in particular §$(x §$in A)(,) as otherwise the §r(conjunction) could not be true.
+                      §proof_part(
+                        §verbatim(§$(x §$in A §$implies x §$in §$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))))):
+                      )(
+                        If §$(x §$in A)(,) then §$(§$set_builder(x)(§$text($x §$in A$ or $x §$in B$)))(,) and then §$(§$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))))(.)
+                      )
+                      §proof_part(
+                        §verbatim(§$(x §$in A §$impliedby x §$in §$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))))):
+                      )(
+                        If §$(x §$in §$set_builder(x)(§$text($x §$in A$ and ($x §$in A$ or $x §$in B$))))(,) then in particular §$(x §$in A)(,) as otherwise the §r(conjunction) could not be true.
+                      )
                     )
                   )
-                )
 
-                §li(
-                  §proof_as_exercise["exercise_intersection_union_absorption_2"](
-                    §p(
-                      §$$align*(
-                        & A §$union §$p(A §$intersection B)
-                      )(
-                        §$seq {} & A §$union §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)) §$tag(Definition $§$intersection§ $)
-                      )(
-                        §$seq {} & §$set_builder(y)(§$text($y §$in A$ or $y §$in §$set_builder(x)(§$text($x §$in A$ and $x §$in B$))$)) §$tag(Definition $§$union§ $)
-                      )(
-                        §$seq {} & §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))) §$tag(§R(set builder notation))
+                  §li(
+                    §proof_as_exercise["exercise_intersection_union_absorption_2"](
+                      §p(
+                        §$$align*(
+                          & A §$union §$p(A §$intersection B)
+                        )(
+                          §$seq {} & A §$union §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)) §$tag(Definition $§$intersection§ $)
+                        )(
+                          §$seq {} & §$set_builder(y)(§$text($y §$in A$ or $y §$in §$set_builder(x)(§$text($x §$in A$ and $x §$in B$))$)) §$tag(Definition $§$union§ $)
+                        )(
+                          §$seq {} & §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))) §$tag(§R(set builder notation))
+                        )
+                      )§p(
+                        We now show that this set is §r(sequal) to §$(A)(,) that is, we show that an object is §r(in) this set if and only if it is §r(in) §$(A)(.)
                       )
-                    )§p(
-                      We now show that this set is §r(sequal) to §$(A)(,) that is, we show that an object is §r(in) this set if and only if it is §r(in) §$(A)(.)
-                    )
 
-                    §proof_part(
-                      §verbatim(§$(x §$in A §$implies x §$in §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))):
-                    )(
-                      If §$(x §$in A)(,) then any §r(disjunction) involving §verbatim(§$(x §$in A)) is true, and thus, in particular, §$(§$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))(.)
-                    )
-                    §proof_part(
-                      §verbatim(§$(x §$notin A §$implies x §$notin §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))):
-                    )(
-                      If §$(x §$notin A)(,) then §verbatim(§$(x §$notin A) and §$(x §$in B)) is not true, and then also §$(x §$notin §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))(.)
+                      §proof_part(
+                        §verbatim(§$(x §$in A §$implies x §$in §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))):
+                      )(
+                        If §$(x §$in A)(,) then any §r(disjunction) involving §verbatim(§$(x §$in A)) is true, and thus, in particular, §$(§$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))(.)
+                      )
+                      §proof_part(
+                        §verbatim(§$(x §$notin A §$implies x §$notin §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))):
+                      )(
+                        If §$(x §$notin A)(,) then §verbatim(§$(x §$notin A) and §$(x §$in B)) is not true, and then also §$(x §$notin §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))(.)
+                      )
                     )
                   )
                 )
@@ -1104,14 +1136,16 @@
           An immediate observation we can make general properties of the §r(set difference) operation is that removing elements from a §r(set) always results in a (not necessarily strict) §r(subset):
         )
 
-        §theorem["set_difference_nonincreasing"](
-          §p(
-            Let §$(A) and §$(B) be §rs(set). Then §$(A §$setminus B §$subseteq A)(.)
+        §proven_fact(
+          §theorem["set_difference_nonincreasing"](
+            §p(
+              Let §$(A) and §$(B) be §rs(set). Then §$(A §$setminus B §$subseteq A)(.)
+            )
           )
-        )
-        §proof["set_difference_nonincreasing"](
-          §p(
-            Let §$(A) and §$(B) be §rs(set), and let §$(x §$in A §$setminus B). Then also §$(x §$in A) by definition of §$(§$setminus)(,) and thus §$(A §$setminus B §$subseteq A)(.)
+          §proof["set_difference_nonincreasing"](
+            §p(
+              Let §$(A) and §$(B) be §rs(set), and let §$(x §$in A §$setminus B). Then also §$(x §$in A) by definition of §$(§$setminus)(,) and thus §$(A §$setminus B §$subseteq A)(.)
+            )
           )
         )
 
@@ -1171,31 +1205,33 @@
           We can prove that this technique always yields the correct result — take a moment to think through how the §cref(intersection_via_set_difference)(following theorem) relates to the technique:
         )
 
-        §theorem["intersection_via_set_difference"](
-          §p(
-            Let §$(A) and §$(B) be §rs(set). Then §$(A §$intersection B §$seq A §$setminus §$p[1](A §$setminus B))(.)
-          )
-        )
-        §proof["intersection_via_set_difference"](
-          §proof_as_exercise["intersection_via_set_difference"](
+        §proven_fact(
+          §theorem["intersection_via_set_difference"](
             §p(
-              Let §$(A) and §$(B) be §rs(set).
+              Let §$(A) and §$(B) be §rs(set). Then §$(A §$intersection B §$seq A §$setminus §$p[1](A §$setminus B))(.)
             )
-
-            §proof_part(
-              §verbatim(§$(A §$intersection B §$subseteq A §$setminus §$p[1](A §$setminus B))):
-            )(
+          )
+          §proof["intersection_via_set_difference"](
+            §proof_as_exercise["intersection_via_set_difference"](
               §p(
-                Let §$(x §$in A §$intersection B)(.) Then §$(x §$in B)(,) and thus §$(x §$notin A §$setminus B)(.) Since §$(x §$in A) (because §$(x §$in A §$intersection B)) and §$(x §$notin A §$setminus B)(,) we have that §$(x §$in A §$setminus §$p[1](A §$setminus B)) (by definition of §$(§$setminus)).
+                Let §$(A) and §$(B) be §rs(set).
               )
-            )
-            §proof_part(
-              §verbatim(§$(A §$intersection B §$supseteq A §$setminus §$p[1](A §$setminus B))):
-            )(
-              §p(
-                Let §$(x §$in A §$setminus §$p[1](A §$setminus B))(.) Then §$(x §$in A) by §cref(set_difference_nonincreasing), so it remains to show that §$(x §$in B)(.)
-              )§p(
-                Suppose toward a contradiction that §$(x §$notin B)(.) Then §$(x §$in A §$setminus B)(,) and thus §$(x §$notin A §$setminus §$p[1](A §$setminus B))(,) contradicting our initial assumption that §$(x §$in A §$setminus §$p[1](A §$setminus B))(.)
+
+              §proof_part(
+                §verbatim(§$(A §$intersection B §$subseteq A §$setminus §$p[1](A §$setminus B))):
+              )(
+                §p(
+                  Let §$(x §$in A §$intersection B)(.) Then §$(x §$in B)(,) and thus §$(x §$notin A §$setminus B)(.) Since §$(x §$in A) (because §$(x §$in A §$intersection B)) and §$(x §$notin A §$setminus B)(,) we have that §$(x §$in A §$setminus §$p[1](A §$setminus B)) (by definition of §$(§$setminus)).
+                )
+              )
+              §proof_part(
+                §verbatim(§$(A §$intersection B §$supseteq A §$setminus §$p[1](A §$setminus B))):
+              )(
+                §p(
+                  Let §$(x §$in A §$setminus §$p[1](A §$setminus B))(.) Then §$(x §$in A) by §cref(set_difference_nonincreasing), so it remains to show that §$(x §$in B)(.)
+                )§p(
+                  Suppose toward a contradiction that §$(x §$notin B)(.) Then §$(x §$in A §$setminus B)(,) and thus §$(x §$notin A §$setminus §$p[1](A §$setminus B))(,) contradicting our initial assumption that §$(x §$in A §$setminus §$p[1](A §$setminus B))(.)
+                )
               )
             )
           )
@@ -1273,7 +1309,7 @@
       )§p(
         Always stay mindful of the difference between the §rs(member) of a §r(set) and the §rs(member) of the §rs(member) of a §r(set): §$(§$symbol0 §$notin §$set[2](§$set(§$symbol0)(§$symbol1))(§$set(§$symbol0)(§$symbol2))(§$symbol3))(,) even though §$(§$symbol0) is an §r(element) of some §rs(member) of §$(§$set[2](§$set(§$symbol0)(§$symbol1))(§$set(§$symbol0)(§$symbol2))(§$symbol3))(. )
       )§p(
-        Another common source of mistakes is the distinction between an object and the §r(set) that contains exactly that object but nothing else. For all §rs(set) §$(X) we have that §$(§$set(X) §$sneq X)(,) because §$(X §$in §$set(X)) but §$(X §$notin X), as no §r(set) can be a §r(member) of itself. In particular, §$(§$set §$sneq §$set(§$set))(.) The §r(empty set) has no §rs(member), whereas §$(§$set(§$set)) has exactly one §r(member), namely the §r(empty set).
+        Another common source of mistakes is the distinction between an object and the §r(set) that contains exactly that object but nothing else. For each §r(set) §$(X) holds §$(§$set(X) §$sneq X)(,) because §$(X §$in §$set(X)) but §$(X §$notin X), as no §r(set) can be a §r(member) of itself. In particular, §$(§$set §$sneq §$set(§$set))(.) The §r(empty set) has no §rs(member), whereas §$(§$set(§$set)) has exactly one §r(member), namely the §r(empty set).
       )
 
       §exercise["nested_sets_predicates"](
@@ -1333,7 +1369,7 @@
 
         §exercise["exercise_powerset_at_least"](
           §p(
-            Find the mistake in the following claim: Because the §r(empty set) is a §r(subset) of every §r(set) (§cref(empty_set_subset_everything)) and every §r(set) is a §r(subset) of itself (§cref(subseteq_reflexivity)), §$(§$powerset(X)) must contain at least two §rs(element) for all §rs(set) §$(X)(.)
+            Find the mistake in the following claim: Because the §r(empty set) is a §r(subset) of every §r(set) (§cref(empty_set_subset_everything)) and every §r(set) is a §r(subset) of itself (§cref(subseteq_reflexivity)), §$(§$powerset(X)) must contain at least two §rs(element) for each §r(set) §$(X)(.)
           )
 
           §solution["exercise_powerset_at_least"](
@@ -1362,16 +1398,18 @@
           bla
         )
 
-        §theorem["equal_powersets_equal_sets"](
-          §p(
-            Let §$(A, B) be §rs(set). If §$(§$powerset(A) §$seq §$powerset(B))(,) then §$(A §$seq B)(.)
+        §proven_fact(
+          §theorem["equal_powersets_equal_sets"](
+            §p(
+              Let §$(A, B) be §rs(set). If §$(§$powerset(A) §$seq §$powerset(B))(,) then §$(A §$seq B)(.)
+            )
           )
-        )
-        §proof["equal_powersets_equal_sets"](
-          §p(
-            We do a proof by contraposition, that is, we show that if §$(A §$sneq B)(,) then §$(§$powerset(A) §$seq §$powerset(B))(.) To that end, let §$(A, B) be §rs(set) with §$(A §$sneq B)(.)
-          )§p(
-            Without loss of generality, there is §$(a §$in A) such that §$(a §$notin B) (otherwise switch the roles of §$(A) and §$(B)). Then §$(§$set(a) §$in §$powerset(A)) (because §$(§$set(a) §$subseteq A)) but §$(§$set(a) §$notin §$powerset(B)) (because §$(§$set(a) §$nsubseteq B)), and thus §$(§$powerset(A) §$sneq §$powerset(B))(.)
+          §proof["equal_powersets_equal_sets"](
+            §p(
+              We do a proof by contraposition, that is, we show that if §$(A §$sneq B)(,) then §$(§$powerset(A) §$seq §$powerset(B))(.) To that end, let §$(A, B) be §rs(set) with §$(A §$sneq B)(.)
+            )§p(
+              Without loss of generality, there is §$(a §$in A) such that §$(a §$notin B) (otherwise switch the roles of §$(A) and §$(B)). Then §$(§$set(a) §$in §$powerset(A)) (because §$(§$set(a) §$subseteq A)) but §$(§$set(a) §$notin §$powerset(B)) (because §$(§$set(a) §$nsubseteq B)), and thus §$(§$powerset(A) §$sneq §$powerset(B))(.)
+            )
           )
         )
 

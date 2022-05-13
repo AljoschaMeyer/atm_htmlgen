@@ -8,11 +8,11 @@
     --color-bg3: #ddd;
     --color-text: #1a1a1a;
 
-    --color-fact: rgb(204, 115, 0);
-    --color-definition: rgb(124, 0, 132);
-    --color-example: rgb(0, 133, 18);
-    --color-exercise: rgb(0, 95, 133);
-    --color-proof: rgb(0, 173, 126);
+    --color-fact: var(--cdd2);
+    --color-definition: var(--cdd4);
+    --color-example: var(--cdd6);
+    --color-exercise: var(--cdd1);
+    --color-proof: var(--cdd3);
 
     --color-obstruction: rgb(237, 7, 71);
     --color-success: rgb(180, 0, 237);
@@ -30,6 +30,11 @@
     --width-default: 41rem;
     --width-wide: 86.26rem;
     --width-slightlywide: 52rem;
+}
+
+.obstruction {
+  color: var(--color-obstruction);
+  stroke: var(--color-obstruction);
 }
 
 * {
@@ -254,6 +259,34 @@ article {
   border-color: var(--color-definition);
 }
 
+.proven_fact {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-right: 1em;
+  padding-left: 1em;
+
+  border-width: 4px;
+  border-style: solid;
+  border-color: var(--color-fact);
+}
+
+.proven_fact > article {
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+
+.proven_fact > article:last-child > h6 {
+  display: none;
+}
+
+.proven_fact > article:last-child:before {
+  content: "Proof:";
+  font-style: italic;
+}
+
 .exercise {
   border-color: var(--color-exercise);
 }
@@ -380,7 +413,7 @@ tbody tr:nth-child(even) {
   text-align: left;
 }
 
-.previous_chapter > a::before {
+.previous_chapter > a:before {
   content: "<< ";
 }
 
@@ -392,7 +425,7 @@ tbody tr:nth-child(even) {
   text-align: right;
 }
 
-.next_chapter > a::after {
+.next_chapter > a:after {
   content: " >>";
 }
 
@@ -428,6 +461,7 @@ button {
   padding: 0.35em 0.5em;
   border-width: 0.1em;
   border-style: solid;
+  border-color: var(--color-text);
   border-radius: 0.12em;
   box-sizing: border-box;
   text-decoration: none;
@@ -500,4 +534,14 @@ button.toggle:hover {
   background-color: var(--c3-transparent);
   stroke: var(--c3-half);
   fill: var(--c3-transparent);
+}
+
+.define_notation {
+  color: var(--color-definition);
+  stroke: var(--color-definition);
+}
+
+.text_color {
+  color: var(--color-text);
+  stroke: var(--color-text);
 }

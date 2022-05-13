@@ -65,7 +65,11 @@ pub(crate) enum ExpansionError {
     #[error("never printed")]
     UnknownMathId(Trace, String),
     #[error("never printed")]
+    UnknownTagId(Trace, String),
+    #[error("never printed")]
     DuplicateMathId(Trace /* redefinition */, String /* id */),
+    #[error("never printed")]
+    DuplicateTagId(Trace /* redefinition */, String /* id */),
     #[error("never printed")]
     HSectionTooManyLevels(Trace),
     #[error("never printed")]
@@ -134,8 +138,20 @@ impl ExpansionError {
                 println!("At:");
                 print_trace(t.clone(), source, true);
             }
+            ExpansionError::UnknownTagId(t, id) => {
+                println!("Unknown tag id.");
+                println!("Id: {}", id);
+                println!("At:");
+                print_trace(t.clone(), source, true);
+            }
             ExpansionError::DuplicateMathId(redefinition, id) => {
                 println!("Cannot define the id corresponding to a math macro multiple times.");
+                println!("Id: {}", id);
+                println!("Redefinition at:");
+                print_trace(redefinition.clone(), source, true);
+            }
+            ExpansionError::DuplicateTagId(redefinition, id) => {
+                println!("Cannot define the id of a tag multiple times.");
                 println!("Id: {}", id);
                 println!("Redefinition at:");
                 print_trace(redefinition.clone(), source, true);
@@ -181,6 +197,7 @@ pub enum Out {
     Input([PathBuf; 1], Vec<Out>),
     Output([PathBuf; 1], Vec<Out>, bool),
     Cref(Cref, Vec<Out>),
+    ReferenceDefined(Vec<Out>, bool /*capitalize*/, bool /*plural*/, bool /*fake define*/),
     MathFunctionParens(MathSet, Vec<Out>),
 }
 
@@ -210,6 +227,8 @@ pub(crate) enum OutInternal {
     SetDomain(Trace, String, Vec<OutInternal>),
     ReferenceDefined(Trace, (), Vec<OutInternal>, bool /*capitalize*/, bool /*plural*/, bool /*fake define*/),
     SetMathId(Trace, SetMathId, Vec<OutInternal>),
+    SetTag(Trace, SetTag, Vec<OutInternal>, bool /*clever*/),
+    RTag(Trace, RTag, Vec<OutInternal>),
     MathMacro(Trace, MathMacro, Vec<OutInternal>, String /* id */, String /* tex */),
     MathSet(Trace, MathSet, Vec<OutInternal>),
     MathGroupingParens(Trace, MathSet, Vec<OutInternal>),
@@ -1075,6 +1094,45 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }
         }
 
+        OutInternal::SetTag(trace, params, args, clever) => {
+            arguments_exact(1, &args, &trace)?;
+
+            if y.state.second_iteration {
+                return Ok(Rope::new());
+            } else {
+                return up_macro(|_, args, y, _span| {
+                    match y.state.sticky_state.tag_definitions.insert(params.0[0].clone(), (args[0].clone(), clever)) {
+                        None => return Ok(Rope::new()),
+                        Some(_) => return Err(ExpansionError::DuplicateTagId(trace.clone(), params.0[0].to_string())),
+                    }
+                }, &params, args, trace.clone(), y);
+            }
+        }
+
+        OutInternal::RTag(trace, params, args) => {
+            arguments_exact(0, &args, &trace)?;
+
+            if y.state.second_iteration {
+                match y.state.sticky_state.tag_definitions.get(&params.0[0]) {
+                    None => return Err(ExpansionError::UnknownTagId(trace, params.0[0].to_string())),
+                    Some((tag, clever)) => {
+                        let tag = tag.clone();
+                        let clever = clever.clone();
+
+                        return down_macro(|p, _n, _y, _trace| {
+                            if clever {
+                                return Ok(Out::Cref(Cref, vec![Out::Text(p.0[0].clone().into()), Out::Text(tag.clone())]));
+                            } else {
+                                return Ok(Out::ReferenceDefined(vec![Out::Text(p.0[0].clone().into()), Out::Text(tag.clone())], false, false, false));
+                            }
+                        }, &params, args, trace.clone(), y);
+                    }
+                }
+            } else {
+                return Ok(Rope::new());
+            }
+        }
+
         OutInternal::MathMacro(trace, params, args, math_id, tex) => {
             arguments_exact(0, &args, &trace)?;
 
@@ -1275,14 +1333,14 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     Out::Text(r###"<div class="proof_part_title"><span class="case_name">"###.into()),
                     Out::Text(
                         if linkable {
-                            format!(r###"<a href="{}" id="{}">"###, href, id).into()
+                            format!(r###"<span id="{}">"###, id).into()
                         } else {
                             "".into()
                         }
                     ),
                     Out::Text(format!("Case {}:</span> ", numbering).into()),
                     if n >= 2 {Out::Argument(0)} else {Out::Text("".into())},
-                    Out::Text(if linkable {"</a>".into()} else {"".into()}),
+                    Out::Text(if linkable {"</span>".into()} else {"".into()}),
                     Out::Text("</div>".into()),
                     Out::Text(r###"<div class="proof_part_body">"###.into()),
                     Out::Argument(n - 1),
@@ -1315,14 +1373,21 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             let base_color = Srgb::new(0.5601, 0.4761, 1.0);
             for i in 0..n {
                 let mut c = Lch::from_color(base_color);
-                c.hue = c.hue + ((360.0 / (n as f64)) * (i as f64));
-                let cl = c.lighten(0.333);
-                let cll = c.lighten(0.666);
-                let clll = c.lighten(0.95);
+                // c = c.lighten(0.5);
+                c.hue = c.hue + 170.0 + ((360.0 / (n as f64)) * (i as f64));
+                let cl = c.lighten(0.6);
+                let cll = c.lighten(1.0);
+                let clll = c.lighten(1.5);
                 let cd = c.darken(0.333);
                 let cdd = c.darken(0.666);
                 let mut clllg = clll.clone();
                 clllg.chroma = 8.0;
+                // println!("{:?}", cdd.l);
+                // println!("{:?}", cd.l);
+                // println!("{:?}", c.l);
+                // println!("{:?}", cl.l);
+                // println!("{:?}", cll.l);
+                // println!("{:?}", clll.l);
 
                 let rgbs = [Srgb::from_color(c), Srgb::from_color(cl), Srgb::from_color(cll), Srgb::from_color(clll), Srgb::from_color(clllg), Srgb::from_color(cd), Srgb::from_color(cdd)];
 
@@ -1448,6 +1513,8 @@ fn out_to_internal(out: Out, args: Vec<OutInternal>) -> Result<OutInternal, usiz
         Out::Output(path, a, tee) => return Ok(OutInternal::Output(Trace(None), path, outs_to_internals(a, args)?, tee)),
 
         Out::Cref(params, a) => return Ok(OutInternal::Cref(Trace(None), params, outs_to_internals(a, args)?)),
+
+        Out::ReferenceDefined(a, f0, f1, f2) => return Ok(OutInternal::ReferenceDefined(Trace(None), (), outs_to_internals(a, args)?, f0, f1, f2)),
 
         Out::TeX(path, a, display) => return Ok(OutInternal::TeX(Trace(None), path, outs_to_internals(a, args)?, display)),
 
@@ -1620,6 +1687,15 @@ impl Default for SetMathId {
 }
 
 #[derive(Deserialize, Clone)]
+pub struct SetTag([String; 1]);
+
+impl Default for SetTag {
+    fn default() -> Self {
+        SetTag(["".to_string()])
+    }
+}
+
+#[derive(Deserialize, Clone)]
 pub struct Case([String; 1]);
 
 impl Default for Case {
@@ -1661,5 +1737,14 @@ pub struct MathSetBuilder([u8; 1]);
 impl Default for MathSetBuilder {
     fn default() -> Self {
         MathSetBuilder([99])
+    }
+}
+
+#[derive(Deserialize, Clone)]
+pub struct RTag([String; 1]);
+
+impl Default for RTag {
+    fn default() -> Self {
+        RTag(["".to_string()])
     }
 }

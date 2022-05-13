@@ -1,3 +1,4 @@
+use ropey::Rope;
 use std::collections::HashSet;
 use std::collections::HashMap;
 use std::io;
@@ -415,6 +416,7 @@ pub(crate) struct StickyState {
     pub boxes: HashMap<String, BoxInfo>,
     pub defined: HashMap<String, DefinedInfo>,
     pub math_definitions: HashMap<String, String>,
+    pub tag_definitions: HashMap<String, (Rope, bool /* r (false) or cref (true)*/)>,
     pub cases: HashMap<String, String>,
     pub hsections_structure: HSections,
 }
@@ -427,6 +429,7 @@ impl StickyState {
             boxes: HashMap::new(),
             defined: HashMap::new(),
             math_definitions: HashMap::new(),
+            tag_definitions: HashMap::new(),
             cases: HashMap::new(),
             hsections_structure: HSections::new(),
         }

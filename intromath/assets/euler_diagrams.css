@@ -147,7 +147,7 @@
 
 .euler_yay {
   /* fill: var(--color-success); */
-  fill: url("#pattern_striped");
+  fill: url("#pattern_euler_yay");
 }
 
 .venn text {
