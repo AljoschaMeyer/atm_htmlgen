@@ -3,10 +3,10 @@
 §css_colors
 
 :root {
-    --color-bg: #fff;
-    --color-bg2: #eee;
-    --color-bg3: #ddd;
-    --color-text: #1a1a1a;
+    --color-bg: #fffff8;
+    --color-bg2: #eeeee8;
+    --color-bg3: #ddddd8;
+    --color-text: #111;
 
     --color-fact: var(--cdd2);
     --color-definition: var(--cdd4);
@@ -24,17 +24,18 @@
     --c3-half: rgba(195, 14, 210, 1);
     --c3-transparent: rgba(241, 145, 249, 1);
 
+    --padding-left: 4rem;
+    --padding-right: 4rem;
+    --padding-marginalia: 4rem;
 
-
+    --max-width-main: 41rem;
+    --max-width-marginalia: 18rem;
+    --max-width-slightlywide: calc(var(--max-width-main) + var(--padding-marginalia) + var(--max-width-marginalia));
+    --max-width-wide: 86.26rem;
 
     --width-default: 41rem;
-    --width-wide: 86.26rem;
+    --width-wide: 86rem;
     --width-slightlywide: 52rem;
-}
-
-.obstruction {
-  color: var(--color-obstruction);
-  stroke: var(--color-obstruction);
 }
 
 * {
@@ -50,32 +51,58 @@ html {
 }
 
 body {
-    margin: 5% auto;
-    padding: 0 .6em;
+    padding-left: var(--padding-left);
+    padding-right: var(--padding-right);
+    padding-bottom: 4rem;
+    margin: 0;
     background: var(--color-bg);
     overflow-x: hidden;
 }
 
-body > *, section > * {
-  max-width: var(--width-default);
-  margin-left: auto;
-  margin-right: auto;
+.container_main {
+  max-width: var(--max-width-slightlywide);
+  position: relative;
+  margin: auto;
 }
 
-body > section, section > section {
-  max-width: var(--width-wide);
+.container_main > * {
+  max-width: var(--max-width-main);
 }
 
-body > .wide, section > .wide {
-  max-width: var(--width-wide);
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+.slightlywide {
+  position: relative;
+  min-width: calc(100vw - calc(var(--padding-left) + var(--padding-right)));
 }
 
-body > .slightlywide, section > .slightlywide {
-  max-width: var(--width-slightlywide);
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+@media screen and (min-width: 87rem) {
+  .slightlywide {
+    min-width: var(--max-width-slightlywide);
+  }
+}
+
+.wide {
+  position: relative;
+  min-width: var(--max-width-wide);
+}
+
+@media screen and (max-width: 110rem) {
+  .wide {
+    min-width: calc(100vw - calc(var(--padding-left) + var(--padding-right)));
+  }
+}
+
+.aside {
+  float: right;
+  clear: right;
+  position: relative;
+  width: var(--max-width-marginalia);
+  margin-right: calc(-1 * calc(var(--padding-marginalia) + var(--max-width-marginalia)));
+  font-size: 0.9rem;
+}
+
+.obstruction {
+  color: var(--color-obstruction);
+  stroke: var(--color-obstruction);
 }
 
 h1, h2, h3, h4 {
@@ -108,7 +135,6 @@ h2 div {
 h3 {
     font-size: 36px;
     padding-bottom: 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 h4 {
@@ -208,7 +234,7 @@ em, i {
   margin-bottom: 4rem;
 }
 
-.img_container > img {
+.img_container > img, .img_container > a > img {
   width: 100%;
   height: auto;
 }
@@ -395,7 +421,7 @@ th, td {
   text-align: center;
 }
 
-tbody tr:nth-child(even) {
+tbody > tr:nth-child(even) {
   background-color: var(--color-bg2);
 }
 
@@ -482,9 +508,40 @@ button.toggle:hover {
   margin-top: 1rem;
 }
 
-.highlightmath .mbin, .highlightmath .minner, .highlightmathdirect {
-  padding: 0.1rem;
+.highlight {
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
   border-radius: 0.4rem;
+  position: relative;
+  display: inline-block;
+}
+
+.highlight.low, .highlight.top {
+  background-color: inherit;
+  isolation: isolate;
+}
+
+.highlight.low:before, .highlight.top:before {
+  position: absolute;
+  display: inline-block;
+  z-index: -1;
+  bottom: 0.25em;
+  left: 0;
+  width: 100%;
+  height: 0.3em;
+  content: "";
+  background-color: var(--color-highlight);
+  border-radius: 0.4em;
+}
+
+.highlight.top:before {
+  top: 0.25em;
+  bottom: unset;
+}
+
+.highlightmath .mbin, .highlightmath .minner, .highlightmathdirect {
+  padding: 0.1em;
+  border-radius: 0.4em;
 }
 
 .highlightc1 .mbin, .highlightc1 .minner, .highlightmathdirect.highlightc1 {
@@ -513,6 +570,19 @@ button.toggle:hover {
   border-color: var(--color-obstruction);
   transform: rotate(-60deg);
   z-index: 1;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.aside_counter {
+  vertical-align: super;
+  font-size: 0.7rem;
+}
+
+.aside > .aside_counter {
+  margin-right: 0.2rem;
 }
 
 .both_c1 {

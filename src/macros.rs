@@ -214,6 +214,7 @@ pub(crate) enum OutInternal {
     CopyAll(Trace, [PathBuf; 2], Vec<OutInternal>),
     Template(Trace, Template, Vec<OutInternal>),
     HSection(Trace, HSection, Vec<OutInternal>, bool /*no numbering*/),
+    Aside(Trace, (), Vec<OutInternal>, bool /*no numbering*/),
     ChapterNav(Trace, (), Vec<OutInternal>),
     Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String),
     Fact(Trace, BoxParams, Vec<OutInternal>, String, bool /*no numbering*/),
@@ -403,10 +404,12 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     Out::Text(r###"
     </head>
     <body>
+        <div class="container_main">
 "###.into()),
                     Out::Argument(1),
                     Out::Text(r###"
-        <script src="./assets/previews.js"></script>
+                <script src="./assets/previews.js"></script>
+            </div>
     </body>
 </html>
 "###.into()),
@@ -621,6 +624,33 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 } else {
                     return Ok(Out::Many(vec![]))
                 }
+            }, &params, args, trace, y);
+        }
+
+        OutInternal::Aside(trace, params, args, no_numbering) => {
+            arguments_gte(2, &args, &trace)?;
+            arguments_lt(3, &args, &trace)?;
+
+            let numbering = if no_numbering {
+                "".to_string()
+            } else {
+                y.state.box_exercise_current_count += 1;
+                let number = y.state.box_exercise_current_count;
+                format!("{}", number)
+            };
+
+            return down_macro(|_p, _n, _y, _trace| {
+                return Ok(Out::Many(vec![
+                    Out::Text(r###"<span class="nowrap">"###.into()),
+                    Out::Argument(0),
+                    if no_numbering {
+                        Out::Text(r###"</span><span class="aside">"###.into())
+                    } else {
+                        Out::Text(format!(r###"<span class="aside_counter">{}</span></span><span class="aside"><span class="aside_counter">{}</span>"###, numbering, numbering).into())
+                    },
+                    Out::Argument(1),
+                    Out::Text(r###"</span>"###.into()),
+                    ]));
             }, &params, args, trace, y);
         }
 
@@ -1414,10 +1444,10 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     s.push_str(&format!(
                         ".bgc{}{} {{
     background-color: var(--c{}{});
-    fill: var(--c{}{});
+    fill: var(--c{}{});{}
 }}
 ",
-                        SHADES[j], i + 1, SHADES[j], i + 1, SHADES[j], i + 1,
+                        SHADES[j], i + 1, SHADES[j], i + 1, SHADES[j], i + 1, if j == 3 {format!("\n  --color-highlight: var(--clll{});", i + 1)} else {"".to_string()}
                     ));
                     s.push_str(&format!(
                         ".borderc{}{} {{

@@ -677,9 +677,9 @@
 
         §p(
           §$$align*(
-            & §$p[2](§$set(§$symbol0)(§$symbol1)(§$symbol2) §$intersection §$p[1](§$set(§$symbol1)(§$symbol3) §$highlight(§$union) §$set(§$symbol1)(§$symbol2)(§$symbol3))) §$union §$set
+            & §$p[2](§$set(§$symbol0)(§$symbol1)(§$symbol2) §$intersection §$p[1](§$set(§$symbol1)(§$symbol3) §$highlight1(§$union) §$set(§$symbol1)(§$symbol2)(§$symbol3))) §$union §$set
           )(
-            §$seq {} & §$p[1](§$set(§$symbol0)(§$symbol1)(§$symbol2) §$highlight2(§$intersection) §$highlight(§$set(§$symbol1)(§$symbol2)(§$symbol3))) §$union §$set
+            §$seq {} & §$p[1](§$set(§$symbol0)(§$symbol1)(§$symbol2) §$highlight2(§$intersection) §$highlight1(§$set(§$symbol1)(§$symbol2)(§$symbol3))) §$union §$set
           )(
             §$seq {} & §$highlight2(§$set(§$symbol1)(§$symbol2)) §$highlight3(§$union) §$set
           )(
@@ -1302,7 +1302,7 @@
         A §r(set) can contain arbitrary mathematical objects. A §r(set) is a mathematical object itself. See where this is going? §Rs(set) can contain other §rs(set)!
       )§p(
         We can have nested §rs(set) such as §$(§$set[2](§$set(§$symbol0)(§$symbol1))(§$set(§$symbol0)(§$symbol2))(§$symbol3)), and our §rs(predicate) work just as before: §$$align*(
-          §$highlight(§$set(§$symbol0)(§$symbol2)) &§$in §$set[2](§$set(§$symbol0)(§$symbol1))(§$highlight(§$set(§$symbol0)(§$symbol2)))(§$symbol3) §$text(, and)
+          §$highlight1(§$set(§$symbol0)(§$symbol2)) &§$in §$set[2](§$set(§$symbol0)(§$symbol1))(§$highlight1(§$set(§$symbol0)(§$symbol2)))(§$symbol3) §$text(, and)
         )(
           §$set[2](§$highlight2(§$set(§$symbol0)(§$symbol1)))(§$highlight3_direct(§$symbol3)) &§$subseteq §$set[2](§$highlight2(§$set(§$symbol0)(§$symbol1)))(§$set(§$symbol0)(§$symbol2))(§$highlight3_direct(§$symbol3)).
         )

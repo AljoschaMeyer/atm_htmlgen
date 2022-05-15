@@ -115,6 +115,9 @@ pub(crate) struct State {
     pub hsection_render_number: [bool; 6],
     pub hsection_name: [String; 6],
 
+    pub aside_current_count: usize,
+    pub aside_level: usize,
+
     pub box_exercise_current_count: usize,
     pub box_exercise_level: usize,
     pub box_other_current_count: usize,
@@ -151,6 +154,9 @@ impl State {
             hsection_post_number: ["".into(), "</div>".into(), ": ".into(),": ".into(), ": ".into(), ": ".into()],
             hsection_render_number: [false, true, true, false, false, false],
             hsection_name: ["".into(), "Chapter".into(), "Section".into(), "Subsection".into(), "Subsubsection".into(), "Subsubsubsection".into()],
+
+            aside_current_count: 0,
+            aside_level: 1,
 
             box_exercise_current_count: 0,
             box_exercise_level: 1,

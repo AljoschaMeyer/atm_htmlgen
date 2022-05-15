@@ -216,6 +216,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "code".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"dfn" {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "dfn".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"html_cite" {
+                        self.pm(|t, p, a| OutInternal::HtmlTag(t, "cite".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"em" {
                         self.pm(|t, p, a| OutInternal::HtmlTag(t, "em".to_string(), p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"i" {
@@ -260,10 +262,20 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::HSection(t, p, a, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"drop" {
                         self.pm(|t, p, a| OutInternal::Drop(t, p, a), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"side" {
+                        self.pm(|t, p, a| OutInternal::Aside(t, p, a, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"side*" {
+                        self.pm(|t, p, a| OutInternal::Aside(t, p, a, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"pretty_venn_duration" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"60s"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"lorem" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, LOREM), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"meta1" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<i class="bgclll1 highlight low">bla</i>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"meta2" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<i class="bgclll3 highlight low">blubb</i>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"meta3" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<i class="bgclll5 highlight low">blip</i>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$mid" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\mid"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"symbol0" {
@@ -392,8 +404,10 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"\htmlClass{text_color}{"###, "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"verbatim" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="verbatim">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"nowrap" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="nowrap">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"video_container" {
-                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="slightlywide"><div class="video_container">"###, "</div></div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="video_container">"###, "</div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"solution" {
                         self.pm(|t, p, a| OutInternal::Toggled(t, p, a, r###"Show a possible solution"###, "Hide solution"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"proof_as_exercise" {
@@ -406,12 +420,18 @@ impl<'a> Parser<'a> {
                         self.pm(OutInternal::MathGroupingParens, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$text" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\text{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
-                    } else if macro_name == b"$highlight" {
+                    } else if macro_name == b"$highlight1" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc1}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$highlight2" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc2}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$highlight3" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc3}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlight4" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc4}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlight5" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc5}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlight6" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc6}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$highlight_direct" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmathdirect highlightc1}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$highlight2_direct" {
