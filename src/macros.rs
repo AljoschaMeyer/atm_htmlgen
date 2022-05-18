@@ -220,6 +220,9 @@ pub(crate) enum OutInternal {
     Fact(Trace, BoxParams, Vec<OutInternal>, String, bool /*no numbering*/),
     Proof(Trace, Proof, Vec<OutInternal>),
     Toggled(Trace, Toggled, Vec<OutInternal>, &'static str, &'static str),
+    LeftDelimiter(Trace, (), Vec<OutInternal>, &'static str),
+    RightDelimiter(Trace, (), Vec<OutInternal>, &'static str),
+    TextDelimiters(Trace, (), Vec<OutInternal>, &'static str, &'static str),
     Define(Trace, Define, Vec<OutInternal>, bool /* is there custom definition text */),
     Cref(Trace, Cref, Vec<OutInternal>),
     TeX(Trace, TeX, Vec<OutInternal>, bool),
@@ -426,18 +429,18 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
             y.state.enable_mathmode(&span)?;
 
-            return up_macro(|_, args, y, span| {
+            return up_macro(|p, args, y, span| {
                 y.state.disable_mathmode(&span)?;
 
                 #[cfg(unix)]
                 {
                     let pre = if args.len() == 3 {
-                        format!(r###"\text{{{}}}"###, args[0].to_string())
+                        format!(r###"\htmlClass{{normal_text}}{{\text{{{}}}}}\nobreak "###, args[0].to_string())
                     } else {
                         "".to_string()
                     };
                     let post = if args.len() > 1 {
-                        format!(r###"\text{{{}}}"###, args[args.len() - 1].to_string())
+                        format!(r###"\nobreak\htmlClass{{normal_text}}{{\text{{{}}}}}"###, args[args.len() - 1].to_string())
                     } else {
                         "".to_string()
                     };
@@ -498,6 +501,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 y.state.hsection_current_count[level] += 1;
             }
 
+            if y.state.aside_level == level {
+                y.state.aside_current_count = 0;
+            }
             if y.state.box_exercise_level == level {
                 y.state.box_exercise_current_count = 0;
             }
@@ -586,6 +592,71 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }, &params, args, trace, y);
         }
 
+        OutInternal::LeftDelimiter(trace, params, args, delimiter) => {
+            arguments_gte(0, &args, &trace)?;
+            arguments_lt(2, &args, &trace)?;
+            return down_macro(|_p, n, _y, _trace| {
+                if n == 0 {
+                    return Ok(Out::Text(delimiter.into()));
+                } else {
+                    return Ok(Out::Many(vec![
+                        Out::Text(format!(r###"<span class="nowrap">{}"###, delimiter).into()),
+                        Out::Argument(0),
+                        Out::Text(r###"</span>"###.into()),
+                        ]));
+                }
+            }, &params, args, trace, y);
+        }
+
+        OutInternal::RightDelimiter(trace, params, args, delimiter) => {
+            arguments_gte(0, &args, &trace)?;
+            arguments_lt(2, &args, &trace)?;
+            return down_macro(|_p, n, _y, _trace| {
+                if n == 0 {
+                    return Ok(Out::Text(delimiter.into()));
+                } else {
+                    return Ok(Out::Many(vec![
+                        Out::Text(r###"<span class="nowrap">"###.into()),
+                        Out::Argument(0),
+                        Out::Text(format!(r###"{}</span>"###, delimiter).into()),
+                        ]));
+                }
+            }, &params, args, trace, y);
+        }
+
+        OutInternal::TextDelimiters(trace, params, args, left, right) => {
+            arguments_gte(1, &args, &trace)?;
+            arguments_lt(4, &args, &trace)?;
+            return down_macro(|_p, n, _y, _trace| {
+                if n == 1 {
+                    return Ok(Out::Many(vec![
+                        Out::Text(format!(r###"<span class="nowrap">{}"###, left).into()),
+                        Out::Argument(0),
+                        Out::Text(format!(r###"{}</span>"###, right).into()),
+                        ]));
+                } else if n == 2 {
+                    return Ok(Out::Many(vec![
+                        Out::Text(format!(r###"<span class="nowrap">{}"###, left).into()),
+                        Out::Argument(0),
+                        Out::Text(r###"</span> "###.into()),
+                        Out::Text(r###"<span class="nowrap">"###.into()),
+                        Out::Argument(1),
+                        Out::Text(format!(r###"{}</span>"###, right).into()),
+                        ]));
+                } else {
+                    return Ok(Out::Many(vec![
+                        Out::Text(format!(r###"<span class="nowrap">{}"###, left).into()),
+                        Out::Argument(0),
+                        Out::Text(r###"</span> "###.into()),
+                        Out::Argument(1),
+                        Out::Text(r###" <span class="nowrap">"###.into()),
+                        Out::Argument(2),
+                        Out::Text(format!(r###"{}</span>"###, right).into()),
+                        ]));
+                }
+            }, &params, args, trace, y);
+        }
+
         OutInternal::ChapterNav(trace, params, args) => {
             arguments_exact(0, &args, &trace)?;
             return down_macro(|_p, _n, y, trace| {
@@ -634,8 +705,8 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             let numbering = if no_numbering {
                 "".to_string()
             } else {
-                y.state.box_exercise_current_count += 1;
-                let number = y.state.box_exercise_current_count;
+                y.state.aside_current_count += 1;
+                let number = y.state.aside_current_count;
                 format!("{}", number)
             };
 
@@ -1699,6 +1770,7 @@ impl Default for Define {
 }
 
 #[derive(Deserialize, Clone)]
+// Whether to have a left and/or right quotation mark surrounding the math.
 pub struct TeX;
 
 impl Default for TeX {

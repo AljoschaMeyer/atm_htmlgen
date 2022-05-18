@@ -386,6 +386,18 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, true, true, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"proven_fact" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="proven_fact">"###, "</div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"lparen" {
+                        self.pm(|t, p, a| OutInternal::LeftDelimiter(t, p, a, "("), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"rparen" {
+                        self.pm(|t, p, a| OutInternal::RightDelimiter(t, p, a, ")"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"lquote" {
+                        self.pm(|t, p, a| OutInternal::LeftDelimiter(t, p, a, "“"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"rquote" {
+                        self.pm(|t, p, a| OutInternal::RightDelimiter(t, p, a, "”"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"parens" {
+                        self.pm(|t, p, a| OutInternal::TextDelimiters(t, p, a, "(", ")"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"verbatim" {
+                        self.pm(|t, p, a| OutInternal::TextDelimiters(t, p, a, "“", "”"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$value" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\mathrm{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$cancel" {
@@ -402,8 +414,6 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"\htmlClass{define_notation}{"###, "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$text_color" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"\htmlClass{text_color}{"###, "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
-                    } else if macro_name == b"verbatim" {
-                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="verbatim">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"nowrap" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="nowrap">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"video_container" {
@@ -420,6 +430,30 @@ impl<'a> Parser<'a> {
                         self.pm(OutInternal::MathGroupingParens, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$text" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\text{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"highlightlow1" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="bgclll1 highlight low">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlow1" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll1 highlight low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"highlightlow2" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="bgclll2 highlight low">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlow2" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll2 highlight low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"highlightlow3" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="bgclll3 highlight low">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlow3" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll3 highlight low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"highlightlow4" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="bgclll4 highlight low">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlow4" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll4 highlight low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"highlightlow5" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="bgclll5 highlight low">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlow5" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll5 highlight low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"highlightlow6" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="bgclll6 highlight low">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlow6" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll6 highlight low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$highlight1" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{highlightmath highlightc1}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$highlight2" {

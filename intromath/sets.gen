@@ -88,11 +88,11 @@
       §p(
         When attempting to define the foundations of mathematics, you run into a chicken-egg problem: Any definition needs to make use of mathematical concepts, so in particular the definition of the foundational objects also requires prior definitions. But then it clearly is not foundational.
       )§p(
-        While there are sophisticated ways of avoiding this problem, they require a good understanding of mathematics to begin with. So we instead follow the traditional approach in teaching: Our very first definition will be slightly informal, and we will simply pretend that it was sufficiently precise. Hence the §verbatim(naïve) in the chapter title §verbatim(naïve set theory).
+        While there are sophisticated ways of avoiding this problem, they require a good understanding of mathematics to begin with. So we instead follow the traditional approach in teaching: Our very first definition will be slightly informal, and we will simply pretend that it was sufficiently precise. Hence the §verbatim(naïve) in the chapter title §verbatim(naïve)(set)(theory).
       )§p(
         In particular, we will talk about mathematical §verbatim(objects), without specifically stating what those are. For our purposes, we require that an object is §r(equal) to itself but not to anything else. The number §$(17)(,) for example, is a mathematical object.
       )§p(
-        Furthermore, an object must be §verbatim(well-defined), that is, it must be clear, for the purposes of determining §r(equal)(equality), which object you are talking about. For example, §verbatim(the most important composer of the 18th century) is not well-defined; whether the most important composer of the 18th century is §r(equal) to §link(Johann Sebastian Bach)(https://en.wikipedia.org/wiki/Johann_Sebastian_Bach) is a matter of personal opinion, not of mathematical reasoning.
+        Furthermore, an object must be §verbatim(well-defined), that is, it must be clear, for the purposes of determining §r(equal)(equality), which object you are talking about. For example, §verbatim(the)(most important composer of the 18th)(century) is not well-defined; whether the most important composer of the 18th century is §r(equal) to §link(Johann Sebastian Bach)(https://en.wikipedia.org/wiki/Johann_Sebastian_Bach) is a matter of personal opinion, not of mathematical reasoning.
       )§p(
         We will use squirrel-related iconography for our mathematical objects: §$(§$symbol0§ , §$symbol1§ , §$symbol2§ , §$symbol3)(,) and §$(§$symbol4)(.) We know that §$(§$symbol0 §$eq §$symbol0§ , §$symbol0 §$neq §$symbol1)(,) and so on, and these are the only properties we ascribe to those symbols.
       )§p(
@@ -120,7 +120,7 @@
         §set_math_id["in", "set_membership"]
         §set_math_id["notin", "set_membership"]
         §p(
-          To express that an object §$(x) occurs in a §r(set) §$(X)(,) we write §$(x §$in X)(,) and we say that §verbatim(§$(x) is an §define(element) of §$(X)), §verbatim(§$(x) is a §define(member) of §$(X)), or simply that §verbatim(§$(x) §define(in) §$(X)).
+          To express that an object §$(x) occurs in a §r(set) §$(X)(,) we write §$(x §$in X)(,) and we say that §verbatim(§$(x))(is an §define(element) of)(§$(X)), §verbatim(§$(x))(is a §define(member) of)(§$(X)), or simply that §verbatim(§$(x))(§define(in))(§$(X)).
         )§p(
           If not §$(x §$in X)(,) we write §$(x §$notin X)(.)
         )
@@ -166,7 +166,7 @@
         )
 
         §p(
-          Take a moment to consider some equivalent formulations for the §verbatim(if and only if) in §cref(set_eq):
+          Take a moment to consider some equivalent formulations for the §verbatim(if)(and only)(if) in §cref(set_eq):
         )
         §ul(
           §li(§$(A §$seq B) if every §$(x §$in A) is §r(in) §$(B) and every §$(x §$in B) is §r(in) §$(A)(.))
@@ -287,7 +287,7 @@
         )
 
         §p(
-          The definition of §r(sequal)(set equality) also justifies why we talk about §verbatim(§em(the) §r(empty set)) and not §verbatim(§em(an) §r(empty set)). The set of numbers that are both less than 12 and greater than 17, and the set of unicorns on the international space station, are precisely the same mathematical object.
+          The definition of §r(sequal)(set equality) also justifies why we talk about §lquote§ §em(the) §r(empty set)§rquote and not §lquote§ §em(an) §r(empty set)§rquote§ . The set of numbers that are both less than 12 and greater than 17, and the set of unicorns on the international space station, are precisely the same mathematical object.
         )
 
       )
@@ -374,11 +374,11 @@
         )
 
         §p(
-          If you played around a bit with §cref(example_subseteq), you may have noticed that the §r(empty set) is a §r(subset) of every set. To understand why, we need to take a close look at how §rs(subset) are defined. The §r(subset)(definition) talks about §verbatim(all §$(x §$in A)), so what happens if §$(A §$seq §$set)(?) There exists no §$(x) such that §$(x §$in §$set)(,) so what does that mean for the §r(subset)(definition)?
+          If you played around a bit with §cref(example_subseteq), you may have noticed that the §r(empty set) is a §r(subset) of every set. To understand why, we need to take a close look at how §rs(subset) are defined. The §r(subset)(definition) talks about §lquote§ all §$(x §$in A)(§rquote§ ,) so what happens if §$(A §$seq §$set)(?) There exists no §$(x) such that §$(x §$in §$set)(,) so what does that mean for the §r(subset)(definition)?
         )§p(
           On an intuitive level, you can say that in order to show that some §r(set) is a §r(subset) of another, you need to show that a certain property holds for each of its §rs(member). As the §r(empty set) has no §rs(member), you do not need to show anything.
         )§p(
-          More formally, the phrase §verbatim(for each §$(x §$in A) holds §i(bla)) is a shorthand for §verbatim(for each object §$(x) holds that §$(x §$in A) implies §i(bla)). With that knowledge, we can formally prove that the §r(empty set) is a §r(subset) of every set:
+          More formally, the phrase §verbatim(for)(each §$(x §$in A) holds)(§meta1) is a shorthand for §verbatim(for)(each object §$(x) holds that §$(x §$in A) implies)(§meta1). With that knowledge, we can formally prove that the §r(empty set) is a §r(subset) of every set:
         )
 
         §proven_fact(
@@ -400,14 +400,14 @@
 
         §exercise["vacuous_nontruth"](
           §p(
-            Based on your knowledge about §r(negation)(negating) §rs(universal quantification), give a full picture of how statements like §verbatim(there exists §$(x §$in §$set) such that §i(bla)) work out.
+            Based on your knowledge about §r(negation)(negating) §rs(universal quantification), give a full picture of how statements like §verbatim(there)(exists §$(x §$in §$set) such that)(§meta1) work out.
           )
           §solution["vacuous_nontruth"](
             §p(
               Such a statement is always false; intuitively it is impossible to find a §r(witness) that is §r(in) the §r(empty set).
             )
             §p(
-              §verbatim(There exists §$(x §$in §$set) such that §i(bla)) is §r(bi-implication)(equivalent) to its §r(double negation) §verbatim(it does not hold that there exists no §$(x §$in §$set) such that §i(bla)). This in turn is §r(bi-implication)(equivalent) to §verbatim(it does not hold that for each §$(x §$in §$set) §i(not bla)), which is the §r(negation) of a §r(vacuously) true statement, and thus false.
+              §verbatim(There)(exists §$(x §$in §$set) such that)(§meta1) is §r(bi-implication)(equivalent) to its §r(double negation) §verbatim(it)(does not hold that there exists no §$(x §$in §$set) such that)(§meta1). This in turn is §r(bi-implication)(equivalent) to §verbatim(it)(does not hold that for each §$(x §$in §$set))(not §meta1), which is the §r(negation) of a §r(vacuously) true statement, and thus false.
             )
           )
         )
@@ -604,9 +604,9 @@
               §$set_builder[1](x)(§$text($x §$in §$set(§$symbol0)(§$symbol1)(§$symbol2)$ and $x §$in §$set(§$symbol0)(§$symbol2)(§$symbol3)$)) §$seq §$set(§$symbol0)(§$symbol2).
             )
           )§p(
-            Read the above example as §verbatim(the §r(set) that contains all §$(x) such that §$(x §$in §$set(§$symbol0)(§$symbol1)(§$symbol2)) and §$(x §$in §$set(§$symbol0)(§$symbol2)(§$symbol3))).
+            Read the above example as §lquote§ the §r(set) that contains all §$(x) such that §$(x §$in §$set(§$symbol0)(§$symbol1)(§$symbol2)) and §$(x §$in §$set(§$symbol0)(§$symbol2)(§$symbol3))(§rquote§ .)
           )
-        ), in which we specify a §r(set) by giving a §r(predicate) that is satisfied exactly by the §rs(member) of the §r(set) (read the vertical bar (§verbatim(§$(§$mid))) as §verbatim(such that)):
+        ), in which we specify a §r(set) by giving a §r(predicate) that is satisfied exactly by the §rs(member) of the §r(set) (read the vertical bar (§verbatim(§$(§$mid))) as §verbatim(such)(that)):
       )§p(
         §$(§$set_builder[1](x)(§$text($x §$in §$set(§$symbol0)(§$symbol1)(§$symbol2)$ and $x §$in §$set(§$symbol0)(§$symbol2)(§$symbol3)$)))(,) for example, is a complicated way of denoting the §r(set) §$(§$set(§$symbol0)(§$symbol2))(.)
       )§p(
@@ -832,7 +832,7 @@
         )
 
         §p(
-          We call operators for which the grouping makes no difference §define(associative), and we don't require explicit grouping via parentheses for §r(associative) operators, so it is fine to write, for example, §verbatim(§$(A §$union B §$union C)). In general, you must always provide parentheses with any §r(binary operator), unless the operator in question has been proven to be §r(associative).
+          We call operators for which the grouping makes no difference §define(associative), and we don't require explicit grouping via parentheses for §r(associative) operators, so it is fine to write, for example, §$(§lquote)(A §$union B §$union C)(§rquote§ .) In general, you must always provide parentheses with any §r(binary operator), unless the operator in question has been proven to be §r(associative).
         )
 
         §p(
@@ -1061,7 +1061,7 @@
                       §proof_part(
                         §verbatim(§$(x §$notin A §$implies x §$notin §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))):
                       )(
-                        If §$(x §$notin A)(,) then §verbatim(§$(x §$notin A) and §$(x §$in B)) is not true, and then also §$(x §$notin §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))(.)
+                        If §$(x §$notin A)(,) then §$(§lquote)(x §$notin A)() and §$(x §$in B)(§rquote) is not true, and then also §$(x §$notin §$set_builder(x)(§$text($x §$in A$ or ($x §$in A$ and $x §$in B$))))(.)
                       )
                     )
                   )
@@ -1408,15 +1408,15 @@
             §p(
               We do a proof by contraposition, that is, we show that if §$(A §$sneq B)(,) then §$(§$powerset(A) §$seq §$powerset(B))(.) To that end, let §$(A, B) be §rs(set) with §$(A §$sneq B)(.)
             )§p(
-              Without loss of generality, there is §$(a §$in A) such that §$(a §$notin B) (otherwise switch the roles of §$(A) and §$(B)). Then §$(§$set(a) §$in §$powerset(A)) (because §$(§$set(a) §$subseteq A)) but §$(§$set(a) §$notin §$powerset(B)) (because §$(§$set(a) §$nsubseteq B)), and thus §$(§$powerset(A) §$sneq §$powerset(B))(.)
+              Without loss of generality, there is §$(a §$in A) such that §$(a §$notin B) §parens(otherwise)(switch the roles of §$(A) and)(§$(B)). Then §$(§$set(a) §$in §$powerset(A)) §(§$()(§$set(a) §$subseteq A)(§)) but §$(§$set(a) §$notin §$powerset(B)) §(because §$()(§$set(a) §$nsubseteq B)(§),) and thus §$(§$powerset(A) §$sneq §$powerset(B))(.)
             )
           )
         )
 
         §p(
-          The proof of §cref(equal_powersets_equal_sets) contains the handy phrase §verbatim(without loss of generality), which indicates that only one of several distinct cases will be presented, because the other cases work in a similar way and can be handled through simple modifications to the presented argument. In this example, it is clearly not always true that §$(A) has a §r(member) that is not §r(in) §$(B)(,) as §$(A) could be a §r(strict subset) of §$(B)(.) But in that case, simply renaming §$(A) to §verbatim(§$(B)) and vice versa correctly finishes the proof.
+          The proof of §cref(equal_powersets_equal_sets) contains the handy phrase §verbatim(without)(loss of)(generality), which indicates that only one of several distinct cases will be presented, because the other cases work in a similar way and can be handled through simple modifications to the presented argument. In this example, it is clearly not always true that §$(A) has a §r(member) that is not §r(in) §$(B)(,) as §$(A) could be a §r(strict subset) of §$(B)(.) But in that case, simply renaming §$(A) to §verbatim(§$(B)) and vice versa correctly finishes the proof.
         )§p(
-          Quickly jotting down a §verbatim(without loss of generality) (or §verbatim(w.l.o.g.) for the particularly time-pressed mathematician) can often lead to overlooking crucial corner cases, leading to faulty proofs. Whenever you feel tempted to wlog your way out of a lengthy proof, ask yourself whether you can describe the necessary changes to cover all cases in one sentence. If yes, simply add that sentence to your proof. And if no, then you do not get to drop those convenient four words.
+          Quickly jotting down a §verbatim(without)(loss of)(generality) (or §verbatim(w.l.o.g.) for the particularly time-pressed mathematician) can often lead to overlooking crucial corner cases, leading to faulty proofs. Whenever you feel tempted to wlog your way out of a lengthy proof, ask yourself whether you can describe the necessary changes to cover all cases in one sentence. If yes, simply add that sentence to your proof. And if no, then you do not get to drop those convenient four words.
         )
 
       )
@@ -1540,7 +1540,7 @@
         )
 
         §p(
-          Keep in mind that §$(U) and §$(A) are §r(universal quantification)(universally quantified), so it is not sufficient to give a §r(set) §$(B) that only works for special choices of §$(U) and §$(A)(.) You can however define §$(B) in terms of §$(U) and §$(A)(,) for example, §verbatim(Define §$(B §$defeq U §$setminus A)).
+          Keep in mind that §$(U) and §$(A) are §r(universal quantification)(universally quantified), so it is not sufficient to give a §r(set) §$(B) that only works for special choices of §$(U) and §$(A)(.) You can however define §$(B) in terms of §$(U) and §$(A)(,) for example, §lquote§ Define §$(B §$defeq U §$setminus A)(§rquote§ .)
         )
       )
 

@@ -5,7 +5,7 @@
     §p(
       Have you ever wondered why the integers §$(§()(§$ldots§ , -2, -1, 0, 1, 2, §$ldots)(§)) do not include a negative zero? When the integers are having a party, the non-zero integers are each dancing with their partner of the opposite sign, while poor zero stands alone in a corner, hoping against hope that someday a negative zero might show up. Well, today is the day we use the power of mathematics to forever crush those dreams.
     )§p(
-      A distinctive property of the number zero is that adding or subtracting it to or from other numbers has no effect: for any integer §$(z) we always know that §$(0 + z = z, z + 0 = z)(,) and §$(z - 0 = z)(.) Because §$(z - 0 = z)(,) and adding a negative number is the same as subtracting the corresponding positive number, we also know that adding a negative zero to any number would have no effect: §$(-0 + z = z) and §$(z + -0 = z) for any integer §$(z)(.)
+      A distinctive property of the number zero is that adding or subtracting it to or from other numbers has no effect: for any integer §$(z) we always know that §$(0 + z = z, z + 0 = z)(,) and §$(z - 0 = z)(.) Because §$(z - 0 = z)(,) and adding a negative number is the same as subtracting the corresponding positive number, we also know that adding negative zero to any number would have no effect: §$(-0 + z = z) and §$(z + -0 = z) for any integer §$(z)(.)
     )§p(
       If adding negative zero to any integer has no effect, then, in particular, we can add it to zero without effect: §$(0 = 0 + -0)(.) We also know that §$(0 + -0 = -0), because adding any number to zero results in that number again. But if §$(0 = 0 + -0) and §$(0 + -0 = -0)(,) then also §$(0 = -0)(.) So §$(-0) is actually the same number as §$(0)(,) there can be no distinct zeros of different signs.
     )§p(
@@ -52,7 +52,7 @@
       )§definition["eq"](Equality)(
         §set_math_id["eq", "eq"]
         §p(
-          Two objects are considered §define["equal"](equal) if they are identical: everything is equal to itself, but not equal to anything else. Claiming that two objects are §r(equal) is a statement. We write §verbatim(§$(x §$eq y)) to compactly express that the object §$(x) is §r(equal) to the object §$(y)(.)
+          Two objects are considered §define["equal"](equal) if they are identical: everything is equal to itself, but not equal to anything else. Claiming that two objects are §r(equal) is a statement. We write §$(§lquote)(x §$eq y)(§rquote) to compactly express that the object §$(x) is §r(equal) to the object §$(y)(.)
         )
       )
 
@@ -73,9 +73,9 @@
         Though rather unexciting, this is our first real proof. Introducing the concept of §r(equal)(equality) would be rather pointless if we could not immediately determine whether any two objects are §r(equal) or not.
       )§p(
         We can make things slightly more interesting by adding §definex["tour_def_term"](term)(terms)(terms)(
-          A §rdef(term) denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §verbatim(§$(+)) denotes addition of two numbers.
-        ) such as §$(1 + 2) to our language of statements. A §r(term) always denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §verbatim(§$(+)) denotes addition of two §side(numbers)(
-          We refrain from giving a precise definition of §verbatim(§$(+)) in this chapter, simply taking the results of concrete computations as granted. Occasionally, the example proofs make use of simple properties, for example, the fact that adding zero to a number yields that number again. Such properties would usually have to be proven from the definition of §verbatim(§$(+)), we will simply assume them to be true in order to focus on the mechanics of §r(deductive reasoning) instead.§br
+          A §rdef(term) denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §$(§lquote)(+)(§rquote) denotes addition of two numbers.
+        ) such as §$(1 + 2) to our language of statements. A §r(term) always denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §$(§lquote)(+)(§rquote) denotes addition of two §side(numbers)(
+          We refrain from giving a precise definition of §$(§lquote)(+)(§rquote) in this chapter, simply taking the results of concrete computations as granted. Occasionally, the example proofs make use of simple properties, for example, the fact that adding zero to a number yields that number again. Such properties would usually have to be proven from the definition of §$(§lquote)(+)(§rquote§ ,) we will simply assume them to be true in order to focus on the mechanics of §r(deductive reasoning) instead.§br
           §cref(chapter_induction) contains a precise definition of natural numbers and addition, as well as proofs for the properties we assume to hold in this chapter.
         ).
       )
@@ -97,9 +97,9 @@
         §p(
           The first such statements we examine are those of §definex["existential_quantification"](existential quantification)(
             §p(
-              A statement of §rdef(existential quantification) asserts that there exists at least one object satisfying a certain property: §verbatim(There exists a natural number §$(n) such that §$(n = 17)).
+              A statement of §rdef(existential quantification) asserts that there exists at least one object satisfying a certain property: §lquote§ There exists a natural number §$(n) such that §$(n = 17)(§rquote§ .)
             )§p(
-              You prove a statement of §r(existential quantification) by presenting a §r(witness), that is, an object that satisfies the required property: §verbatim(Define §$(n §$defeq 17)(,) then §$(n §$eq n)).
+              You prove a statement of §r(existential quantification) by presenting a §r(witness), that is, an object that satisfies the required property: §lquote§ Define §$(n §$defeq 17)(,) then §$(n §$eq n)(§rquote§ .)
             )
           ), which is just fancy terminology for stating that at least one object satisfying a certain property exists:
         )
@@ -116,9 +116,9 @@
         §p(
           You prove §r(existential quantification)(statements of this form) by presenting a §definex["witness"](witness)(witnesses)(
             §p(A §rdef(witness) for a statement of §r(existential quantification) is an object for which the quantified claim holds.)
-          ), that is, an object that satisfies the required property. Note how two symbols that looks similar but have very different meaning appear in the proof: §verbatim(§$(§$eq)) signifies a statement that is true if both sides of the symbol denote the same object, whereas §definex["defeq"](defeq)()()(
-            §p(The §verbatim(§$(§$defeq)) symbol makes the name on its left denote the object on its right: §verbatim(Define §$(x §$defeq 42), then §$(x §$eq 42)).)
-          )§set_math_id["defeq", "defeq"]§set_math_id["eqdef", "defeq"]§verbatim(§$(§$defeq)) makes the name on the left side denote the object on the right side.
+          ), that is, an object that §lquote§ satisfies the required property. Note how two symbols that looks similar but have very different meaning appear in the proof: §$(§lquote)(§$eq)(§rquote) signifies a statement that is true if both sides of the symbol denote the same object, whereas §definex["defeq"](defeq)()()(
+            §p(The §$(§lquote)(§$defeq)(§rquote) symbol makes the name on its left denote the object on its right: §lquote§ Define §$(x §$defeq 42), then §$(x §$eq 42)(§rquote§ .))
+          )§set_math_id["defeq", "defeq"]§set_math_id["eqdef", "defeq"]§$(§lquote)(§$defeq)(§rquote) makes the name on the left side denote the object on the right side.
         )§p(
           As §r(existential quantification) allows us to construct statements that contain other statements, we can formulate statements with multiple, nested levels of quantification:
         )
@@ -134,7 +134,7 @@
 
         §exercise["tour_existential_quantification_atleast"](
           §p(
-            When mathematicians say §verbatim(there exists an object) they mean §verbatim(there exists at least one object, and there may or may not be more). Why is that, and why is it not necessary to say so explicitly?
+            When mathematicians say §verbatim(there)(exists an)(object) they mean §verbatim(there)(exists at least one object, and there may or may not be)(more). Why is that, and why is it not necessary to say so explicitly?
           )
           §solution["tour_existential_quantification_atleast"](
             §p(
@@ -146,9 +146,9 @@
         §p(
           Besides §r(existential quantification) for asserting that a statement holds for at least one object, there is §definex["universal_quantification"](universal quantification)(
             §p(
-              A statement of §rdef(universal quantification) asserts that all objects satisfy a certain property: §verbatim(For each natural number §$(n) holds that §$(n §$eq n)).
+              A statement of §rdef(universal quantification) asserts that all objects satisfy a certain property: §lquote(For) each natural number §$(n) holds that §$(n §$eq n)(§rquote§ .)
             )§p(
-              You prove a statement of §r(universal quantification) by showing that an arbitrarily chosen object satisfies the required property: §verbatim(Let §$(n) be a natural number. Then §$(n §$eq n)).
+              You prove a statement of §r(universal quantification) by showing that an arbitrarily chosen object satisfies the required property: §lquote(Let) §$(n) be a natural number. Then §$(n §$eq n)(§rquote§ .)
             )
           ) for asserting that a statement holds for all objects:
         )
@@ -163,9 +163,9 @@
         )
 
         §p(
-          Because there are infinitely many natural numbers, we cannot prove a statement about every single number by going through all of them; we need our proofs to be of finite size. The only way to prove statements of §r(universal quantification) is by showing that the property in question holds for an arbitrarily chosen object, one about which we know nothing except that it is the kind of object that the statement speaks of. Throughout the book, we always use the phrase §verbatim(let §$(x) be a §i(something)) to express when this is happening. Proving statements by working with arbitrarily chosen, featureless objects usually takes some getting used to, but it is the only way of proving statements about infinitely many objects.
+          Because there are infinitely many natural numbers, we cannot prove a statement about every single number by going through all of them; we need our proofs to be of finite size. The only way to prove statements of §r(universal quantification) is by showing that the property in question holds for an arbitrarily chosen object, one about which we know nothing except that it is the kind of object that the statement speaks of. Throughout the book, we always use the phrase §verbatim(let)(§$(x) be a)(§i(something)) to express when this is happening. Proving statements by working with arbitrarily chosen, featureless objects usually takes some getting used to, but it is the only way of proving statements about infinitely many objects.
         )§p(
-          The phrase §verbatim(Let §$(x) be a §i(something).) is also sometimes used as a different way of phrasing statements of §r(universal quantification), most often to specify in advance which kinds of objects a statement will talk about. The following example expresses exactly the same fact as §cref(tour_universal_quantification) (and thus admits an identical proof), merely formulated differently:
+          The phrase §verbatim(let)(§$(x) be a)(§i(something)) is also sometimes used as a different way of phrasing statements of §r(universal quantification), most often to specify in advance which kinds of objects a statement will talk about. The following example expresses exactly the same fact as §cref(tour_universal_quantification) (and thus admits an identical proof), merely formulated differently:
         )
 
         §proven_fact(
@@ -210,8 +210,8 @@
                 )(
                   &§$eq 17, §$tag(Definition $+$)
                 ) and §side(thus)(
-                The intent behind chaining §r(equal)(equal signs) as in §span(nowrap)(§verbatim(§$(12 + k §$eq 12 + 5 §$eq 17))) is to express that the §rs(term) on the two sides of each §verbatim(§$(§$eq)) are §r(equal) to each other, and that consequently the first §r(term) is §r(equal) to the last one.§br
-                This interpretation is different from that of each §verbatim(§$(§$eq)) expressing a new statement; technically we must write something along the lines of §verbatim(§$(12 + k §$eq 12 + 5)(,) §$(12 + 5 §$eq 17)(,) and thus §$(12 + k §$eq 17)) instead.§br
+                The intent behind chaining §r(equal)(equal signs) as in §span(nowrap)(§$(§lquote)(12 + k §$eq 12 + 5 §$eq 17)(§rquote)) is to express that the §rs(term) on the two sides of each §$(§lquote)(§$eq)(§rquote) are §r(equal) to each other, and that consequently the first §r(term) is §r(equal) to the last one.§br
+                This interpretation is different from that of each §$(§lquote)(§$eq)(§rquote) expressing a new statement; technically we must write something along the lines of §$(§lquote)(12 + k §$eq 12 + 5)(,) §$(12 + 5 §$eq 17)(,) and thus §$(12 + k §$eq 17)(§rquote) instead.§br
                 The notational convention of chaining §r(equal)(equal signs) is so useful and commonplace however, that we make use of it as well.
               ) §$(12 §$leq 17)(.)
             )
@@ -246,7 +246,7 @@
         §p(
           As you can see, a definition is nothing but a shorthand; proofs proceed by unfolding the definition and then continuing as if the body of the definition had been used rather than its shorter name. Naming recurring concepts is vital to achieving concise yet precise communication, and it can also help in clarifying thought processes. This can lead to short sentences carrying large amounts of information, but this information can always be recovered by repeatedly unfolding definitions.
         )§p(
-          This book tries to make the unfolding of definitions as easy as possible: you can hover over any defined terminology (for example, §verbatim(§r(less than or equal to))) or symbol (for example, §verbatim(§$(§$leq))), and the definition will open in a tooltip. The terminology or symbol is also a hyperlink to its definition.
+          This book tries to make the unfolding of definitions as easy as possible: you can hover over any defined terminology (for example, §lquote§ §r(less than or equal to)§rquote§ ) or symbol §(for example, §$(§lquote)(§$leq)(§rquote§),) and the definition will open in a tooltip. The terminology or symbol is also a hyperlink to its definition.
         )
 
         §proven_fact(
@@ -265,11 +265,11 @@
         )
 
         §p(
-          Originally, §r(equal)(equality) was our only way of moving from objects of interest to statements of truth: §verbatim(§$(17)) is not a statement (it is neither true nor false), but §verbatim(§$(17 §$eq 18)) is (albeit a false one). The newly defined concept of numbers being §r(less than or equal to) each other achieves the same shift of conceptual level, it combines a number of §rs(term) into a statement. We call such concepts §definex["predicate"](predicate)(predicates)(predicates)(
+          Originally, §r(equal)(equality) was our only way of moving from objects of interest to statements of truth: §$(§lquote)(17)(§rquote) is not a statement (it is neither true nor false), but §$(§lquote)(17 §$eq 18)(§rquote) is (albeit a false one). The newly defined concept of numbers being §r(less than or equal to) each other achieves the same shift of conceptual level, it combines a number of §rs(term) into a statement. We call such concepts §definex["predicate"](predicate)(predicates)(predicates)(
             §p(
               A §rdef(predicate) combines a number of §rs(term) into a statement.
             )§p(
-              The prototypical §r(predicate) is §r(equal)(equality): §verbatim(§$(17)) is not a statement (it is neither true nor false), but §verbatim(§$(17 §$eq 18)) is.
+              The prototypical §r(predicate) is §r(equal)(equality): §$(§lquote)(17)(§rquote) is not a statement (it is neither true nor false), but §$(§lquote)(17 §$eq 18)(§rquote) is.
             )
           ).
         )§p(
@@ -320,7 +320,7 @@
         )
 
         §p(
-          It would not have been difficult to prove §cref(use_universal) directly, but utilizing §cref(tour_leq2) saved us the trouble of finding a suitable number §$(k) to add to §$(5)(.) In fact, our proof works even if we have no idea how §verbatim(§$(§$leq)) is defined. This hints at one of the key strengths of §r(deductive reasoning): we can reason in terms of high-level concepts (§verbatim(§$(§$leq))) while still getting the guarantee that everything works because it can ultimately be broken down to simple and correct building blocks (§r(equal)(equality) and §r(existential quantification) in this case).
+          It would not have been difficult to prove §cref(use_universal) directly, but utilizing §cref(tour_leq2) saved us the trouble of finding a suitable number §$(k) to add to §$(5)(.) In fact, our proof works even if we have no idea how §$(§lquote)(§$leq)(§rquote) is defined. This hints at one of the key strengths of §r(deductive reasoning): we can reason in terms of high-level concepts §$(§(§lquote)(§$leq)(§rquote§)) while still getting the guarantee that everything works because it can ultimately be broken down to simple and correct building blocks (§r(equal)(equality) and §r(existential quantification) in this case).
         )
 
         §p(
@@ -333,7 +333,7 @@
           )
           §proof["use_existential"](
             §p(
-              By §cref(tour_leq) we know that §$(12 §$leq 17)(.) From the definition of §verbatim(§$(§$leq)) we obtain §$(k) such §side(that)(This is where we use a statement of §r(existential quantification). You might know that the §r(witness) is §$(5)(,) but the fact that §$(12 §$leq 17) does not tell us that — it only states that §em(some) §r(witness) must exist.) §$(12 + k §$eq 17)(.)
+              By §cref(tour_leq) we know that §$(12 §$leq 17)(.) From the definition of §$(§lquote)(§$leq)(§rquote) we obtain §$(k) such §side(that)(This is where we use a statement of §r(existential quantification). §em(You) might know that the §r(witness) is §$(5)(,) but the fact that §$(12 §$leq 17) does not include that information — it only states that §em(some) §r(witness) must exist.) §$(12 + k §$eq 17)(.)
             )§p(
               If §$(12 + k §$eq 17)(,) then also §$(§$p(12 + k) + 1 §$eq 17 + 1)(,) then also §$(§$p(12 + k) + 1 §$eq 18)(,) and then also §$(12 + §$p(k + 1) §$eq 18)(.)
             )§p(
@@ -361,31 +361,31 @@
               A §rdef(name) is a shorthand for a §r(term) or object. Every name must be bound to a §r(term) or object through one of the following constructs:
             )§ul(
               §li(
-                Formulating §rs(universal quantification): §verbatim(For each squirrel §$(s) holds that…).
+                Formulating §rs(universal quantification): §verbatim(For)(each squirrel §$(s) holds)(that…).
               )§li(
-                Proving §rs(universal quantification): §verbatim(Let §$(s) be a squirrel, then…).
+                Proving §rs(universal quantification): §verbatim(Let)(§$(s) be a squirrel,)(then…).
               )§li(
-                Formulating §rs(existential quantification): §verbatim(There exists a squirrel §$(s) such that…).
+                Formulating §rs(existential quantification): §verbatim(There)(exists a squirrel §$(s) such)(that…).
               )§li(
-                Using §rs(existential quantification): §verbatim(Obtain a squirrel §$(s) such that…).
+                Using §rs(existential quantification): §verbatim(Obtain)(a squirrel §$(s) such)(that…).
               )§li(
-                Explicit §r(defeq)(naming): §verbatim(Define §$(s §$defeq §$ldots)).
+                Explicit §r(defeq)(naming): §lquote(Define) §$(s §$defeq §$ldots)(§rquote§ .)
               )
             )
-          ), which we have started using in §rs(term) such as §verbatim(§$(n + k §$eq 17)) without prior discussion. §Rs(name) can stand in for objects or §rs(term), but they never drop out of nowhere. Every §r(name) has to be introduced before it can appear in a proof: If we have no idea what §$(x) is, how are we to determine whether §$(x §$eq 6) is true or false?
+          ), which we have started using in §rs(term) such as §$(§lquote)(n + k §$eq 17)(§rquote) without prior discussion. §Rs(name) can stand in for objects or §rs(term), but they never drop out of nowhere. Every §r(name) has to be introduced before it can appear in a proof: If we have no idea what §$(x) is, how are we to determine whether the statement §$(§lquote)(x §$eq 6)(§rquote) is true or false?
         )§p(
           There is only a limited number of ways in which §rs(name) can be introduced, and we have already seen all of them:
         )§ul(
           §li(
-            Formulating §rs(universal quantification): §verbatim(For each squirrel §$(s) holds that…).
+            Formulating §rs(universal quantification): §verbatim(For)(each squirrel §$(s) holds)(that…).
           )§li(
-            Proving §rs(universal quantification): §verbatim(Let §$(s) be a squirrel, then…).
+            Proving §rs(universal quantification): §verbatim(Let)(§$(s) be a squirrel,)(then…).
           )§li(
-            Formulating §rs(existential quantification): §verbatim(There exists a squirrel §$(s) such that…).
+            Formulating §rs(existential quantification): §verbatim(There)(exists a squirrel §$(s) such)(that…).
           )§li(
-            Using §rs(existential quantification): §verbatim(Obtain a squirrel §$(s) such that…).
+            Using §rs(existential quantification): §verbatim(Obtain)(a squirrel §$(s) such)(that…).
           )§li(
-            Explicit §r(defeq)(naming): §verbatim(Define §$(s §$defeq §$ldots)).
+            Explicit §r(defeq)(naming): §lquote(Define) §$(s §$defeq §$ldots)(§rquote§ .)
           )
         )
         §p(
@@ -509,7 +509,7 @@
         )
 
         §p(
-          §Rs(negation) are usually formulated less verbosely, for example §verbatim(It does not hold that there exist §$(x) such that…) would normally be written along the lines of §verbatim(There exists no §$(x) such that…). The negation of statements of §r(equal)(equality) even has its own symbol: if §$(x) and §$(y) are §definex["neq"](unequal)(
+          §Rs(negation) are usually formulated less verbosely, for example §verbatim(It)(does not hold that there exist §$(x) such)(that…) would normally be written along the lines of §verbatim(There)(exists no §$(x) such)(that…). The negation of statements of §r(equal)(equality) even has its own symbol: if §$(x) and §$(y) are §definex["neq"](unequal)(
             §set_math_id["neq", "neq"]
             §p(Two objects are §rdef(unequal), written as §$(x §$neq y)(,) if they are not §r(equal).)
           ), we write §$(x §$neq y)(.)
@@ -533,7 +533,7 @@
         §p(
           Disproving statements by proving their §r(negation) makes sense only if we assume that every statement must either be true or false. This assumption is known as the §definex["bivalence"](principle of bivalence)(
             §p(The §rdef(principle of bivalence) states that every statement is either true or false.)
-          ), and while it might feel self-evident, it is possible to find self-consistent frameworks for §r(deductive reasoning) that reject it. To keep things compact, this book consistently sticks to the prevalent school of §verbatim(classical mathematics) that accepts the §r(principle of bivalence)§side()(The schools of mathematics that reject the §r(principle of bivalence) are collectively referred to as §link(§verbatim(constructive mathematics))(https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)).).
+          ), and while it might feel self-evident, it is possible to find self-consistent frameworks for §r(deductive reasoning) that reject it. To keep things compact, this book consistently sticks to the prevalent school of §em(classical mathematics) that accepts the §r(principle of bivalence)§side()(The schools of mathematics that reject the §r(principle of bivalence) are collectively referred to as §link(§em(constructive mathematics))(https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_mathematics)).).
         )
 
         §p(
@@ -563,11 +563,11 @@
           §p(
             A common mistake when §r(negation)(negating) statements of §r(existential quantification) is to propagate the §r(negation) without swapping to §r(universal quantification).
           )§p(
-            Give a §r(predicate) §verbatim(§meta1) such that §verbatim(there exists no squirrel §$(s) such that §meta1) and §verbatim(there exists a squirrel §$(s) such that not §meta1) do not §r(mean the same).
+            Give a §r(predicate) §verbatim(§meta1) such that §verbatim(there)(exists no squirrel §$(s) such that)(§meta1) and §verbatim(there)(exists a squirrel §$(s) such that not)(§meta1) do not §r(mean the same).
           )
           §solution["wrong_negation_existential"](
             §p(
-              Consider the §r(predicate) of being §r(equal) to §$(§$value(Alex))(.) The statement that there exists no squirrel §$(s) such that §$(s §$eq §$value(Alex)) is false, because if we define §$(s §$defeq §$value(Alex))(,) then §$(s §$neq §$value(Alex)) does not hold.
+              Consider the §r(predicate) of being §r(equal) to §$(§$value(Alex))(.) The statement that there exists no squirrel §$(s) such that §$(s §$eq §$value(Alex)) is false, because if we define §$(s §$defeq §$value(Alex))(,) then §$(s §$eq §$value(Alex)) does hold.
             )§p(
               If we propagate the §r(negation) without swapping to §r(universal quantification) however, the statement becomes true: there exists a squirrel §$(s) such that §$(s §$neq §$value(Alex))(,) for example §$(s §$defeq §$value(Blake))(.)
             )
@@ -576,7 +576,7 @@
           §p(
             A common mistake when §r(negation)(negating) statements of §r(universal quantification) is to propagate the §r(negation) without swapping to §r(existential quantification).
           )§p(
-            Give a §r(predicate) §verbatim(§meta1) such that §verbatim(it does not hold that for each squirrel §$(s) holds §meta1) and §verbatim(for each squirrel §$(s) does not hold §meta1) do not §r(mean the same).
+            Give a §r(predicate) §verbatim(§meta1) such that §verbatim(it)(does not hold that for each squirrel §$(s) holds)(§meta1) and §verbatim(for)(each squirrel §$(s) does not hold)(§meta1) do not §r(mean the same).
           )
           §solution["wrong_negation_universal"](
             §p(
@@ -595,9 +595,9 @@
         )§p(
           A §definex["conjunction"](conjunction)(
             §p(
-              A §rdef(conjunction) asserts that two substatements both hold: §verbatim(§$(5 §$eq 5) and §$(6 §$eq 6)).
+              A §rdef(conjunction) asserts that two substatements both hold: §$(§lquote)(5 §$eq 5)() and §$(6 §$eq 6)(§rquote).
             )§p(
-              You prove a §r(conjunction) by proving both of its substatements: §verbatim(§$(5 §$eq 5) holds by definition, and §$(6 §$eq 6) holds by definition, and so the full statement holds).
+              You prove a §r(conjunction) by proving both of its substatements: §$(§lquote)(5 §$eq 5)() holds by definition, and §$(6 §$eq 6) holds by definition, and so the full statement holds§rquote§ .
             )
           ) asserts that two substatements are both true:
         )
@@ -614,13 +614,13 @@
         )
 
         §p(
-          As you can see, you prove a §r(conjunction) by proving both of its §side(substatements)(We have now officially reached the §verbatim(trivial or even boring) examples.).
+          As you can see, you prove a §r(conjunction) by proving both of its §side(substatements)(We have now officially reached the §verbatim(trivial)(or even)(boring) examples.).
         )§p(
           A §definex["disjunction"](disjunction)(
             §p(
-              A §rdef(disjunction) asserts that out of two substatements at least one holds: §verbatim(§$(5 §$eq 6) or §$(6 §$eq 6)).
+              A §rdef(disjunction) asserts that out of two substatements at least one holds: §$(§lquote)(5 §$eq 6)() or §$(6 §$eq 6)(§rquote§ .)
             )§p(
-              You prove a §r(disjunction) by proving either of its substatements: §verbatim(§$(6 §$eq 6) holds by definition, and so the full statement holds).
+              You prove a §r(disjunction) by proving either of its substatements: §$(§lquote)(6 §$eq 6)() holds by definition, and so the full statement holds§rquote§ .
             )
           ) asserts that out of two substatements at least one is true:
         )
@@ -678,18 +678,18 @@
             §p(
               The §rdef(exclusive or) of two substatements asserts that exactly one of them holds.
             )
-          ), which denotes that both at least and at most one — that is, exactly one — of two alternatives §verbatim(§meta1) and §verbatim(§meta2) is true, is formulated as an explicit §verbatim(either §meta1 or §meta2).
+          ), which denotes that both at least and at most one — that is, exactly one — of two alternatives §verbatim(§meta1) and §verbatim(§meta2) is true, is formulated as an explicit §verbatim(either)(§meta1 or)(§meta2).
         )
 
         §exercise["tour_xor"](
           §p(
-            Using §r(negation), §r(conjunction), and §r(disjunction), construct a statement with §r(mean the same)(the same meaning) as §verbatim(Either §$(§$value(Alex)) is hungry or §$(§$value(Alex)) is asleep).
+            Using §r(negation), §r(conjunction), and §r(disjunction), construct a statement with §r(mean the same)(the same meaning) as §verbatim(either)(§highlightlow1(§$(§$value(Alex)) is hungry) or)(§highlightlow3(§$(§$value(Alex)) is asleep)).
           )§p(
             Whenever you encounter an §r(exclusive or), you can prove it by first translating it into the equivalent statement that only uses §r(negation), §r(conjunction), and §r(disjunction).
           )
           §solution["tour_xor"](
             §p(
-              §$(§$value(Alex)) is hungry and §$(§$value(Alex)) is not asleep, or §$(§$value(Alex)) is not hungry and §$(§$value(Alex)) is asleep.
+              §highlightlow1(§$(§$value(Alex)) is hungry) and §highlightlow3(§$(§$value(Alex)) is not asleep), or §highlightlow1(§$(§$value(Alex)) is not hungry) and §highlightlow3(§$(§$value(Alex)) is asleep).
             )
           )
         )
@@ -697,9 +697,9 @@
         §p(
           Notice that whenever the §r(exclusive or) of two statements is true, then so is their §r(disjunction). Remember also that we assume every statement to be either true or false (the §r(principle of bivalence)). From these two properties, we obtain the §definex["excluded_middle"](law of excluded middle)(
             §p(
-              The §rdef(law of excluded middle) states that §verbatim(§meta1 or not §meta1) always holds.
+              The §rdef(law of excluded middle) states that §verbatim(§meta1)(or not)(§meta1) always holds.
             )
-          ): we can always assume §verbatim(§meta1 or not §meta1) to be true, no matter how simple or complicated of a statement §verbatim(§meta1) is.
+          ): we can always assume §verbatim(§meta1)(or not)(§meta1) to be true, no matter how simple or complicated of a statement §verbatim(§meta1) is.
         )
 
       )
@@ -738,7 +738,7 @@
           )
           §proof["tour_use_disjunction"](
             §p(
-              Let §$(s) be a squirrel. By the §r(law of excluded middle) we know that §$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex))(.) We do a §r(case distinction) on §verbatim(§$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex))):
+              Let §$(s) be a squirrel. By the §r(law of excluded middle) we know that §$(s §$eq §$value(Alex)) or §$(s §$neq §$value(Alex))(.) We do a §r(case distinction) on §$(§lquote)(s §$eq §$value(Alex))() or §$(s §$neq §$value(Alex))(§rquote):
             )§cases(
               §case(§$(s §$eq §$value(Alex)))(
                 §p(
@@ -769,7 +769,7 @@
               §case["exercise_tour_use_disjunction_case1"](§$(n §$eq 0))(
                 §p(
                   Define §$(m §$defeq 1)(,)§side*()(
-                    A common mistake is to not provide a specific value in §cref(exercise_tour_use_disjunction_case1), but only write something along the lines of §verbatim(§$(m) can be any natural number other than §$(0)). That may be true, but it does not change the fact that the only way of proving an §r(existential quantification) is to give a concrete, well-defined §r(witness). §verbatim(Any natural number other than §$(0)) is not that.§br
+                    A common mistake is to not provide a specific value in §cref(exercise_tour_use_disjunction_case1), but only write something along the lines of §verbatim(§$(m))(can be any natural number other than)(§$(0)). That may be true, but it does not change the fact that the only way of proving an §r(existential quantification) is to give a concrete, well-defined §r(witness). §verbatim(Any)(natural number other than)(§$(0)) is not that.§br
                     It can be helpful to explicitly tell your reader that you chose a §r(witness) arbitrarily within certain constraints. But for mathematical correctness, you always have to settle on a specific one.
                   ) then §$(m §$neq n)(.)
                 )
@@ -846,26 +846,26 @@
           §p(
             A common mistake when §r(negation)(negating) §rs(conjunction) is to propagate the §r(negation) without swapping to a §r(disjunction).
           )§p(
-            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §verbatim(not (§meta1 and §meta2)) and §verbatim((not §meta1) and (not §meta2)) do not §r(mean the same).
+            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §lquote§ not §lparen(§meta1) and §rquote(§rparen(§meta2)) and §lquote§ §(not §rparen(§meta1) and §(not §rquote(§rparen(§meta2)) do not §r(mean the same).
           )
           §solution["wrong_negation_conjunction"](
             §p(
-              The statement §verbatim(not §$(§()(0 §$eq 0)() and §$(0 §$eq 1)(§))) is true, because §verbatim(§$(0 §$eq 0) and §$(0 §$eq 1)) is false.
+              The statement §verbatim(not)(§$(§()(§$highlightlow1(0 §$eq 0))() and)(§$(§$highlightlow3(0 §$eq 1))(§))) is true, because §verbatim(§$(§$highlightlow1(0 §$eq 0)))(and)(§$(§$highlightlow3(0 §$eq 1))) is false.
             )§p(
-              The statement §verbatim((not §$(0 §$eq 0)) and (not §$(0 §$eq 1))) however is false, because §verbatim(not §$(0 §$eq 0)) is false.
+              The statement §lquote(§lparen(not)) §$(§$highlightlow1(0 §$eq 0))(§rparen) and §lparen(not) §$(§$highlightlow3(0 §$eq 1))(§rparen) however is false, because §verbatim(not)(§$(§$highlightlow1(0 §$eq 0))) is false.
             )
           )
         )§exercise["wrong_negation_disjunction"](
           §p(
             A common mistake when §r(negation)(negating) §rs(disjunction) is to propagate the §r(negation) without swapping to a §r(conjunction).
           )§p(
-            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §verbatim(not (§meta1 or §meta2)) and §verbatim((not §meta1) or (not §meta2)) do not §r(mean the same).
+            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §lquote§ not §lparen(§meta1) or §rquote(§rparen(§meta2)) and §lquote§ §(not §rparen(§meta1) or §(not §rquote(§rparen(§meta2)) do not §r(mean the same).
           )
           §solution["wrong_negation_disjunction"](
             §p(
-              The statement §verbatim(not §$(§()(0 §$eq 0)() or §$(0 §$eq 1)(§))) is false, because §verbatim(§$(0 §$eq 0)) is true.
+              The statement §verbatim(not)(§$(§()(§$highlightlow1(0 §$eq 0))() or)(§$(§$highlightlow3(0 §$eq 1))(§))) is false, because §verbatim(§$(§$highlightlow1(0 §$eq 0))) is true.
             )§p(
-              The statement §verbatim((not §$(0 §$eq 0)) or (not §$(0 §$eq 1))) however is true, because §verbatim(not §$(0 §$eq 1)) is true.
+              The statement §lquote(§lparen(not)) §$(§$highlightlow1(0 §$eq 0))(§rparen) or §lparen(not) §$(§$highlightlow3(0 §$eq 1))(§rparen) however is true, because §verbatim(not)(§$(§$highlightlow3(0 §$eq 1))) is true.
             )
           )
         )
@@ -874,7 +874,7 @@
 
       §hsection["meta_conjunction_disjunction"](Meta Statements for Conjunctions And Disjunctions)(
         §p(
-          We can observe some simple §rs(meta statement) for §rs(conjunction) and §rs(disjunction). The order of the two substatements of a §r(conjunction) or §r(disjunction) does not matter: §verbatim(§meta1 and §meta2) and §verbatim(§meta2 and §meta1) §r(mean the same), as do §verbatim(§meta1 or §meta2) and §verbatim(§meta2 or §meta1). These laws are called the §definex["conjunction_commutativity"](commutative conjunction)(blarg)(commutativity)(
+          We can observe some simple §rs(meta statement) for §rs(conjunction) and §rs(disjunction). The order of the two substatements of a §r(conjunction) or §r(disjunction) does not matter: §verbatim(§meta1)(and)(§meta2) and §verbatim(§meta2)(and)(§meta1) §r(mean the same), as do §verbatim(§meta1)(or)(§meta2) and §verbatim(§meta2)(or)(§meta1). These laws are called the §definex["conjunction_commutativity"](commutative conjunction)(blarg)(commutativity)(
             §p(
               The §rdef(commutative conjunction)(commutativity) of §rs(conjunction) states that, after swapping the order of the substatements of a §r(conjunction), the old and new statement §r(mean the same).
             )
@@ -884,7 +884,7 @@
             )
           ) of §rs(disjunction) respectively.
         )§p(
-          Because a §r(conjunction) has exactly two substatements, we technically cannot state directly that three different statements all must hold, we instead either have to say that §verbatim(§meta1 and (§meta2 and §meta3)) or that §verbatim((§meta1 and §meta2) and §meta3). Both ways of grouping the §rs(conjunction) §r(mean the same), which is why we do not require making the grouping explicit. This law is called the §definex["conjunction_associativity"](associative conjunction)(blarg)(associativity)(
+          Because a §r(conjunction) has exactly two substatements, we technically cannot state directly that three different statements all must hold, we instead either have to say that §lquote(§meta1) and §lparen(§meta2) and §rquote(§rparen(§meta3)) or that §lquote(§lparen(§meta1)) and §rparen(§meta2) and §rquote(§meta3). Both ways of grouping the §rs(conjunction) §r(mean the same), which is why we do not require making the grouping explicit. This law is called the §definex["conjunction_associativity"](associative conjunction)(blarg)(associativity)(
             §p(
               The §rdef(associative conjunction)(associativity) of §rs(conjunction) states that all ways of grouping multiple §rs(conjunction) §r(mean the same).
             )
@@ -903,9 +903,9 @@
           )
           §solution["exercise_associativity_conjunction_disjunction"](
             §p(
-              §i(Claim:) §$(§()(0 §$eq 1)() and §$(1 §$eq 2)(§)) or §$(0 §$eq 0)(.) This claim is true, because §verbatim(§$(0 §$eq 0)) holds.
+              §i(Claim:) §$(§()(§$highlightlow1(0 §$eq 1))() and §$(§$highlightlow3(1 §$eq 2))(§)) or §$(§$highlightlow5(0 §$eq 0))(.) This claim is true, because §$(§lquote)(§$highlightlow5(0 §$eq 0))(§rquote) holds.
             )§p(
-              §i(Claim:) §$(0 §$eq 1) and §$(§()(1 §$eq 2)() or §$(0 §$eq 0)(§).) This claim is false, because §verbatim(§$(0 §$eq 1)) does not hold.
+              §i(Claim:) §$(§$highlightlow1(0 §$eq 1)) and §$(§()(§$highlightlow3(1 §$eq 2))() or §$(§$highlightlow5(0 §$eq 0))(§).) This claim is false, because §$(§lquote)(§$highlightlow1(0 §$eq 1))(§rquote) does not hold.
             )
           )
         )
@@ -949,21 +949,21 @@
         §p(
           §R(deductive reasoning) is about deriving statements from other statements. Whether some statement — the §definex["conclusion"](conclusion)(
             §p(
-              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x)(,) then §$(x §$eq x)).
+              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §lquote§ If §$(x §$eq x)(,) then §$(x §$eq x)(§rquote§ .)
             )§p(
-              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x)(,) then §$(x §$eq x) by assumption).
+              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume)(that §$(x §$eq x)(,) then §$(x §$eq x) by)(assumption).
             )
           ) — can be derived from some other statement — the §definex["premise"](premise)(
             §p(
-              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x)(,) then §$(x §$eq x)).
+              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §lquote§ If §$(x §$eq x)(,) then §$(x §$eq x)(§rquote§ .)
             )§p(
-              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x)(,) then §$(x §$eq x) by assumption).
+              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume)(that §$(x §$eq x)(,) then §$(x §$eq x) by)(assumption).
             )
           ) — is in itself either true or false, that is, it is a statement itself. Such a statement is called an §definex["implication"](implication)(
             §p(
-              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §verbatim(If §$(x §$eq x)(,) then §$(x §$eq x)).
+              An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §lquote§ If §$(x §$eq x)(,) then §$(x §$eq x)(§rquote§ .)
             )§p(
-              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume that §$(x §$eq x)(,) then §$(x §$eq x) by assumption).
+              You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume)(that §$(x §$eq x)(,) then §$(x §$eq x) by)(assumption).
             )
           ).
         )
@@ -978,7 +978,7 @@
           )
           §proof["tour_implication"](
             §p(
-              Assume §$(n §$leq 5)(.) From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5)(.)
+              Assume §$(n §$leq 5)(.) From the definition of §$(§lquote)(§$leq)(§rquote) obtain §$(k) such that §$(n + k §$eq 5)(.)
             )§p(
               If §$(n + k §$eq 5)(,) then also §$(§$p(n + k) + 2 §$eq 5 + 2)(,) then also §$(§$p(n + k) + 2 §$eq 7)(,) then also §$(n + §$p(k + 2) §$eq 7)(,) and thus, because §$(k + 2) is a natural number, §$(n §$leq 7)(.)
             )
@@ -988,7 +988,7 @@
         §p(
           You prove an §r(implication) by assuming the §r(premise) to hold and then proving the §side(§r(conclusion))(If the §r(conclusion) holds even without assuming the §r(premise), the §r(implication) is true, albeit rather uninteresting.). Note that the truth of an §r(implication) has no bearing on the truth of its §r(premise) or its §r(conclusion) in isolation. Considering §cref(tour_implication), there exist both numbers which are §r(less than or equal to) §$(5) as well as numbers that are not §r(less than or equal to) §$(5)(,) same for §$(7)(.) But we do know that there exist no numbers which are both §r(less than or equal to) §$(5) and not §r(less than or equal to) §$(7)(.)
         )§p(
-          The proof of §cref(tour_implication) consists primarily of a chain of §verbatim(if §meta1§ , then also §meta2) fragments, that is, it consists of many successive implications. A more readable way of writing such proofs is by separating those statements with double arrows (§verbatim(§$(§$implies))), particularly if the implications connect mathematical symbols rather than natural language statements:
+          The proof of §cref(tour_implication) consists primarily of a chain of §lquote§ if §meta1§ , then also §rquote(§meta2) fragments, that is, it consists of many successive implications. A more readable way of writing such proofs is by separating those statements with double arrows §parens(§verbatim(§$(§$implies))), particularly if the implications connect mathematical symbols rather than natural language statements:
         )
 
         §drop(
@@ -1017,7 +1017,7 @@
             §i(Claim:) If §$(n §$leq 5)(,) then §$(n §$leq 7)(.)
           )
           §p(
-            §i(Proof:) Assume §$(n §$leq 5)(.) From the definition of §verbatim(§$(§$leq)) obtain §$(k) such that §$(n + k §$eq 5)(.) Then
+            §i(Proof:) Assume §$(n §$leq 5)(.) From the definition of §$(§lquote)(§$leq)(§rquote) obtain §$(k) such that §$(n + k §$eq 5)(.) Then
           )§$$align*(
             && n + k &§$eq 5
           )(
@@ -1047,7 +1047,7 @@
               §p(
                 Let §$(a, b, c) be natural numbers.
               )§p(
-                Assume that §$(a §$leq b) and obtain §$(k) such that §$(a + k §$eq b)(.) Furthermore, assume that §$(b §$leq c) and obtain §$(k')§side()(Pronounced §verbatim(k prime), a common way of generating new, uninventive names.) such that §$(b + k' §$eq c)(.)
+                Assume that §$(a §$leq b) and obtain §$(k) such that §$(a + k §$eq b)(.) Furthermore, assume that §$(b §$leq c) and obtain §$(k')§side()(Pronounced §verbatim(k)(prime), a common way of generating new, uninventive names.) such that §$(b + k' §$eq c)(.)
               )§p(
                 Define §$(k'' §$defeq k + k')(.) Then
               )§$$align*(
@@ -1071,9 +1071,9 @@
           )
           §solution["exercise_exactly_one"](
             §p(
-              Stating that there exists §verbatim(exactly one) object with a certain property can be done by stating that there exists both §verbatim(at least one) and §verbatim(at most one). The §verbatim(at least) part is regular §r(existential quantification), the interesting part is expressing the §verbatim(at most) constraint:
+              Stating that there exists §verbatim(exactly)(one) object with a certain property can be done by stating that there exists both §verbatim(at)(least)(one) and §verbatim(at)(most)(one). The §verbatim(§highlightlow2(at least)) part is regular §r(existential quantification), the interesting part is expressing the §verbatim(§highlightlow4(at most)) constraint:
             )§p(
-              There exists a natural number §$(n) such that §$(n §$leq 0)(,) and for all natural numbers §$(x, y) holds that if both §$(x §$leq 0) and §$(y §$leq 0), then §$(x §$eq y).
+              §highlightlow2(There exists a natural number §$(n) such that §$(n §$leq 0)(,)) and§br§highlightlow4(for all natural numbers §$(x, y) holds that if both §$(x §$leq 0) and §$(y §$leq 0)(,) then §$(x §$eq y)(.))
             )
           )
         )
@@ -1081,15 +1081,15 @@
         §p(
           §Rs(implication) are so common that various phrases and symbols are in use for expressing them; all of the following denote an §r(implication) with §r(premise) §verbatim(§meta1) and §r(conclusion) §verbatim(§meta2):
         )§ul(
-          §li(§verbatim(§meta1 implies §meta2))
-          §li(§verbatim(if §meta1§ , then §meta2))
-          §li(§verbatim(whenever §meta1§ , also §meta2))
-          §li(§verbatim(from §meta1 follows §meta2))
-          §li(§verbatim(§meta2 follows from §meta1))
-          §li(§verbatim(§meta1 §$(§$implies) §meta2))
-          §li(§verbatim(§meta2 §$(§$impliedby) §meta1))
-          §li(§verbatim(§meta1 is sufficient for §meta2))
-          §li(§verbatim(§meta2 is necessary for §meta1))
+          §li(§verbatim(§meta1 implies §meta2),)
+          §li(§verbatim(if §meta1§ , then §meta2),)
+          §li(§verbatim(whenever §meta1§ , also §meta2),)
+          §li(§verbatim(from §meta1 follows §meta2),)
+          §li(§verbatim(§meta2 follows from §meta1),)
+          §li(§verbatim(§meta1 §$(§$implies) §meta2),)
+          §li(§verbatim(§meta2 §$(§$impliedby) §meta1),)
+          §li(§verbatim(§meta1 is sufficient for §meta2),)
+          §li(§verbatim(§meta2 is necessary for §meta1).)
         )
 
       )
@@ -1143,9 +1143,9 @@
         §p(
           From a similar line of reasoning we can derive another §r(meta statement). If the §r(conclusion) of an implication does not hold, then the §r(premise) of the implication cannot hold either. This reformulation of an §r(implication) is called its §definex(contrapositive)(
             §p(
-              The §rdef(contrapositive) of an §r(implication) §verbatim(§meta1 implies §meta2) is §verbatim(not §meta2 implies not §meta1).
+              The §rdef(contrapositive) of an §r(implication) §verbatim(§meta1)(implies)(§meta2) is §verbatim(not)(§meta2 implies not)(§meta1).
             )
-          ): the §r(contrapositive) of §verbatim(§meta1 implies §meta2) is §verbatim(not §meta2 implies not §meta1). An §r(implication) and its §r(contrapositive) §r(mean the same), this is called the law of §definex(contraposition)(
+          ): the §r(contrapositive) of §verbatim(§meta1)(implies)(§meta2) is §verbatim(not)(§meta2 implies not)(§meta1). An §r(implication) and its §r(contrapositive) §r(mean the same), this is called the law of §definex(contraposition)(
             §p(
               The law of §rdef(contraposition)(contraposition) states that an §r(implication) and its §r(contrapositive) §r(mean the same).
             )
@@ -1180,7 +1180,7 @@
           )
           §proof["absurd"](
             §p(
-              Assume §$(0 §$eq 1)(.) Further notice that §$(0 §$neq 1) holds by §r(equal)(the definition of equality). Thus also the §r(disjunction) §verbatim(§$(0 §$neq 1) or §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon) holds.
+              Assume §$(0 §$eq 1)(.) Further notice that §$(0 §$neq 1) holds by §r(equal)(the definition of equality). Thus also the §r(disjunction) §$(§lquote)(0 §$neq 1)() or §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon§rquote holds.
             )§p(
               Because §$(0 §$eq 1)(,) the first substatement of that §r(disjunction) cannot be true, so the second substatement has to be. Thus, we have shown that §$(§$value(Alex)) is currently eating pumpkin pie in a hot air balloon.
             )
@@ -1218,26 +1218,26 @@
           §p(
             A common mistake when §r(negation)(negating) §rs(implication) is to simply negate both the §r(premise) and the §r(conclusion) and call it a day.
           )§p(
-            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §verbatim(§meta1 does not imply §meta2) and §verbatim(not §meta1 implies not §meta2) do not §r(mean the same).
+            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §verbatim(§meta1)(does not imply)(§meta2) and §verbatim(not)(§meta1 implies not)(§meta2) do not §r(mean the same).
           )
           §solution["wrong_negation_implication"](
             §p(
-              The statement §verbatim(§$(0 §$eq 1) does not imply §$(1 §$eq 2)) is false, because §verbatim(§$(0 §$eq 1) implies §$(1 §$eq 2)) is true by the §r(principle of explosion).
+              The statement §verbatim(§$(§$highlightlow1(0 §$eq 1)))(does not imply)(§$(§$highlightlow3(1 §$eq 2))) is false, because §verbatim(§$(§$highlightlow1(0 §$eq 1)))(implies)(§$(§$highlightlow3(1 §$eq 2))) is true by the §r(principle of explosion).
             )§p(
-              The statement §verbatim(§$(0 §$neq 1) implies §$(1 §$neq 2)) is true however, because both §verbatim(§$(0 §$neq 1)) and §verbatim(§$(1 §$neq 2)) are true.
+              The statement §verbatim(§$(§$highlightlow1(0 §$neq 1)))(implies)(§$(§$highlightlow3(1 §$neq 2))) is true however, because both §verbatim(§$(§$highlightlow1(0 §$neq 1))) and §verbatim(§$(§$highlightlow3(1 §$neq 2))) are true.
             )
           )
         )§exercise["wrong_negation_implication2"](
           §p(
             A common mistake when §r(negation)(negating) §rs(implication) is to simply swap the §r(premise) and the §r(conclusion) and call it a day.
           )§p(
-            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §verbatim(§meta1 does not imply §meta2) and §verbatim(§meta2 implies §meta1) do not §r(mean the same).
+            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §verbatim(§meta1)(does not imply)(§meta2) and §verbatim(§meta2)(implies)(§meta1) do not §r(mean the same).
           )
           §solution["wrong_negation_implication2"](
             §p(
-              The statement §verbatim(§$(0 §$eq 1) does not imply §$(1 §$eq 2)) is false, because §verbatim(§$(0 §$eq 1) implies §$(1 §$eq 2)) is true by the §r(principle of explosion).
+              The statement §verbatim(§$(§$highlightlow1(0 §$eq 1)))(does not imply)(§$(§$highlightlow3(1 §$eq 2))) is false, because §verbatim(§$(§$highlightlow1(0 §$eq 1)))(implies)(§$(§$highlightlow3(1 §$eq 2))) is true by the §r(principle of explosion).
             )§p(
-              The statement §verbatim(§$(1 §$eq 2) implies §$(0 §$eq 1)) is true however, because §verbatim(§$(1 §$eq 2)) is true.
+              The statement §verbatim(§$(§$highlightlow3(1 §$eq 2)))(implies)(§$(§$highlightlow1(0 §$eq 1))) is true however, because §verbatim(§$(§$highlightlow3(1 §$eq 2))) is true.
             )
           )
         )
@@ -1247,7 +1247,7 @@
           )
           §solution["exercise_wrong_negations_implication"](
             §p(
-              The statement §verbatim(if not §meta1 then not §meta2) is the §r(contrapositive) of the statement §verbatim(if §meta2 then §meta1).
+              The statement §verbatim(if)(not §meta1 then not)(§meta2) is the §r(contrapositive) of the statement §verbatim(if)(§meta2 then)(§meta1).
             )
           )
         )
@@ -1286,7 +1286,7 @@
         §p(
           When two statements §r(implication)(imply) each other, then either both of them or neither of them have to hold. This is called a §definex["bi_implication"](bi-implication)(
             §p(
-              A §rdef(bi-implication) asserts that two statements §r(implication)(imply) each other: §verbatim(§$(5 §$eq 6) if and only if §$(6 §$eq 7)).
+              A §rdef(bi-implication) asserts that two statements §r(implication)(imply) each other: §$(§lquote)(5 §$eq 6)() if and only if §$(6 §$eq 7)(§rquote§ .)
             )§p(
               You prove a §r(bi-implication) by proving both §rs(implication) separately.
             )
@@ -1360,14 +1360,14 @@
         )
 
         §p(
-          Furthermore, the concept of statements that §r(mean the same) is exactly that of statements that §side(§r(bi-implication)(imply each other))(We simply did not have the necessary terminology available when first introducing §rs(meta statement). From now on, we use more standard §r(bi-implication) terminology).
+          Furthermore, the concept of statements that §r(mean the same) is exactly that of statements that §side(§r(bi-implication)(imply each other))(We simply did not have the necessary terminology available when first introducing §rs(meta statement). From now on, we use more standard §r(bi-implication) terminology when formulating §rs(meta statement).).
         )
 
       )
 
       §hsection["meta_biimplication"](Meta Statements for Bi-Implications)(
         §p(
-          Similar to §rs(conjunction) and §rs(disjunction), the order of the two substatements of a §r(bi-implication) does not matter: §verbatim(§meta1 if and only if §meta2) and §verbatim(§meta2 if and only if §meta1) §r(bi-implication)(are equivalent). This law is called the §definex["biimplication_commutativity"](commutative bi-implication)(blarg)(commutativity)(
+          Similar to §rs(conjunction) and §rs(disjunction), the order of the two substatements of a §r(bi-implication) does not matter: §verbatim(§meta1)(if and only if)(§meta2) and §verbatim(§meta2)(if and only if)(§meta1) §r(bi-implication)(are equivalent). This law is called the §definex["biimplication_commutativity"](commutative bi-implication)(blarg)(commutativity)(
             §p(
               The §rdef(commutative bi-implication)(commutativity) of §rs(bi-implication) states that, after swapping the order of the substatements of a §r(bi-implication), the old and new statement §r(bi-implication)(are equivalent).
             )
@@ -1375,14 +1375,12 @@
         )§p(
           Furthermore, §rs(bi-implication) inherit the §r(transitive implication)(transitivity) of §rs(implication) and are thus §definex["transitivity_biimplication"](transitive bi-implication)(blarg)(transitive)(
             §p(
-              The §rdef(transitive bi-implication)(transitivity) of §rs(bi-implication) states that if §verbatim(§meta1 if and only if §meta2) and §verbatim(§meta2 if and only if §meta3), then also §verbatim(§meta1 if and only if §meta3).
+              The §rdef(transitive bi-implication)(transitivity) of §rs(bi-implication) states that if §verbatim(§meta1)(if and only if)(§meta2) and §verbatim(§meta2)(if and only if)(§meta3), then also §verbatim(§meta1)(if and only if)(§meta3).
             )
-          ) themselves: if §verbatim(§meta1 if and only if §meta2) and §verbatim(§meta2 if and only if §meta3), then also §verbatim(§meta1 if and only if §meta3).
+          ) themselves: if §verbatim(§meta1)(if and only if)(§meta2) and §verbatim(§meta2)(if and only if)(§meta3), then also §verbatim(§meta1)(if and only if)(§meta3).
         )§p(
           The §r(transitive bi-implication)(transitivity) of §rs(bi-implication) reduces the number of individual proofs you need for showing that several statements are pairwise §r(bi-implication)(equivalent). You can save even more work by showing that they §r(implication)(imply) each other cyclically: if §verbatim(§meta1) §r(implication)(implies) §verbatim(§meta2), §verbatim(§meta2) §r(implication)(implies) §verbatim(§meta3), and §verbatim(§meta3) §r(implication)(implies) §verbatim(§meta1), then §verbatim(§meta1), §verbatim(§meta2), and §verbatim(§meta3) are all §r(bi-implication)(equivalent) to each other. This generalizes to larger numbers of statements as well.
         )
-
-
 
       )
 
@@ -1406,38 +1404,38 @@
             )
             §tbody(
               §tr(
-                §td(§R(existential quantification):§br§ §verbatim(There exists §$(x) such that §meta1))
-                §td(Provide a §r(witness):§br§verbatim(Define §$(x §$defeq §$ldots)).)
+                §td(§R(existential quantification):§br§ §verbatim(There)(exists §$(x) such that)(§meta1))
+                §td(Provide a §r(witness):§br§verbatim(Define)(§$(x §$defeq §$ldots)).)
                 §td(Can obtain §r(witness).)
                 §td(Swap to §r(universal quantification), move §r(negation) inside.)
               )§tr(
-                §td(§R(universal quantification):§br§ §verbatim(For each §$(x) holds §meta1))
-                §td(Prove for arbitrary object:§br§verbatim(Let §$(x) be something, then…).)
+                §td(§R(universal quantification):§br§ §verbatim(For)(each §$(x) holds)(§meta1))
+                §td(Prove for arbitrary object:§br§verbatim(Let)(§$(x) be something,)(then…).)
                 §td(Can assume §verbatim(§meta1) for any object.)
                 §td(Swap to §r(existential quantification), move §r(negation) inside.)
               )§tr(
-                §td(§R(negation):§br § §verbatim(It does not hold that §meta1))
+                §td(§R(negation):§br § §verbatim(It)(does not hold that)(§meta1))
                 §td(Varies by type of §r(negation)(negated) statement.)
                 §td(Can use the statement obtained by moving the §r(negation) inside.)
                 §td(§R(double negation) can be dropped.)
               )§tr(
-                §td(§R(conjunction):§br§ §verbatim(§meta1 and §meta2))
+                §td(§R(conjunction):§br§ §verbatim(§meta1)(and)(§meta2))
                 §td(Prove both §verbatim(§meta1) and §verbatim(§meta2).)
                 §td(Can assume either statement.)
                 §td(Swap to §r(disjunction), move §r(negation) inside.)
               )§tr(
-                §td(§R(disjunction):§br§ §verbatim(§meta1 or §meta2))
+                §td(§R(disjunction):§br§ §verbatim(§meta1)(or)(§meta2))
                 §td(Prove §verbatim(§meta1) or §verbatim(§meta2).)
                 §td(Can do a §r(case distinction).)
                 §td(Swap to §r(conjunction), move §r(negation) inside.)
               )§tr(
-                §td(§R(implication):§br§ §verbatim(If §meta1 then §meta2§ .))
+                §td(§R(implication):§br§ §verbatim(If)(§meta1 then)(§meta2))
                 §td(Assume §verbatim(§meta1) and prove §verbatim(§meta2).)
                 §td(Can prove §verbatim(§meta1) to prove §verbatim(§meta2).)
                 §td(Prove §verbatim(§meta1) and disprove §verbatim(§meta2).)
               )§tr(
-                §td(§R(bi-implication):§br§ §verbatim(§meta1 if and only if §meta2))
-                §td(Prove §verbatim(§meta1 §$(§$implies) §meta2) and§br§ §verbatim(§meta2 §$(§$implies) §meta1).)
+                §td(§R(bi-implication):§br§ §verbatim(§meta1)(if and only if)(§meta2))
+                §td(Prove §verbatim(§meta1)(§$(§$implies))(§meta2) and§br§ §verbatim(§meta2)(§$(§$implies))(§meta1).)
                 §td(Proving/disproving either statement also proves/disproves the other.)
                 §td(Disprove either §r(implication).)
               )
@@ -1524,6 +1522,6 @@
 
 )
 
-- highlight in incorrect negation exercises, also xor exercise, exactly one exercise
-- Prevent linebreaks with quotation marks
-- nowrap for parens in text
+- definitions as iff (and sloppy formulation)
+- common mistake exercise side note to suggest tthinking about when it does work
+- side note about proof by contradiction being more useful than it might look initially

@@ -42,7 +42,7 @@
     box-sizing: border-box;
 }
 
-html {
+html, .normal_text {
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
     line-height: 1.68;
@@ -208,13 +208,13 @@ em, i {
     font-style: italic;
 }
 
-.verbatim:before {
+/* .verbatim:before {
   content: "“";
 }
 
 .verbatim:after {
   content: "”";
-}
+} */
 
 .outlink {
   border-bottom: 1px solid var(--color-text);
@@ -570,6 +570,10 @@ button.toggle:hover {
   border-color: var(--color-obstruction);
   transform: rotate(-60deg);
   z-index: 1;
+}
+
+.pre {
+  white-space: pre;
 }
 
 .nowrap {
