@@ -2,9 +2,7 @@
     <h6><a href="http://localhost:1234/sets.html#exercise_arbitrary_venn">Exercise 2.11</a></h6>
     <p>Give an expression that denotes exactly the highlighted areas of the <a class="ref definition" href="http://localhost:1234/sets.html#venn_diagram" data-preview="http://localhost:1234/previews/venn_diagram.html">Venn diagram</a> below. You will need at least <span id="exercise_arbitrary_venn_text" class=""></span> operators.</p>
 
-          <div class="venn3_container centered"><svg class="venn" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
-  <rect x="-54" y="-59" width="108" height="108"/>
-
+          <div class="venn3_container centered"><svg class="venn vennop" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
   <!-- A -->
   <clipPath id="clip_a_exercise_arbitrary">
     <circle cx="-17.3205" cy="10" r="30"/>
@@ -68,19 +66,19 @@
   </mask>
 
   <!-- just A -->
-  <rect id="arbitrary_venn6" clip-path="url('#clip_a_exercise_arbitrary')" mask="url(#mask_buc_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <circle id="arbitrary_venn6" clip-path="url('#clip_a_exercise_arbitrary')" mask="url(#mask_buc_exercise_arbitrary)" cx="0" cy="0" r="53"/>
   <!-- just B -->
-  <rect id="arbitrary_venn2" clip-path="url('#clip_b_exercise_arbitrary')" mask="url(#mask_auc_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <circle id="arbitrary_venn2" clip-path="url('#clip_b_exercise_arbitrary')" mask="url(#mask_auc_exercise_arbitrary)" cx="0" cy="0" r="53"/>
   <!-- just C -->
-  <rect id="arbitrary_venn0" clip-path="url('#clip_c_exercise_arbitrary')" mask="url(#mask_aub_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <circle id="arbitrary_venn0" clip-path="url('#clip_c_exercise_arbitrary')" mask="url(#mask_aub_exercise_arbitrary)" cx="0" cy="0" r="53"/>
   <!-- A intersect B without C -->
-  <rect id="arbitrary_venn5" clip-path="url('#clip_aib_exercise_arbitrary')" mask="url(#mask_aibic_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <circle id="arbitrary_venn5" clip-path="url('#clip_aib_exercise_arbitrary')" mask="url(#mask_aibic_exercise_arbitrary)" cx="0" cy="0" r="53"/>
   <!-- A intersect C without B -->
-  <rect id="arbitrary_venn4" clip-path="url('#clip_aic_exercise_arbitrary')" mask="url(#mask_aibic_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <circle id="arbitrary_venn4" clip-path="url('#clip_aic_exercise_arbitrary')" mask="url(#mask_aibic_exercise_arbitrary)" cx="0" cy="0" r="53"/>
   <!-- B intersect C without A -->
-  <rect id="arbitrary_venn1" clip-path="url('#clip_bic_exercise_arbitrary')" mask="url(#mask_aibic_exercise_arbitrary)" x="-55" y="-60" width="110" height="110"/>
+  <circle id="arbitrary_venn1" clip-path="url('#clip_bic_exercise_arbitrary')" mask="url(#mask_aibic_exercise_arbitrary)" cx="0" cy="0" r="53"/>
   <!-- A intersect B intersect C -->
-  <rect id="arbitrary_venn3" clip-path="url('#clip_aibic_exercise_arbitrary')" x="-55" y="-60" width="110" height="110"/>
+  <circle id="arbitrary_venn3" clip-path="url('#clip_aibic_exercise_arbitrary')" cx="0" cy="0" r="53"/>
 
 
   <circle cx="-17.3205" cy="10" r="30"/>

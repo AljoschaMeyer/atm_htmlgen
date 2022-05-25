@@ -1383,7 +1383,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                         outs.push(Out::Text(r###"\\
 "###.into()));
                     }
+                    // outs.push(Out::Text(r###"\htmlClass{background_stripe}{"###.into()));
                     outs.push(Out::Argument(i));
+                    // outs.push(Out::Text(r###"}"###.into()));
                 }
                 outs.push(Out::Text(format!(r###"\end{{{}}}"###, env).into()));
 
@@ -1468,42 +1470,59 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         OutInternal::CssColors(trace, _params, args) => {
             arguments_exact(0, &args, &trace)?;
 
+            // https://css.land/lch/
+            let cs = [
+                [
+                    "rgb(100% 94.63% 62.64%)", // lch(95% 132 95)
+                    "rgb(75.43% 100% 84.61%)",
+                    "rgb(82.82% 97.09% 100%)",
+                    "rgb(92.8% 94.33% 100%)",
+                    "rgb(100% 84.24% 95.28%)", // lightness 90
+                    "rgb(100% 92.76% 91.28%)",
+                ],
+                [
+                    "rgb(95.1% 94.36% 91.33%)", // lch(95% 4 95)
+                    "rgb(91.91% 95.2% 93%)",
+                    "rgb(91.09% 95.18% 96.02%)",
+                    "rgb(93.54% 94.33% 97.37%)",
+                    "rgb(96.74% 93.47% 95.69%)", // lightness 90
+                    "rgb(97.48% 93.49% 92.67%)",
+                ],
+                [
+                    "rgb(72.76% 67.77% 0%)", // lch(70% 132 95)
+                    "rgb(0% 76.9% 46.98%)",
+                    "rgb(0% 74.3% 83.85%)",
+                    "rgb(52.87% 67.18% 100%)",
+                    "rgb(100% 47.87% 87.95%)",
+                    "rgb(100% 53.03% 45.72%)",
+                ],
+                [
+                    "rgb(45.44% 42.19% 0%)", // lch(45% 132 95)
+                    "rgb(0% 48.14% 28.66%)",
+                    "rgb(0% 46.44% 52.66%)",
+                    "rgb(0% 42.18% 82.13%)",
+                    "rgb(76.71% 0% 65.13%)",
+                    "rgb(82.67% 0% 11.59%)",
+                ]
+            ];
+
             let mut s = ":root {\n".to_string();
 
-            let n = 6;
-            let base_color = Srgb::new(0.5601, 0.4761, 1.0);
-            for i in 0..n {
-                let mut c = Lch::from_color(base_color);
-                // c = c.lighten(0.5);
-                c.hue = c.hue + 170.0 + ((360.0 / (n as f64)) * (i as f64));
-                let cl = c.lighten(0.6);
-                let cll = c.lighten(1.0);
-                let clll = c.lighten(1.5);
-                let cd = c.darken(0.333);
-                let cdd = c.darken(0.666);
-                let mut clllg = clll.clone();
-                clllg.chroma = 8.0;
-                // println!("{:?}", cdd.l);
-                // println!("{:?}", cd.l);
-                // println!("{:?}", c.l);
-                // println!("{:?}", cl.l);
-                // println!("{:?}", cll.l);
-                // println!("{:?}", clll.l);
+            for j in 0..cs.len() {
 
-                let rgbs = [Srgb::from_color(c), Srgb::from_color(cl), Srgb::from_color(cll), Srgb::from_color(clll), Srgb::from_color(clllg), Srgb::from_color(cd), Srgb::from_color(cdd)];
-
-                for j in 0..7 {
+                for i in 0..6 {
+                    // let mut c = cs[j][i];
                     s.push_str(&format!(
-                        "  --c{}{}: rgb({}%, {}%, {}%);\n",
-                        SHADES[j], i + 1, rgbs[j].red * 100.0, rgbs[j].green * 100.0, rgbs[j].blue * 100.0,
+                        "  --c{}{}: {};\n",
+                        SHADES[j], i + 1, cs[j][i],
                     ));
                 }
             }
 
             s.push_str("\n}\n");
 
-            for i in 0..n {
-                for j in 0..7 {
+            for i in 0..6 {
+                for j in 0..cs.len() {
                     s.push_str(&format!(
                         ".c{}{} {{
     color: var(--c{}{});
@@ -1518,7 +1537,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
     fill: var(--c{}{});{}
 }}
 ",
-                        SHADES[j], i + 1, SHADES[j], i + 1, SHADES[j], i + 1, if j == 3 {format!("\n  --color-highlight: var(--clll{});", i + 1)} else {"".to_string()}
+                        SHADES[j], i + 1, SHADES[j], i + 1, SHADES[j], i + 1, if j == 0 {format!("\n  --color-highlight: var(--clll{});", i + 1)} else {"".to_string()}
                     ));
                     s.push_str(&format!(
                         ".borderc{}{} {{
@@ -1528,6 +1547,20 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                         SHADES[j], i + 1, SHADES[j], i + 1,
                     ));
                 }
+
+                // .highlightc1 .mbin, .highlightc1 .minner, .highlightmathdirect.highlightc1 {
+                //   background-color: var(--c1-transparent)
+                // }
+
+                s.push_str(&format!(
+                    ".bgmclll{} .mbin, .bgmclll{} .minner, .bgmcllldirect{} {{
+    background-color: var(--clll{});
+    padding: 0.1rem;
+    border-radius: 0.4rem;
+}}
+",
+                    i + 1, i + 1, i + 1, i + 1,
+                ));
 
                 s.push_str(&format!(
                     ".no.bgclll{} {{
@@ -1555,15 +1588,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
     }
 }
 
-static SHADES: [&'static str; 7] = ["", "l", "ll", "lll", "lllg", "d", "dd"];
-
-// .bgclllg1, .no.bgclll1 {
-//   background-color: var(--clllg1);
-//   fill: var(--clllg1);
-// }
-//
-// .bgmclll1 .mbin, .bgmclll1 .minner {
-// }
+static SHADES: [&'static str; 4] = ["lll", "lllg", "", "d"];
 
 fn arguments_exact(n: usize, args: &[OutInternal], span: &Trace) -> Result<(), ExpansionError> {
     if args.len() != n {

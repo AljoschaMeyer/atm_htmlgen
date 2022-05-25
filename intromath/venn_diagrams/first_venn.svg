@@ -4,28 +4,8 @@
     <circle cx="-17.3205" cy="10" r="30.5"/>
   </clipPath>
 
-  <!-- B -->
-  <clipPath id="clip_b_first_venn">
-    <circle cx="0" cy="-20" r="30.5"/>
-  </clipPath>
-
-  <!-- C -->
-  <clipPath id="clip_c_first_venn">
-    <circle cx="17.3205" cy="10" r="30.5"/>
-  </clipPath>
-
   <!-- A intersect B -->
   <clipPath id="clip_aib_first_venn" clip-path="url('#clip_a_first_venn')">
-    <circle cx="0" cy="-20" r="30.5"/>
-  </clipPath>
-
-  <!-- A intersect C -->
-  <clipPath id="clip_aic_first_venn" clip-path="url('#clip_a_first_venn')">
-    <circle cx="17.3205" cy="10" r="30.5"/>
-  </clipPath>
-
-  <!-- B intersect C -->
-  <clipPath id="clip_bic_first_venn" clip-path="url('#clip_c_first_venn')">
     <circle cx="0" cy="-20" r="30.5"/>
   </clipPath>
 
@@ -40,57 +20,22 @@
     <rect clip-path="url('#clip_aibic_first_venn')" x="-55" y="-60" width="110" height="110" style="fill: black;"/>
   </mask>
 
-  <!-- A union B -->
-  <mask id="mask_aub_first_venn">
-    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
-    <circle cx="-17.3205" cy="10" r="30" style="fill: black;"/>
-    <circle cx="0" cy="-20" r="30" style="fill: black;"/>
-  </mask>
 
-  <!-- A union C -->
-  <mask id="mask_auc_first_venn">
-    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
-    <circle cx="-17.3205" cy="10" r="30" style="fill: black;"/>
-    <circle cx="17.3205" cy="10" r="30" style="fill: black;"/>
-  </mask>
-
-  <!-- B union C -->
-  <mask id="mask_buc_first_venn">
-    <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
-    <circle cx="0" cy="-20" r="30" style="fill: black;"/>
-    <circle cx="17.3205" cy="10" r="30" style="fill: black;"/>
-  </mask>
-
-  <!-- just A -->
-  <rect class="first_venn_region" clip-path="url('#clip_a_first_venn')" mask="url(#mask_buc_first_venn)" x="-55" y="-60" width="110" height="110"/>
-  <!-- just B -->
-  <rect class="first_venn_region" clip-path="url('#clip_b_first_venn')" mask="url(#mask_auc_first_venn)" x="-55" y="-60" width="110" height="110"/>
-  <!-- just C -->
-  <rect class="first_venn_region" clip-path="url('#clip_c_first_venn')" mask="url(#mask_aub_first_venn)" x="-55" y="-60" width="110" height="110"/>
-  <!-- A intersect B without C -->
-  <rect class="first_venn_region" clip-path="url('#clip_aib_first_venn')" mask="url(#mask_aibic_first_venn)" x="-55" y="-60" width="110" height="110"/>
-  <!-- A intersect C without B -->
-  <rect class="first_venn_region" clip-path="url('#clip_aic_first_venn')" mask="url(#mask_aibic_first_venn)" x="-55" y="-60" width="110" height="110"/>
-  <!-- B intersect C without A -->
-  <rect class="first_venn_region" clip-path="url('#clip_bic_first_venn')" mask="url(#mask_aibic_first_venn)" x="-55" y="-60" width="110" height="110"/>
-  <!-- A intersect B intersect C -->
-  <rect id="duck_region" class="first_venn_region" clip-path="url('#clip_aibic_first_venn')" x="-55" y="-60" width="110" height="110"/>
-
-  <circle cx="-17.3205" cy="10" r="30"/>
+  <circle class="cd1 bgclll1" cx="-17.3205" cy="10" r="30"/>
   <foreignObject x="-40.9807" y="0" width="30" height="30">
     <!-- https://thenounproject.com/icon/bat-2064473/ -->
     <span class="symbol_container"><span style="mask: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImEiPgogICA8cGF0aCBkPSJtMTM5LjIxIDE2N2g0NzMuNTh2NDE4aC00NzMuNTh6Ii8+CiAgPC9jbGlwUGF0aD4KIDwvZGVmcz4KIDxnIGNsaXAtcGF0aD0idXJsKCNhKSI+CiAgPHBhdGggZD0ibTQxOS42MSAxNjcuODJjLTEuNjA1NS0wLjU4OTg0LTMuNDA2Mi0wLjIyMjY2LTQuNjU2MiAwLjk0MTQxLTEuMjUgMS4xNjgtMS43MzgzIDIuOTQxNC0xLjI2MTcgNC41ODIgNi4yMzA1IDI2LjM3MSAxLjc5NjkgNTQuMTMzLTEyLjMzMiA3Ny4yNTQtNi40Mzc1IDEyLjA4Mi0xNS4zODcgMjIuNjQ4LTI2LjI0NiAzMC45OC03LjUgNS4xMjg5LTI0Ljk2MSA4LjI4OTEtMjcuMDM1IDE4LjU0NyAxLjQ3MjctNy4xNzU4IDEuMTAxNi0xNC42MTMtMS4wODItMjEuNjA1LTEtMTcuNDYxLTYuMjg1Mi0zNC40MDItMTUuMzk1LTQ5LjMzMi0wLjQyMTg3LTAuODkwNjItMS4yMjI3LTEuNTQzLTIuMTc5Ny0xLjc3MzQtMC45NjA5NC0wLjIzMDQ3LTEuOTcyNy0wLjAxMTcxOS0yLjc1IDAuNTg5ODQtNi4zMTI1IDYuNDE0MS0yMC40MjIgMjIuMzk1LTIwLjYyMSAzNS44MTZ2LTAuMDAzOTA3Yy00LjEwNTUgMS40MDIzLTguMDcwMyAzLjE4NzUtMTEuODQgNS4zMjgxLTMuNzQ2MSAyLjE1MjMtNy4yNTM5IDQuNjk5Mi0xMC40NjEgNy41OTc3LTExLjg0LTYuNTExNy0zMi42NTYtMi4yNjk1LTQxLjQzOCAwLTAuOTQ5MjIgMC4yODkwNi0xLjcxMDkgMC45OTYwOS0yLjA3ODEgMS45MTgtMC4zNjMyOCAwLjkyMTg4LTAuMjg5MDYgMS45NTcgMC4yMDMxMiAyLjgyMDMgOC40NDUzIDE1LjQ3NyAyMC42MjEgMjguNjAyIDM1LjQyMiAzOC4xOCA1LjAwMzkgNS4zODI4IDExLjI4MSA5LjQyMTkgMTguMjU0IDExLjc0Mi05Ljg2NzItMy4zNTU1LTIxLjQxIDkuODY3Mi0yOS41OTggMTQuMTA5aC0wLjAwMzkwNmMtMTIuNjMzIDUuMjg1Mi0yNi4yNzMgNy43NDIyLTM5Ljk1NyA3LjIwMzEtMjcuMDM5IDAuNTkzNzUtNTMuMjMtOS40NzI3LTcyLjkxNC0yOC4wMjMtMS4xMDE2LTEuMjY5NS0yLjgyODEtMS44MDg2LTQuNDU3LTEuMzkwNi0xLjYyODkgMC40MTc5Ny0yLjg4MjggMS43MTg4LTMuMjM4MyAzLjM2NzItNS42MjUgMzYuMDEyLTE5LjczNCAxNjYuNDUgNTcuMzI0IDI1NS44MyAxLjE5MTQgMS40NzI3IDMuMTg3NSAyLjAyNzMgNC45Njg4IDEuMzgyOHMyLjk1MzEtMi4zNTE2IDIuOTI1OC00LjI0NjFjMC0yOC45MDYgNi40MTQxLTk5LjM1MiA1OS4xOTktNzYuMzYzaC0wLjAwMzkwNmMxLjQxNDEgMC42MDE1NiAzLjAzNTIgMC40NDUzMSA0LjMwODYtMC40MTAxNiAxLjI3MzQtMC44NTU0NyAyLjAyNzMtMi4yOTY5IDIuMDA3OC0zLjgzMiAwLTE0LjEwOSA0LjE0NDUtNDIuNDI2IDQwLjY0OC0zMS4xNzZ2LTAuMDAzOTA2YzEuMzIwMyAwLjM5NDUzIDIuNzUgMC4xNjQwNiAzLjg4MjgtMC42MjEwOSAxLjEzMjgtMC43ODkwNiAxLjg0MzgtMi4wNDY5IDEuOTM3NS0zLjQyMTkgMC45ODgyOC0xOC4wNTUgMTAuNzU0LTY1LjYwOSA5MS41NTkgMTguMjU0di0wLjAwMzkwNmMxLjQyNTggMS41MzUyIDMuNzI2NiAxLjg2MzMgNS41MjczIDAuNzg5MDYgMS43NzM0LTEuMDQzIDIuNjIxMS0zLjE0ODQgMi4wNzAzLTUuMTI4OS0zMi4yNjItMTExLjk4IDEzLjgxMi05Ni41OSAyOS41OTgtODguNzk3IDEuMjQ2MSAwLjYwNTQ3IDIuNjk1MyAwLjYxMzI4IDMuOTQ1MyAwLjAxOTUzMSAxLjI1LTAuNTk3NjYgMi4xNTYyLTEuNzMwNSAyLjQ2ODgtMy4wNzgxIDguNTgyLTM3LjE5NSAzNS4yMjMtMjYuNzM4IDQ3LjQ1Ny0xOS43MzR2MC4wMDM5MDdjMS4yODkxIDAuNzgxMjUgMi44ODY3IDAuODU1NDcgNC4yNDIyIDAuMTk1MzEgMS4zNTU1LTAuNjU2MjUgMi4yODUyLTEuOTU3IDIuNDY4OC0zLjQ1MzEgNi40MTQxLTU3LjAyNyA3MC4zNDgtMjcuMTMzIDk1LjYwNS0xMi45MjZoLTAuMDAzOTA3YzEuNDg4MyAwLjkyMTg4IDMuMzc1IDAuODgyODEgNC44MjQyLTAuMDk3NjU2czIuMTg3NS0yLjcxODggMS44ODY3LTQuNDQxNGMtMzkuNDY1LTExMS4xOS0xNTkuMTQtMTY0LjQ3LTE5My4xOC0xNzcuNTl6Ii8+CiA8L2c+Cjwvc3ZnPgo=&quot;) no-repeat 50% 50%;
     mask-size: cover;"></span></span>
   </foreignObject>
 
-  <circle cx="0" cy="-20" r="30"/>
+  <circle class="cd5 bgclll5" cx="0" cy="-20" r="30"/>
   <foreignObject x="-15" y="-45" width="30" height="30">
     <!-- https://thenounproject.com/icon/camel-1081331/ -->
     <span class="symbol_container"><span style="mask: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtMTc2LjQ1IDI1Ni45NmMtNS4zMjQyIDEuMzM1OS05LjA3ODEgNC4zMjgxLTkuNTM5MSA4LjAyMzQtMC44ODI4MSA3LjA0NjkgNyA0LjUzNTIgNy41ODIgNC41MTE3IDEyLjU4Mi0wLjQ5MjE5IDMyLjc0MiA2LjkyOTcgMzkuNzAzIDE1LjUxNiAyLjE4NzUgMi42OTUzIDEwLjQyMiA1LjIwMzEgMTMuNjI5IDMuNTg5OC0xLjA4NTkgMTkuODAxLTEyLjE4IDU4Ljc0MiA3LjEwNTUgNzkuMzE2IDE1Ljk5NiAxNy4wNjYgMjcuOTggMzQuMTEzIDUyLjM4MyAzOC4wOTggMi45NDkyIDAuNDg0MzggMTUuMTk1IDAuODU1NDcgMjEuNDc3IDIuNDI1OCA2LjA4MiAxNC41IDQuMTg3NSAyNC40MTggMTguMTA1IDI2LjM2NyAyNi41IDMuNzA3IDEuODY3MiAyNi44MiAxNS4wMTYgMzYuMzIgOC4zMjAzIDYuMDA3OCA2LjQ1MzEgMTYuMzU5IDYuODU5NCAyNi42NzYgMC42ODM1OSAxNy41NzgtMC4yMTg3NSAzMi4yNjYtNS4xNTYyIDMyLjM1Mi0xNC4xMjUgMC4yMzgyOC0yMC42MjUgMTYuMzUyLTEwLjM1NSAxNi4zNDggMTUuNTUxLTAuMDAzOTA2IDM1LjQ4NCA2LjgzMiAzMi4yMTktMTAuMzQ4LTMuMjc3My0xNy4yMjMtNy44MDQ3LTUyLjgyIDIuNDUzMS02Ny4yMTkgNS40Mzc1LTcuNjMyOC0xLjk0NTMtMjEuNzQyLTIuMDc0Mi0yNC44NjcgMTQuNTU5IDcuOTc2NiAxLjQyMTkgMjMuODAxIDEyLjQwNiAzNC4yMjMgMTQuNjQ1IDEzLjg5MSAxNy4zMDUgNTQuNjg0IDEwLjY5NSA1Ni44NDgtNy41IDIuNDUzMS05LjU3MDMgNi43MTg4LTExLjA0NyAxMi42NjQtMS4wNDY5IDQuMjE4OCAyMS40OTIgMS45NDkyIDIxLjYxNyAxLjk0NTMgMTYuMjk3LTAuNjQwNjIgMTUuMjgxLTQuNDc2NiAxMi40MzgtMTguNTUxLTIuOTQ1My0xNC41OTgtMTMuOTgtNDUuMzY3LTkuODk0NS01NC4wMTYgMy4zMDg2LTcuMDAzOSAzLjk0MTQtMTAuODA5IDMuNDk2MS0xNC40NDUtMS41NjI1LTEyLjgwMS03LjY3MTktMTguNTc0LTkuODQ3Ny0yNS4xNTYgMTUuNTk0LTQuNDEwMiAxNC41ODItMjQuMjgxIDE0LjYwNS0yNi4yODkgMzguOTM4IDYuNTI3MyA2Ny43OTMtOS40NTcgNzguMzE2LTE5Ljc0MiAwLjEyNS0wLjExNzE5LTAuNTE5NTMgMTYuODc1IDEwLjczNCAyNy45MTQgMjIuNzc3IDIyLjMyOCAxNi40NTcgNDcuNzE1IDMuMDU4NiA3Mi43ODktNC41OTM4IDguNTkzOC04LjgyODEgMTYuMTM3LTEzLjExNyAyNC40NjEtMy41ODk4IDYuOTY0OC02LjYyNSAxNS41NTktMTUuNzE1IDE1LjU1OS0xMS40ODQgMC0yMS43OTMgMTUuMjMtOS43NTM5IDE1LjA2NiAxMS4yNTgtMC4xNTYyNSAyOS44MDEgMy42OTUzIDMyLjUyLTEyLjM0OCAyLjE3MTktMTIuODI4IDI3LjU2Mi00My40MTggMzcuMTk1LTUwLjE2OCAzLjk1MzEtMi43Njk1IDguNzUtMy40NjQ4IDkuNzQyMi04LjE5MTQgMS45MTQxLTkuMTM2Ny0yLjYwMTYtMjQuMTA5LTAuMjQyMTktMzMuNjY4IDE0LjgyNCAyNS43MjcgNy4xODM2IDU1Ljc3MyAxLjI0MjIgNzguOTM0LTQuOTM3NSAxOS4yNDItOC4yODEyIDcuODYzMy0xNi45OTYgMTMuNTY2LTI5LjI4MSAxOS4xOCAyMi41MzEgMTIuODU5IDI0LjIyMyAxMC45MyAxLjI4NTItMS40Njg4IDEyLjc2Mi00Ni4zMTIgMTMuMzc5LTQ4LjE4NCA1LjM0NzctMTYuMzQ4IDIwLjYwMi0yOC45MTggMTEuNTI3LTQyLjQ4LTguMDIzNC0xMS45ODgtNC41OTc3LTQwLjUtMy4xOTUzLTQ4LjM2MyAxLjU4NTktOC45MTggNC4xODM2LTMzLjE0MSA1LjMwMDgtNDIuMjE5IDIuMDI3MyAzLjg3ODkgMi43ODUyIDEzLjY1NiA0LjU3NDIgMTMuOTg0IDEuMDY2NCAwLjE5OTIyIDMuNzUtMTQuMzkxIDMuNjQwNi0xNS43ODktMS4wMDc4LTEyLjUwOC0xMy41NTUtMzguNzM4LTIxLjMxMi01MC4zMjgtMy43MTA5LTUuNTQ2OS00NC45MDYtNTkuMDU1LTQ3LjI3My02Mi4wMzEtMTMuNTI3LTE2Ljk2OS0zOC4xMDUtNTEuNDk2LTYwLjA5NC00OS4xOTktMTQuMTg4IDEuNDgwNS0xMy4yNyAxOS4zNDgtMjMuMTI5IDM1LjY0MS02Ljg4NjcgMTEuMzc5LTkuODYzMyAxNS44NjMtMTYuMDU5IDE2LjYxMy0yMi44ODcgMi43Njk1LTE4LjcwMy01Ny4yNzMtNDMuMTk1LTUxLjMyLTI1LjkzNCA2LjI5My0yOS4yMzggMjIuMjMtMzcuMDQzIDM1LjQyNi0xMy43ODEgMjMuMjg5LTYuNzU3OCA2NS42NjgtNDQuNDg4IDc5LjY3Ni0zLjMzNTktMTkuNjUyIDkuNTg5OC00Mi41MjctMC4wODk4NDMtNTkuNzExLTIuODI4MS01LjAxOTUtMTMuNjI5LTcuNzYxNy0xMS41OTgtMTIuODE2LTAuMjIyNjYtNi4wMTk1IDIuMTgzNi05Ljg4NjcgMC4xNTIzNC0xMi43MTktMi43NjU2LTMuODU1NS0xMC43ODUtNS4yNTc4LTE3LjMyOC0yLjY4MzYtMjAuMTAyLTExLjkzLTI1LjgxNi0zLjUzOTEtMzkuODA1IDEuNzg1Mi0yLjc2OTUgMC40OTYwOS0yOC41ODItMC4wOTM3NS0zNS40ODggMC43MTg3NS01LjAzNTIgMC41OTM3NS0xNS43NjIgMi40NjA5LTE1LjQ0OSA4LjAyMzQtNy4yNjk1IDUuNzc3My0xMC4yOTcgNy4xMzI4LTguOTcyNyAxMi44NCAwLjYxMzI4IDIuNzYxNyA2LjE2OCAxLjU3NDIgMTAuODYzIDMuNzAzMXptNDguMTcyLTE4LjU1NWMyLjg1NTUtMS40NDUzIDExLjUwOCAwLjUzOTA2IDEzLjgwOSA2LjIwNy01Ljg1MTYtMC42OTkyMi0xMS4wODIgMS41NjY0LTE1LjIwNyAxLjI1LTQuNTM1Mi0wLjM0Mzc1IDAuMDMxMjUtNi43NjU2IDEuMzk4NC03LjQ1N3oiLz4KPC9zdmc+Cg==&quot;) no-repeat 50% 50%;
     mask-size: cover;"></span></span>
   </foreignObject>
 
-  <circle cx="17.3205" cy="10" r="30"/>
+  <circle class="cd3 bgclll3" cx="17.3205" cy="10" r="30"/>
   <foreignObject x="15.9807" y="0" width="30" height="30">
     <!-- https://thenounproject.com/icon/dolphin-3120906/ -->
     <span class="symbol_container"><span style="mask: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImEiPgogICA8cGF0aCBkPSJtMTQ1IDEzOS4yMWg0NjJ2NDczLjU4aC00NjJ6Ii8+CiAgPC9jbGlwUGF0aD4KIDwvZGVmcz4KIDxnIGNsaXAtcGF0aD0idXJsKCNhKSI+CiAgPHBhdGggZD0ibTE1MC4yNiAzMjUuNTljMTYuNDMgMTYuOTk2IDc1LjkxLTExLjMyOCAxMDAuODQtMTEuMzI4IDIyLjA5NCAwIDMwLjU5IDE1Ljg2MyAxMDkuOSA4LjQ5NjEgMTEuMzI4IDQyLjQ4OCA2Mi44NzkgNjUuMTQ1IDkxLjIwMyA3OC43NDIgMTEuMzI4IDUuNjY0MSAyMi4wOTQtNy4zNjMzIDE1LjI5Ny0xNy41NjItMTEuODk1LTE2LjQzLTI3Ljc1OC0yOC4zMjQtMjYuNjI1LTU1LjUxNiAxNi40MyA1LjA5NzcgNDMuNjIxIDE1LjI5NyA1OC4zNDggMzUuNjg4IDE4LjY5NSAyNy4xOTEgNDMuMDU1IDEwOC4yIDE3LjU2MiAxMDguMi02Ny45NzcgMC0xMDEuOTcgNDguNzE5LTc1LjkxIDQ5Ljg1MiAzNy45NTMgMS4xMzI4IDU2LjY0OCAxMy4wMjcgODAuNDQxIDEzLjAyNyAxMy41OTQgMzIuMjg5IDUyLjExNyAyNy43NTggNjEuNzQ2IDY5LjEwOSA1LjY2NDEgMjQuOTI2IDQ1Ljg4Ny01LjA5NzcgNC41MzEyLTg2LjEwNS03LjM2MzMtMTQuMTY0LTEzLjU5NC0yNi4wNTktMTAuNzYyLTQxLjM1MiAyNS40OTItMTQzLjg5LTMuMzk4NC0yMjcuNzMtMTAxLjk3LTI4OC45MSAyMy4yMjctMTguMTI5IDU0Ljk0OS02LjIzMDUgNTguOTE0LTE4LjY5NSA1LjA5NzctMTYuOTk2LTU2LjA4Mi00Ny4wMi0xMzAuMjktMTcuNTYyLTU4LjM0OCAyMy4yMjctODIuMTQxIDExLjg5NS0xMzguNzkgNDAuNzg1LTQ3LjAyIDI0LjM1OS02OC41NDMgNDYuNDUzLTY1LjE0NSA3Ni40NzctMjAuMzk1IDEwLjc2Mi02OS4xMDkgMzUuNjg4LTQ5LjI4NSA1Ni42NDh6IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KIDwvZz4KPC9zdmc+Cg==&quot;) no-repeat 50% 50%;
@@ -120,4 +65,7 @@
     <span class="symbol_container"><span style="mask: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtNTkwLjY0IDIwMS40MWMtNC43NzczLTEuMzU5NC0xMS4wMi0xLjk4NDQtMTcuMjU4LTYuNTI3My0xMS43NjItOC41NzQyLTMxLjI5Ny0zMy44OTgtNDcuMjUtMzcuMjg1LTE1Ljk1My0zLjM5MDYtNTEuMjQyIDIuMTkxNC02MS42MDUgNzUuOTYxLTEwLjM3MSA3My43NzMtOS45Njg4IDcwLjk4OC0yNy41MTYgNjUuMDA0LTE3LjU0Ny01Ljk4MDUtNzQuOTY1LTE3Ljk0OS0xNDMuNTUgMjYuNzExLTY4LjU4NiA0NC42NjQtMTMwLjggMzguMjgxLTEzMC44IDM4LjI4MWw0My40NjkgMTguMzQ4LTU1LjQzNCA1MS4wMzkgNjguNTk0LTkuNTcwM3MyOS44NTIgMTUuMjkzIDcwLjE2IDI1LjQzOGwtMjguMDc4IDQyLjQ2MSA0MS43ODUgNTguMjczLTkuNTg1OSAxNS4zMzYgODMuOTY1IDMwLjI4OSAxMC4zNTUtMTkuNTU1czM5LjQ5Mi0xMS44ODcgNDcuNTM5LTMwLjI4OWwtMTAwLjQ1LTYuMTI4OS00Mi45NDEtNDcuNTQzIDM3LjM3MS0zNS41MDhjMTguNTE2IDIuMDQ2OSAzNy43ODkgMi4xNDA2IDU2LjQ2MS0xLjE0MDZsMzIuMzA5IDQ3Ljc3LTkuNTg1OSAxNS4zMzYgODMuOTY1IDMwLjI4OSAxMC4zNTUtMTkuNTU1czM5LjQ5Mi0xMS44ODcgNDcuNTM5LTMwLjI4OWwtMTAwLjQ1LTYuMTI4OS0zNS4wMTYtNDUuNzYyYzEwLjEyNS00LjE4MzYgMTkuODE2LTkuNzI2NiAyOC44MTItMTYuOTEgODIuOTQ1LTY2LjE5OSA4MS4zNTItNzguNTYyIDc0LjE3Ni0xMTMuNjUtNy4xNzU4LTM1LjA5NC0xMC45MTgtNzcuNTQzIDcuMTc1OC05Mi41MTYgMTguMDk0LTE0Ljk3MyA1OS44MTYtNy4xNzE5IDcwLjU4Ni01LjE3OTcgMTEuNzQyIDIuMTcxOSAyLjQ3MjctMTQuODM2LTUuMDg5OC0xNi45OTJ6bS0yMjkuNzggMjE2LjYgMC40MTAxNiAwLjYwNTQ3LTI3LjY3NiAwLjcwMzEyIDE0LjAyNy0xMS44MjRzLTI1LjgyIDEwLjI1OC0zNC4zMDUgNi4wMTE3Yy04LjQ5MjItNC4yMzgzLTExLjUtMTMuNDQxLTExLjUtMTMuNDQxbDIzLjg3OS01LjgzNTlzLTI1LjExMyAwLjM1MTU2LTM0LjQ4NC02LjM2NzJjLTkuMzc1LTYuNzIyNy0xMy4yNy0yMy4zNDgtMTMuMjctMjMuMzQ4IDM1LjAxNiAwIDUyLjcwMy0xNy4zMjggNzcuNDYxLTI1LjEwOSAyNC43NTgtNy43ODEyIDQ5Ljg3MSAxNS41NjIgNDkuODcxIDQwLjY3MiAwIDE1Ljg3OS04LjA1ODYgMjkuODUyLTIwLjUxNiAzNy45M2gtMjMuODk1em0zLjM5MDYgNS4wMTU2IDEuMzI0MiAxLjk1N2MtMS4yMjY2IDAuMTUyMzQtMi40NjA5IDAuMjYxNzItMy43MTg4IDAuMzIwMzF6bTE2My4yNS0yNTEuOTZjMy45OTIyIDAgNy4yMjY2IDQuNzQyMiA3LjIyNjYgMTAuNTk0IDAgNS44NDM4LTMuMjM0NCAxMC41OS03LjIyNjYgMTAuNTlzLTcuMjI2Ni00Ljc0MjItNy4yMjY2LTEwLjU5YzAtNS44NTE2IDMuMjM0NC0xMC41OTQgNy4yMjY2LTEwLjU5NHoiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K&quot;) no-repeat 50% 50%;
     mask-size: cover;"></span></span>
   </foreignObject>
+
+  <!-- A intersect B intersect C -->
+  <rect id="duck_region" class="first_venn_region" clip-path="url('#clip_aibic_first_venn')" x="-55" y="-60" width="110" height="110"/>
 </svg>

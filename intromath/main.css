@@ -8,11 +8,11 @@
     --color-bg3: #ddddd8;
     --color-text: #111;
 
-    --color-fact: var(--cdd2);
-    --color-definition: var(--cdd4);
-    --color-example: var(--cdd6);
-    --color-exercise: var(--cdd1);
-    --color-proof: var(--cdd3);
+    --color-fact: var(--cd4);
+    --color-definition: var(--cd2);
+    --color-example: var(--cd3);
+    --color-exercise: var(--cd5);
+    --color-proof: var(--cd6);
 
     --color-obstruction: rgb(237, 7, 71);
     --color-success: rgb(180, 0, 237);
@@ -516,6 +516,11 @@ button.toggle:hover {
   display: inline-block;
 }
 
+span.enclosing.highlight {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .highlight.low, .highlight.top {
   background-color: inherit;
   isolation: isolate;
@@ -534,9 +539,17 @@ button.toggle:hover {
   border-radius: 0.4em;
 }
 
+span.enclosing.highlight.low:before {
+  bottom: 0;
+}
+
 .highlight.top:before {
   top: 0.25em;
   bottom: unset;
+}
+
+span.enclosing.highlight.top:before {
+  top: 0;
 }
 
 .highlightmath .mbin, .highlightmath .minner, .highlightmathdirect {

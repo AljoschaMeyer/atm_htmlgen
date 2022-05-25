@@ -13,12 +13,12 @@
   font-size: 0.95rem
 }
 
-.eulersvg {
+.eulersvg, .venn {
   max-height: 20rem;
   isolation: isolate;
 }
 
-.eulersvg > path {
+.eulersvg > path, .venn > circle {
   mix-blend-mode: multiply;
 }
 
@@ -131,22 +131,25 @@
 } */
 
 .venn .venn_yay {
-  fill: var(--color-success);
+  fill: var(--c2);
+  /* fill: var(--c5); */
   /* fill: url("#pattern_striped"); */
 }
 
 .venn .venn_yay_a {
-  fill: var(--c1-transparent);
+  fill: var(--clll1);
+  /* fill: var(--clll4); */
   /* fill: url("#pattern_striped"); */
 }
 
 .venn .venn_yay_b {
-  fill: var(--c2-transparent);
+  fill: var(--clll3);
+  /* fill: var(--clll6); */
   /* fill: url("#pattern_striped"); */
 }
 
 .euler_yay {
-  /* fill: var(--color-success); */
+  /* fill: var(--c5); */
   fill: url("#pattern_euler_yay");
 }
 
@@ -174,4 +177,13 @@
   text-align: left;
   padding-left: 2rem;
   overflow-x: auto;
+}
+
+.vennop {
+  border: 0.16rem var(--color-text) solid;
+}
+
+.vennop > circle {
+  stroke: var(--color-text);
+  fill: none;
 }

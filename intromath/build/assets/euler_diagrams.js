@@ -132,11 +132,15 @@ function name_set(set) {
 }
 
 function set_tex_class(set, tex) {
-  return `\\htmlClass{cd${set === 1 ? 1 : 3}}{${tex}}`;
+  return `\\htmlClass{cd${set === 1 ? 1 : (set === 3 ? 2 : 3)}}{${tex}}`;
 }
 
 function set_tex_class_bg(set, tex) {
-  return `\\htmlClass{bgmclll${set === 1 ? 1 : 3}}{${tex}}`;
+  if (set === 3) {
+    return `\\htmlClass{bgmc2}{${tex}}`;
+  } else {
+    return `\\htmlClass{bgmclll${set === 1 ? 1 : 3}}{${tex}}`;
+  }
 }
 
 function button_text(element, set, is_in) {
@@ -147,7 +151,7 @@ function render_set_def(set, s, s3) {
   return tex_string(`${name_set(set)} ${defeq} ${set_tex_class(set, set_tex_class_bg(set, set_tex(s, s3)))}`);
 }
 
-function set_tex(s, s3_) {
+function set_tex(s, s3_, set_n) {
   const s3 = s3_ ? s3_ : [false, false, false, false, false];
 
   const elements = s.reduce((acc, element, i) => {
@@ -161,7 +165,11 @@ function set_tex(s, s3_) {
     return acc;
   }, []);
 
-  return set(elements);
+  if (set_n) {
+    return set_tex_class(set_n, set_tex_class_bg(set_n, set(elements)));
+  } else {
+    return set(elements);
+  }
 }
 
 function set_tex_vanilla(s) {
@@ -240,8 +248,8 @@ const container_equality = document.querySelector("#container_euler_equality");
 euler(container_equality, set_symmetric_difference, (container, s1, s2, s3) => {
   const s1_name = name_set(1);
   const s2_name = name_set(2);
-  const set1 = set_tex(s1, s3);
-  const set2 = set_tex(s2, s3);
+  const set1 = set_tex(s1, s3, 1);
+  const set2 = set_tex(s2, s3, 2);
   const rel = cardinality(s3) === 0 ? seq : sneq;
 
   return tex(`${s1_name} ${seq} ${set1} ${rel} ${set2} ${seq} ${s2_name}`, container);
@@ -253,10 +261,10 @@ euler(container_subseteq, () => [false, false, false, false, false], (container,
 
   const s1_name = name_set(1);
   const s2_name = name_set(2);
-  const set1 = set_tex(s1, empty);
-  const set2 = set_tex(s2, empty);
-  const set1_2 = set_tex(s1, set_difference(s1, s2));
-  const set2_2 = set_tex(s2, set_difference(s2, s1));
+  const set1 = set_tex(s1, empty, 1);
+  const set2 = set_tex(s2, empty, 2);
+  const set1_2 = set_tex(s1, set_difference(s1, s2), 1);
+  const set2_2 = set_tex(s2, set_difference(s2, s1), 2);
 
   let is_subseteq = true;
   let is_supseteq = true;
@@ -280,7 +288,7 @@ function handle_binop(op_name, op_tex, op_bitvec) {
     const s2_name = name_set(2);
     const set1 = set_tex_class(1, set_tex_class_bg(1, set_tex(s1)));
     const set2 = set_tex_class(2, set_tex_class_bg(2, set_tex(s2)));
-    const set3 = set_tex(s3);
+    const set3 = set_tex_class_bg(3, set_tex(s3));
 
     return tex(`${s1_name} ${op_tex} ${s2_name} ${seq} ${set1} ${op_tex} ${set2} ${seq} ${set3}`, container);
   }, op_name);
@@ -289,39 +297,6 @@ function handle_binop(op_name, op_tex, op_bitvec) {
 handle_binop("intersection", intersection, bitvec_and);
 handle_binop("union", union, bitvec_or);
 handle_binop("setminus", setminus, bitvec_without);
-
-// const container_intersection = document.querySelector("#container_euler_intersection");
-// euler(container_intersection, set_intersection, (container, s1, s2, s3) => {
-//   const s1_name = name_set(1);
-//   const s2_name = name_set(2);
-//   const set1 = set_tex_class(1, set_tex_class_bg(1, set_tex(s1)));
-//   const set2 = set_tex_class(2, set_tex_class_bg(2, set_tex(s2)));
-//   const set3 = set_tex(s3);
-//
-//   return tex(`${s1_name} ${intersection} ${s2_name} ${seq} ${set1} ${intersection} ${set2} ${seq} ${set3}`, container);
-// }, "intersection");
-//
-// const container_union = document.querySelector("#container_euler_union");
-// euler(container_union, set_union, (container, s1, s2, s3) => {
-//   const s1_name = name_set(1);
-//   const s2_name = name_set(2);
-//   const set1 = set_tex(s1, s3);
-//   const set2 = set_tex(s2, s3);
-//   const set3 = set_tex(s3, s3);
-//
-//   return tex(`${s1_name} ${union} ${s2_name} ${seq} ${set1} ${union} ${set2} ${seq} ${set3}`, container);
-// }, "union");
-//
-// const container_setminus = document.querySelector("#container_euler_setminus");
-// euler(container_setminus, set_difference, (container, s1, s2, s3) => {
-//   const s1_name = name_set(1);
-//   const s2_name = name_set(2);
-//   const set1 = set_tex(s1, s3);
-//   const set2 = set_tex(s2, s3);
-//   const set3 = set_tex(s3, s3);
-//
-//   return tex(`${s1_name} ${setminus} ${s2_name} ${seq} ${set1} ${setminus} ${set2} ${seq} ${set3}`, container);
-// }, "setminus");
 
 const container_powerset = document.querySelector("#container_euler_powerset");
 (() => {
@@ -952,15 +927,29 @@ function tex_op(op) {
   }
 }
 
-function expr_to_tex(expr, not_a_set) {
+function associative_op(op) {
+  return (op === "intersection") || (op === "union") || (op === "symmetric_difference");
+}
+
+function expr_to_tex(expr, not_a_set, associative) {
   const h = height(expr);
-  return dfs((_, level) => {return level + 1;}, (lnode, op, rnode, left, pre, right) => {
-    if (pre === -1) {
-      return `${left} ${tex_op(op)} ${right}`;
+  let outermost = true;
+  return dfs(
+    (op, [parent_op, _, _2]) => {
+      if (outermost) {
+        outermost = false;
+        return [op, true, associative && (op === parent_op) && associative_op(op)];
+      } else {
+        return [op, false, associative && (op === parent_op) && associative_op(op)];
+      }
+    }, (lnode, op, rnode, [left_tex, left_level], pre, [right_tex, right_level]) => {
+    if (pre[1] || pre[2]) {
+      return [`${left_tex} ${tex_op(op)} ${right_tex}`, Math.max(left_level, right_level)];
     } else {
-      return p(`${left} ${tex_op(op)} ${right}`, h - (pre + 1));
+      const level = Math.max(left_level, right_level) + 1;
+      return [p(`${left_tex} ${tex_op(op)} ${right_tex}`, level - (not_a_set ? 1 : 0)), level];
     }
-  }, not_a_set ? x => x : set_tex_vanilla, expr, -2);
+  }, not_a_set ? x => [x, 0] : x => [set_tex_vanilla(x), 0], expr, [null, null, null])[0];
 }
 
 function expr_to_solution_tex(expr_) {
@@ -1046,15 +1035,15 @@ function arbitrary_venn_index_to_term(i) {
   }
 }
 
-function new_arbitrary_venn() {
+function new_arbitrary_venn(small) {
   while (true) {
     const i = random_int(128);
     const expr = arbitrary_venn_index_to_term(i);
     const size = leaves(expr);
 
-    if (size >= 4) {
+    if ((size >= 4) && ((!small) || (size === 4))) {
       exercise_arbitrary_venn_text.textContent = `${size - 1}`;
-      tex(`${expr_to_tex(expr, true)}.`, exercise_arbitrary_venn_solution);
+      tex(`${expr_to_tex(expr, true, true)}.`, exercise_arbitrary_venn_solution);
 
       const btn_toggle_exercise_arbitrary_venn = document.querySelector("#btn_toggle_exercise_arbitrary_venn");
       if (btn_toggle_exercise_arbitrary_venn.classList.contains("yes")) {
@@ -1070,8 +1059,8 @@ function new_arbitrary_venn() {
   }
 }
 
-new_arbitrary_venn();
-exercise_arbitrary_venn_new.addEventListener("click", new_arbitrary_venn);
+new_arbitrary_venn(true);
+exercise_arbitrary_venn_new.addEventListener("click", () => new_arbitrary_venn(false));
 
 
 
