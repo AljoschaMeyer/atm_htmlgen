@@ -1,3 +1,4 @@
+use palette::LabHue;
 use std::io;
 use std::fs;
 use std::collections::BTreeMap;
@@ -201,6 +202,23 @@ pub enum Out {
     MathFunctionParens(MathSet, Vec<Out>),
 }
 
+impl Out {
+    fn html(tag: &str, inner: Vec<Out>) -> Self {
+        let params = BTreeMap::new();
+        return Out::HtmlTag(tag.to_string(), params, vec![Out::Many(inner)]);
+    }
+
+    fn html_class(tag: &str, clazz: &str, inner: Vec<Out>) -> Self {
+        let mut params = BTreeMap::new();
+        params.insert("class".to_string(), clazz.to_string());
+        return Out::HtmlTag(tag.to_string(), params, vec![Out::Many(inner)]);
+    }
+
+    fn tex(src: &str) -> Self {
+        return Out::TeX(TeX, vec![Out::Text(src.into())], false);
+    }
+}
+
 #[derive(Clone)]
 pub(crate) enum OutInternal {
     Many(Vec<OutInternal>),
@@ -250,6 +268,9 @@ pub(crate) enum OutInternal {
     Drop(Trace, (), Vec<OutInternal>),
     ProofPart(Trace, (), Vec<OutInternal>),
     CssColors(Trace, (), Vec<OutInternal>),
+    PowersetColors(Trace, (), Vec<OutInternal>),
+    EulerToggles(Trace, (), Vec<OutInternal>),
+    EulerTogglesPower(Trace, (), Vec<OutInternal>),
 }
 
 impl OutInternal {
@@ -571,7 +592,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             arguments_exact(1, &args, &trace)?;
             return down_macro(|p, _n, _y, _trace| {
                 return Ok(Out::Many(vec![
-                        Out::Text(format!(r###"<button class="btn_toggle no" id="btn_toggle_{}">{}</button><div class="toggled" style="display: none">"###, p.0[0], invisible).into()),
+                        Out::Text(format!(r###"<button class="toggle no" id="btn_toggle_{}">{}</button><div class="toggled" style="display: none">"###, p.0[0], invisible).into()),
                         Out::Argument(0),
                         Out::Text(format!(r###"</div>
     <script>
@@ -1481,14 +1502,6 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     "rgb(100% 92.76% 91.28%)",
                 ],
                 [
-                    "rgb(95.1% 94.36% 91.33%)", // lch(95% 4 95)
-                    "rgb(91.91% 95.2% 93%)",
-                    "rgb(91.09% 95.18% 96.02%)",
-                    "rgb(93.54% 94.33% 97.37%)",
-                    "rgb(96.74% 93.47% 95.69%)", // lightness 90
-                    "rgb(97.48% 93.49% 92.67%)",
-                ],
-                [
                     "rgb(72.76% 67.77% 0%)", // lch(70% 132 95)
                     "rgb(0% 76.9% 46.98%)",
                     "rgb(0% 74.3% 83.85%)",
@@ -1548,10 +1561,6 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     ));
                 }
 
-                // .highlightc1 .mbin, .highlightc1 .minner, .highlightmathdirect.highlightc1 {
-                //   background-color: var(--c1-transparent)
-                // }
-
                 s.push_str(&format!(
                     ".bgmclll{} .mbin, .bgmclll{} .minner, .bgmcllldirect{} {{
     background-color: var(--clll{});
@@ -1561,34 +1570,119 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 ",
                     i + 1, i + 1, i + 1, i + 1,
                 ));
-
                 s.push_str(&format!(
-                    ".no.bgclll{} {{
-    background-color: var(--clllg{});
-    fill: var(--cclllg{});
-}}
-",
-                    i + 1, i + 1, i + 1,
-                ));
-
-                s.push_str(&format!(
-                    ".bgmclll{} .mbin, .bgmclll{} .minner {{
-    background-color: var(--clll{});
+                    ".bgmc{} .mbin, .bgmc{} .minner, .bgmcdirect{} {{
+    background-color: var(--c{});
     padding: 0.1rem;
     border-radius: 0.4rem;
 }}
 ",
-                    i + 1, i + 1, i + 1,
+                    i + 1, i + 1, i + 1, i + 1,
                 ));
             }
 
             return Ok(s.into());
         }
 
+        OutInternal::PowersetColors(trace, _params, args) => {
+            arguments_exact(0, &args, &trace)?;
+
+            let mut r = "".to_string();
+            for i in 0..=30 {
+                let mut c = Lch::from_color(Srgb::new(0.0, 0.769, 0.4698));
+                c.hue = LabHue::from_degrees(((i as f32) / 30.0) * 360.0);
+                c.l *= 0.9;
+                let rgb = Srgb::from_color(c);
+                r.push_str(&format!(
+                    r###".powerset{} {{
+    stroke: rgb({}% {}% {}%);
+    color: rgb({}% {}% {}%);
+}}
+"###,
+                    i, rgb.red * 100.0, rgb.green * 100.0, rgb.blue * 100.0, rgb.red * 100.0, rgb.green * 100.0, rgb.blue * 100.0,
+                ));
+            }
+
+            return Ok(r.into());
+        }
+
+        OutInternal::EulerToggles(trace, params, args) => {
+            arguments_exact(0, &args, &trace)?;
+
+            return down_macro(|_p, _n, _y, _trace| {
+                return Ok(Out::Many(vec![
+                    Out::html_class("div", "euler_toggles", vec![
+                        Out::html("div", vec![
+                            Out::html_class("button", "toggle bordercd1 bgclll1 no", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}} \notin A"###),
+                            ]),
+                            Out::html_class("button", "toggle bordercd1 bgclll1 yes", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}} \in A"###),
+                            ]),
+                            Out::html_class("button", "toggle bordercd1 bgclll1 yes", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}} \in A"###),
+                            ]),
+                            Out::html_class("button", "toggle bordercd1 bgclll1 no", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}} \notin A"###),
+                            ]),
+                            Out::html_class("button", "toggle bordercd1 bgclll1 yes", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}} \in A"###),
+                            ]),
+                        ]),
+                        Out::html("div", vec![
+                            Out::html_class("button", "toggle bordercd3 bgclll3 no", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}} \notin A"###),
+                            ]),
+                            Out::html_class("button", "toggle bordercd3 bgclll3 yes", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}} \in A"###),
+                            ]),
+                            Out::html_class("button", "toggle bordercd3 bgclll3 no", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}} \notin A"###),
+                            ]),
+                            Out::html_class("button", "toggle bordercd3 bgclll3 yes", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}} \in A"###),
+                            ]),
+                            Out::html_class("button", "toggle bordercd3 bgclll3 no", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}} \notin A"###),
+                            ]),
+                        ]),
+                    ]),
+                ]));
+            }, &params, args, trace, y);
+        }
+
+        OutInternal::EulerTogglesPower(trace, params, args) => {
+            arguments_exact(0, &args, &trace)?;
+
+            return down_macro(|_p, _n, _y, _trace| {
+                return Ok(Out::Many(vec![
+                    Out::html_class("div", "euler_toggles", vec![
+                        Out::html("div", vec![
+                            Out::html_class("button", "toggle no", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}} \notin A"###),
+                            ]),
+                            Out::html_class("button", "toggle no", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}} \notin A"###),
+                            ]),
+                            Out::html_class("button", "toggle no", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}} \notin A"###),
+                            ]),
+                            Out::html_class("button", "toggle yes", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}} \in A"###),
+                            ]),
+                            Out::html_class("button", "toggle yes", vec![
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}} \in A"###),
+                            ]),
+                        ]),
+                    ]),
+                ]));
+            }, &params, args, trace, y);
+        }
+
     }
 }
 
-static SHADES: [&'static str; 4] = ["lll", "lllg", "", "d"];
+static SHADES: [&'static str; 3] = ["lll", "", "d"];
 
 fn arguments_exact(n: usize, args: &[OutInternal], span: &Trace) -> Result<(), ExpansionError> {
     if args.len() != n {

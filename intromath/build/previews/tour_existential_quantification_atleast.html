@@ -1,7 +1,7 @@
 <article class="exercise " id="tour_existential_quantification_atleast">
     <h6><a href="http://localhost:1234/deductive_reasoning.html#tour_existential_quantification_atleast">Exercise 1.1</a></h6>
     <p>When mathematicians say <span class="nowrap">“there</span> exists an <span class="nowrap">object”</span> they mean <span class="nowrap">“there</span> exists at least one object, and there may or may not be <span class="nowrap">more”</span>. Why is that, and why is it not necessary to say so explicitly?</p>
-          <button class="btn_toggle no" id="btn_toggle_tour_existential_quantification_atleast">Show a possible solution</button><div class="toggled" style="display: none"><p>Presenting a single <a class="ref definition" href="http://localhost:1234/deductive_reasoning.html#witness" data-preview="http://localhost:1234/previews/witness.html">witness</a> proves the statement. Whether there are multiple other <a class="ref definition" href="http://localhost:1234/deductive_reasoning.html#witness" data-preview="http://localhost:1234/previews/witness.html">witnesses</a> does not change that.</p></div>
+          <button class="toggle no" id="btn_toggle_tour_existential_quantification_atleast">Show Solution</button><div class="toggled" style="display: none"><p>Presenting a single <a class="ref definition" href="http://localhost:1234/deductive_reasoning.html#witness" data-preview="http://localhost:1234/previews/witness.html">witness</a> proves the statement. Whether there are multiple other <a class="ref definition" href="http://localhost:1234/deductive_reasoning.html#witness" data-preview="http://localhost:1234/previews/witness.html">witnesses</a> does not change that.</p></div>
     <script>
         (()=>{
             let shown = false;
@@ -9,7 +9,7 @@
             const sol = btn.nextSibling;
             btn.addEventListener("click", e => {
                 sol.style.display = shown ? "none" : "block";
-                btn.textContent = shown ? "Show a possible solution" : "Hide solution";
+                btn.textContent = shown ? "Show Solution" : "Hide Solution";
                 btn.classList.toggle("yes", !shown);
                 btn.classList.toggle("no", shown);
                 shown = !shown;

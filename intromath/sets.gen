@@ -57,19 +57,11 @@
         transform: translate(-50%, -50%) rotate(20deg);
       }
     }
+
+    §powerset_colors
   </style>
 )(
   §hsection["chapter_sets"](Naïve Set Theory)(
-    §p(
-      §div(
-        §span(clll1 bgclll1)(mmmmmmmmmmmm)§span(cll1 bgcll1)(mmmmmmmmmmmm)§span(cl1 bgcl1)(mmmmmmmmmmmm)§span(c1 bgc1)(mmmmmmmmmmmm)§span(cd1 bgcd1)(mmmmmmmmmmmm)§span(cdd1 bgcdd1)(mmmmmmmmmmmm)
-        §span(clll2 bgclll2)(mmmmmmmmmmmm)§span(cll2 bgcll2)(mmmmmmmmmmmm)§span(cl2 bgcl2)(mmmmmmmmmmmm)§span(c2 bgc2)(mmmmmmmmmmmm)§span(cd2 bgcd2)(mmmmmmmmmmmm)§span(cdd2 bgcdd2)(mmmmmmmmmmmm)
-        §span(clll3 bgclll3)(mmmmmmmmmmmm)§span(cll3 bgcll3)(mmmmmmmmmmmm)§span(cl3 bgcl3)(mmmmmmmmmmmm)§span(c3 bgc3)(mmmmmmmmmmmm)§span(cd3 bgcd3)(mmmmmmmmmmmm)§span(cdd3 bgcdd3)(mmmmmmmmmmmm)
-        §span(clll4 bgclll4)(mmmmmmmmmmmm)§span(cll4 bgcll4)(mmmmmmmmmmmm)§span(cl4 bgcl4)(mmmmmmmmmmmm)§span(c4 bgc4)(mmmmmmmmmmmm)§span(cd4 bgcd4)(mmmmmmmmmmmm)§span(cdd4 bgcdd4)(mmmmmmmmmmmm)
-        §span(clll5 bgclll5)(mmmmmmmmmmmm)§span(cll5 bgcll5)(mmmmmmmmmmmm)§span(cl5 bgcl5)(mmmmmmmmmmmm)§span(c5 bgc5)(mmmmmmmmmmmm)§span(cd5 bgcd5)(mmmmmmmmmmmm)§span(cdd5 bgcdd5)(mmmmmmmmmmmm)
-        §span(clll6 bgclll6)(mmmmmmmmmmmm)§span(cll6 bgcll6)(mmmmmmmmmmmm)§span(cl6 bgcl6)(mmmmmmmmmmmm)§span(c6 bgc6)(mmmmmmmmmmmm)§span(cd6 bgcd6)(mmmmmmmmmmmm)§span(cdd6 bgcdd6)(mmmmmmmmmmmm)
-      )
-    )
     §p(
       In the §cref(chapter_deductive_reasoning)(previous chapter) we examined how to formulate, prove, and disprove statements. The example statements we looked at talked about numbers and squirrel, but the principles we examined apply regardless of which objects the statements talk about. In this chapter, we examine a class of objects that is so powerful that we can express everything from numbers to computers to proofs themselves in it. This class of objects will provide the foundation for everything we will study throughout this book.
     )§p(
@@ -617,7 +609,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
         	<defs>
         		<pattern id="pattern_euler_yay" patternUnits="userSpaceOnUse" width="8" height="8">
-              <path d='M0 0L8 8ZM8 0L0 8Z' stroke-width='2.5' style="stroke: var(--c2)"/>
+              <path d='M0 0L8 8ZM8 0L0 8Z' stroke-width='2.5' style="stroke: var(--c6)"/>
         		</pattern>
         	</defs>
         </svg>
@@ -699,7 +691,7 @@
             §div(practice_intersection_union_direct_solution)()()
           )
           §p(
-            §button(practice_intersection_union_direct_new)()(Generate new exercise)
+            §button(practice_intersection_union_direct_new)()(New Exercise)
           )
         )
 
@@ -1104,7 +1096,7 @@
             §div(practice_set_difference_direct_solution)()()
           )
           §p(
-            §button(practice_set_difference_direct_new)()(Generate new exercise)
+            §button(practice_set_difference_direct_new)()(New Exercise)
           )
         )
 
@@ -1125,7 +1117,7 @@
             §div(exercise_arbitrary_venn_solution)()()
           )
           §p(
-            §button(exercise_arbitrary_venn_new)()(Generate new exercise)
+            §button(exercise_arbitrary_venn_new)()(New Exercise)
           )
         )
 
@@ -1433,13 +1425,17 @@
         )
 
         §example["example_powerset", "slightlywide"](Power Set)(
-          §input["euler_diagrams/powerset.html"]
+          §captioned(
+            §input["euler_diagrams/powerset.html"]
+          )(
+            Visualization of the §r(power set) construction. The §r(empty set) is a §r(member) of every §r(power set), even though the §r(Euler diagram) never depicts it.
+          )
         )
 
         §p(
           Notice how §verbatim(§$(A §$subseteq U)) and §verbatim(§$(A §$in §$powerset(U))) mean the same thing.
         )§p(
-          The definition of §rs(power set) is very short, but the §r(power set) of the §r(empty set) initially feels slightly unintuitive to many learners. Think through the following two exercises however, and you should be fine.
+          The definition of §rs(power set) is very short, yet the §r(power set) of the §r(empty set) initially feels unintuitive to many learners. Think through the following two exercises however, and you should be fine.
         )
 
         §exercise["exercise_powerset_at_least"](
@@ -1470,7 +1466,7 @@
         )
 
         §p(
-          bla
+          §Rs(power set) have a number of interesting properties, but for now it shall suffice to note that §rs(power set) are unique to each §side(§r(set))(A very different statement from the trivial observation that every §r(set) has exactly one §r(power set).):
         )
 
         §proven_fact(
@@ -1481,9 +1477,9 @@
           )
           §proof["equal_powersets_equal_sets"](
             §p(
-              We do a proof by contraposition, that is, we show that if §$(A §$sneq B)(,) then §$(§$powerset(A) §$seq §$powerset(B))(.) To that end, let §$(A, B) be §rs(set) with §$(A §$sneq B)(.)
+              We do a proof by contraposition, that is, we show that if §$(A §$sneq B)(,) then §$(§$powerset(A) §$sneq §$powerset(B))(.) To that end, let §$(A, B) be §rs(set) with §$(A §$sneq B)(.)
             )§p(
-              Without loss of generality, there is §$(a §$in A) such that §$(a §$notin B) §parens(otherwise)(switch the roles of §$(A) and)(§$(B)). Then §$(§$set(a) §$in §$powerset(A)) §(§$()(§$set(a) §$subseteq A)(§)) but §$(§$set(a) §$notin §$powerset(B)) §(because §$()(§$set(a) §$nsubseteq B)(§),) and thus §$(§$powerset(A) §$sneq §$powerset(B))(.)
+              Without loss of generality, there exists §$(a §$in A) such that §$(a §$notin B) §parens(otherwise)(switch the roles of §$(A) and)(§$(B)). Then §$(§$set(a) §$in §$powerset(A)) §(because §$()(§$set(a) §$subseteq A)(§)) but §$(§$set(a) §$notin §$powerset(B)) §(because §$()(§$set(a) §$nsubseteq B)(§),) and thus §$(§$powerset(A) §$sneq §$powerset(B))(.)
             )
           )
         )
@@ -1491,7 +1487,7 @@
         §p(
           The proof of §cref(equal_powersets_equal_sets) contains the handy phrase §verbatim(without)(loss of)(generality), which indicates that only one of several distinct cases will be presented, because the other cases work in a similar way and can be handled through simple modifications to the presented argument. In this example, it is clearly not always true that §$(A) has a §r(member) that is not §r(in) §$(B)(,) as §$(A) could be a §r(strict subset) of §$(B)(.) But in that case, simply renaming §$(A) to §verbatim(§$(B)) and vice versa correctly finishes the proof.
         )§p(
-          Quickly jotting down a §verbatim(without)(loss of)(generality) (or §verbatim(w.l.o.g.) for the particularly time-pressed mathematician) can often lead to overlooking crucial corner cases, leading to faulty proofs. Whenever you feel tempted to wlog your way out of a lengthy proof, ask yourself whether you can describe the necessary changes to cover all cases in one sentence. If yes, simply add that sentence to your proof. And if no, then you do not get to drop those convenient four words.
+          Quickly jotting down a §verbatim(without)(loss of)(generality) (or §verbatim(w.l.o.g.) for the particularly time-pressed mathematician) can often lead to overlooking crucial corner cases, resulting in faulty proofs. Whenever you feel tempted to §side(wlog)(It may not have been a verb before, but now it is.) your way out of a lengthy proof, ask yourself whether you can describe the necessary changes to cover all cases in one sentence. If you can, then simply add that sentence to your proof. And if you cannot, then you do not get to drop those convenient four words.
         )
 
       )
@@ -1500,9 +1496,11 @@
 
     §hsection["conclusion_sets"](Conclusion)(
       §p(
-        This concludes our first foray into set theory. Almost all of modern mathematics builds upon the notion of §rs(set), with its predicates of §r(member)(membership), §r(seq)(equality), and §rs(subset), and the operations of §r(intersection), §r(union), §r(set difference), and §r(power set).
+        This concludes our first foray into set theory. Almost all of modern §side(mathematics)(Alternate formalisms that can serve as foundations of mathematics include §link(category theory)(https://en.wikipedia.org/wiki/Category_theory) and §link(type theories)(https://en.wikipedia.org/wiki/Type_theory). Set theory however is by far the most widely used one, both in teaching and in actual research.) builds upon the notion of §rs(set), with its §rs(predicate) of §r(member)(membership), §r(seq)(equality), and §rs(subset), and the operations of §r(intersection), §r(union), §r(set difference), and §r(power set).
       )§p(
-        By now, you should be familiar with all of them, having both developed good intuition for them, and being able to define them precisely and work with those definitions. The proofs in this chapter rarely required a brilliant idea, but rather demonstrated the basic workflow of breaking down definitions and letting the structure of the statements in question guide their proofs. This alone will get you quite far, a significant part of mathematics is solid, unexciting craftsmanship. It might not be glamorous, but it yields good results.
+        By now, you should have developed a solid intuitive understanding of these §rs(predicate) and operations. You should also be able to work with their formal definitions and prove statements that relate them to each other.
+      )§p(
+        The proofs in this chapter rarely required a brilliant idea, but rather demonstrated the basic workflow of breaking down definitions and letting the structure of the statements in question guide the proof. This alone will get you quite far, a significant part of mathematics is solid, unexciting craftsmanship. It might not be glamorous, but it yields good results.
       )§p(
         Throughout the examples and exercises of this chapter, all specific §rs(set) contained finitely many §rs(element). The definition of §rs(set) does not require this, it is perfectly fine for a §r(set) to contain infinitely many objects. All our proofs work perfectly fine for infinite §rs(set). Infinite §rs(set) come with their own challenges however, starting with the simple question of how to even define an infinitely large object through a finite mathematic expression. The answers to that and several other problems are what we will cover in the §cref(chapter_induction)(next chapter).
       )
@@ -1510,7 +1508,7 @@
 
     §hsection["exercises_sets"](Exercises)(
       §p(
-        This section contains a collection of exercises that touch upon all definitions of this chapter. Some introduce new but related definitions, so make sure to read through all the exercises even if you do not intend to solve all of them. Unlike the exercises throughout the chapter body, these exercises come without solutions. Write your own instead, and try to get feedback on them.
+        This section contains a collection of exercises that touch upon all definitions of this chapter. Some introduce new but related definitions, so make sure to read through the exercises even if you do not intend to solve all of them. Unlike the exercises throughout the chapter body, these exercises come without solutions. Write your own instead, and try to get feedback on them.
       )
 
       §exercise["exercise_cardinality_constraints"](
@@ -1544,9 +1542,9 @@
           §li(
             Find a §r(set) §$(X) such that §$(§$p(X §$setminus §$set(0)(2)) §$intersection §$p(X §$union §$set(0)(1)) §$seq §$set(0)(2) §$setminus X)(.) Justify your answer by giving the step-by-step computation of the expressions.
           )§li(
-            Prove that your answer is the only solution. If you do not know how to prove this, think about it until you do. You will be learning something more than just following instructions that way.
+            Prove that your answer is the only §side(solution)(Figuring out how to prove uniqueness of the solution is the interesting part of this exercise.).
           )§li(
-            Invent your own exercises of this kind: one with exactly one solution, one with exactly two solutions, one with infinitely many solutions, and one with no solutions.
+            Invent your own exercises of this kind: one with exactly one solution, one with exactly two solutions, one with infinitely many solutions, and one with no §side(solutions)(For each of these you have to prove that your equation has the desired number of solutions.).
           )
         )
       )
@@ -1570,7 +1568,9 @@
 
       §exercise["exercise_set_operations_extremes"](
         §p(
-          Let §$(U) be a §r(set), and let §$(A §$subseteq U). For each of the following equations, give a §r(set) §$(B) that satisfies the equation, or prove that no such §$(B) exists.
+          Let §$(U) be a §r(set), and let §$(A §$subseteq U). For each of the following equations, give a §r(set) §$(B) that satisfies the equation, or prove that no such §$(B) §side(exists)(
+            Keep in mind that §$(U) and §$(A) are §r(universal quantification)(universally quantified), so it is not sufficient to give a §r(set) §$(B) that only works for special choices of §$(U) and §$(A)(.) You can however define §$(B) in terms of §$(U) and §$(A)(,) for example, §lquote§ Define §$(B §$defeq U §$setminus A)(§rquote§ .)
+          ).
         )
 
         §ol(
@@ -1601,10 +1601,6 @@
           §li(
             §$(A §$setminus B §$seq §$set)(.)
           )
-        )
-
-        §p(
-          Keep in mind that §$(U) and §$(A) are §r(universal quantification)(universally quantified), so it is not sufficient to give a §r(set) §$(B) that only works for special choices of §$(U) and §$(A)(.) You can however define §$(B) in terms of §$(U) and §$(A)(,) for example, §lquote§ Define §$(B §$defeq U §$setminus A)(§rquote§ .)
         )
       )
 
@@ -1715,6 +1711,8 @@
 
 - detailed set builder notation?
 - side note why not let x in A?
-- generate diagram html
 - consistent commas in statementsAndproofs
 - color in proofs
+- clean up CSS
+- clean up JavaScript
+- dark mode

@@ -2,7 +2,7 @@
     <h6><a href="http://localhost:1234/sets.html#practice_set_difference_direct">Exercise 2.10</a></h6>
     <p>Compute <span id="practice_set_difference_direct_text" class=""></span></p>
 
-          <button class="btn_toggle no" id="btn_toggle_practice_set_difference_direct">Show a possible solution</button><div class="toggled" style="display: none"><div id="practice_set_difference_direct_solution" class=""></div></div>
+          <button class="toggle no" id="btn_toggle_practice_set_difference_direct">Show Solution</button><div class="toggled" style="display: none"><div id="practice_set_difference_direct_solution" class=""></div></div>
     <script>
         (()=>{
             let shown = false;
@@ -10,12 +10,12 @@
             const sol = btn.nextSibling;
             btn.addEventListener("click", e => {
                 sol.style.display = shown ? "none" : "block";
-                btn.textContent = shown ? "Show a possible solution" : "Hide solution";
+                btn.textContent = shown ? "Show Solution" : "Hide Solution";
                 btn.classList.toggle("yes", !shown);
                 btn.classList.toggle("no", shown);
                 shown = !shown;
             });
         })()
     </script>
-          <p><button id="practice_set_difference_direct_new" class="">Generate new exercise</button></p>
+          <p><button id="practice_set_difference_direct_new" class="">New Exercise</button></p>
 </article>

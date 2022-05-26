@@ -304,6 +304,20 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, "<br>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$ldots" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, "\\ldots"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"euler_svg" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, EULER_SVG), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"euler_svg_union" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, EULER_SVG_UNION), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"euler_svg_setminus" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, EULER_SVG_SETMINUS), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"euler_svg_equality" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, EULER_SVG_EQUALITY), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"euler_svg_intersection" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, EULER_SVG_INTERSECTION), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"euler_toggles" {
+                        self.pm(OutInternal::EulerToggles, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"euler_toggles_power" {
+                        self.pm(OutInternal::EulerTogglesPower, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"cref" {
                         self.pm(OutInternal::Cref, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"cases" {
@@ -368,6 +382,8 @@ impl<'a> Parser<'a> {
                         self.pm(OutInternal::ProofPart, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"css_colors" {
                         self.pm(OutInternal::CssColors, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"powerset_colors" {
+                        self.pm(OutInternal::PowersetColors, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"r" {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, false, false, false), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"R" {
@@ -419,9 +435,9 @@ impl<'a> Parser<'a> {
                     } else if macro_name == b"video_container" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="video_container">"###, "</div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"solution" {
-                        self.pm(|t, p, a| OutInternal::Toggled(t, p, a, r###"Show a possible solution"###, "Hide solution"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Toggled(t, p, a, r###"Show Solution"###, "Hide Solution"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"proof_as_exercise" {
-                        self.pm(|t, p, a| OutInternal::Toggled(t, p, a, r###"Prove it yourself, then click to compare"###, "Hide proof"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Toggled(t, p, a, r###"Show Proof"###, "Hide Proof"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"nobr" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<span class="nobr">"###, "</span>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$tag" {
@@ -654,3 +670,143 @@ impl<'a> Parser<'a> {
 }
 
 static LOREM: &str = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.";
+
+static EULER_SVG: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">
+<path class="cd1 bgclll1" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+<path class="cd3 bgclll3" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+
+<foreignObject x="-16.2858" y="-85" width="30" height="30">
+<span class="symbol_container"><span class="symbol0"></span></span>
+</foreignObject>
+<foreignObject x="51.5739" y="-36.6311" width="30" height="30">
+<span class="symbol_container"><span class="symbol1"></span></span>
+</foreignObject>
+<foreignObject x="26.1449" y="41.6311" width="30" height="30">
+<span class="symbol_container"><span class="symbol2"></span></span>
+</foreignObject>
+<foreignObject x="-56.1449" y="41.6311" width="30" height="30">
+<span class="symbol_container"><span class="symbol3"></span></span>
+</foreignObject>
+<foreignObject x="-81.5739" y="-36.6311" width="30" height="30">
+<span class="symbol_container"><span class="symbol4"></span></span>
+</foreignObject>
+</svg>"###;
+
+static EULER_SVG_EQUALITY: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">
+<path class="cd1 bgclll1" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+<path class="cd3 bgclll3" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+
+<foreignObject x="-16.2858" y="-85" width="30" height="30">
+<span class="symbol_container"><span class="symbol0"></span></span>
+</foreignObject>
+<foreignObject x="51.5739" y="-36.6311" width="30" height="30">
+<span class="symbol_container"><span class="symbol1"></span></span>
+</foreignObject>
+<foreignObject x="26.1449" y="41.6311" width="30" height="30" class="s3">
+<span class="symbol_container"><span class="symbol2"></span></span>
+</foreignObject>
+<foreignObject x="-56.1449" y="41.6311" width="30" height="30" class="s3">
+<span class="symbol_container"><span class="symbol3"></span></span>
+</foreignObject>
+<foreignObject x="-81.5739" y="-36.6311" width="30" height="30" class="s3">
+<span class="symbol_container"><span class="symbol4"></span></span>
+</foreignObject>
+</svg>"###;
+
+static EULER_SVG_INTERSECTION: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">
+<path class="cd1 bgclll1" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+<path class="cd3 bgclll3" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+
+<clipPath id="intersection_clip1_euler">
+<path id="intersection_clip1_euler_path" class="euler clip" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+</clipPath>
+<clipPath id="intersection_clip2_euler" clip-path="url('#intersection_clip1_euler')">
+<path id="intersection_clip2_euler_path" class="euler clip" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+</clipPath>
+<mask id="intersection_mask_euler">
+<rect fill="white" x="-100" y="-100" width="200" height="200"/>
+<path id="intersection_mask1_euler_path" class="euler mask" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+<path id="intersection_mask2_euler_path" class="euler mask" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+</mask>
+
+<rect class="euler_yay" clip-path="url('#intersection_clip2_euler')" mask="url('#intersection_mask_euler')" x="-100" y="-100" width="200" height="200"/>
+
+<foreignObject x="-16.2858" y="-85" width="30" height="30">
+<span class="symbol_container"><span class="symbol0"></span></span>
+</foreignObject>
+<foreignObject x="51.5739" y="-36.6311" width="30" height="30" class="s3">
+<span class="symbol_container"><span class="symbol1"></span></span>
+</foreignObject>
+<foreignObject x="26.1449" y="41.6311" width="30" height="30" class="">
+<span class="symbol_container"><span class="symbol2"></span></span>
+</foreignObject>
+<foreignObject x="-56.1449" y="41.6311" width="30" height="30" class="">
+<span class="symbol_container"><span class="symbol3"></span></span>
+</foreignObject>
+<foreignObject x="-81.5739" y="-36.6311" width="30" height="30" class="">
+<span class="symbol_container"><span class="symbol4"></span></span>
+</foreignObject>
+</svg>"###;
+
+static EULER_SVG_SETMINUS: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">
+<path class="cd1 bgclll1" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+<path class="cd3 bgclll3" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+
+<clipPath id="setminus_clip1_euler">
+<path id="setminus_clip1_euler_path" class="euler clip" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+</clipPath>
+<mask id="setminus_mask_euler">
+<rect fill="white" x="-100" y="-100" width="200" height="200"/>
+<path id="setminus_mask1_euler_path" class="euler mask" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+<path id="setminus_mask2_euler_path" class="euler mask" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+<path id="setminus_clip2_euler_path" style="fill: black; stroke: black" class="euler clip" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+</mask>
+
+<rect class="euler_yay" clip-path="url('#setminus_clip1_euler')" mask="url('#setminus_mask_euler')" x="-100" y="-100" width="200" height="200"/>
+
+<foreignObject x="-16.2858" y="-85" width="30" height="30">
+<span class="symbol_container"><span class="symbol0"></span></span>
+</foreignObject>
+<foreignObject x="51.5739" y="-36.6311" width="30" height="30" class="s3">
+<span class="symbol_container"><span class="symbol1"></span></span>
+</foreignObject>
+<foreignObject x="26.1449" y="41.6311" width="30" height="30" class="">
+<span class="symbol_container"><span class="symbol2"></span></span>
+</foreignObject>
+<foreignObject x="-56.1449" y="41.6311" width="30" height="30" class="">
+<span class="symbol_container"><span class="symbol3"></span></span>
+</foreignObject>
+<foreignObject x="-81.5739" y="-36.6311" width="30" height="30" class="">
+<span class="symbol_container"><span class="symbol4"></span></span>
+</foreignObject>
+</svg>"###;
+
+static EULER_SVG_UNION: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">
+<path class="cd1 bgclll1" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+<path class="cd3 bgclll3" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+<clipPath id="union_clip1_euler">
+<path id="union_clip1_euler_path" class="euler clip" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+<path id="union_clip2_euler_path" class="euler clip" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+</clipPath>
+<mask id="union_mask_euler">
+<rect fill="white" x="-100" y="-100" width="200" height="200"/>
+<path id="union_mask1_euler_path" class="euler mask" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
+<path id="union_mask2_euler_path" class="euler mask" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
+</mask>
+<rect class="euler_yay" clip-path="url('#union_clip1_euler')" mask="url('#union_mask_euler')" x="-100" y="-100" width="200" height="200"/>
+<foreignObject x="-16.2858" y="-85" width="30" height="30">
+<span class="symbol_container"><span class="symbol0"></span></span>
+</foreignObject>
+<foreignObject x="51.5739" y="-36.6311" width="30" height="30" class="s3">
+<span class="symbol_container"><span class="symbol1"></span></span>
+</foreignObject>
+<foreignObject x="26.1449" y="41.6311" width="30" height="30" class="">
+<span class="symbol_container"><span class="symbol2"></span></span>
+</foreignObject>
+<foreignObject x="-56.1449" y="41.6311" width="30" height="30" class="">
+<span class="symbol_container"><span class="symbol3"></span></span>
+</foreignObject>
+<foreignObject x="-81.5739" y="-36.6311" width="30" height="30" class="">
+<span class="symbol_container"><span class="symbol4"></span></span>
+</foreignObject>
+</svg>"###;

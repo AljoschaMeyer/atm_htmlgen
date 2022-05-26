@@ -1,8 +1,19 @@
-const tex_options = {trust: true};
+const strictness = (err) => {
+  if (err === "htmlExtension") {
+    return "ignore";
+  } else {
+    return "warn";
+  }
+}
+const tex_options = {
+  trust: true,
+  strict: strictness,
+};
 
 export function tex_string(str, opts) {
   if (opts) {
     opts.trust = true;
+    opts.strict = strictness;
   }
   return katex.renderToString(str, opts ? opts : tex_options);
 }
@@ -10,6 +21,7 @@ export function tex_string(str, opts) {
 export function tex(str, elem, opts) {
   if (opts) {
     opts.trust = true;
+    opts.strict = strictness;
   }
   return katex.render(str, elem, opts ? opts : tex_options);
 }

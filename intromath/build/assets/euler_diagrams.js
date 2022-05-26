@@ -108,14 +108,14 @@ function euler(container, compute_s3, render_results, prefix) {
     for (let i = 0; i < 5; i++) {
       buttons1.children[i].classList.toggle("yes", s1[i]);
       buttons1.children[i].classList.toggle("no", !s1[i]);
-      buttons1.children[i].innerHTML = button_text(i, 1, s1[i]);
+      buttons1.children[i].innerHTML = button_text(i, s1[i], 1);
       buttons2.children[i].classList.toggle("yes", s2[i]);
       buttons2.children[i].classList.toggle("no", !s2[i]);
-      buttons2.children[i].innerHTML = button_text(i, 2, s2[i]);
+      buttons2.children[i].innerHTML = button_text(i, s2[i], 2);
     }
 
-    set1.innerHTML = render_set_def(1, s1);
-    set2.innerHTML = render_set_def(2, s2);
+    set1.innerHTML = render_set_def(s1, 1);
+    set2.innerHTML = render_set_def(s2, 2);
 
     if (render_results) {
       render_results(results, s1, s2, s3);
@@ -128,27 +128,35 @@ function empty_s() {
 }
 
 function name_set(set) {
-  return set_tex_class(set, set === 1 ? "A" : "B");
+  if (set) {
+    return set_tex_class(set, set === 1 ? "A" : "B");
+  } else {
+    return "A";
+  }
 }
 
 function set_tex_class(set, tex) {
-  return `\\htmlClass{cd${set === 1 ? 1 : (set === 3 ? 2 : 3)}}{${tex}}`;
+  return `\\htmlClass{cd${set === 1 ? 1 : (set === 3 ? 6 : 3)}}{${tex}}`;
 }
 
 function set_tex_class_bg(set, tex) {
   if (set === 3) {
-    return `\\htmlClass{bgmc2}{${tex}}`;
+    return `\\htmlClass{bgmc6}{${tex}}`;
   } else {
     return `\\htmlClass{bgmclll${set === 1 ? 1 : 3}}{${tex}}`;
   }
 }
 
-function button_text(element, set, is_in) {
+function button_text(element, is_in, set) {
   return tex_string(`${tex_symbol(element)} ${is_in ? "\\in" : "\\notin"} ${name_set(set)}`);
 }
 
-function render_set_def(set, s, s3) {
-  return tex_string(`${name_set(set)} ${defeq} ${set_tex_class(set, set_tex_class_bg(set, set_tex(s, s3)))}`);
+function render_set_def(s, set, s3) {
+  if (set) {
+    return tex_string(`${name_set(set)} ${defeq} ${set_tex_class(set, set_tex_class_bg(set, set_tex(s, s3)))}`);
+  } else {
+    return tex_string(`A ${defeq} ${set_tex(s, s3)}`);
+  }
 }
 
 function set_tex(s, s3_, set_n) {
@@ -298,10 +306,14 @@ handle_binop("intersection", intersection, bitvec_and);
 handle_binop("union", union, bitvec_or);
 handle_binop("setminus", setminus, bitvec_without);
 
+function powerset_color(set_as_int) {
+  return `hsl\\(${(set_as_int / 31) * 360}, 100%, 50%\\)`;
+}
+
 const container_powerset = document.querySelector("#container_euler_powerset");
 (() => {
   const container = container_powerset;
-  const s = [false, false, false, false, false];
+  const s = [false, false, false, true, true];
 
   const svg = container.children[0];
 
@@ -326,120 +338,97 @@ const container_powerset = document.querySelector("#container_euler_powerset");
 
   function render_state(j) {
     const grew = s[j];
-
-    let delay = 0;
-    for (let car = 0; car < 6; car++) {
-      for (let i0 = 0; i0 < 2; i0++) {
-        for (let i1 = 0; i1 < 2; i1++) {
-          for (let i2 = 0; i2 < 2; i2++) {
-            for (let i3 = 0; i3 < 2; i3++) {
-              for (let i4 = 0; i4 < 2; i4++) {
-                const b0 = i0 === 1;
-                const b1 = i1 === 1;
-                const b2 = i2 === 1;
-                const b3 = i3 === 1;
-                const b4 = i4 === 1;
-                const b = [b0, b1, b2, b3, b4];
-
-                if (bitvec_count(b) === car) {
-                  const i = (0 |
-                    (b0 ? 1 : 0) |
-                    (b1 ? 2 : 0) |
-                    (b2 ? 4 : 0) |
-                    (b3 ? 8 : 0) |
-                    (b4 ? 16 : 0)) - 1;
-
-                    if (b.reduce(
-                      (acc, bk, k) => acc && (!bk || s[k]),
-                      true,
-                    )) {
-                      if (grew && b[j]) {
-                        setTimeout(() => animate_power_set_grow(b, j, svg.children[i]), delay);
-                      }
-                      delay += 300;
-                    }
-
-                    if (b.reduce(
-                      (acc, bk, k) => acc && (!bk || s[k] || (k === j)),
-                      true,
-                    )) {
-                      if (!grew && b[j]) {
-                        animate_power_set_shrink(b, j, svg.children[i]);
-                      }
-                    }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    const car = cardinality(s);
+    const subs = subsets(s);
 
     for (let i = 0; i < 5; i++) {
       buttons1.children[i].classList.toggle("yes", s[i]);
       buttons1.children[i].classList.toggle("no", !s[i]);
-      buttons1.children[i].innerHTML = button_text(i, 1, s[i]);
+      buttons1.children[i].innerHTML = button_text(i, s[i]);
     }
 
-    set1.innerHTML = render_set_def(1, s);
+    set1.innerHTML = render_set_def(s);
 
-    const results_texs = [set([])];
-    const results_by_size = [[], [], [], [], []];
-    for (let j = 1; j < 6; j++) {
-      for (let i0 = 0; i0 < 2; i0++) {
-        for (let i1 = 0; i1 < 2; i1++) {
-          for (let i2 = 0; i2 < 2; i2++) {
-            for (let i3 = 0; i3 < 2; i3++) {
-              for (let i4 = 0; i4 < 2; i4++) {
-                const b0 = i0 === 1;
-                const b1 = i1 === 1;
-                const b2 = i2 === 1;
-                const b3 = i3 === 1;
-                const b4 = i4 === 1;
+    const tex_prefix = `${powerset("A")} ${seq} `;
+    const result_set_texs = [];
+    const lines = [];
 
-                const i = (0 |
-                  (b0 ? 1 : 0) |
-                  (b1 ? 2 : 0) |
-                  (b2 ? 4 : 0) |
-                  (b3 ? 8 : 0) |
-                  (b4 ? 16 : 0)) - 1;
+    const delay_round = 450;
+    const delay_set = 250;
+    let delay = -delay_round;
 
-                if (
-                  (!b0 || s[0]) &&
-                  (!b1 || s[1]) &&
-                  (!b2 || s[2]) &&
-                  (!b3 || s[3]) &&
-                  (!b4 || s[4]) &&
-                  (i0 + i1 + i2 + i3 + i4 === j)
-                ) {
-                  const subset = [b0, b1, b2, b3, b4];
-                  results_texs.push(set_tex(subset));
-                  results_by_size[cardinality(subset) - 1].push(subset);
-                }
-              }
-            }
-          }
+    for (const row of subs) {
+      lines.push([]);
+      delay += delay_round;
+
+      for (const b of row) {
+        const set_as_int = (
+          (b[0] ? 1 : 0) |
+          (b[1] ? 2 : 0) |
+          (b[2] ? 4 : 0) |
+          (b[3] ? 8 : 0) |
+          (b[4] ? 16 : 0)) - 1;
+
+        const t = `\\htmlClass{powerset${set_as_int}}{${set_tex(b)}}`;
+        if (car <= 1) {
+          result_set_texs.push(t);
+        } else {
+          lines[lines.length - 1].push(t);
+        }
+
+        if (grew && b[j]) {
+          setTimeout(() => animate_power_set_grow(b, j, svg.children[set_as_int]), delay);
+          delay += delay_set;
+        }
+        if (!grew) {
+          const old = b.map(x => x);
+          old[j] = true;
+          setTimeout(() => animate_power_set_shrink(old, j, svg.children[((set_as_int + 1) | Math.pow(2, j)) - 1]), delay);
+          delay += delay_set;
         }
       }
     }
 
-    if (cardinality(s) <= 1) {
-      tex(`${powerset(name_set(1))} ${seq} ${set(results_texs, 1)}`, results);
+    if (car <= 1) {
+      tex(`${tex_prefix}${set(result_set_texs)}`, results);
     } else {
-      const lines = [[set([])]];
-      for (let i = 1; i <= cardinality(s); i++) {
-        lines.push(results_by_size[i - 1].map(set_tex));
-      }
-
-      const actual_lines = lines.map(sets => sets.join(", "));
-
-      tex(`${powerset(name_set(1))} ${seq} \\big\\{\\\\ \\hspace{2em}
-  ${actual_lines.join(", \\\\ \\hspace{2em}")}
+      tex(`${tex_prefix}\\big\\{\\\\ \\hspace{2em}
+  ${lines.map(sets => sets.join(", ")).join(", \\\\ \\hspace{2em}")}
 \\\\\\big\\}`, results, {display: true, fleqn: true});
     }
 
   }
 })();
+
+function subsets(b) {
+  const unsorted = [];
+  for (let i4 = 0; i4 <= b[4] ? 1 : 0; i4++) {
+    for (let i3 = 0; i3 <= b[3] ? 1 : 0; i3++) {
+      for (let i2 = 0; i2 <= b[2] ? 1 : 0; i2++) {
+        for (let i1 = 0; i1 <= b[1] ? 1 : 0; i1++) {
+          for (let i0 = 0; i0 <= b[0] ? 1 : 0; i0++) {
+            unsorted.push([i0, i1, i2, i3, i4]);
+          }
+        }
+      }
+    }
+  }
+
+  const sorted = [];
+  for (let i = 0; i < 6; i++) {
+    const arr = [];
+    unsorted.forEach(sb => {
+      if (bitvec_count(sb) === i) {
+        arr.push(sb);
+      }
+    });
+    if (arr.length > 0) {
+      sorted.push(arr);
+    }
+  }
+
+  return sorted;
+}
 
 function animate_power_set_grow(b, i, p) {
   const c_to = cardinality(b);

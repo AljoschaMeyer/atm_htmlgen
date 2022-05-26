@@ -1,8 +1,13 @@
 /* typography adapted from https://ssbc.github.io/scuttlebutt-protocol-guide/ */
 
+.yes {
+  background-color: var(--color-bg0)
+}
+
 §css_colors
 
 :root {
+    --color-bg0: #ffffff;
     --color-bg: #fffff8;
     --color-bg2: #eeeee8;
     --color-bg3: #ddddd8;
@@ -331,7 +336,7 @@ article {
 
 .preview {
   position: absolute;
-  background: rgba(255, 255, 255, 30);
+  background: var(--color-bg);
   box-shadow: 0px 0px 3px 4px #DDDDDD;
   padding: 4px;
   max-width: calc(var(--width-default) + 8px);
@@ -488,15 +493,23 @@ button {
   border-width: 0.1em;
   border-style: solid;
   border-color: var(--color-text);
-  border-radius: 0.12em;
+  border-radius: 0.4em;
   box-sizing: border-box;
   text-decoration: none;
   color: var(--color-text);
   text-align: center;
   transition: all 0.2s;
+  background-color: var(--color-bg2);
+  font-size: 0.95rem;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
 }
 
-button.toggle:hover {
+.no {
+  background-color: var(--color-bg2)
+}
+
+button:hover {
   background-color: var(--color-bg);
 }
 

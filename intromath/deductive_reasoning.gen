@@ -1258,7 +1258,7 @@
         §p(
           §Rs(implication) with a false §r(premise) always hold, but what about §rs(implication) with a false §r(conclusion)? If the §r(implication) is to hold, we must be able to prove its §r(conclusion), which should be impossible if the §r(conclusion) is false. Except, of course, if the §r(premise) is false as well. So we can observe the following: If an §r(implication) with a false §r(conclusion) holds, its §r(premise) must be false.
         )§p(
-          We can use this as a proof technique: If we can manage to prove a falsehood by assuming the §r(negation) of some statement, then the §r(negation) of that statement must have been false, and thus, the original statement must have been true. Such a proof is called a §definex["proof_by_contradiction"](proof by contradiction)(
+          We can use this as a proof technique: If we can manage to prove a falsehood by assuming the §r(negation) of some statement, then the §r(negation) of that statement must have been false, and thus, the original statement must have been §side(true)(This may seem like a rather convoluted approach when described abstractly, but we will see many surprisingly elegant examples throughout the book.). Such a proof is called a §definex["proof_by_contradiction"](proof by contradiction)(
             §p(
               A §rdef(proof by contradiction) shows a statement by assuming its negation and deriving a falsehood from it.
             )
@@ -1361,6 +1361,8 @@
 
         §p(
           Furthermore, the concept of statements that §r(mean the same) is exactly that of statements that §side(§r(bi-implication)(imply each other))(We simply did not have the necessary terminology available when first introducing §rs(meta statement). From now on, we use more standard §r(bi-implication) terminology when formulating §rs(meta statement).).
+        )§p(
+          Finally, every definition establishes a §r(bi-implication) between the newly-defined terminology and its meaning. By convention, definitions usually leave the §verbatim(only if) implicit. For example, we write §lquote§ a squirrel is a §define["frob1"](frob) §em(if) §rquote(§meta1) rather than §lquote§ a squirrel is a §define["frob2"](frob2)()(frob) §em(if and only if) §rquote(§meta1). This is technically incorrect, but so widely-spread that there is little point in fighting §side(it)(The correct reading is so intuitively obvious to most people that they never even detect the ambiguity. Few people read the definition of §$(§$leq) and conclude that there is no information on whether §$(5 §$leq 4) is true or not.).
         )
 
       )
@@ -1522,6 +1524,4 @@
 
 )
 
-- definitions as iff (and sloppy formulation)
-- common mistake exercise side note to suggest tthinking about when it does work
-- side note about proof by contradiction being more useful than it might look initially
+- chapter-internal meta-statement previews
