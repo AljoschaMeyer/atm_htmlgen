@@ -1,9 +1,9 @@
-:root {
-  --color-s3: var(--color-success);
-}
-
 .s3_obstruction {
   --color-s3: var(--color-obstruction);
+}
+
+.s3_obstruction .s3 .symbol0, .s3_obstruction .s3 .symbol1, .s3_obstruction .s3 .symbol2, .s3_obstruction .s3 .symbol3, .s3_obstruction .s3 .symbol4 {
+  background-color: var(--color-obstruction);
 }
 
 .euler_diagram {
@@ -22,18 +22,10 @@
   mix-blend-mode: multiply;
 }
 
-.euler {
-  stroke-width: 1;
-}
-
-.euler.c1 {
-  stroke: var(--c1-half);
-  fill: var(--c1-transparent);
-}
-
-.euler.c2 {
-  stroke: var(--c2-half);
-  fill: var(--c2-transparent);
+@media (prefers-color-scheme: dark) {
+  .eulersvg > path, .venn > circle {
+    mix-blend-mode: screen;
+  }
 }
 
 .euler.clip {
@@ -44,15 +36,6 @@
 .euler.mask {
   stroke: black;
   fill: none;
-}
-/*
-.s3 {
-  color: var(--color-s3);
-  fill: var(--color-s3);
-} */
-
-.s3_obstruction .s3 .symbol0, .s3_obstruction .s3 .symbol1, .s3_obstruction .s3 .symbol2, .s3_obstruction .s3 .symbol3, .s3_obstruction .s3 .symbol4 {
-  background-color: var(--color-obstruction);
 }
 
 .euler_toggles, .the_sets {
@@ -66,6 +49,7 @@
 .euler_toggles > div > button {
   margin: 0 0.3em 0.3em 0;
 }
+
 .the_sets {
   margin: 1rem 0;
 }
@@ -84,10 +68,6 @@
   background-color: var(--color-text);
   height: 100%;
   width: 100%;
-}
-
-.symbol0, .symbol1, .symbol2, .symbol3, .symbol4 {
-
 }
 
 .symbol0 {
@@ -116,55 +96,8 @@
   mask-size: cover;
 }
 
-.venn2_container > svg {
-  max-height: 10rem;
-}
-
-.venn3_container > svg {
-  max-height: 10rem;
-}
-
-/* .venn * {
-  stroke: var(--color-text);
-  fill: none;
-} */
-
-.venn .venn_yay {
-  fill: var(--c6);
-  /* fill: var(--c5); */
-  /* fill: url("#pattern_striped"); */
-}
-
-.venn .venn_yay_a {
-  fill: var(--clll1);
-  /* fill: var(--clll4); */
-  /* fill: url("#pattern_striped"); */
-}
-
-.venn .venn_yay_b {
-  fill: var(--clll3);
-  /* fill: var(--clll6); */
-  /* fill: url("#pattern_striped"); */
-}
-
 .euler_yay {
-  /* fill: var(--c5); */
   fill: url("#pattern_euler_yay");
-}
-
-.venn text {
-  text-anchor: middle;
-  dominant-baseline: middle;
-  stroke: none;
-  fill: var(--color-text);
-  font-family: KaTeX_Math;
-  font-style: italic;
-  font-size: 0.8rem;
-}
-
-.three_venns {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
 }
 
 #container_euler_powerset > svg > path {
@@ -177,11 +110,58 @@
   overflow-x: auto;
 }
 
-.vennop {
-  border: 0.16rem var(--color-text) solid;
+#first_venn > foreignObject {
+  pointer-events: none;
 }
 
-.vennop > circle {
-  stroke: var(--color-text);
-  fill: none;
+.first_venn_region {
+  stroke: none;
+  fill: rgba(0, 0, 0, 0);
+}
+
+#duck_region {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion) {
+  #duck_region {
+    cursor: initial;
+  }
+}
+
+#duck_container {
+  z-index: 2;
+  width: 0px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#duck_container.active_duck {
+  animation: duck_zoom 8s ease 0s 1 normal forwards, duck_rotate 0.91s ease 0s infinite alternate forwards;
+}
+
+@keyframes duck_zoom {
+  0% {
+    width: 0px;
+  }
+
+  50% {
+    width: 100vw;
+  }
+
+  100% {
+    width: 0px;
+  }
+}
+
+@keyframes duck_rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(-20deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(20deg);
+  }
 }

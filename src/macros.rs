@@ -429,6 +429,13 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
     </head>
     <body>
         <div class="container_main">
+            <div id="js_notice" style="margin-top: 10rem; border: 4px solid var(--cd5); padding: 1rem;">
+              <p>This page uses javascript for helpful features such as tooltips, generating exercises, hiding solutions, or interactive visualizations. It does not do anything evil, in particular there is no tracking, no reporting, no storing of any information anywhere.</p>
+              <p>Enable javascript for many niceties and hopefully no drawbacks. All the code is publicly available at <a href="https://github.com/AljoschaMeyer/atm_htmlgen/" class="outlink">https://github.com/AljoschaMeyer/atm_htmlgen/</a>. If anything feels objectionable to you, please open an issue.</p>
+            </div>
+            <script>
+                document.querySelector("#js_notice").remove()
+            </script>
 "###.into()),
                     Out::Argument(1),
                     Out::Text(r###"
@@ -1518,13 +1525,37 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     "rgb(82.67% 0% 11.59%)",
                 ]
             ];
+            let cs_dark = [
+                [
+                    "rgb(35.22% 32.63% 0%)", // lch(35% 132 95)
+                    "rgb(0% 37.38% 21.81%)",
+                    "rgb(0% 36.03% 41%)",
+                    "rgb(0% 32.62% 64.56%)",
+                    "rgb(60.23% 0% 50.96%)",
+                    "rgb(64.99% 0% 8.16%)",
+                ],
+                [
+                    "rgb(72.76% 67.77% 0%)", // lch(70% 132 95)
+                    "rgb(0% 76.9% 46.98%)",
+                    "rgb(0% 74.3% 83.85%)",
+                    "rgb(52.87% 67.18% 100%)",
+                    "rgb(100% 47.87% 87.95%)",
+                    "rgb(100% 53.03% 45.72%)",
+                ],
+                [
+                    "rgb(84.29% 78.57% 0%)", // lch(80% 132 95)
+                    "rgb(0% 89.05% 54.71%)",
+                    "rgb(0% 86.06% 97.01%)",
+                    "rgb(70.08% 77.77% 100%)",
+                    "rgb(100% 67.38% 91.25%)",
+                    "rgb(100% 70.06% 64.41%)",
+                ]
+            ];
 
             let mut s = ":root {\n".to_string();
 
             for j in 0..cs.len() {
-
                 for i in 0..6 {
-                    // let mut c = cs[j][i];
                     s.push_str(&format!(
                         "  --c{}{}: {};\n",
                         SHADES[j], i + 1, cs[j][i],
@@ -1532,7 +1563,25 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 }
             }
 
-            s.push_str("\n}\n");
+            s.push_str(r###"
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+"###);
+
+            for j in 0..cs.len() {
+                for i in 0..6 {
+                    s.push_str(&format!(
+                        "  --c{}{}: {};\n",
+                        SHADES[j], i + 1, cs_dark[j][i],
+                    ));
+                }
+            }
+
+            s.push_str(r###"
+    }
+}"###);
 
             for i in 0..6 {
                 for j in 0..cs.len() {

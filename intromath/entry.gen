@@ -9,9 +9,6 @@
 §output["cardinality.html"](§input["cardinality.gen"])
 §output["homogeneous_relations.html"](§input["homogeneous_relations.gen"])
 §output["abstract_algebra.html"](§input["abstract_algebra.gen"])
-§output["propositional_logic.html"](§input["propositional_logic.gen"])
-§output["first_order_logic.html"](§input["first_order_logic.gen"])
-§output["higher_order_logic.html"](§input["higher_order_logic.gen"])
 
 §output["assets/tex.js"](§input["tex.js"])
 §output["assets/main.css"](§input["main.css"])

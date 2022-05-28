@@ -6,11 +6,52 @@
         <link rel="stylesheet" href="./assets/fonts.css">
         <link rel="stylesheet" href="./assets/main.css">
         <script src="./assets/floating-ui.core.min.js"></script>
-        <script src="./assets/floating-ui.dom.min.js"></script>
+        <script src="./assets/floating-ui.dom.min.js"></script><style>
+    .toc {
+      text-align: center;
+    }
+
+    .tocparttitle {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .tocpartchapters {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .tocchapter > a:first-child::after {
+      content: ":\a";
+      white-space: pre;
+    }
+
+    .tocchapter > ol {
+      list-style-type: disc;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .todo {
+      color: var(--color-text2);
+    }
+  </style>
     </head>
     <body>
         <div class="container_main">
-<div class="wide"><h1><span style="font-size: 40px">An Opinionated</span><br>Introduction to<br>Mathematics</h1></div>
+            <div id="js_notice" style="margin-top: 10rem; border: 4px solid var(--cd5); padding: 1rem;">
+              <p>This page uses javascript for helpful features such as tooltips, generating exercises, hiding solutions, or interactive visualizations. It does not do anything evil, in particular there is no tracking, no reporting, no storing of any information anywhere.</p>
+              <p>Enable javascript for many niceties and hopefully no drawbacks. All the code is publicly available at <a href="https://github.com/AljoschaMeyer/atm_htmlgen/" class="outlink">https://github.com/AljoschaMeyer/atm_htmlgen/</a>. If anything feels objectionable to you, please open an issue.</p>
+            </div>
+            <script>
+                document.querySelector("#js_notice").remove()
+            </script>
+<div class="wide"><h1><span style="font-size: 2rem">An Opinionated</span><br>Introduction to<br>Mathematics</h1></div>
 
   <p>Doing mathematics is a lot like playing the violin: not particularly pragmatic at first glance, pretty frustrating when starting <span class="nowrap">out<span class="aside_counter">1</span></span><span class="aside"><span class="aside_counter">1</span>Also, there are always people to whom it seems to come easier than to you. Don't compare yourself to those people!</span>, and yet quite a few people say that learning to do it changed their life for the better.</p>
 
@@ -23,7 +64,7 @@
         Performed by Yoojin Jang</span>
       <div class="video_container"><iframe src="https://www.youtube-nocookie.com/embed/vCS0pHKYcrI?start=19" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div></div>
 
-    <p>There is a similar progression when learning to do mathematics. Our squishy monkey brains did not evolve for formal, abstract reasoning, so there is an initial hurdle to overcome. But after some practice, you unlock a new mode of thought and communication, you become able to use tools that were refined over centuries, allowing you to tackle certain tasks in a more effective way then you would have been able to before.</p><p>Just like playing music, doing mathematics can lead you to moments of deep exhilaration or profound beauty. A lot of mathematics is about finding and verifying patterns, and our brains really enjoy doing that. And just in case school gave you any weird ideas: mathematics is as much about calculating angles in a triangle as poetry is about memorizing the alphabet.</p><p>This book aims to get you to the point where mathematics augment your ability to reason about the world. It cannot give feedback like a teacher can, but at least it can present all the material. While you might not be able to find a person to actively teach you, you might find someone willing to give you feedback on your exercises. Speaking of which: the book contains lots of them. You would not expect to learn to play the violin by passively reading a book, so why would mathematics be any different?</p><p>By the end of this book, you should have learned roughly the same material as that of a foundational university course. You should be able to learn more advanced material on your own, whether by scouring the internet for resources, or by reading more traditional textbooks written for university students. And you should be able to apply mathematics to whatever you are doing, adapting it and bending the rules for your purposes.</p>
+    <p>There is a similar progression when learning to do mathematics. Our squishy monkey brains did not evolve for formal, abstract reasoning, so there is an initial hurdle to overcome. But after some practice, you unlock a new mode of thought and communication. You become able to use tools that were refined over centuries, allowing you to tackle certain tasks in a more effective way than you would have been able to before.</p><p>Just like playing music, doing mathematics can lead you to moments of deep exhilaration or profound beauty. A lot of mathematics is about finding and verifying patterns, and our brains really enjoy doing that. And just in case school gave you any weird ideas: mathematics is as much about calculating angles in a triangle as poetry is about memorizing the alphabet.</p><p>This book aims to get you to the point where mathematics augment your ability to reason about the world. It cannot give feedback like a teacher can, but at least it can present all the material. While you might not be able to find a person to actively teach you, perhaps you can find someone willing to give you feedback on your exercises. Speaking of which: the book contains lots of them. You would not expect to learn to play the violin by passively reading a book, so why would mathematics be any different?</p><p>By the end of this book, you should have learned roughly the same material as that of a foundational university course. You should be able to learn more advanced material on your own, whether by scouring the internet for resources, or by reading more traditional textbooks written for university students. And you should be able to apply mathematics to whatever you are doing, adapting it and bending the rules for your purposes.</p>
 
     <div><span class="nowrap"></span><span class="aside"><cite>Matisse: La Danse</cite><br>
         Composed by Tracy Silverman<br>
@@ -33,22 +74,39 @@
     <section>
     <h3 id="toc"><a href="http://localhost:1234/index.html#toc">Table of Contents</a></h3>
     <div class="toc slightlywide"><div class="tocpart"><div class="tocparttitle">Part 1: Tools of the Trade</div><div class="tocpartchapters"><div class="tocchapter"><a class="ref" href="http://localhost:1234/deductive_reasoning.html#chapter_deductive_reasoning">Chapter&nbsp;1</a>
-              <a class="ref" href="http://localhost:1234/deductive_reasoning.html#chapter_deductive_reasoning">Deductive Reasoning</a></div><div class="tocchapter"><a class="ref" href="http://localhost:1234/sets.html#chapter_sets">Chapter&nbsp;2</a>
-              <a class="ref" href="http://localhost:1234/sets.html#chapter_sets">WIP Naïve Set Theory</a></div><div class="tocchapter"><a class="ref" href="http://localhost:1234/induction.html#chapter_induction">Chapter&nbsp;3</a>
-              <a class="ref" href="http://localhost:1234/induction.html#chapter_induction">TODO Induction</a></div></div></div>
-        <div class="tocpart"><div class="tocparttitle">Part 2: Comparisons</div><div class="tocpartchapters"><div class="tocchapter"><a class="ref" href="http://localhost:1234/cardinality.html#chapter_cardinality">Chapter&nbsp;4</a>
-              <a class="ref" href="http://localhost:1234/cardinality.html#chapter_cardinality">TODO Cardinality</a></div><div class="tocchapter"><a class="ref" href="http://localhost:1234/homogeneous_relations.html#chapter_homogeneous_relations">Chapter&nbsp;5</a>
-              <a class="ref" href="http://localhost:1234/homogeneous_relations.html#chapter_homogeneous_relations">TODO Homogeneous Relations</a></div><div class="tocchapter"><a class="ref" href="http://localhost:1234/abstract_algebra.html#chapter_abstract_algebra">Chapter&nbsp;6</a>
-              <a class="ref" href="http://localhost:1234/abstract_algebra.html#chapter_abstract_algebra">TODO Abstract Algebra</a></div></div></div>
-        <div class="tocpart"><div class="tocparttitle">Part 3: Logics</div><div class="tocpartchapters"><div class="tocchapter"><a class="ref" href="http://localhost:1234/propositional_logic.html#chapter_propositional_logic">Chapter&nbsp;7</a>
-              <a class="ref" href="http://localhost:1234/propositional_logic.html#chapter_propositional_logic">TODO Propositional Logic</a></div><div class="tocchapter"><a class="ref" href="http://localhost:1234/first_order_logic.html#chapter_first_order_logic">Chapter&nbsp;8</a>
-              <a class="ref" href="http://localhost:1234/first_order_logic.html#chapter_first_order_logic">TODO First-Order Logic</a></div><div class="tocchapter"><a class="ref" href="http://localhost:1234/higher_order_logic.html#chapter_higher_order_logic">Chapter&nbsp;9</a>
-              <a class="ref" href="http://localhost:1234/higher_order_logic.html#chapter_higher_order_logic">TODO Higher-Order Logic</a></div></div></div></div>
+              <a class="ref" href="http://localhost:1234/deductive_reasoning.html#chapter_deductive_reasoning">Deductive Reasoning</a>
+              <ol><li><a class="ref" href="http://localhost:1234/deductive_reasoning.html#section_deductive_reasoning">1.1 Gathering Knowledge</a></li>
+                <li><a class="ref" href="http://localhost:1234/deductive_reasoning.html#section_whirlwind_tour">1.2 A Whirlwind Tour of Tiny Proofs</a></li>
+                <li><a class="ref" href="http://localhost:1234/deductive_reasoning.html#deductive_reasoning_conclusion">1.3 Conclusion</a></li>
+                <li><a class="ref" href="http://localhost:1234/deductive_reasoning.html#exercises_deductive_reasoning">1.4 Exercises</a></li></ol></div><div class="tocchapter"><a class="ref" href="http://localhost:1234/sets.html#chapter_sets">Chapter&nbsp;2</a>
+              <a class="ref" href="http://localhost:1234/sets.html#chapter_sets">Naïve Set Theory</a>
+              <ol><li><a class="ref" href="http://localhost:1234/sets.html#section_sets">2.1 Sets</a></li>
+                <li><a class="ref" href="http://localhost:1234/sets.html#combining_sets">2.2 Combining Sets</a></li>
+                <li><a class="ref" href="http://localhost:1234/sets.html#sets_of_sets">2.3 Sets of Sets</a></li>
+                <li><a class="ref" href="http://localhost:1234/sets.html#conclusion_sets">2.4 Conclusion</a></li>
+                <li><a class="ref" href="http://localhost:1234/sets.html#exercises_sets">2.5 Exercises</a></li></ol></div><div class="tocchapter todo"><a class="ref" href="http://localhost:1234/induction.html#chapter_induction">Chapter&nbsp;3</a>
+              <a class="ref" href="http://localhost:1234/induction.html#chapter_induction">Induction</a>
+              <ol><li>To</li>
+                <li>Be</li>
+                <li>Written</li></ol></div></div></div>
+        <div class="tocpart"><div class="tocparttitle">Part 2: Pervasive Patterns</div><div class="tocpartchapters"><div class="tocchapter todo"><a class="ref" href="http://localhost:1234/cardinality.html#chapter_cardinality">Chapter&nbsp;4</a>
+              <a class="ref" href="http://localhost:1234/cardinality.html#chapter_cardinality">Cardinality</a>
+              <ol><li>To</li>
+                <li>Be</li>
+                <li>Written</li></ol></div><div class="tocchapter todo"><a class="ref" href="http://localhost:1234/homogeneous_relations.html#chapter_homogeneous_relations">Chapter&nbsp;5</a>
+              <a class="ref" href="http://localhost:1234/homogeneous_relations.html#chapter_homogeneous_relations">Homogeneous Relations</a>
+              <ol><li>To</li>
+                <li>Be</li>
+                <li>Written</li></ol></div><div class="tocchapter todo"><a class="ref" href="http://localhost:1234/abstract_algebra.html#chapter_abstract_algebra">Chapter&nbsp;6</a>
+              <a class="ref" href="http://localhost:1234/abstract_algebra.html#chapter_abstract_algebra">Abstract Algebra</a>
+              <ol><li>To</li>
+                <li>Be</li>
+                <li>Written</li></ol></div></div></div></div>
 </section>
 
     <section>
     <h3 id="about"><a href="http://localhost:1234/index.html#about">About the Book</a></h3>
-    <p>This book is written by <a class="outlink" href="https://aljoscha-meyer.de/">Aljoscha Meyer</a>, out of the desire for a high-quality, freely accessible introduction to the wonderful and useful world of mathematics. It is placed in the public domain, which means you are free to distribute or modify it however you like. You could create a translation, add more topics, or even print it on T-shirts, sell them, and keep all the profits for yourself.</p><p>The source code for this book is hosted on <a class="outlink" href="https://github.com/AljoschaMeyer/introtcs">github</a>. This is also the primary place to suggest changes to the book. Please do not hesitate to report even small errors such as misspelled words, failure to consistently stick to American English, awkward grammar, typographic mistakes, or stylistic mishaps.</p>
+    <p>This book is written by <a class="outlink" href="https://aljoscha-meyer.de/">Aljoscha Meyer</a>, out of the desire for a high-quality, freely accessible introduction to the wonderful and useful world of mathematics. It is placed in the <a class="outlink" href="https://en.wikipedia.org/wiki/Public_domain">public domain</a>, which means you are free to distribute or modify it in any way you like. You could create a translation, add more topics, or even print it on T-shirts, sell them, and keep all the profits for yourself.</p><p>The source code for this book is hosted on <a class="outlink" href="https://github.com/AljoschaMeyer/atm_htmlgen">github</a>. This is also the primary place to suggest <span class="nowrap">improvements<span class="aside_counter">1</span></span><span class="aside"><span class="aside_counter">1</span>Alternatively, you can send an email to <a href="mailto:intromath@aljoscha-meyer.de" class="outlink">intromath@aljoscha-meyer.de</a></span>. Please do not hesitate to report even small errors such as misspelled words, failure to consistently stick to American English, awkward grammar, typographic mistakes, or stylistic mishaps.</p>
 </section>
 
     <nav class="chapter_navigation slightlywide">
@@ -67,5 +125,5 @@
 </html>
 
 
-- rename repo
-- add email
+- create email
+- make repo public

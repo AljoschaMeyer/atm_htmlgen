@@ -1,8 +1,42 @@
 §template(
+  <style>
+    .toc {
+      text-align: center;
+    }
 
+    .tocparttitle {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .tocpartchapters {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .tocchapter > a:first-child::after {
+      content: ":\a";
+      white-space: pre;
+    }
+
+    .tocchapter > ol {
+      list-style-type: disc;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .todo {
+      color: var(--color-text2);
+    }
+  </style>
 )(
   §div(wide)(
-    §h1(§span{"style": "font-size: 40px"}(An Opinionated)§br§ Introduction to§br§ Mathematics)
+    §h1(§span{"style": "font-size: 2rem"}(An Opinionated)§br§ Introduction to§br§ Mathematics)
   )
 
   §p(
@@ -26,11 +60,11 @@
     )
 
     §p(
-      There is a similar progression when learning to do mathematics. Our squishy monkey brains did not evolve for formal, abstract reasoning, so there is an initial hurdle to overcome. But after some practice, you unlock a new mode of thought and communication, you become able to use tools that were refined over centuries, allowing you to tackle certain tasks in a more effective way then you would have been able to before.
+      There is a similar progression when learning to do mathematics. Our squishy monkey brains did not evolve for formal, abstract reasoning, so there is an initial hurdle to overcome. But after some practice, you unlock a new mode of thought and communication. You become able to use tools that were refined over centuries, allowing you to tackle certain tasks in a more effective way than you would have been able to before.
     )§p(
       Just like playing music, doing mathematics can lead you to moments of deep exhilaration or profound beauty. A lot of mathematics is about finding and verifying patterns, and our brains really enjoy doing that. And just in case school gave you any weird ideas: mathematics is as much about calculating angles in a triangle as poetry is about memorizing the alphabet.
     )§p(
-      This book aims to get you to the point where mathematics augment your ability to reason about the world. It cannot give feedback like a teacher can, but at least it can present all the material. While you might not be able to find a person to actively teach you, you might find someone willing to give you feedback on your exercises. Speaking of which: the book contains lots of them. You would not expect to learn to play the violin by passively reading a book, so why would mathematics be any different?
+      This book aims to get you to the point where mathematics augment your ability to reason about the world. It cannot give feedback like a teacher can, but at least it can present all the material. While you might not be able to find a person to actively teach you, perhaps you can find someone willing to give you feedback on your exercises. Speaking of which: the book contains lots of them. You would not expect to learn to play the violin by passively reading a book, so why would mathematics be any different?
     )§p(
       By the end of this book, you should have learned roughly the same material as that of a foundational university course. You should be able to learn more advanced material on your own, whether by scouring the internet for resources, or by reading more traditional textbooks written for university students. And you should be able to apply mathematics to whatever you are doing, adapting it and bending the rules for your purposes.
     )
@@ -53,44 +87,61 @@
             §div(tocchapter)(
               §cref(chapter_deductive_reasoning)
               §cref(chapter_deductive_reasoning)(Deductive Reasoning)
+              §ol(
+                §li(§cref(section_deductive_reasoning)(1.1 Gathering Knowledge))
+                §li(§cref(section_whirlwind_tour)(1.2 A Whirlwind Tour of Tiny Proofs))
+                §li(§cref(deductive_reasoning_conclusion)(1.3 Conclusion))
+                §li(§cref(exercises_deductive_reasoning)(1.4 Exercises))
+              )
             )§div(tocchapter)(
               §cref(chapter_sets)
-              §cref(chapter_sets)(WIP Naïve Set Theory)
-            )§div(tocchapter)(
+              §cref(chapter_sets)(Naïve Set Theory)
+              §ol(
+                §li(§cref(section_sets)(2.1 Sets))
+                §li(§cref(combining_sets)(2.2 Combining Sets))
+                §li(§cref(sets_of_sets)(2.3 Sets of Sets))
+                §li(§cref(conclusion_sets)(2.4 Conclusion))
+                §li(§cref(exercises_sets)(2.5 Exercises))
+              )
+            )§div(tocchapter todo)(
               §cref(chapter_induction)
-              §cref(chapter_induction)(TODO Induction)
+              §cref(chapter_induction)(Induction)
+              §ol(
+                §li(To)
+                §li(Be)
+                §li(Written)
+              )
             )
           )
         )
         §div(tocpart)(
           §div(tocparttitle)(
-            Part 2: Comparisons
+            Part 2: Pervasive Patterns
           )§div(tocpartchapters)(
-            §div(tocchapter)(
+            §div(tocchapter todo)(
               §cref(chapter_cardinality)
-              §cref(chapter_cardinality)(TODO Cardinality)
-            )§div(tocchapter)(
+              §cref(chapter_cardinality)(Cardinality)
+              §ol(
+                §li(To)
+                §li(Be)
+                §li(Written)
+              )
+            )§div(tocchapter todo)(
               §cref(chapter_homogeneous_relations)
-              §cref(chapter_homogeneous_relations)(TODO Homogeneous Relations)
-            )§div(tocchapter)(
+              §cref(chapter_homogeneous_relations)(Homogeneous Relations)
+              §ol(
+                §li(To)
+                §li(Be)
+                §li(Written)
+              )
+            )§div(tocchapter todo)(
               §cref(chapter_abstract_algebra)
-              §cref(chapter_abstract_algebra)(TODO Abstract Algebra)
-            )
-          )
-        )
-        §div(tocpart)(
-          §div(tocparttitle)(
-            Part 3: Logics
-          )§div(tocpartchapters)(
-            §div(tocchapter)(
-              §cref(chapter_propositional_logic)
-              §cref(chapter_propositional_logic)(TODO Propositional Logic)
-            )§div(tocchapter)(
-              §cref(chapter_first_order_logic)
-              §cref(chapter_first_order_logic)(TODO First-Order Logic)
-            )§div(tocchapter)(
-              §cref(chapter_higher_order_logic)
-              §cref(chapter_higher_order_logic)(TODO Higher-Order Logic)
+              §cref(chapter_abstract_algebra)(Abstract Algebra)
+              §ol(
+                §li(To)
+                §li(Be)
+                §li(Written)
+              )
             )
           )
         )
@@ -99,9 +150,9 @@
 
     §hsection*["about"](About the Book)(
       §p(
-        This book is written by §link(Aljoscha Meyer)(https://aljoscha-meyer.de/), out of the desire for a high-quality, freely accessible introduction to the wonderful and useful world of mathematics. It is placed in the public domain, which means you are free to distribute or modify it however you like. You could create a translation, add more topics, or even print it on T-shirts, sell them, and keep all the profits for yourself.
+        This book is written by §link(Aljoscha Meyer)(https://aljoscha-meyer.de/), out of the desire for a high-quality, freely accessible introduction to the wonderful and useful world of mathematics. It is placed in the §link(public domain)(https://en.wikipedia.org/wiki/Public_domain), which means you are free to distribute or modify it in any way you like. You could create a translation, add more topics, or even print it on T-shirts, sell them, and keep all the profits for yourself.
       )§p(
-        The source code for this book is hosted on §link(github)(https://github.com/AljoschaMeyer/introtcs). This is also the primary place to suggest changes to the book. Please do not hesitate to report even small errors such as misspelled words, failure to consistently stick to American English, awkward grammar, typographic mistakes, or stylistic mishaps.
+        The source code for this book is hosted on §link(github)(https://github.com/AljoschaMeyer/atm_htmlgen). This is also the primary place to suggest §side(improvements)(Alternatively, you can send an email to <a href="mailto:intromath@aljoscha-meyer.de" class="outlink">intromath@aljoscha-meyer.de</a>). Please do not hesitate to report even small errors such as misspelled words, failure to consistently stick to American English, awkward grammar, typographic mistakes, or stylistic mishaps.
       )
     )
 
@@ -110,5 +161,5 @@
 
 )
 
-- rename repo
-- add email
+- create email
+- make repo public

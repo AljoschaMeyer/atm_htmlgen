@@ -29,7 +29,7 @@
           Proven knowledge is verifiable. It does not matter who wrote a proof, whether you trust them or not. If every single step follows the deduction rules, then the resulting information is true.
         )
         §li(
-          Proven knowledge is inspectable. If you do not understand why something is true, the proof breaks it down for you into small, almost obviously correct §side(steps)(More often than not, the person who wrote that initially incomprehensible proof is yourself from the past. But if the proof is well written, you will always able to untangle it.).
+          Proven knowledge is inspectable. If you do not understand why something is true, the proof breaks it down for you into small, almost obviously correct §side(steps)(More often than not, the person who wrote that initially incomprehensible proof is yourself from the past. But if the proof is well written, you will always be able to untangle it.).
         )
         §li(
           Proven knowledge is composable. Once a fact has been proven, it can be reused in further proofs. Furthermore, the details of how it was proven do not affect that reuse in any way.
@@ -406,9 +406,7 @@
             §p(
               A §rdef(meta statement) is a statement about statements.
             )
-          ), statements about statements. We are not yet able to rigorously prove them, but, by the end of this book, we will do exactly that. For now, we merely state some particularly useful and simple §rs(meta statement) and allow their (often implicit) use when writing proofs.
-        )§p(
-          Even though we do not prove §rs(meta statement) yet, we can be a bit more precise in formulating them. We say that two statements §definex["equivalent_statements"](mean the same)(
+          ), statements about §side(statements)(As §rs(meta statement) are indeed statements, they can be proven. We refrain from doing so in this book, because introducing the necessary formalism goes beyond a mere introduction to mathematics. The field that studies §rs(meta statement) is that of §link(mathematical logic)(https://en.wikipedia.org/wiki/Mathematical_logic).). To be a bit more precise in formulating §rs(meta statement), we say that two statements §definex["equivalent_statements"](mean the same)(
             §p(
               Two statements §rdef(mean the same) if, whenever we can prove one of them, we can also prove the other.
             )
@@ -846,7 +844,7 @@
           §p(
             A common mistake when §r(negation)(negating) §rs(conjunction) is to propagate the §r(negation) without swapping to a §r(disjunction).
           )§p(
-            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §lquote§ not §lparen(§meta1) and §rquote(§rparen(§meta2)) and §lquote§ §(not §rparen(§meta1) and §(not §rquote(§rparen(§meta2)) do not §r(mean the same).
+            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §lquote§ not §lparen(§meta1) and §rquote(§rparen(§meta2)) and §lquote§ §lparen§ not §rparen(§meta1) and §lparen§ not §rquote(§rparen(§meta2)) do not §r(mean the same).
           )
           §solution["wrong_negation_conjunction"](
             §p(
@@ -859,7 +857,7 @@
           §p(
             A common mistake when §r(negation)(negating) §rs(disjunction) is to propagate the §r(negation) without swapping to a §r(conjunction).
           )§p(
-            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §lquote§ not §lparen(§meta1) or §rquote(§rparen(§meta2)) and §lquote§ §(not §rparen(§meta1) or §(not §rquote(§rparen(§meta2)) do not §r(mean the same).
+            Give statements §verbatim(§meta1) and §verbatim(§meta2) such that §lquote§ not §lparen(§meta1) or §rquote(§rparen(§meta2)) and §lquote§ §lparen§ not §rparen(§meta1) or §lparen§ not §rquote(§rparen(§meta2)) do not §r(mean the same).
           )
           §solution["wrong_negation_disjunction"](
             §p(
@@ -876,23 +874,31 @@
         §p(
           We can observe some simple §rs(meta statement) for §rs(conjunction) and §rs(disjunction). The order of the two substatements of a §r(conjunction) or §r(disjunction) does not matter: §verbatim(§meta1)(and)(§meta2) and §verbatim(§meta2)(and)(§meta1) §r(mean the same), as do §verbatim(§meta1)(or)(§meta2) and §verbatim(§meta2)(or)(§meta1). These laws are called the §definex["conjunction_commutativity"](commutative conjunction)(blarg)(commutativity)(
             §p(
-              The §rdef(commutative conjunction)(commutativity) of §rs(conjunction) states that, after swapping the order of the substatements of a §r(conjunction), the old and new statement §r(mean the same).
+              The §rdef(commutative conjunction)(commutativity) of §rs(conjunction) states that, after swapping the order of the substatements of a §r(conjunction), the old and new statement are §r(bi-implication)(equivalent):
+            )§p(
+              §div(centered)(§meta1 and §meta2 §$(§$iff) §meta2 and §meta1)
             )
           ) of §rs(conjunction) and the §definex["disjunction_commutativity"](commutative disjunction)(blarg)(commutativity)(
             §p(
-              The §rdef(commutative disjunction)(commutativity) of §rs(disjunction) states that, after swapping the order of the substatements of a §r(disjunction), the old and new statement §r(mean the same).
+              The §rdef(commutative disjunction)(commutativity) of §rs(disjunction) states that, after swapping the order of the substatements of a §r(disjunction), the old and new statement are §r(bi-implication)(equivalent):
+            )§p(
+              §div(centered)(§meta1 or §meta2 §$(§$iff) §meta2 or §meta1)
             )
           ) of §rs(disjunction) respectively.
         )§p(
           Because a §r(conjunction) has exactly two substatements, we technically cannot state directly that three different statements all must hold, we instead either have to say that §lquote(§meta1) and §lparen(§meta2) and §rquote(§rparen(§meta3)) or that §lquote(§lparen(§meta1)) and §rparen(§meta2) and §rquote(§meta3). Both ways of grouping the §rs(conjunction) §r(mean the same), which is why we do not require making the grouping explicit. This law is called the §definex["conjunction_associativity"](associative conjunction)(blarg)(associativity)(
             §p(
-              The §rdef(associative conjunction)(associativity) of §rs(conjunction) states that all ways of grouping multiple §rs(conjunction) §r(mean the same).
+              The §rdef(associative conjunction)(associativity) of §rs(conjunction) states that all ways of grouping multiple §rs(conjunction) are §r(bi-implication)(equivalent):
+            )§p(
+              §div(centered)(§parens(§meta1)(and)(§meta2) and §meta3 §$(§$iff) §meta1 and §parens(§meta2)(and)(§meta3))
             )
           ) of §rs(conjunction), and allows us to think in terms of §rs(conjunction) with arbitrarily many substatements.
         )§p(
           For §rs(disjunction) we have the analogous §definex["disjunction_associativity"](associative disjunction)(blarg)(associativity)(
             §p(
-              The §rdef(associative disjunction)(associativity) of §rs(disjunction) states that all ways of grouping multiple §rs(disjunction) §r(mean the same).
+              The §rdef(associative disjunction)(associativity) of §rs(disjunction) states that all ways of grouping multiple §rs(disjunction) are §r(bi-implication)(equivalent):
+            )§p(
+              §div(centered)(§parens(§meta1)(or)(§meta2) or §meta3 §$(§$iff) §meta1 or §parens(§meta2)(or)(§meta3))
             )
           ) of §rs(disjunction), and we can accordingly think in terms of §rs(disjunction) with arbitrarily many substatements. We even allow §rs(case distinction) with more than two cases, as long as the §r(disjunction) over all cases is known to be true.
         )
@@ -994,7 +1000,7 @@
         §drop(
           §theorem*["tour_monotonicity_addition"](Monotonicity of Addition)(
             §p(
-              Let §$(n, m, k) be natural numbers. Then
+              Let §$(n)(,) §$(m)(,) and §$(k) be natural numbers. Then
             )
             §$$(
               n §$leq m §$implies n + k §$leq m + k.
@@ -1003,7 +1009,7 @@
 
           §theorem*["tour_associativity_addition"](Associativivity of Addition)(
             §p(
-              Let §$(a, b, c) be natural numbers. Then
+              Let §$(a)(,) §$(b)(,) and §$(c) be natural numbers. Then
             )
             §$$(
               a + §$p(b + c) §$eq §$p(a + b) + c.
@@ -1038,14 +1044,14 @@
         §proven_fact(
           §theorem["transitivity_leq"](Transitivity of §$(§$leq[true]))(
             §p(
-              Let §$(a, b, c) be natural numbers.
+              Let §$(a)(,) §$(b)(,) and §$(c) be natural numbers.
               If §$(a §$leq b) and §$(b §$leq c)(,) then §$(a §$leq c)(.)
             )
           )
           §proof["transitivity_leq"](
             §proof_as_exercise["exercise_transitivity_leq"](
               §p(
-                Let §$(a, b, c) be natural numbers.
+                Let §$(a)(,) §$(b)(,) and §$(c) be natural numbers.
               )§p(
                 Assume that §$(a §$leq b) and obtain §$(k) such that §$(a + k §$eq b)(.) Furthermore, assume that §$(b §$leq c) and obtain §$(k')§side()(Pronounced §verbatim(k)(prime), a common way of generating new, uninventive names.) such that §$(b + k' §$eq c)(.)
               )§p(
@@ -1141,13 +1147,15 @@
         )
 
         §p(
-          From a similar line of reasoning we can derive another §r(meta statement). If the §r(conclusion) of an implication does not hold, then the §r(premise) of the implication cannot hold either. This reformulation of an §r(implication) is called its §definex(contrapositive)(
+          From a similar line of reasoning we can derive another §r(meta statement). If the §r(conclusion) of an implication does not hold, then the §r(premise) of the implication cannot hold either. This reformulation of an §r(implication) is called its §definex["contrapositive"](contrapositive)(
             §p(
               The §rdef(contrapositive) of an §r(implication) §verbatim(§meta1)(implies)(§meta2) is §verbatim(not)(§meta2 implies not)(§meta1).
             )
-          ): the §r(contrapositive) of §verbatim(§meta1)(implies)(§meta2) is §verbatim(not)(§meta2 implies not)(§meta1). An §r(implication) and its §r(contrapositive) §r(mean the same), this is called the law of §definex(contraposition)(
+          ): the §r(contrapositive) of §verbatim(§meta1)(implies)(§meta2) is §verbatim(not)(§meta2 implies not)(§meta1). An §r(implication) and its §r(contrapositive) §r(mean the same), this is called the law of §definex["contraposition"](contraposition)(
             §p(
-              The law of §rdef(contraposition)(contraposition) states that an §r(implication) and its §r(contrapositive) §r(mean the same).
+              The law of §rdef(contraposition)(contraposition) states that an §r(implication) and its §r(contrapositive) are §r(bi-implication)(equivalent):
+            )§p(
+              §div(centered)(§meta1 implies §meta2 §$(§$iff) §parens(not §meta2) implies §parens(not §meta1))
             )
           ).
         )
@@ -1524,4 +1532,4 @@
 
 )
 
-- chapter-internal meta-statement previews
+- disclaimer text versus visual

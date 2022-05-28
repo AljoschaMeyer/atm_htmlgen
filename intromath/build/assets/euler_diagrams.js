@@ -1,4 +1,8 @@
-import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, powerset, p } from './tex.js';
+import { reduce_motion } from "./accessibility.js";
+
+import { animate, ease_in_out_cubic } from "./animation.js";
+
+import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, powerset, p } from "./tex.js";
 
 import {
   bitvec_singleton,
@@ -9,6 +13,8 @@ import {
   bitvec_without,
   bitvec_and,
   bitvec_or,
+  bitvec_xor,
+  bitvec_eq,
 } from "./bitvec.js";
 
 import {
@@ -72,8 +78,6 @@ function euler(container, compute_s3, render_results, prefix) {
   initialize_set_path(p1, s1);
   initialize_set_path(p2, s2);
 
-  render_state(0);
-
   function render_state(change, set1_changed) {
     const s3 = compute_s3 ? compute_s3(s1, s2) : empty_s();
 
@@ -81,23 +85,23 @@ function euler(container, compute_s3, render_results, prefix) {
     const old2 = s2.map(x => x);
     if (set1_changed) {
       old1[change] = !s1[change];
-      draw_set2(old1, s1, p1);
+      draw_set(old1, s1, p1);
 
       if (clip1) {
-        draw_set2(old1, s1, clip1);
+        draw_set(old1, s1, clip1);
       }
       if (mask1) {
-        draw_set2(old1, s1, mask1);
+        draw_set(old1, s1, mask1);
       }
     } else {
       old2[change] = !s2[change];
-      draw_set2(old2, s2, p2);
+      draw_set(old2, s2, p2);
 
       if (clip2) {
-        draw_set2(old2, s2, clip2);
+        draw_set(old2, s2, clip2);
       }
       if (mask2) {
-        draw_set2(old2, s2, mask2);
+        draw_set(old2, s2, mask2);
       }
     }
 
@@ -195,70 +199,16 @@ function tex_symbol(i) {
   return `\\htmlClass{symbol_container}{\\htmlClass{symbol${i}}{}}`;
 }
 
-function set_symmetric_difference(s1, s2) {
-  const s3 = [];
-
-  for (let i = 0; i < 5; i++) {
-    s3.push(s1[i] != s2[i]);
-  }
-
-  return s3;
-}
-
-function set_difference(s1, s2) {
-  const s3 = [];
-
-  for (let i = 0; i < 5; i++) {
-    s3.push(s1[i] && !s2[i]);
-  }
-
-  return s3;
-}
-
-function set_intersection(s1, s2) {
-  const s3 = [];
-
-  for (let i = 0; i < 5; i++) {
-    s3.push(s1[i] && s2[i]);
-  }
-
-  return s3;
-}
-
-function set_union(s1, s2) {
-  const s3 = [];
-
-  for (let i = 0; i < 5; i++) {
-    s3.push(s1[i] || s2[i]);
-  }
-
-  return s3;
-}
-
-function set_eq(a1, a2) {
-  if (a1.length != a2.length) {
-    return false;
-  }
-
-  for (let i = 0; i < a1.length; i++) {
-    if (a1[i] != a2[i]) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
 const container_vanilla = document.querySelector("#container_euler_vanilla");
 euler(container_vanilla, () => [false, false, false, false, false], () => {});
 
 const container_equality = document.querySelector("#container_euler_equality");
-euler(container_equality, set_symmetric_difference, (container, s1, s2, s3) => {
+euler(container_equality, bitvec_xor, (container, s1, s2, s3) => {
   const s1_name = name_set(1);
   const s2_name = name_set(2);
   const set1 = set_tex(s1, s3, 1);
   const set2 = set_tex(s2, s3, 2);
-  const rel = cardinality(s3) === 0 ? seq : sneq;
+  const rel = bitvec_count(s3) === 0 ? seq : sneq;
 
   return tex(`${s1_name} ${seq} ${set1} ${rel} ${set2} ${seq} ${s2_name}`, container);
 });
@@ -271,8 +221,8 @@ euler(container_subseteq, () => [false, false, false, false, false], (container,
   const s2_name = name_set(2);
   const set1 = set_tex(s1, empty, 1);
   const set2 = set_tex(s2, empty, 2);
-  const set1_2 = set_tex(s1, set_difference(s1, s2), 1);
-  const set2_2 = set_tex(s2, set_difference(s2, s1), 2);
+  const set1_2 = set_tex(s1, bitvec_without(s1, s2), 1);
+  const set2_2 = set_tex(s2, bitvec_without(s2, s1), 2);
 
   let is_subseteq = true;
   let is_supseteq = true;
@@ -338,7 +288,7 @@ const container_powerset = document.querySelector("#container_euler_powerset");
 
   function render_state(j) {
     const grew = s[j];
-    const car = cardinality(s);
+    const car = bitvec_count(s);
     const subs = subsets(s);
 
     for (let i = 0; i < 5; i++) {
@@ -353,8 +303,8 @@ const container_powerset = document.querySelector("#container_euler_powerset");
     const result_set_texs = [];
     const lines = [];
 
-    const delay_round = 450;
-    const delay_set = 250;
+    const delay_round = reduce_motion ? 0 : 450;
+    const delay_set = reduce_motion ? 0 : 250;
     let delay = -delay_round;
 
     for (const row of subs) {
@@ -431,98 +381,21 @@ function subsets(b) {
 }
 
 function animate_power_set_grow(b, i, p) {
-  const c_to = cardinality(b);
+  const c_to = bitvec_count(b);
   const r_to = set_margin(c_to);
-
   const [poly_from, poly_to] = morpheable_polys(bitvec_singleton(i, b.length), b);
-
-  // const poly_from = set_to_poly(bitvec_singleton(i, b.length));
-  // const poly_to = set_to_poly(b);
-  animate(p, make_set_morph2(poly_from, 0, poly_to, r_to), SET_ANIMATION_DURATION);
+  animate(p, make_set_morph(poly_from, 0, poly_to, r_to), SET_ANIMATION_DURATION);
 }
 
 function animate_power_set_shrink(b, i, p) {
-  const c_from = cardinality(b);
+  const c_from = bitvec_count(b);
   const r_from = set_margin(c_from);
-
   const [poly_from, poly_to] = morpheable_polys(b, bitvec_singleton(i, b.length));
-
-  // const poly_from = set_to_poly(b);
-  // const poly_to = set_to_poly(bitvec_singleton(i, b.length));
-  animate(p, make_set_morph2(poly_from, r_from, poly_to, 0), SET_ANIMATION_DURATION);
-}
-
-function element_cartesian(i) {
-  return polar_to_cartesian([0, 0], 70, (PI * 1.5) + ((2 * PI * i) / 5));
-}
-
-function svg_label(label, [x, y]) {
-  const e = document.createElementNS(svgns, "text");
-  e.setAttribute("x", x);
-  e.setAttribute("y", y);
-  e.setAttribute("class", "label");
-  e.setAttribute("text-anchor", "middle");
-  e.setAttribute("dominant-baseline", "middle");
-  e.setAttribute("font-size", "20px");
-  e.textContent = label;
-  return e;
-};
-
-function svg_path(clazz) {
-  const path = document.createElementNS(svgns, "path");
-  path.setAttribute("class", clazz);
-  return path;
-}
-
-function cardinality(s) {
-  let count = 0;
-  s.forEach(x => {
-    if (x) {
-      count++;
-    }
-  });
-  return count;
-}
-
-function set_first(s) {
-  return set_next(s, 0);
-}
-
-function set_next(s, i) {
-  for (let j = 1; j <= s.length; j++) {
-    if (s[(i + j) % s.length]) {
-      return (i + j) % s.length;
-    }
-  }
-
-  throw "empty set has no next element";
-}
-
-function set_previous(s, i) {
-  for (let j = s.length - 1; j >= 0; j--) {
-    if (s[(i + j) % s.length]) {
-      return (i + j) % s.length;
-    }
-  }
-
-  throw "empty set has no previous element";
+  animate(p, make_set_morph(poly_from, r_from, poly_to, 0), SET_ANIMATION_DURATION);
 }
 
 function set_margin(cardinality) {
   return cardinality === 0 ? 0 : R + (2.5 * cardinality);
-}
-
-function draw_set(s, p) {
-  const c = cardinality(s);
-  const r = set_margin(c);
-
-  if (c === 0) {
-    const poly = p.atm_poly ? p.atm_poly : [];
-    animate(p, make_set_morph(p, poly, r), SET_ANIMATION_DURATION);
-  } else {
-    const poly = bitvec_to_poly(s, r);
-    animate(p, make_set_morph(p, poly, r), SET_ANIMATION_DURATION);
-  }
 }
 
 function initialize_set_path(p, s) {
@@ -535,10 +408,10 @@ function regular_polygon_point(center, r, i, n) {
   return polar_to_cartesian(center, r, (PI * 1.5) + ((2 * PI * i) / n));
 }
 
-function draw_set2(s_from, s_to, p) {
-  const c_from = cardinality(s_from);
+function draw_set(s_from, s_to, p) {
+  const c_from = bitvec_count(s_from);
   const r_from = set_margin(c_from);
-  const c_to = cardinality(s_to);
+  const c_to = bitvec_count(s_to);
   const r_to = set_margin(c_to);
 
   let poly_from = null;
@@ -547,17 +420,14 @@ function draw_set2(s_from, s_to, p) {
   if (c_from === 0) {
     const poly_from = set_to_poly(s_to);
     const poly_to = set_to_poly(s_to);
-    animate(p, make_set_morph2(poly_from, r_from, poly_to, r_to), SET_ANIMATION_DURATION);
+    animate(p, make_set_morph(poly_from, r_from, poly_to, r_to), SET_ANIMATION_DURATION);
   } else if (c_to === 0) {
     const poly_from = set_to_poly(s_from);
     const poly_to = set_to_poly(s_from);
-    // console.log(`${s_from}`);
-    // console.log(`from: ${poly_from.length}: [${poly_from}]\nto: ${poly_to.length}: [${poly_to}]`);
-    animate(p, make_set_morph2(poly_from, r_from, poly_to, r_to), SET_ANIMATION_DURATION);
+    animate(p, make_set_morph(poly_from, r_from, poly_to, r_to), SET_ANIMATION_DURATION);
   } else {
     const [poly_from, poly_to] = morpheable_polys(s_from, s_to);
-    // console.log(`from: ${poly_from.length}: [${poly_from}]\nto: ${poly_to.length}: [${poly_to}]`);
-    animate(p, make_set_morph2(poly_from, r_from, poly_to, r_to), SET_ANIMATION_DURATION);
+    animate(p, make_set_morph(poly_from, r_from, poly_to, r_to), SET_ANIMATION_DURATION);
   }
 }
 
@@ -613,14 +483,6 @@ function bitvec_to_poly(bs, r, center_) {
         poly.push(regular_polygon_point(center, DIAGRAM_R, first, bs.length));
       }
     } else {
-      // let previous = bitvec_previous(bs, first);
-      // for (let i = 0; i < bs.length; i++) {
-      //   if (bs[i % bs.length]) {
-      //     previous = i;
-      //   }
-      //
-      //   poly.push(polar_to_cartesian(center, DIAGRAM_R, (PI * 1.5) + ((2 * PI * (previous % bs.length)) / bs.length)));
-      // }
       for (let i = 0; i < bs.length; i++) {
         const p = regular_polygon_point(center, DIAGRAM_R, i, bs.length);
         if (bs[i]) {
@@ -637,86 +499,7 @@ function bitvec_to_poly(bs, r, center_) {
   }
 }
 
-function animate(elem, cb, duration) {
-  window.cancelAnimationFrame(elem.atm_animate_id);
-  elem.atm_animate_start = undefined;
-  elem.atm_animate_id = window.requestAnimationFrame(fun);
-
-  function fun(time_) {
-    let time = time_;
-    if (!elem.atm_animate_start) {
-      elem.atm_animate_start = time;
-    }
-
-    let last = false;
-    if (time >= elem.atm_animate_start + duration) {
-      time = elem.atm_animate_start + duration;
-      last = true;
-    }
-
-    if (!last) {
-      elem.atm_animate_id = window.requestAnimationFrame(fun);
-    }
-
-    cb(elem, (time - elem.atm_animate_start) / duration);
-  }
-}
-
-function ease_out_bounce(x) {
-  const n1 = 7.5625;
-  const d1 = 2.75;
-
-  if (x < 1 / d1) {
-      return n1 * x * x;
-  } else if (x < 2 / d1) {
-      return n1 * (x -= 1.5 / d1) * x + 0.75;
-  } else if (x < 2.5 / d1) {
-      return n1 * (x -= 2.25 / d1) * x + 0.9375;
-  } else {
-      return n1 * (x -= 2.625 / d1) * x + 0.984375;
-  }
-}
-
-function ease_in_bounce(x) {
-  return 1 - ease_out_bounce(1 - x);
-}
-
-function ease_in_out_quad(x) {
-  return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
-}
-
-function ease_in_out_cubic(x) {
-  return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-}
-
-function make_set_morph(elem, target_poly, target_r) {
-  const start_r = elem.atm_poly_r ? elem.atm_poly_r : 0;
-  const start_poly = (start_r != 0 && elem.atm_poly) ? elem.atm_poly : target_poly;
-
-  const tween = ease_in_out_cubic;
-  // const tween = start_r < target_r ? ease_out_bounce : ease_in_bounce;
-
-  // const tween = (t) => t;
-  // const tween = (x) => {
-  //   // return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
-  //   const c1 = 1.70158;
-  //   const c3 = c1 + 1;
-  //
-  //   return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
-  // };
-  const poly = (t) => lerp_poly(start_poly, target_poly, tween(t));
-  const r = (t) => lerp(start_r, target_r, tween(t));
-
-  return (elem, t) => {
-    elem.atm_poly = poly(t);
-    elem.atm_poly_r = r(t);
-
-    const path_string = convex_path_string(convex_path_description(elem.atm_poly, elem.atm_poly_r));
-    elem.setAttribute("d", path_string);
-  };
-}
-
-function make_set_morph2(poly_from, r_from, poly_to, r_to) {
+function make_set_morph(poly_from, r_from, poly_to, r_to) {
   const tween = ease_in_out_cubic;
   const poly = (t) => lerp_poly(poly_from, poly_to, tween(t));
   const r = (t) => lerp(r_from, r_to, tween(t));
@@ -725,23 +508,6 @@ function make_set_morph2(poly_from, r_from, poly_to, r_to) {
     const path_string = convex_path_string(convex_path_description(poly(t), r(t)));
     elem.setAttribute("d", path_string);
   };
-}
-
-function angle_to_x([[x1, y1], [x2, y2]]) {
-  return Math.atan2(y2 - y1, x2 - x1);
-}
-
-function angle_to_y(line) {
-  return angle_to_x(line) + (PI * 0.5);
-}
-
-function describe_arc([x, y], radius, startAngle, endAngle, do_move){
-  const [start_x, start_y] = polar_to_cartesian([x, y], radius, endAngle);
-  const [end_x, end_y] = polar_to_cartesian([x, y], radius, startAngle);
-  const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
-
-  const d = !!do_move ? ["M", start_x, start_y] : [];
-  return d.concat(["A", radius, radius, 0, largeArcFlag, 0, end_x, end_y]).join(" ");
 }
 
 function random_bin_tree(target_inner, gen_leaf, gen_inner, state) {
@@ -788,10 +554,10 @@ function dfs(inner_pre, inner_post, leaf, node, parent_pre) {
 
 function eval_op(op, left, right) {
   switch (op) {
-    case "intersection": return set_intersection(left, right);
-    case "union": return set_union(left, right);
-    case "difference": return set_difference(left, right);
-    case "symmetric_difference": return set_symmetric_difference(left, right);
+    case "intersection": return bitvec_and(left, right);
+    case "union": return bitvec_or(left, right);
+    case "difference": return bitvec_without(left, right);
+    case "symmetric_difference": return bitvec_xor(left, right);
 
     default: throw "unknown operator";
   }
@@ -861,10 +627,10 @@ function practice_intersection_union_tree() {
 
     dfs(null, (_l, op, _r, left, _p, right) => {
       const result = eval_op(op, left, right);
-      if (set_eq(result, left) && Math.random() <= 0.7) {
+      if (bitvec_eq(result, left) && Math.random() <= 0.7) {
         interesting = false;
       }
-      if (set_eq(result, right) && Math.random() <= 0.7) {
+      if (bitvec_eq(result, right) && Math.random() <= 0.7) {
         interesting = false;
       }
       return result;
@@ -887,13 +653,13 @@ function practice_set_difference_tree() {
 
     dfs(null, (_l, op, _r, left, _p, right) => {
       const result = eval_op(op, left, right);
-      if (set_eq(result, left) && Math.random() <= 0.7) {
+      if (bitvec_eq(result, left) && Math.random() <= 0.7) {
         interesting = false;
       }
-      if (set_eq(result, right) && Math.random() <= 0.7) {
+      if (bitvec_eq(result, right) && Math.random() <= 0.7) {
         interesting = false;
       }
-      if (set_eq(result, empty_s()) && Math.random() <= 0.8) {
+      if (bitvec_eq(result, empty_s()) && Math.random() <= 0.8) {
         interesting = false;
       }
       return result;
@@ -956,47 +722,38 @@ function expr_to_solution_tex(expr_) {
   return `\\begin{align*}${lines.join("\n")}\\end{align*}`;
 }
 
-const practice_intersection_union_direct_text = document.querySelector("#practice_intersection_union_direct_text");
-const practice_intersection_union_direct_solution = document.querySelector("#practice_intersection_union_direct_solution");
-const practice_intersection_union_direct_new = document.querySelector("#practice_intersection_union_direct_new");
+function generated_exercise(id_prefix, new_exercise, new_text, new_solution) {
+  const tag_text = document.querySelector(`#${id_prefix}_text`);
+  const tag_solution = document.querySelector(`#${id_prefix}_solution`);
+  const tag_new = document.querySelector(`#${id_prefix}_new`);
+  const btn = document.querySelector(`#btn_toggle_${id_prefix}`);
 
-function new_practice_intersection_union_direct() {
-  const expr = practice_intersection_union_tree();
-  tex(`${expr_to_tex(expr)}.`, practice_intersection_union_direct_text);
-  tex(`${expr_to_solution_tex(expr)}`, practice_intersection_union_direct_solution, {displayMode: true});
-
-  const btn_toggle_practice_intersection_union_direct = document.querySelector("#btn_toggle_practice_intersection_union_direct");
-  if (btn_toggle_practice_intersection_union_direct.classList.contains("yes")) {
-    btn_toggle_practice_intersection_union_direct.click()
+  function on_click(first) {
+    const ex = new_exercise(first);
+    new_text(ex, tag_text);
+    new_solution(ex, tag_solution);
+    if (btn.classList.contains("yes")) {
+      btn.click();
+    }
   }
+
+  on_click(true);
+  tag_new.addEventListener("click", () => on_click(false));
 }
 
-new_practice_intersection_union_direct();
-practice_intersection_union_direct_new.addEventListener("click", new_practice_intersection_union_direct);
+generated_exercise(
+  "practice_intersection_union_direct",
+  practice_intersection_union_tree,
+  (ex, tag) => tex(`${expr_to_tex(ex)}.`, tag),
+  (ex, tag) => tex(expr_to_solution_tex(ex), tag, {displayMode: true}),
+);
 
-
-
-const practice_set_difference_direct_text = document.querySelector("#practice_set_difference_direct_text");
-const practice_set_difference_direct_solution = document.querySelector("#practice_set_difference_direct_solution");
-const practice_set_difference_direct_new = document.querySelector("#practice_set_difference_direct_new");
-
-function new_practice_set_difference_direct() {
-  const expr = practice_set_difference_tree();
-  tex(`${expr_to_tex(expr)}.`, practice_set_difference_direct_text);
-  tex(`${expr_to_solution_tex(expr)}`, practice_set_difference_direct_solution, {displayMode: true});
-
-  const btn_toggle_practice_set_difference_direct = document.querySelector("#btn_toggle_practice_set_difference_direct");
-  if (btn_toggle_practice_set_difference_direct.classList.contains("yes")) {
-    btn_toggle_practice_set_difference_direct.click()
-  }
-}
-
-new_practice_set_difference_direct();
-practice_set_difference_direct_new.addEventListener("click", new_practice_set_difference_direct);
-
-const exercise_arbitrary_venn_text = document.querySelector("#exercise_arbitrary_venn_text");
-const exercise_arbitrary_venn_solution = document.querySelector("#exercise_arbitrary_venn_solution");
-const exercise_arbitrary_venn_new = document.querySelector("#exercise_arbitrary_venn_new");
+generated_exercise(
+  "practice_set_difference_direct",
+  practice_set_difference_tree,
+  (ex, tag) => tex(`${expr_to_tex(ex)}.`, tag),
+  (ex, tag) => tex(expr_to_solution_tex(ex), tag, {displayMode: true}),
+);
 
 const exercise_arbitrary_venn_sections = [];
 for (let i = 0; i < 7; i++) {
@@ -1024,42 +781,37 @@ function arbitrary_venn_index_to_term(i) {
   }
 }
 
-function new_arbitrary_venn(small) {
-  while (true) {
-    const i = random_int(128);
-    const expr = arbitrary_venn_index_to_term(i);
-    const size = leaves(expr);
+generated_exercise(
+  "exercise_arbitrary_venn",
+  (first) => {
+    while (true) {
+      const i = random_int(128);
+      const expr = arbitrary_venn_index_to_term(i);
+      const size = leaves(expr);
 
-    if ((size >= 4) && ((!small) || (size === 4))) {
-      exercise_arbitrary_venn_text.textContent = `${size - 1}`;
-      tex(`${expr_to_tex(expr, true, true)}.`, exercise_arbitrary_venn_solution);
-
-      const btn_toggle_exercise_arbitrary_venn = document.querySelector("#btn_toggle_exercise_arbitrary_venn");
-      if (btn_toggle_exercise_arbitrary_venn.classList.contains("yes")) {
-        btn_toggle_exercise_arbitrary_venn.click()
+      if ((size >= 4) && ((!first) || (size === 4))) {
+        return [i, expr];
       }
-
-      for (let j = 0; j < 7; j++) {
-        exercise_arbitrary_venn_sections[j].classList.toggle("venn_yay", (i & (1 << j)) != 0);
-      }
-
-      return;
     }
-  }
-}
+  },
+  ([i, expr], tag) => {
+    const size = leaves(expr);
+    tag.textContent = `${size - 1}`;
 
-new_arbitrary_venn(true);
-exercise_arbitrary_venn_new.addEventListener("click", () => new_arbitrary_venn(false));
-
-
-
-
+    for (let j = 0; j < 7; j++) {
+      exercise_arbitrary_venn_sections[j].classList.toggle("venn_yay", (i & (1 << j)) != 0);
+    }
+  },
+  ([_, expr], tag) => tex(`${expr_to_tex(expr, true, true)}.`, tag),
+);
 
 const duck_container = document.querySelector("#duck_container");
 const duck_region = document.querySelector("#duck_region");
 duck_region.addEventListener("click", () => {
-  duck_container.classList.toggle("active_duck");
-  setTimeout(() => {
+  if (!reduce_motion) {
     duck_container.classList.toggle("active_duck");
-  }, 8000);
+    setTimeout(() => {
+      duck_container.classList.toggle("active_duck");
+    }, 8000);
+  }
 });

@@ -22,6 +22,12 @@
   mix-blend-mode: multiply;
 }
 
+@media (prefers-color-scheme: dark) {
+  .eulersvg > path, .venn > circle {
+    mix-blend-mode: screen;
+  }
+}
+
 .euler.clip {
   stroke: none;
   fill: white;
@@ -31,8 +37,6 @@
   stroke: black;
   fill: none;
 }
-
-
 
 .euler_toggles, .the_sets {
   display: flex;
@@ -104,4 +108,60 @@
   text-align: left;
   padding-left: 2rem;
   overflow-x: auto;
+}
+
+#first_venn > foreignObject {
+  pointer-events: none;
+}
+
+.first_venn_region {
+  stroke: none;
+  fill: rgba(0, 0, 0, 0);
+}
+
+#duck_region {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion) {
+  #duck_region {
+    cursor: initial;
+  }
+}
+
+#duck_container {
+  z-index: 2;
+  width: 0px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#duck_container.active_duck {
+  animation: duck_zoom 8s ease 0s 1 normal forwards, duck_rotate 0.91s ease 0s infinite alternate forwards;
+}
+
+@keyframes duck_zoom {
+  0% {
+    width: 0px;
+  }
+
+  50% {
+    width: 100vw;
+  }
+
+  100% {
+    width: 0px;
+  }
+}
+
+@keyframes duck_rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(-20deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(20deg);
+  }
 }
