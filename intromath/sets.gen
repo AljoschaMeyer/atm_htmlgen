@@ -22,13 +22,13 @@
 
     §hsection["section_sets"](Sets)(
       §p(
-        When attempting to define the foundations of mathematics, you run into a chicken-egg problem: Any definition needs to make use of mathematical concepts, so in particular the definition of the foundational objects also requires prior definitions. But then it clearly is not foundational.
+        When attempting to define the foundations of mathematics, you run into a chicken-egg problem: Any definition needs to make use of mathematical concepts, so in particular the definition of the foundational objects also requires prior definitions. But then, it clearly is not foundational.
       )§p(
-        While there are sophisticated ways of avoiding this problem, they require a good understanding of mathematics to begin with. So we instead follow the traditional approach in teaching: Our very first definition will be slightly informal, and we will simply pretend that it was sufficiently precise. Hence the §verbatim(naïve) in the chapter title §verbatim(naïve)(set)(theory).
+        While there are sophisticated ways of avoiding this problem, they require a good understanding of mathematics to begin with. So we instead follow the traditional approach in teaching: our very first definition will be slightly informal, and we will simply pretend that it was sufficiently precise. Hence the §verbatim(naïve) in the chapter title §verbatim(naïve)(set)(theory).
       )§p(
         In particular, we will talk about mathematical §verbatim(objects), without specifically stating what those are. For our purposes, we require that an object is §r(equal) to itself but not to anything else. The number §$(17)(,) for example, is a mathematical object.
       )§p(
-        Furthermore, an object must be §verbatim(well-defined), that is, it must be clear, for the purposes of determining §r(equal)(equality), which object you are talking about. For example, §verbatim(the)(most important composer of the 18th)(century) is not well-defined; whether the most important composer of the 18th century is §r(equal) to §link(Johann Sebastian Bach)(https://en.wikipedia.org/wiki/Johann_Sebastian_Bach) is a matter of personal opinion, not of mathematical reasoning.
+        Furthermore, every object must be §verbatim(well-defined), that is, it must always be clear which object we are talking about. For example, §verbatim(the)(most important composer of the 18th)(century) is not well-defined; whether the most important composer of the 18th century is §r(equal) to §link(Johann Sebastian Bach)(https://en.wikipedia.org/wiki/Johann_Sebastian_Bach) is a matter of personal opinion, not of mathematical reasoning.
       )§p(
         In examples, we will use squirrel-related iconography for our mathematical objects: §$(§$symbol0§ , §$symbol1§ , §$symbol2§ , §$symbol3)(,) and §$(§$symbol4)(.) We know that §$(§$symbol0 §$eq §$symbol0§ , §$symbol0 §$neq §$symbol1)(,) and so on, and these are the only properties we ascribe to those symbols.
       )§p(
@@ -38,7 +38,7 @@
       §definition["set"](Set)(
         §set_math_id["set", "set"]
         §p(
-          A §define(set) is a collection of objects, characterized solely by which objects belong to it, and which objects do not.
+          A §define(set) is a collection of objects, characterized solely by which objects belong to it and which objects do not.
         )§p(
           We denote a §r(set) by listing its objects within curly braces, separated by commas, for example: §$(§$set(§$symbol0)(§$symbol1)(§$symbol2))(.)
         )§p(
@@ -49,16 +49,16 @@
       §p(
         Because a §r(set) is characterized by which objects belong to it, §$(§$set(§$symbol0)(§$symbol1)) and §$(§$set(§$symbol1)(§$symbol0)) are two different ways of denoting the same §r(set). Informally speaking, §rs(set) ignore the order of their objects. Furthermore, §$(§$set(§$symbol0)(§$symbol1)(§$symbol0)) and §$(§$set(§$symbol0)(§$symbol1)) also denote the same §r(set), you could say that §rs(set) ignore duplicates. All three expressions are simply different ways of denoting the unique mathematical object characterized by the fact that §$(§$symbol0) and §$(§$symbol1) belong to it, but nothing else does.
       )§p(
-        After the build-up about the foundational concept that is able to express anything you could possibly dream up, the notion of §rs(set) might be a bit of a letdown at first glance. We will get to the reasons for why §rs(set) are a very powerful concept soon enough, but first, we define and inspect some elementary terminology and notation.
+        After the build-up about the foundational concept that is able to express anything you could possibly dream up, the notion of §rs(set) might initially be a bit of a letdown. We will get to the reasons for why §rs(set) are a very powerful concept soon enough, but first, we define and inspect some elementary terminology and notation.
       )
 
       §definition["set_membership"](Set Membership)(
         §set_math_id["in", "set_membership"]
         §set_math_id["notin", "set_membership"]
         §p(
-          To express that an object §$(x) occurs in a §r(set) §$(X)(,) we write §$(x §$in X)(,) and we say that §verbatim(§$(x))(is an §define(element) of)(§$(X)), §verbatim(§$(x))(is a §define(member) of)(§$(X)), or simply that §verbatim(§$(x))(§define(in))(§$(X)).
+          To express that an object §$(x) occurs in a §r(set) §$(X)(,) we write §$(x §$define_notation(§$in) X)(,) and we say that §verbatim(§$(x))(is an §define(element) of)(§$(X)), §verbatim(§$(x))(is a §define(member) of)(§$(X)), or simply that §verbatim(§$(x))(§define(in))(§$(X)).
         )§p(
-          If not §$(x §$in X)(,) we write §$(x §$notin X)(.)
+          If not §$(x §$in X)(,) we write §$(x §$define_notation(§$notin) X)(.)
         )
       )
 
@@ -95,9 +95,9 @@
             Let §$(A) and §$(B) be §rs(set).
           )
           §p(
-            We say §$(A) and §$(B) are §define["", "seq"](equal)(equal), written as §$(A §$seq B)(,) if for each §$(x) holds that §$(x §$in A) if and only if §$(x §$in B)(.)
+            We say §$(A) and §$(B) are §define["", "seq"](equal)(equal), written as §$(A §$define_notation(§$seq) B)(,) if for each §$(x) holds that §$(x §$in A) if and only if §$(x §$in B)(.)
           )§p(
-             If not §$(A §$seq B)(,) we write §$(A §$sneq B)(.)
+             If not §$(A §$seq B)(,) we write §$(A §$define_notation(§$sneq) B)(.)
           )
         )
 
@@ -226,7 +226,7 @@
 
       §hsection["subsection_subsets"](Subsets)(
         §p(
-          We can think of §r(seq)(set equality) as a very strict way of looking for similarity between two §rs(set). But there are more general ways in which §rs(set) can be related. It might be the case, for example, that one §r(set) contains all §rs(element) of another §r(set), but not necessarily the other way around. This relation is common enough that we give it a name:
+          We can think of §r(seq)(set equality) as a very strict way of looking for similarity between two §rs(set). But there are more general ways in which two §rs(set) can be related. It might be the case, for example, that one §r(set) contains all §rs(element) of another §r(set), but not necessarily the other way around. This relation is common enough that we give it a name:
         )
 
         §definition["subseteq"](Subset, Superset)(
@@ -237,11 +237,11 @@
           §p(
             Let §$(A) and §$(B) be §rs(set).
           )§p(
-            We say §$(A) is a §define(subset) of §$(B)(,) written as §$(A §$subseteq B)(,) if for each §$(x §$in A) holds §$(x §$in B)(.)
+            We say §$(A) is a §define(subset) of §$(B)(,) written as §$(A §$define_notation(§$subseteq) B)(,) if for each §$(x §$in A) holds §$(x §$in B)(.)
           )§p(
-            Conversely, we say that §$(B) is a §define(superset) of §$(A)(,) written as §$(B §$supseteq A)(,) if §$(A §$subseteq B)(.)
+            Conversely, we say that §$(B) is a §define(superset) of §$(A)(,) written as §$(B §$define_notation(§$supseteq) A)(,) if §$(A §$subseteq B)(.)
           )§p(
-            We further write §$(A §$nsubseteq B) if not §$(A §$subseteq B)(,) and §$(A §$nsupseteq B) if not §$(A §$supseteq B)(.)
+            We further write §$(A §$define_notation(§$nsubseteq) B) if not §$(A §$subseteq B)(,) and §$(A §$define_notation(§$nsupseteq) B) if not §$(A §$supseteq B)(.)
           )
         )
 
@@ -369,7 +369,7 @@
           §proof["subseteq_reflexivity"](
             §proof_as_exercise["subseteq_reflexivity"](
               §p(
-                Let §$(A) be a §r(set), and let §$(x) be an object. If §$(a §$in A)(,) then §$(a §$in A)(,) and thus §$(A §$subseteq A)(.)
+                Let §$(A) be a §r(set), and let §$(x) be an object. If §$(a §$in A)(,) then §$(a §$in A) by assumption, and thus §$(A §$subseteq A)(.)
               )
             )
           )
@@ -400,11 +400,11 @@
 
         §exercise["subseteq_cyclic"](
           §p(
-            Prove or disprove: there exist §rs(set) §$(A, B, C) such that §$(A §$subseteq B)(,) §$(B §$subseteq C)(,) and §$(C §$subseteq A)(.)
+            Prove or disprove: there exist §rs(set) §$(A)(,) §$(B)(,) and §$(C) such that §$(A §$subseteq B)(,) §$(B §$subseteq C)(,) and §$(C §$subseteq A)(.)
           )
           §solution["subseteq_cyclic"](
             §p(
-              The statement holds. Define §$(A §$defeq §$set)(,) §$(B §$defeq §$set)(,) and §$(C §$defeq §$set)(.) Then §$(A §$subseteq B)(,) §$(B §$subseteq C)(,) and §$(C §$subseteq A) by §cref(subseteq_reflexivity).§side*()(Bonus exercise: show that for all §rs(set) §$(A, B, C) holds that §$(A §$subseteq B)(,) §$(B §$subseteq C) and §$(C §$subseteq A) if and only if §$(A §$seq B) and §$(B §$seq C)(.))
+              The statement holds. Define §$(A §$defeq §$set)(,) §$(B §$defeq §$set)(,) and §$(C §$defeq §$set)(.) Then §$(A §$subseteq B)(,) §$(B §$subseteq C)(,) and §$(C §$subseteq A) by §cref(subseteq_reflexivity).§side*()(Bonus exercise: show that for all §rs(set) §$(A)(,) §$(B)(,) and §$(C) holds that §$(A §$subseteq B)(,) §$(B §$subseteq C) and §$(C §$subseteq A) if and only if §$(A §$seq B) and §$(B §$seq C)(.))
             )
           )
         )
@@ -424,11 +424,11 @@
           §p(
             Let §$(A) and §$(B) be §rs(set).
           )§p(
-            We say §$(A) is a §define(strict subset) of §$(B)(,) written as §$(A §$subset B)(,) if §$(A §$subseteq B) and §$(A §$sneq B)(.)
+            We say §$(A) is a §define(strict subset) of §$(B)(,) written as §$(A §$define_notation(§$subset) B)(,) if §$(A §$subseteq B) and §$(A §$sneq B)(.)
           )§p(
-            Conversely, we say §$(A) is a §define(strict superset) of §$(B)(,) written as §$(A §$supset B)(,) if §$(A §$supseteq B) and §$(A §$sneq B)(.)
+            Conversely, we say §$(A) is a §define(strict superset) of §$(B)(,) written as §$(A §$define_notation(§$supset) B)(,) if §$(A §$supseteq B) and §$(A §$sneq B)(.)
           )§p(
-            We further write §$(A §$nsubset B) if not §$(A §$subset B)(,) and §$(A §$nsupset B) if not §$(A §$supset B)(.)
+            We further write §$(A §$define_notation(§$nsubset) B) if not §$(A §$subset B)(,) and §$(A §$define_notation(§$nsupset) B) if not §$(A §$supset B)(.)
           )
         )
 
@@ -485,20 +485,20 @@
           )
           §solution["subset_antisymmetry"](
             §p(
-              Let §$(A) and §$(B) be §rs(set) such that §$(A §$subset B) and §$(B §$subset A)(.) Then also §$(A §$subseteq B) and §$(B §$subseteq A) by §cref(subset_is_subseteq), and thus §$(A §$seq B) by §cref(sequality_and_subsets).§side*()(You may have noticed that §$(A §$seq B) contradicts the assumptions of §$(A §$subset B) and §$(B §$subset A)(,) as a §r(strict subset) relation precludes §r(seq)(equality) by definition. This has no consequences for the validity of the proof however, because any §r(implication) with a false §r(premise) holds regardless.)
+              Let §$(A) and §$(B) be §rs(set) such that §$(A §$subset B) and §$(B §$subset A)(.) Then also §$(A §$subseteq B) and §$(B §$subseteq A) by §cref(subset_is_subseteq), and thus §$(A §$seq B) by §cref(sequality_and_subsets).§side*()(You may have noticed that §$(A §$seq B) contradicts the assumptions of §$(A §$subset B) and §$(B §$subset A)(,) as the §r(strict subset) relation precludes §r(seq)(equality) by definition. This has no consequences for the validity of the proof however, because any §r(implication) with a false §r(premise) holds regardless.)
             )
           )
         )
 
         §exercise["subset_cyclic"](
           §p(
-            Prove or disprove: there exist §rs(set) §$(A, B, C) such that §$(A §$subset B)(,) §$(B §$subset C)(,) and §$(C §$subset A)(.)
+            Prove or disprove: there exist §rs(set) §$(A)(,) §$(B)(,) and §$(C) such that §$(A §$subset B)(,) §$(B §$subset C)(,) and §$(C §$subset A)(.)
           )
           §solution["subset_cyclic"](
             §p(
               The statement does not hold, so we prove its §r(negation). Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set), and suppose toward a contradiction that §$(A §$subset B)(,) §$(B §$subset C)(,) and §$(C §$subset A)(.)
             )§p(
-              Because §$(A §$subset B)(,) there exists §$(x §$in B) such that §$(x §$notin A)(.) Then §$(x §$in C)(,) because §$(x §$in B) and §$(B §$subset C)(.) But then also §$(x §$in A)(,) because §$(x §$in C) and §$(C §$subset A)(,) a contradiction.
+              Because §$(A §$subset B)(,) there exists §$(x §$in B) such that §$(§$highlightlow6(x §$notin A))(.) Then §$(x §$in C)(,) because §$(x §$in B) and §$(B §$subset C)(.) But then also §$(§$highlightlow6(x §$in A))(,) because §$(x §$in C) and §$(C §$subset A)(,) a contradiction.
             )
           )
         )
@@ -535,7 +535,7 @@
           )
         )(
           §p(
-            A §r(Venn diagram) showing the §rs(set) of animal species that can §span(cd5 highlight bgclll5)(walk), §span(cd1 highlight bgclll1)(fly), and §span(cd3 highlight bgclll3)(swim). Each region shows an icon of a species that belongs to it.
+            A §r(Venn diagram) showing the §rs(set) of animal species that can §span(cd5 highlight bgclll5)(walk), §span(cd1 highlight bgclll1)(fly), and §span(cd3 highlight bgclll3)(swim). Each of the seven resulting regions shows an icon of a species that belongs to it.
           )
         )
       )
@@ -543,14 +543,14 @@
       §p(
         So far, we have always denoted §rs(set) by explicitly enumerating their §rs(member), which does not help us when trying to define a §r(set) in terms of other §rs(set). For that reason, we introduce the §definex["set_builder_notation_preliminary", "set builder notation preliminary"](set builder notation)(set builder notations)(
           §p(
-            In §rdef(set builder notation preliminary)(set builder notation), we define a §r(set) by giving a predicate that holds for exactly the §rs(member) of the §r(set):
+            In §rdef(set builder notation preliminary)(set builder notation), we define a §r(set) by giving a §r(predicate) that holds for exactly the §rs(member) of that §r(set):
             §$$(
               §$set_builder[1](x)(§$text($x §$in §$set(§$symbol0)(§$symbol1)(§$symbol2)$ and $x §$in §$set(§$symbol0)(§$symbol2)(§$symbol3)$)) §$seq §$set(§$symbol0)(§$symbol2).
             )
           )§p(
             Read the above example as §lquote§ the §r(set) that contains all §$(x) such that §$(x §$in §$set(§$symbol0)(§$symbol1)(§$symbol2)) and §$(x §$in §$set(§$symbol0)(§$symbol2)(§$symbol3))(§rquote§ .)
           )
-        ), in which we specify a §r(set) by giving a §r(predicate) that is satisfied exactly by the §rs(member) of the §r(set) (read the vertical bar (§verbatim(§$(§$mid))) as §verbatim(such)(that)):
+        ), in which we specify a §r(set) by giving a §r(predicate) that is satisfied exactly by the §rs(member) of that §r(set) (read the vertical bar (§verbatim(§$(§$mid))) as §verbatim(such)(that)):
       )§p(
         §$(§$set_builder[1](x)(§$text($x §$in §$set(§$symbol0)(§$symbol1)(§$symbol2)$ and $x §$in §$set(§$symbol0)(§$symbol2)(§$symbol3)$)))(,) for example, is a complicated way of denoting the §r(set) §$(§$set(§$symbol0)(§$symbol2))(.)
       )§p(
@@ -573,7 +573,10 @@
         §definition["intersection"](Intersection)(
           §set_math_id["intersection", "intersection"]
           §p(
-            Let §$(A) and §$(B) be §rs(set). The §define(intersection) of §$(A) and §$(B)(,) written as §$(A §$intersection B)(,) is the §r(set) of all objects which are §rs(element) of both §$(A) and §$(B)(:)
+            Let §$(A) and §$(B) be §rs(set).
+          )
+          §p(
+            The §define(intersection) of §$(A) and §$(B)(,) written as §$(A §$define_notation(§$intersection) B)(,) is the §r(set) of all objects which are §rs(element) of both §$(A) and §$(B)(:)
 
             §$$(
               A §$intersection B §$defeq §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)).
@@ -589,13 +592,16 @@
         )
 
         §p(
-          If we swap the §r(conjunction) for a §r(disjunction) in the definition of the §r(intersection) of two §rs(set), we obtain another useful concept:
+          If we swap the §r(conjunction) in the definition of the §r(intersection) of two §rs(set) for a §r(disjunction), we obtain another useful concept:
         )
 
         §definition["union"](Union)(
           §set_math_id["union", "union"]
           §p(
-            Let §$(A) and §$(B) be §rs(set). The §define(union) of §$(A) and §$(B)(,) written as §$(A §$union B)(,) is the §r(set) of all objects which are §rs(element) of at least one of §$(A) or §$(B)(:)
+            Let §$(A) and §$(B) be §rs(set).
+          )
+          §p(
+            The §define(union) of §$(A) and §$(B)(,) written as §$(A §$define_notation(§$union) B)(,) is the §r(set) of all objects which are §rs(element) of at least one of §$(A) or §$(B)(:)
 
             §$$(
               A §$union B §$defeq §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)).
@@ -622,9 +628,9 @@
           §$$align*(
             & §$p[2](§$set(§$symbol0)(§$symbol1)(§$symbol2) §$intersection §$highlightlow1(§$p[1](§$set(§$symbol1)(§$symbol3) §$union §$set(§$symbol1)(§$symbol2)(§$symbol3)))) §$union §$set
           )(
-            §$seq {} & §$highlightlow3(§$p[1](§$set(§$symbol0)(§$symbol1)(§$symbol2) §$intersection §$highlighttop1(§$set(§$symbol1)(§$symbol2)(§$symbol3)))) §$union §$set
+            §$seq {} & §$highlightlowr3(§$p[1](§$set(§$symbol0)(§$symbol1)(§$symbol2) §$intersection §$highlighttop1(§$set(§$symbol1)(§$symbol2)(§$symbol3)))) §$union §$set
           )(
-            §$seq {} & §$highlightlow5(§$highlighttop3(§$set(§$symbol1)(§$symbol2)) §$union §$set)
+            §$seq {} & §$highlightlow5(§$highlighttopr3(§$set(§$symbol1)(§$symbol2)) §$union §$set)
           )(
             §$seq {} & §$highlighttop5(§$set(§$symbol1)(§$symbol2))
           )
@@ -654,7 +660,7 @@
         §proven_fact(
           §statement["intersection_union_parens"](
             §p(
-              There exist §rs(set) §$(A, B, C) such that §$(§$p(A §$intersection B) §$union C §$sneq A §$intersection §$p(B §$union C))(.)
+              There exist §rs(set) §$(A)(,) §$(B)(,) and §$(C) such that §$(§$p(A §$intersection B) §$union C §$sneq A §$intersection §$p(B §$union C))(.)
             )
           )
           §proof["intersection_union_parens"](
@@ -865,7 +871,7 @@
         )
 
         §p(
-          The following exercises give you some more opportunities to become more familiar with §rs(intersection) and §rs(union), as well as to practice proving statements in general. These proofs are slightly more involved than those we have seen so far in the section, but they still follow the same approach of unfolding definitions and then letting the structure of the statements guide the process of §r(deductive reasoning).
+          The following exercises present further opportunities to become more familiar with §rs(intersection) and §rs(union), as well as to practice proving statements in general. These proofs are slightly more involved than those we have seen so far in the section, but they still follow the same approach of unfolding definitions and then letting the structure of the statements guide the process of §r(deductive reasoning).
         )
 
         §exercise["exercise_characterize_subseteq"](
@@ -1018,13 +1024,16 @@
 
       §hsection["section_set_difference"](Set Difference)(
         §p(
-          §R(intersection) and §r(union) are arguably the two most simple operations on §rs(set), but sometimes they do not suffice. Consider, for example, the §r(set) of animal species that can swim but cannot fly. This §r(set) is neither the §r(intersection) nor the §r(union) of the species that can swim and fly respectively. We thus define a third §r(binary operator):
+          §R(intersection) and §r(union) are arguably the two most simple operations on §rs(set), but sometimes they do not suffice. Consider, for example, the §r(set) of animal species that can swim but cannot fly. This §r(set) is neither the §r(intersection) nor the §r(union) of the species that can swim or fly respectively. We thus define a third §r(binary operator):
         )
 
         §definition["set_difference"](Set Difference)(
           §set_math_id["setminus", "set_difference"]
           §p(
-            Let §$(A) and §$(B) be §rs(set). The §define(set difference) of §$(A) and §$(B)(,) §define(relative complement) of §$(B) in §$(A)(,) or simply §$(A) §define(without) §$(B)(,) written as §$(A §$setminus B)(,) is the §r(set) of all objects which are §rs(element) of §$(A) but not of §$(B)(:)
+            Let §$(A) and §$(B) be §rs(set).
+          )
+          §p(
+            The §define(set difference) of §$(A) and §$(B)(,) §define(relative complement) of §$(B) in §$(A)(,) or simply §$(A) §define(without) §$(B)(,) written as §$(A §$define_notation(§$setminus) B)(,) is the §r(set) of all objects which are §rs(element) of §$(A) but not of §$(B)(:)
 
             §$$(
               A §$setminus B §$defeq §$set_builder(x)(§$text($x §$in A$ and $x §$notin B$)).
@@ -1053,7 +1062,7 @@
         )
 
         §p(
-          Equipped with the notions of §r(intersection), §r(union), and §r(set difference), we can describe all the possible ways in which multiple §rs(set) can relate to each other:
+          Equipped with the notions of §r(intersection), §r(union), and §r(set difference), we can describe all the possible ways in which multiple §rs(set) can be combined:
         )
 
         §exercise["exercise_arbitrary_venn"](
@@ -1096,7 +1105,7 @@
 
         §statement["set_difference_not_commutative"](
           §p(
-            There exist §rs(set) §$(A, B) such that §$(A §$setminus B §$sneq B §$setminus A)(.)
+            There exist §rs(set) §$(A) and §$(B) such that §$(A §$setminus B §$sneq B §$setminus A)(.)
           )
 
           §proof_as_exercise["set_difference_not_commutative"](
@@ -1116,7 +1125,7 @@
 
         §statement["set_difference_not_associative"](
           §p(
-            There exist §rs(set) §$(A, B, C) such that §$(§$p(A §$setminus B) §$setminus C §$sneq A §$setminus §$p(B §$setminus C))(.)
+            There exist §rs(set) §$(A)(,) §$(B)(,) and §$(C) such that §$(§$p(A §$setminus B) §$setminus C §$sneq A §$setminus §$p(B §$setminus C))(.)
           )
 
           §proof_as_exercise["set_difference_not_associative"](
@@ -1326,7 +1335,7 @@
           §$set[2](§$highlight3(§$set(§$symbol0)(§$symbol1)))(§$highlight5_direct(§$symbol3)) &§$subseteq §$set[2](§$highlight3(§$set(§$symbol0)(§$symbol1)))(§$set(§$symbol0)(§$symbol2))(§$highlight5_direct(§$symbol3)).
         )
       )§p(
-        Always stay mindful of the difference between the §rs(member) of a §r(set) and the §rs(member) of the §rs(member) of a §r(set): §$(§$symbol0 §$notin §$set[2](§$set(§$symbol0)(§$symbol1))(§$set(§$symbol0)(§$symbol2))(§$symbol3))(,) even though §$(§$symbol0) is an §r(element) of some §rs(member) of §$(§$set[2](§$set(§$symbol0)(§$symbol1))(§$set(§$symbol0)(§$symbol2))(§$symbol3))(. )
+        Always stay mindful of the difference between the §rs(member) of a §r(set) and the §rs(member) of its §rs(member): §$(§$symbol0 §$notin §$set[2](§$set(§$symbol0)(§$symbol1))(§$set(§$symbol0)(§$symbol2))(§$symbol3))(,) even though §$(§$symbol0) is an §r(element) of some §rs(member) of §$(§$set[2](§$set(§$symbol0)(§$symbol1))(§$set(§$symbol0)(§$symbol2))(§$symbol3))(. )
       )§p(
         Another common source of mistakes is the distinction between an object and the §r(set) that contains exactly that object but nothing else. For each §r(set) §$(X) holds §$(§$set(X) §$sneq X)(,) because §$(X §$in §$set(X)) but §$(X §$notin X), as no §r(set) can be a §r(member) of itself. In particular, §$(§$set §$sneq §$set(§$set))(.) The §r(empty set) has no §rs(member), whereas §$(§$set(§$set)) has exactly one §r(member), namely the §r(empty set).
       )
@@ -1360,7 +1369,7 @@
       )
 
       §p(
-        Because we can nest §rs(set) arbitrarily deeply, we can represent even the most complex mathematical concepts through §rs(set). Sometimes we do so explicitly by defining the concepts in terms of §rs(set), sometimes we will simply assume implicitly that it would be possible to express concepts in terms of §rs(set). We have been using icons such as §$(§$symbol0§ , §$symbol1), and §$(§$symbol2) as objects for example, but since their only interesting property is how they behave in terms of §r(equal)(equality), we might as well have been using the §rs(set) §$(§$set§ , §$set(§$set))(,) and §$(§$set(§$set(§$set))) instead. Using symbols is more readable, but ultimately not necessary from a purely mathematical §side(standpoint)(Expressing everything in terms of pure sets is indeed how more formal approaches to set theory eliminate the problem of having to define objects before being able to define sets.).
+        Because we can nest §rs(set) arbitrarily deeply, we can represent even the most complex mathematical concepts through §rs(set). Sometimes we do so explicitly by defining the concepts in terms of §rs(set), sometimes we will simply assume implicitly that it would be possible to express concepts in terms of §rs(set). We have been using icons such as §$(§$symbol0§ , §$symbol1), and §$(§$symbol2) as objects, for example, but since their only interesting property is how they behave in terms of §r(equal)(equality), we might as well have been using the §rs(set) §$(§$set§ , §$set(§$set))(,) and §$(§$set(§$set(§$set))) instead. Using symbols is more readable, but ultimately not necessary from a purely mathematical §side(standpoint)(Expressing everything in terms of pure sets is indeed how more formal approaches to set theory eliminate the problem of having to define objects before being able to define sets.).
       )
 
       §hsection["section_powerset"](Power Sets)(
@@ -1372,7 +1381,9 @@
           §set_math_id["powerset", "powerset"]
 
           §p(
-            Let §$(X) be a §r(set). The §define(power set) of §$(X)(,) written as §$(§$powerset(X))(,) is the §r(set) of all §rs(subset) of §$(X)(.)
+            Let §$(X) be a §r(set).
+          )§p(
+            The §define(power set) of §$(X)(,) written as §$(§$define_notation(§$powerset(§$text_color(X))))(,) is the §r(set) of all §rs(subset) of §$(X)(.)
           )
         )
 
@@ -1380,7 +1391,7 @@
           §captioned(
             §input["euler_diagrams/powerset.html"]
           )(
-            Visualization of the §r(power set) construction. The §r(empty set) is a §r(member) of every §r(power set), even though the §r(Euler diagram) never depicts it.
+            A visualization of the §r(power set) construction. The §r(empty set) is a §r(member) of every §r(power set), even though the §r(Euler diagram) never depicts it.
           )
         )
 
@@ -1431,13 +1442,13 @@
             §p(
               We do a proof by contraposition, that is, we show that if §$(A §$sneq B)(,) then §$(§$powerset(A) §$sneq §$powerset(B))(.) To that end, let §$(A) and §$(B) be §rs(set) with §$(A §$sneq B)(.)
             )§p(
-              Without loss of generality, there exists §$(a §$in A) such that §$(a §$notin B) §parens(otherwise)(switch the roles of §$(A) and)(§$(B)). Then §$(§$set(a) §$in §$powerset(A)) §(because §$()(§$set(a) §$subseteq A)(§)) but §$(§$set(a) §$notin §$powerset(B)) §(because §$()(§$set(a) §$nsubseteq B)(§),) and thus §$(§$powerset(A) §$sneq §$powerset(B))(.)
+              Without loss of generality, there exists §$(a §$in A) such that §$(a §$notin B) §parens(otherwise)(switch the roles of §$(A) and)(§$(B)). Then §$(§$set(a) §$in §$powerset(A)) §(because §$()(§$set(a) §$subseteq A)(§)) but §$(§$set(a) §$notin §$powerset(B)) §(because §$()(§$set(a) §$nsubseteq B)(§),) and thus, §$(§$powerset(A) §$sneq §$powerset(B))(.)
             )
           )
         )
 
         §p(
-          The proof of §cref(equal_powersets_equal_sets) contains the handy phrase §verbatim(without)(loss of)(generality), which indicates that only one of several distinct cases will be presented, because the other cases work in a similar way and can be handled through simple modifications to the presented argument. In this example, it is clearly not always true that §$(A) has a §r(member) that is not §r(in) §$(B)(,) as §$(A) could be a §r(strict subset) of §$(B)(.) But in that case, simply renaming §$(A) to §verbatim(§$(B)) and vice versa correctly finishes the proof.
+          The proof of §cref(equal_powersets_equal_sets) contains the handy phrase §verbatim(without)(loss of)(generality), which indicates that only one of several distinct cases will be presented, because the other cases work in a similar way and can be handled through simple modifications to the presented argument. In this example, it is clearly not always true that §$(A) has a §r(member) that is not §r(in) §$(B)(,) as §$(A) could be a §r(strict subset)((strict) subset) of §$(B)(.) But in that case, simply renaming §$(A) to §verbatim(§$(B)) and vice versa correctly finishes the proof.
         )§p(
           Quickly jotting down a §verbatim(without)(loss of)(generality) (or §verbatim(w.l.o.g.) for the particularly time-pressed mathematician) can often lead to overlooking crucial corner cases, resulting in faulty proofs. Whenever you feel tempted to §side(wlog)(It may not have been a verb before, but now it is.) your way out of a lengthy proof, ask yourself whether you can describe the necessary changes to cover all cases in one sentence. If you can, then simply add that sentence to your proof. And if you cannot, then you do not get to drop those convenient four words.
         )
@@ -1460,14 +1471,14 @@
 
     §hsection["exercises_sets"](Exercises)(
       §p(
-        This section contains a collection of exercises that touch upon all definitions of this chapter. Some introduce new but related definitions, so make sure to read through the exercises even if you do not intend to solve all of them. Unlike the exercises throughout the chapter body, these exercises come without solutions. Write your own instead, and try to get feedback on them.
+        This section contains a collection of exercises that touch upon all definitions of this chapter. Some introduce new but related definitions, so make sure to read through the exercises even if you do not intend to solve all of them. Unlike the exercises throughout the chapter body, these exercises do not come with solutions. Write your own instead, and try to get feedback on them.
       )
 
       §exercise["exercise_cardinality_constraints"](
         §ol(
           §li(
             §p(
-              Give §rs(set) §$(A, B, C) such that all of the following conditions are satisfied simultaneously:
+              Give §rs(set) §$(A)(,) §$(B)(,) and §$(C) such that all of the following conditions are satisfied simultaneously:
             )§ol(
               §li(§$(A) has exactly five §rs(element),)
               §li(§$(B) has exactly three §rs(element),)
@@ -1492,9 +1503,9 @@
       §exercise["exercise_sets_solve"](
         §ol(
           §li(
-            Find a §r(set) §$(X) such that §$(§$p(X §$setminus §$set(0)(2)) §$intersection §$p(X §$union §$set(0)(1)) §$seq §$set(0)(2) §$setminus X)(.) Justify your answer by giving the step-by-step computation of the expressions.
+            Find a §r(set) §$(X) such that §$(§$p(X §$setminus §$set(0)(2)) §$intersection §$p(X §$union §$set(0)(1)) §$seq §$set(0)(2) §$setminus X)(.) Justify your answer by giving the step-by-step computations of the expressions.
           )§li(
-            Prove that your answer is the only §side(solution)(Figuring out how to prove uniqueness of the solution is the interesting part of this exercise.).
+            Prove that your answer is the only possible §side(solution)(Figuring out how to prove uniqueness of the solution is the interesting part of this exercise.).
           )§li(
             Invent your own exercises of this kind: one with exactly one solution, one with exactly two solutions, one with infinitely many solutions, and one with no §side(solutions)(For each of these you have to prove that your equation has the desired number of solutions.).
           )
@@ -1598,7 +1609,9 @@
       §definition["symmetric_difference"](Symmetric Difference)(
         §set_math_id["symdif", "symmetric_difference"]
         §p(
-          Let §$(A) and §$(B) be §rs(set). The §define(symmetric difference) of §$(A) and §$(B)(,) written as §$(A §$symdif B)(,) is the §r(set) of all objects which are §rs(element) of exactly one of §$(A) or §$(B)(:)
+          Let §$(A) and §$(B) be §rs(set).
+        )§p(
+          The §define(symmetric difference) of §$(A) and §$(B)(,) written as §$(A §$define_notation(§$symdif) B)(,) is the §r(set) of all objects which are §rs(element) of exactly one of §$(A) or §$(B)(:)
 
           §$$(
             A §$symdif B §$defeq §$p(A §$setminus B) §$union §$p(B §$setminus A).
@@ -1628,7 +1641,7 @@
 
       §exercise["exercise_symdif_venn"](
         §p(
-          Draw a §r(Venn diagram) of three §rs(set) §$(A, B, C)(,) and highlight the areas corresponding to §$(§$p(A §$symdif B) §$symdif C)(.)
+          Draw a §r(Venn diagram) of three §rs(set) §$(A)(,) §$(B)(,) and §$(C)(,) and highlight the areas corresponding to §$(§$p(A §$symdif B) §$symdif C)(.)
         )
       )
 
@@ -1660,5 +1673,3 @@
 
   )
 )
-
-- color in proofs

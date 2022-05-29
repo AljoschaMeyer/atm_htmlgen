@@ -482,6 +482,30 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll6 highlight low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$highlighttop6" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll6 highlight top}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlowr1" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll1 highlight rightspace low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlighttopr1" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll1 highlight rightspace top}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlowr2" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll2 highlight rightspace low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlighttopr2" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll2 highlight rightspace top}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlowr3" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll3 highlight rightspace low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlighttopr3" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll3 highlight rightspace top}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlowr4" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll4 highlight rightspace low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlighttopr4" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll4 highlight rightspace top}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlowr5" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll5 highlight rightspace low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlighttopr5" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll5 highlight rightspace top}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlightlowr6" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll6 highlight rightspace low}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$highlighttopr6" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgclll6 highlight rightspace top}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$highlight1" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgmclll1}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$highlight2" {
