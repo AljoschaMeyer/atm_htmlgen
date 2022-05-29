@@ -841,6 +841,7 @@ span.enclosing.highlight.rightspace.top:before {
 
 .cancel_symbol {
   position: relative;
+  isolation: isolate;
 }
 
 .cancel_symbol:before {
@@ -849,8 +850,9 @@ span.enclosing.highlight.rightspace.top:before {
   left: 0;
   top: 45%;
   right: 0;
-  border-top: 0.15rem solid;
+  border-top: 0.25em solid;
   border-color: var(--color-obstruction);
+  border-radius: 1em;
   transform: rotate(-60deg);
   z-index: 1;
 }

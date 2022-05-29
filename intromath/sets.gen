@@ -1301,17 +1301,17 @@
                 )
                 §fleqn(
                   §$$align*(
-                    & C §$setminus §$p(B §$setminus A) §$seq §$p(C §$intersection A) §$union §$p(C §$setminus B)
+                    & C §$setminus §$p(§$highlightlowr1(B) §$setminus A) §$seq §$p(C §$intersection A) §$union §$p(C §$setminus §$highlightlow1(B))
                   )(
-                    §$implies {} & C §$setminus §$p(C §$setminus A) §$seq §$p(C §$intersection A) §$union §$p(C §$setminus C) §$tag($B §$seq C$)
+                    §$implies {} & C §$setminus §$p(§$highlighttopr1(C) §$setminus A) §$seq §$p(C §$intersection A) §$union §$highlightlow3(§$p(C §$setminus §$highlighttop1(C))) §$tag($B §$seq C$)
                   )(
-                    §$implies {} & C §$setminus §$p(C §$setminus A) §$seq §$p(C §$intersection A) §$union §$set §$tag(§cref(set_difference)(Definition) $§$setminus§ $)
+                    §$implies {} & C §$setminus §$p(C §$setminus A) §$seq §$highlightlow5(§$p(C §$intersection A) §$union §$highlighttop3(§$set)) §$tag(§cref(set_difference)(Definition) $§$setminus§ $)
                   )(
-                    §$implies {} & C §$setminus §$p(C §$setminus A) §$seq C §$intersection A §$tag(§cref(union)(Definition) $§$union§ $)
+                    §$implies {} & §$highlightlowr2(C §$setminus §$p(C §$setminus A)) §$seq §$highlightlow4(§$highlighttop5(C §$intersection A)) §$tag(§cref(union)(Definition) $§$union§ $)
                   )(
-                    §$implies {} & C §$intersection A §$seq C §$setminus §$p(C §$setminus A) §$tag(§cref(seq_symmetry)(Symmetry $§$seq[true]$))
+                    §$implies {} & §$highlighttopr4(§$highlightlowr6(C) §$intersection §$highlightlowr1(A)) §$seq §$highlighttop2(§$highlightlowr6(C) §$setminus §$p(§$highlightlowr6(C) §$setminus §$highlightlow1(A))) §$tag(§cref(seq_symmetry)(Symmetry $§$seq[true]$))
                   )(
-                    §$implies {} & A §$intersection B §$seq A §$setminus §$p(A §$setminus B). §$tag(Rename)
+                    §$implies {} & §$highlighttopr6(A) §$intersection §$highlighttopr1(B) §$seq §$highlighttopr6(A) §$setminus §$p(§$highlighttopr6(A) §$setminus §$highlighttop1(B)). §$tag(Rename)
                   )
                 )
               )
@@ -1419,11 +1419,13 @@
           )
           §solution["exercise_powers_of_empty"](
             §$$align*(
-              §$powerset[2](§$powerset[1](§$powerset(§$set))) &§$seq §$powerset[2](§$powerset[1](§$set(§$set)))
+              & §$powerset[2](§$powerset[1](§$highlightlow1(§$powerset(§$set))))
             )(
-              &§$seq §$powerset[2](§$set[1](§$set§ , §$set(§$set)))
+              §$seq {} & §$powerset[2](§$highlightlow3(§$powerset[1](§$highlighttop1(§$set(§$set)))))
             )(
-              &§$seq §$set[2](§$set§ , §$set(§$set), §$set[1](§$set(§$set)), §$set[1](§$set§ , §$set(§$set)))
+              §$seq {} & §$highlightlow5(§$powerset[2](§$highlighttop3(§$set[1](§$set§ , §$set(§$set)))))
+            )(
+              §$seq {} & §$highlighttop5(§$set[2](§$set§ , §$set(§$set), §$set[1](§$set(§$set)), §$set[1](§$set§ , §$set(§$set))))
             )
           )
         )

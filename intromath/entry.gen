@@ -12,3 +12,6 @@
 
 §output["assets/tex.js"](§input["tex.js"])
 §output["assets/main.css"](§input["main.css"])
+
+- Highlighting in generate solutions
+- highlighting in power set exercise

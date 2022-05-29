@@ -1680,19 +1680,19 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                         ]),
                         Out::html("div", vec![
                             Out::html_class("button", "toggle bordercd3 bgclll3 no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}} \notin A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}} \notin B"###),
                             ]),
                             Out::html_class("button", "toggle bordercd3 bgclll3 yes", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}} \in A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}} \in B"###),
                             ]),
                             Out::html_class("button", "toggle bordercd3 bgclll3 no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}} \notin A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}} \notin B"###),
                             ]),
                             Out::html_class("button", "toggle bordercd3 bgclll3 yes", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}} \in A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}} \in B"###),
                             ]),
                             Out::html_class("button", "toggle bordercd3 bgclll3 no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}} \notin A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}} \notin B"###),
                             ]),
                         ]),
                     ]),

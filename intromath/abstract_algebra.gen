@@ -1,7 +1,7 @@
 §template(
 
 )(
-  §hsection["chapter_abstract_algebra"](TODO Abstract Algebra)(
+  §hsection["chapter_abstract_algebra"](Abstract Algebra)(
     §p(
       TODO
     )

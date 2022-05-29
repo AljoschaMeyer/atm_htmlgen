@@ -1,7 +1,7 @@
 §template(
 
 )(
-  §hsection["chapter_cardinality"](TODO Cardinality)(
+  §hsection["chapter_cardinality"](Cardinality)(
     §p(
       TODO
     )

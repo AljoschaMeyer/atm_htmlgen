@@ -1,7 +1,7 @@
 §template(
 
 )(
-  §hsection["chapter_induction"](TODO Induction)(
+  §hsection["chapter_induction"](Induction)(
     §p(
       TODO
     )
