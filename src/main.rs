@@ -17,6 +17,8 @@ use parse::*;
 mod hsections;
 use hsections::*;
 
+mod set_examples;
+
 pub struct RunConfiguration {
     pub entrypoint: PathBuf,
 }
@@ -131,6 +133,8 @@ pub(crate) struct State {
 
     pub mathmode: bool,
     pub fleqn: bool,
+
+    pub venn_id: usize,
 }
 
 impl State {
@@ -171,6 +175,8 @@ impl State {
 
             mathmode: false,
             fleqn: false,
+
+            venn_id: 0,
         });
     }
 

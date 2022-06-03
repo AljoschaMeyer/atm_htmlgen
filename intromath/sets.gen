@@ -72,7 +72,7 @@
             An §rdef(Euler diagram) visualizes §rs(member)(set membership) by drawing §rs(set) as blobs that enclose their §rs(element).
           )
           §input["euler_diagrams/vanilla_no_controls.html"]
-        ). Note how the idea of a §r(set) containing §rs(element) multiple times or in a particular order cannot even be expressed in these depictions, making §rs(Euler diagram) a more faithful representations of §rs(set) than our written notation.
+        ). Note how the idea of a §r(set) containing §rs(element) multiple times or in a particular order cannot even be expressed in these §side(depictions)(Once the universe of objects under consideration has been laid out.), making §rs(Euler diagram) a more faithful representations of §rs(set) than our written notation.
       )
 
       §example["example_euler_diagram", "slightlywide"](Euler Diagram)(
@@ -219,7 +219,7 @@
         )
 
         §p(
-          The definition of §r(seq)(set equality) also justifies why we talk about §lquote§ §em(the) §r(empty set)§rquote and not §lquote§ §em(an) §r(empty set)§rquote§ . The set of numbers that are both less than 12 and greater than 17, and the set of unicorns on the international space §side(station)(None as of writing.) are precisely the same mathematical object.
+          The definition of §r(seq)(set equality) also justifies why we talk about §lquote§ §em(the) §r(empty set)§rquote and not §lquote§ §em(an) §r(empty set)§rquote§ . The set of numbers that are both less than 12 and greater than 17, and the set of unicorns grazing on the Eiffel §side(Tower)(None as of writing.) are precisely the same mathematical object.
         )
 
       )
@@ -815,6 +815,9 @@
 
         §proven_fact(
           §theorem["commutative_union"](Commutativity of §$(§$union[true]§ ))(
+            §p(
+              tmp §side*()(§venn_associative_intersection)
+            )
             §p(
               Let §$(A) and §$(B) be §rs(set). Then §$(A §$union B §$seq B §$union A)(.)
             )

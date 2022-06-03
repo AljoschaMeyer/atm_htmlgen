@@ -13,6 +13,7 @@ use palette::{FromColor, Lch, Srgb, Shade};
 use crate::{Yatt, print_trace, CrefKind, BoxKind};
 use crate::parse;
 use crate::parse::OffsetSpan;
+use crate::set_examples::{Term, render_equation};
 
 #[derive(Clone, Debug)]
 pub(crate) struct Trace(pub Option<OffsetSpan>);
@@ -271,6 +272,7 @@ pub(crate) enum OutInternal {
     PowersetColors(Trace, (), Vec<OutInternal>),
     EulerToggles(Trace, (), Vec<OutInternal>),
     EulerTogglesPower(Trace, (), Vec<OutInternal>),
+    EquationVenn3(Trace, (), Vec<OutInternal>, Term, Term),
 }
 
 impl OutInternal {
@@ -1653,6 +1655,16 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }
 
             return Ok(r.into());
+        }
+
+        OutInternal::EquationVenn3(trace, params, args, lhs, rhs) => {
+            arguments_exact(0, &args, &trace)?;
+
+            return down_macro(|_p, _n, y, _trace| {
+                let id = y.state.venn_id;
+                y.state.venn_id += lhs.info().count + rhs.info().count - 1;
+                return Ok(Out::Text(render_equation(id, &lhs, &rhs).into()));
+            }, &params, args, trace, y);
         }
 
         OutInternal::EulerToggles(trace, params, args) => {

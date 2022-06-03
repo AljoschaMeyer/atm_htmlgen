@@ -8,6 +8,8 @@ use valuable_value::human::{VVDeserializer, Error as VVError};
 
 use crate::{Yatt, print_trace, BoxKind};
 use crate::macros::{OutInternal, Trace};
+use crate::set_examples::{S1, S2, S3, Operator, Term};
+use Operator::*;
 
 // An offset into the source map.
 pub(crate) type Offset = usize;
@@ -602,6 +604,27 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::EncloseFunctionApplication(t, p, a, "twice".into(), r###"\operatorname{twice}"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$powerset" {
                         self.pm(|t, p, a| OutInternal::EncloseFunctionApplication(t, p, a, "powerset".into(), r###"\operatorname{\mathcal{P}}"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"venn_associative_intersection" {
+                        self.pm(|t, p, a| OutInternal::EquationVenn3(t, p, a,
+                            Term::Binary(
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S1)),
+                                    Intersection,
+                                    Box::new(Term::Unary(S2)),
+                                )),
+                                Intersection,
+                                Box::new(Term::Unary(S3)),
+                            ),
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                Intersection,
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S2)),
+                                    Intersection,
+                                    Box::new(Term::Unary(S3)),
+                                )),
+                            ),
+                        ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {
                         let trace_end = source_offset + self.p.position() - initial_position;
                         let trace = Trace(Some((trace_start, trace_end)));

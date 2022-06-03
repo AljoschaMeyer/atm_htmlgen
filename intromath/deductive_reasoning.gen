@@ -18,7 +18,7 @@
       )§p(
         Contrast this with §definex["inductive_reasoning"](inductive reasoning)(§Rdef(inductive reasoning) is the process of hypothesizing causes from observed facts.), the process of hypothesizing causes from observed facts. From observing that the sun rises and sets every day, you might form the potential explanation that the sun orbits the §side(earth)(According to current scientific consensus, it does not.). Later observations might invalidate a hypothesis, but a hypothesis can never be proven beyond doubt.
       )§p(
-        Even though §r(inductive reasoning) can lead to false conclusions, it has its firm place in humanity's quest for knowledge. Physics or chemistry, for example, would make little sense if they were not grounded in observations of the world around us. They can strive to find increasingly accurate models of the world, but there could always come a new observation that contradicts the existing models.
+        Even though §r(inductive reasoning) can lead to false conclusions, it has its firm place in humanity's quest for knowledge. Physics or chemistry, for example, would make little sense if they were not grounded in observations of the world around us. Scientists can strive to find increasingly accurate models of the world, but there could always come a new observation that contradicts the existing models.
       )§p(
         Unlike the natural sciences, mathematics relies on §r(deductive reasoning) alone. Rigorous adherence to the principle that every claim has to follow from either assumptions or previously proven claims may not be a normal mode of operation for your brain, but learning to operate that way comes with a number of benefits:
       )§ul(
@@ -47,7 +47,7 @@
     §hsection["section_whirlwind_tour"](A Whirlwind Tour of Tiny Proofs)(
       §side*()(Fair warning: this section provides a thorough, text-heavy presentation of vital but not terribly exciting information. Not everyone enjoys learning from that kind of material. If you struggle with such passages, you might want to directly skip to the §cref(chapter_sets)(next chapter), which has fluffy, interactive visualizations and other niceties. Whenever you encounter an unknown term there, you can click on it to jump back to its definition.)
       §p(
-        In order to formulate statements, we first need objects that the statements can talk about. For the coming examples, we will use the natural numbers §$(§()(0, 1, 2, §$ldots)(§).) To demonstrate that this mode of reasoning can be applied to anything really, we will also talk about a population of friendly (and presumably hungry) squirrels: §$(§$value(Alex))(,) §$(§$value(Blake))(,) and §$(§$value(Charlie))(.)
+        In order to formulate statements, we first need objects that the statements can talk about. For the coming examples, we will use the natural numbers §$(§()(0, 1, 2, §$ldots)(§).) To demonstrate that this mode of reasoning can be applied to practically anything, we will also talk about a population of friendly (and presumably hungry) squirrels: §$(§$value(Alex))(,) §$(§$value(Blake))(,) and §$(§$value(Charlie))(.)
       )§p(
         A squirrel by itself is not a statement; §$(§$value(Alex)) is neither true nor false, but merely an adorable object of interest. The same applies to the number §$(17)(,) although arguably less adorable. We can bridge into the world of statements by comparing objects for equality:
       )§definition["eq"](Equality)(
@@ -76,7 +76,7 @@
         We can make things slightly more interesting by adding §definex["tour_def_term"](term)(terms)(terms)(
           A §rdef(term) denotes a way of obtaining objects of interest from other objects or other §rs(term).
         ) such as §$(1 + 2) to our language of statements. A §r(term) always denotes a way of obtaining objects of interest from other objects or other §rs(term). In our examples, §$(§lquote)(+)(§rquote) denotes addition of two §side(numbers)(
-          We refrain from giving a precise definition of §$(§lquote)(+)(§rquote) in this chapter, simply taking the results of concrete computations as granted. Occasionally, the example proofs make use of simple properties, for example, the fact that adding zero to a number yields that number again. Such properties would usually have to be proven from the definition of §$(§lquote)(+)(§rquote§ ,) we will simply assume them to be true in order to focus on the mechanics of §r(deductive reasoning) instead.§br
+          We refrain from giving a precise definition of §$(§lquote)(+)(§rquote) in this chapter, simply taking the results of concrete computations for granted. Occasionally, the example proofs make use of simple properties, for example, the fact that adding zero to a number yields that number again. Such properties would usually have to be proven from the definition of §$(§lquote)(+)(§rquote§ ,) we will simply assume them to be true in order to focus on the mechanics of §r(deductive reasoning) instead.§br
           §cref(chapter_induction) contains a precise definition of natural numbers and addition, as well as proofs for the properties we assume to hold in this chapter.
         ).
       )
@@ -117,7 +117,7 @@
         §p(
           You prove §r(existential quantification)(statements of this form) by presenting a §definex["witness"](witness)(witnesses)(
             §p(A §rdef(witness) for a statement of §r(existential quantification) is an object for which the quantified claim holds.)
-          ), that is, an object that satisfies the required property. Note how two symbols that looks similar but have very different meaning appear in the proof: §$(§lquote)(§$eq)(§rquote) signifies a statement that is true if both sides of the symbol denote the same object, whereas §definex["defeq"](defeq)()()(
+          ), that is, an object that satisfies the required property. Note how two symbols that look similar but have very different meaning appear in the proof: §$(§lquote)(§$eq)(§rquote) signifies a statement that is true if both sides of the symbol denote the same object, whereas §definex["defeq"](defeq)()()(
             §p(The §$(§lquote)(§$defeq)(§rquote) symbol makes the name on its left denote the object on its right: §lquote§ Define §$(x §$defeq 42), then §$(x §$eq 42)(§rquote§ .))
           )§set_math_id["defeq", "defeq"]§set_math_id["eqdef", "defeq"]§$(§lquote)(§$defeq)(§rquote) makes the name on the left side denote the object on the right side.
         )§p(
