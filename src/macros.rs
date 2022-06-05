@@ -8,7 +8,7 @@ use ropey::Rope;
 use thiserror::Error;
 use sourcefile::SourceFile;
 use serde::Deserialize;
-use palette::{FromColor, Lch, Srgb, Shade};
+use palette::{FromColor, Lch, Srgb};
 
 use crate::{Yatt, print_trace, CrefKind, BoxKind};
 use crate::parse;
@@ -201,6 +201,7 @@ pub enum Out {
     Cref(Cref, Vec<Out>),
     ReferenceDefined(Vec<Out>, bool /*capitalize*/, bool /*plural*/, bool /*fake define*/),
     MathFunctionParens(MathSet, Vec<Out>),
+    MathMacro(MathMacro, Vec<Out>, String /* id */, String /* tex */),
 }
 
 impl Out {
@@ -272,6 +273,7 @@ pub(crate) enum OutInternal {
     PowersetColors(Trace, (), Vec<OutInternal>),
     EulerToggles(Trace, (), Vec<OutInternal>),
     EulerTogglesPower(Trace, (), Vec<OutInternal>),
+    EquationVenn2(Trace, (), Vec<OutInternal>, Term, Term),
     EquationVenn3(Trace, (), Vec<OutInternal>, Term, Term),
 }
 
@@ -1657,13 +1659,23 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             return Ok(r.into());
         }
 
+        OutInternal::EquationVenn2(trace, params, args, lhs, rhs) => {
+            arguments_exact(0, &args, &trace)?;
+
+            return down_macro(|_p, _n, y, _trace| {
+                let id = y.state.venn_id;
+                y.state.venn_id += lhs.count() + rhs.count();
+                return Ok(render_equation(id, &lhs, &rhs, crate::set_examples::DRAW_VENN2));
+            }, &params, args, trace, y);
+        }
+
         OutInternal::EquationVenn3(trace, params, args, lhs, rhs) => {
             arguments_exact(0, &args, &trace)?;
 
             return down_macro(|_p, _n, y, _trace| {
                 let id = y.state.venn_id;
-                y.state.venn_id += lhs.info().count + rhs.info().count - 1;
-                return Ok(Out::Text(render_equation(id, &lhs, &rhs).into()));
+                y.state.venn_id += lhs.count() + rhs.count();
+                return Ok(render_equation(id, &lhs, &rhs, crate::set_examples::DRAW_VENN3));
             }, &params, args, trace, y);
         }
 
@@ -1800,6 +1812,8 @@ fn out_to_internal(out: Out, args: Vec<OutInternal>) -> Result<OutInternal, usiz
         Out::TeX(path, a, display) => return Ok(OutInternal::TeX(Trace(None), path, outs_to_internals(a, args)?, display)),
 
         Out::MathFunctionParens(params, a) => return Ok(OutInternal::MathFunctionParens(Trace(None), params, outs_to_internals(a, args)?)),
+
+        Out::MathMacro(p, a, id, tex) => return Ok(OutInternal::MathMacro(Trace(None), p, outs_to_internals(a, args)?, id, tex)),
     }
 }
 
@@ -1987,7 +2001,7 @@ impl Default for Case {
 }
 
 #[derive(Deserialize, Clone)]
-pub struct MathMacro([bool; 1]);
+pub struct MathMacro(pub [bool; 1]);
 
 impl Default for MathMacro {
     fn default() -> Self {

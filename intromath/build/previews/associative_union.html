@@ -1,62 +1,781 @@
 <article class="fact" id="associative_union">
-    <h6><a href="http://localhost:1234/sets.html#associative_union">Theorem 2.26: Associativity of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∪</mo></mrow><annotation encoding="application/x-tex">\htmlData{preview=http://localhost:1234/previews/union.html}{\cup}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><span class="mord">∪</span></span></span></span></span></a></h6>
+    <h6><a href="http://localhost:1234/sets.html#associative_union">Theorem 2.26: Associativity of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∪</mo></mrow><annotation encoding="application/x-tex">\htmlData{preview=http://localhost:1234/previews/union.html}{\cup}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><span class="mord">∪</span></span></span></span></span><span class="nowrap"></span><span class="aside"><svg class="venn vennop multi" version"1.1" viewBox="-227 -316 454 632" xmlns="http://www.w3.org/2000/svg">
+          <!-- A -->
+          <clipPath id="clip_10_a">
+            <circle cx="-188.3205" cy="-245" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_10_b">
+            <circle cx="-171" cy="-275" r="30"/>
+          </clipPath>
+
+          <!-- C -->
+          <clipPath id="clip_10_c">
+            <circle cx="-153.6795" cy="-245" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_10_aib" clip-path="url('#clip_10_a')">
+            <circle cx="-171" cy="-275" r="30"/>
+          </clipPath>
+
+          <!-- A intersect C -->
+          <clipPath id="clip_10_aic" clip-path="url('#clip_10_a')">
+            <circle cx="-153.6795" cy="-245" r="30"/>
+          </clipPath>
+
+          <!-- B intersect C -->
+          <clipPath id="clip_10_bic" clip-path="url('#clip_10_c')">
+            <circle cx="-171" cy="-275" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B intersect C -->
+          <clipPath id="clip_10_aibic" clip-path="url('#clip_10_aib')">
+            <circle cx="-153.6795" cy="-245" r="30"/>
+          </clipPath>
+
+          <!-- a intersect B intersect C -->
+          <mask id="mask_10_aibic" >
+            <rect x="-226" y="-315" width="110" height="110" style="fill: white;"/>
+            <rect clip-path="url('#clip_10_aibic')" x="-226" y="-315" width="110" height="110" style="fill: black;"/>
+          </mask>
+
+          <!-- A union B -->
+          <mask id="mask_10_aub">
+            <rect x="-226" y="-315" width="110" height="110" style="fill: white;"/>
+            <circle cx="-188.3205" cy="-245" r="30" style="fill: black;"/>
+            <circle cx="-171" cy="-275" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- A union C -->
+          <mask id="mask_10_auc">
+            <rect x="-226" y="-315" width="110" height="110" style="fill: white;"/>
+            <circle cx="-188.3205" cy="-245" r="30" style="fill: black;"/>
+            <circle cx="-153.6795" cy="-245" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B union C -->
+          <mask id="mask_10_buc">
+            <rect x="-226" y="-315" width="110" height="110" style="fill: white;"/>
+            <circle cx="-171" cy="-275" r="30" style="fill: black;"/>
+            <circle cx="-153.6795" cy="-245" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_10_a')" mask="url(#mask_10_buc)" cx="-171" cy="-260" r="53"class="venn_yay"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_10_b')" mask="url(#mask_10_auc)" cx="-171" cy="-260" r="53"/>
+          <!-- just C -->
+          <circle clip-path="url('#clip_10_c')" mask="url(#mask_10_aub)" cx="-171" cy="-260" r="53"/>
+          <!-- A intersect B without C -->
+          <circle clip-path="url('#clip_10_aib')" mask="url(#mask_10_aibic)" cx="-171" cy="-260" r="53"class="venn_yay"/>
+          <!-- A intersect C without B -->
+          <circle clip-path="url('#clip_10_aic')" mask="url(#mask_10_aibic)" cx="-171" cy="-260" r="53"class="venn_yay"/>
+          <!-- B intersect C without A -->
+          <circle clip-path="url('#clip_10_bic')" mask="url(#mask_10_aibic)" cx="-171" cy="-260" r="53"/>
+          <!-- A intersect B intersect C -->
+          <circle clip-path="url('#clip_10_aibic')" cx="-171" cy="-260" r="53"class="venn_yay"/>
+
+          <circle cx="-188.3205" cy="-245" r="30"/>
+          <text x="-196.9807" y="-240">A</text>
+          <circle cx="-171" cy="-275" r="30"/>
+          <text x="-171" y="-285">B</text>
+          <circle cx="-153.6795" cy="-245" r="30"/>
+          <text x="-145.0193" y="-240">C</text>
+
+          <rect x="-226" y="-315" width="110" height="110" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_11_a">
+            <circle cx="-102.8205" cy="-115" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_11_b">
+            <circle cx="-85.5" cy="-145" r="30"/>
+          </clipPath>
+
+          <!-- C -->
+          <clipPath id="clip_11_c">
+            <circle cx="-68.1795" cy="-115" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_11_aib" clip-path="url('#clip_11_a')">
+            <circle cx="-85.5" cy="-145" r="30"/>
+          </clipPath>
+
+          <!-- A intersect C -->
+          <clipPath id="clip_11_aic" clip-path="url('#clip_11_a')">
+            <circle cx="-68.1795" cy="-115" r="30"/>
+          </clipPath>
+
+          <!-- B intersect C -->
+          <clipPath id="clip_11_bic" clip-path="url('#clip_11_c')">
+            <circle cx="-85.5" cy="-145" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B intersect C -->
+          <clipPath id="clip_11_aibic" clip-path="url('#clip_11_aib')">
+            <circle cx="-68.1795" cy="-115" r="30"/>
+          </clipPath>
+
+          <!-- a intersect B intersect C -->
+          <mask id="mask_11_aibic" >
+            <rect x="-140.5" y="-185" width="110" height="110" style="fill: white;"/>
+            <rect clip-path="url('#clip_11_aibic')" x="-140.5" y="-185" width="110" height="110" style="fill: black;"/>
+          </mask>
+
+          <!-- A union B -->
+          <mask id="mask_11_aub">
+            <rect x="-140.5" y="-185" width="110" height="110" style="fill: white;"/>
+            <circle cx="-102.8205" cy="-115" r="30" style="fill: black;"/>
+            <circle cx="-85.5" cy="-145" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- A union C -->
+          <mask id="mask_11_auc">
+            <rect x="-140.5" y="-185" width="110" height="110" style="fill: white;"/>
+            <circle cx="-102.8205" cy="-115" r="30" style="fill: black;"/>
+            <circle cx="-68.1795" cy="-115" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B union C -->
+          <mask id="mask_11_buc">
+            <rect x="-140.5" y="-185" width="110" height="110" style="fill: white;"/>
+            <circle cx="-85.5" cy="-145" r="30" style="fill: black;"/>
+            <circle cx="-68.1795" cy="-115" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_11_a')" mask="url(#mask_11_buc)" cx="-85.5" cy="-130" r="53"class="venn_yay"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_11_b')" mask="url(#mask_11_auc)" cx="-85.5" cy="-130" r="53"class="venn_yay"/>
+          <!-- just C -->
+          <circle clip-path="url('#clip_11_c')" mask="url(#mask_11_aub)" cx="-85.5" cy="-130" r="53"/>
+          <!-- A intersect B without C -->
+          <circle clip-path="url('#clip_11_aib')" mask="url(#mask_11_aibic)" cx="-85.5" cy="-130" r="53"class="venn_yay"/>
+          <!-- A intersect C without B -->
+          <circle clip-path="url('#clip_11_aic')" mask="url(#mask_11_aibic)" cx="-85.5" cy="-130" r="53"class="venn_yay"/>
+          <!-- B intersect C without A -->
+          <circle clip-path="url('#clip_11_bic')" mask="url(#mask_11_aibic)" cx="-85.5" cy="-130" r="53"class="venn_yay"/>
+          <!-- A intersect B intersect C -->
+          <circle clip-path="url('#clip_11_aibic')" cx="-85.5" cy="-130" r="53"class="venn_yay"/>
+
+          <circle cx="-102.8205" cy="-115" r="30"/>
+          <text x="-111.4807" y="-110">A</text>
+          <circle cx="-85.5" cy="-145" r="30"/>
+          <text x="-85.5" y="-155">B</text>
+          <circle cx="-68.1795" cy="-115" r="30"/>
+          <text x="-59.5193" y="-110">C</text>
+
+          <rect x="-140.5" y="-185" width="110" height="110" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_12_a">
+            <circle cx="-17.3205" cy="-245" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_12_b">
+            <circle cx="0" cy="-275" r="30"/>
+          </clipPath>
+
+          <!-- C -->
+          <clipPath id="clip_12_c">
+            <circle cx="17.3205" cy="-245" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_12_aib" clip-path="url('#clip_12_a')">
+            <circle cx="0" cy="-275" r="30"/>
+          </clipPath>
+
+          <!-- A intersect C -->
+          <clipPath id="clip_12_aic" clip-path="url('#clip_12_a')">
+            <circle cx="17.3205" cy="-245" r="30"/>
+          </clipPath>
+
+          <!-- B intersect C -->
+          <clipPath id="clip_12_bic" clip-path="url('#clip_12_c')">
+            <circle cx="0" cy="-275" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B intersect C -->
+          <clipPath id="clip_12_aibic" clip-path="url('#clip_12_aib')">
+            <circle cx="17.3205" cy="-245" r="30"/>
+          </clipPath>
+
+          <!-- a intersect B intersect C -->
+          <mask id="mask_12_aibic" >
+            <rect x="-55" y="-315" width="110" height="110" style="fill: white;"/>
+            <rect clip-path="url('#clip_12_aibic')" x="-55" y="-315" width="110" height="110" style="fill: black;"/>
+          </mask>
+
+          <!-- A union B -->
+          <mask id="mask_12_aub">
+            <rect x="-55" y="-315" width="110" height="110" style="fill: white;"/>
+            <circle cx="-17.3205" cy="-245" r="30" style="fill: black;"/>
+            <circle cx="0" cy="-275" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- A union C -->
+          <mask id="mask_12_auc">
+            <rect x="-55" y="-315" width="110" height="110" style="fill: white;"/>
+            <circle cx="-17.3205" cy="-245" r="30" style="fill: black;"/>
+            <circle cx="17.3205" cy="-245" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B union C -->
+          <mask id="mask_12_buc">
+            <rect x="-55" y="-315" width="110" height="110" style="fill: white;"/>
+            <circle cx="0" cy="-275" r="30" style="fill: black;"/>
+            <circle cx="17.3205" cy="-245" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_12_a')" mask="url(#mask_12_buc)" cx="0" cy="-260" r="53"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_12_b')" mask="url(#mask_12_auc)" cx="0" cy="-260" r="53"class="venn_yay"/>
+          <!-- just C -->
+          <circle clip-path="url('#clip_12_c')" mask="url(#mask_12_aub)" cx="0" cy="-260" r="53"/>
+          <!-- A intersect B without C -->
+          <circle clip-path="url('#clip_12_aib')" mask="url(#mask_12_aibic)" cx="0" cy="-260" r="53"class="venn_yay"/>
+          <!-- A intersect C without B -->
+          <circle clip-path="url('#clip_12_aic')" mask="url(#mask_12_aibic)" cx="0" cy="-260" r="53"/>
+          <!-- B intersect C without A -->
+          <circle clip-path="url('#clip_12_bic')" mask="url(#mask_12_aibic)" cx="0" cy="-260" r="53"class="venn_yay"/>
+          <!-- A intersect B intersect C -->
+          <circle clip-path="url('#clip_12_aibic')" cx="0" cy="-260" r="53"class="venn_yay"/>
+
+          <circle cx="-17.3205" cy="-245" r="30"/>
+          <text x="-25.9807" y="-240">A</text>
+          <circle cx="0" cy="-275" r="30"/>
+          <text x="0" y="-285">B</text>
+          <circle cx="17.3205" cy="-245" r="30"/>
+          <text x="25.9807" y="-240">C</text>
+
+          <rect x="-55" y="-315" width="110" height="110" class="venn_frame"/><line x1="-111" y1="-260" x2="-60" y2="-260" class="venn_flow"/>
+                        <line x1="-85.5" y1="-260" x2="-85.5" y2="-190" class="venn_flow"/>
+                        <polygon points="-85.5,-190 -92.5,-206 -78.5,-206" class="venn_flow"/>
+                        <foreignObject x="-135.5" y="-310" width="100" height="100"><div class="venn_op_container"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo href="http://localhost:1234/sets.html#union">∪</mo></mrow><annotation encoding="application/x-tex">\htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><a href="http://localhost:1234/sets.html#union"><span class="mord">∪</span></a></span></span></span></span></div></foreignObject>
+          <!-- A -->
+          <clipPath id="clip_13_a">
+            <circle cx="-17.3205" cy="15" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_13_b">
+            <circle cx="0" cy="-15" r="30"/>
+          </clipPath>
+
+          <!-- C -->
+          <clipPath id="clip_13_c">
+            <circle cx="17.3205" cy="15" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_13_aib" clip-path="url('#clip_13_a')">
+            <circle cx="0" cy="-15" r="30"/>
+          </clipPath>
+
+          <!-- A intersect C -->
+          <clipPath id="clip_13_aic" clip-path="url('#clip_13_a')">
+            <circle cx="17.3205" cy="15" r="30"/>
+          </clipPath>
+
+          <!-- B intersect C -->
+          <clipPath id="clip_13_bic" clip-path="url('#clip_13_c')">
+            <circle cx="0" cy="-15" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B intersect C -->
+          <clipPath id="clip_13_aibic" clip-path="url('#clip_13_aib')">
+            <circle cx="17.3205" cy="15" r="30"/>
+          </clipPath>
+
+          <!-- a intersect B intersect C -->
+          <mask id="mask_13_aibic" >
+            <rect x="-55" y="-55" width="110" height="110" style="fill: white;"/>
+            <rect clip-path="url('#clip_13_aibic')" x="-55" y="-55" width="110" height="110" style="fill: black;"/>
+          </mask>
+
+          <!-- A union B -->
+          <mask id="mask_13_aub">
+            <rect x="-55" y="-55" width="110" height="110" style="fill: white;"/>
+            <circle cx="-17.3205" cy="15" r="30" style="fill: black;"/>
+            <circle cx="0" cy="-15" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- A union C -->
+          <mask id="mask_13_auc">
+            <rect x="-55" y="-55" width="110" height="110" style="fill: white;"/>
+            <circle cx="-17.3205" cy="15" r="30" style="fill: black;"/>
+            <circle cx="17.3205" cy="15" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B union C -->
+          <mask id="mask_13_buc">
+            <rect x="-55" y="-55" width="110" height="110" style="fill: white;"/>
+            <circle cx="0" cy="-15" r="30" style="fill: black;"/>
+            <circle cx="17.3205" cy="15" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_13_a')" mask="url(#mask_13_buc)" cx="0" cy="0" r="53"class="venn_yay"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_13_b')" mask="url(#mask_13_auc)" cx="0" cy="0" r="53"class="venn_yay"/>
+          <!-- just C -->
+          <circle clip-path="url('#clip_13_c')" mask="url(#mask_13_aub)" cx="0" cy="0" r="53"class="venn_yay"/>
+          <!-- A intersect B without C -->
+          <circle clip-path="url('#clip_13_aib')" mask="url(#mask_13_aibic)" cx="0" cy="0" r="53"class="venn_yay"/>
+          <!-- A intersect C without B -->
+          <circle clip-path="url('#clip_13_aic')" mask="url(#mask_13_aibic)" cx="0" cy="0" r="53"class="venn_yay"/>
+          <!-- B intersect C without A -->
+          <circle clip-path="url('#clip_13_bic')" mask="url(#mask_13_aibic)" cx="0" cy="0" r="53"class="venn_yay"/>
+          <!-- A intersect B intersect C -->
+          <circle clip-path="url('#clip_13_aibic')" cx="0" cy="0" r="53"class="venn_yay"/>
+
+          <circle cx="-17.3205" cy="15" r="30"/>
+          <text x="-25.9807" y="20">A</text>
+          <circle cx="0" cy="-15" r="30"/>
+          <text x="0" y="-25">B</text>
+          <circle cx="17.3205" cy="15" r="30"/>
+          <text x="25.9807" y="20">C</text>
+
+          <rect x="-55" y="-55" width="110" height="110" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_14_a">
+            <circle cx="68.1795" cy="-115" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_14_b">
+            <circle cx="85.5" cy="-145" r="30"/>
+          </clipPath>
+
+          <!-- C -->
+          <clipPath id="clip_14_c">
+            <circle cx="102.8205" cy="-115" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_14_aib" clip-path="url('#clip_14_a')">
+            <circle cx="85.5" cy="-145" r="30"/>
+          </clipPath>
+
+          <!-- A intersect C -->
+          <clipPath id="clip_14_aic" clip-path="url('#clip_14_a')">
+            <circle cx="102.8205" cy="-115" r="30"/>
+          </clipPath>
+
+          <!-- B intersect C -->
+          <clipPath id="clip_14_bic" clip-path="url('#clip_14_c')">
+            <circle cx="85.5" cy="-145" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B intersect C -->
+          <clipPath id="clip_14_aibic" clip-path="url('#clip_14_aib')">
+            <circle cx="102.8205" cy="-115" r="30"/>
+          </clipPath>
+
+          <!-- a intersect B intersect C -->
+          <mask id="mask_14_aibic" >
+            <rect x="30.5" y="-185" width="110" height="110" style="fill: white;"/>
+            <rect clip-path="url('#clip_14_aibic')" x="30.5" y="-185" width="110" height="110" style="fill: black;"/>
+          </mask>
+
+          <!-- A union B -->
+          <mask id="mask_14_aub">
+            <rect x="30.5" y="-185" width="110" height="110" style="fill: white;"/>
+            <circle cx="68.1795" cy="-115" r="30" style="fill: black;"/>
+            <circle cx="85.5" cy="-145" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- A union C -->
+          <mask id="mask_14_auc">
+            <rect x="30.5" y="-185" width="110" height="110" style="fill: white;"/>
+            <circle cx="68.1795" cy="-115" r="30" style="fill: black;"/>
+            <circle cx="102.8205" cy="-115" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B union C -->
+          <mask id="mask_14_buc">
+            <rect x="30.5" y="-185" width="110" height="110" style="fill: white;"/>
+            <circle cx="85.5" cy="-145" r="30" style="fill: black;"/>
+            <circle cx="102.8205" cy="-115" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_14_a')" mask="url(#mask_14_buc)" cx="85.5" cy="-130" r="53"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_14_b')" mask="url(#mask_14_auc)" cx="85.5" cy="-130" r="53"/>
+          <!-- just C -->
+          <circle clip-path="url('#clip_14_c')" mask="url(#mask_14_aub)" cx="85.5" cy="-130" r="53"class="venn_yay"/>
+          <!-- A intersect B without C -->
+          <circle clip-path="url('#clip_14_aib')" mask="url(#mask_14_aibic)" cx="85.5" cy="-130" r="53"/>
+          <!-- A intersect C without B -->
+          <circle clip-path="url('#clip_14_aic')" mask="url(#mask_14_aibic)" cx="85.5" cy="-130" r="53"class="venn_yay"/>
+          <!-- B intersect C without A -->
+          <circle clip-path="url('#clip_14_bic')" mask="url(#mask_14_aibic)" cx="85.5" cy="-130" r="53"class="venn_yay"/>
+          <!-- A intersect B intersect C -->
+          <circle clip-path="url('#clip_14_aibic')" cx="85.5" cy="-130" r="53"class="venn_yay"/>
+
+          <circle cx="68.1795" cy="-115" r="30"/>
+          <text x="59.5193" y="-110">A</text>
+          <circle cx="85.5" cy="-145" r="30"/>
+          <text x="85.5" y="-155">B</text>
+          <circle cx="102.8205" cy="-115" r="30"/>
+          <text x="111.4807" y="-110">C</text>
+
+          <rect x="30.5" y="-185" width="110" height="110" class="venn_frame"/><line x1="-25.5" y1="-130" x2="25.5" y2="-130" class="venn_flow"/>
+                        <line x1="0" y1="-130" x2="0" y2="-60" class="venn_flow"/>
+                        <polygon points="0,-60 -7,-76 7,-76" class="venn_flow"/>
+                        <foreignObject x="-50" y="-180" width="100" height="100"><div class="venn_op_container"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo href="http://localhost:1234/sets.html#union">∪</mo></mrow><annotation encoding="application/x-tex">\htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><a href="http://localhost:1234/sets.html#union"><span class="mord">∪</span></a></span></span></span></span></div></foreignObject>
+          <!-- A -->
+          <clipPath id="clip_15_a">
+            <circle cx="-102.8205" cy="145" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_15_b">
+            <circle cx="-85.5" cy="115" r="30"/>
+          </clipPath>
+
+          <!-- C -->
+          <clipPath id="clip_15_c">
+            <circle cx="-68.1795" cy="145" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_15_aib" clip-path="url('#clip_15_a')">
+            <circle cx="-85.5" cy="115" r="30"/>
+          </clipPath>
+
+          <!-- A intersect C -->
+          <clipPath id="clip_15_aic" clip-path="url('#clip_15_a')">
+            <circle cx="-68.1795" cy="145" r="30"/>
+          </clipPath>
+
+          <!-- B intersect C -->
+          <clipPath id="clip_15_bic" clip-path="url('#clip_15_c')">
+            <circle cx="-85.5" cy="115" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B intersect C -->
+          <clipPath id="clip_15_aibic" clip-path="url('#clip_15_aib')">
+            <circle cx="-68.1795" cy="145" r="30"/>
+          </clipPath>
+
+          <!-- a intersect B intersect C -->
+          <mask id="mask_15_aibic" >
+            <rect x="-140.5" y="75" width="110" height="110" style="fill: white;"/>
+            <rect clip-path="url('#clip_15_aibic')" x="-140.5" y="75" width="110" height="110" style="fill: black;"/>
+          </mask>
+
+          <!-- A union B -->
+          <mask id="mask_15_aub">
+            <rect x="-140.5" y="75" width="110" height="110" style="fill: white;"/>
+            <circle cx="-102.8205" cy="145" r="30" style="fill: black;"/>
+            <circle cx="-85.5" cy="115" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- A union C -->
+          <mask id="mask_15_auc">
+            <rect x="-140.5" y="75" width="110" height="110" style="fill: white;"/>
+            <circle cx="-102.8205" cy="145" r="30" style="fill: black;"/>
+            <circle cx="-68.1795" cy="145" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B union C -->
+          <mask id="mask_15_buc">
+            <rect x="-140.5" y="75" width="110" height="110" style="fill: white;"/>
+            <circle cx="-85.5" cy="115" r="30" style="fill: black;"/>
+            <circle cx="-68.1795" cy="145" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_15_a')" mask="url(#mask_15_buc)" cx="-85.5" cy="130" r="53"class="venn_yay"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_15_b')" mask="url(#mask_15_auc)" cx="-85.5" cy="130" r="53"/>
+          <!-- just C -->
+          <circle clip-path="url('#clip_15_c')" mask="url(#mask_15_aub)" cx="-85.5" cy="130" r="53"/>
+          <!-- A intersect B without C -->
+          <circle clip-path="url('#clip_15_aib')" mask="url(#mask_15_aibic)" cx="-85.5" cy="130" r="53"class="venn_yay"/>
+          <!-- A intersect C without B -->
+          <circle clip-path="url('#clip_15_aic')" mask="url(#mask_15_aibic)" cx="-85.5" cy="130" r="53"class="venn_yay"/>
+          <!-- B intersect C without A -->
+          <circle clip-path="url('#clip_15_bic')" mask="url(#mask_15_aibic)" cx="-85.5" cy="130" r="53"/>
+          <!-- A intersect B intersect C -->
+          <circle clip-path="url('#clip_15_aibic')" cx="-85.5" cy="130" r="53"class="venn_yay"/>
+
+          <circle cx="-102.8205" cy="145" r="30"/>
+          <text x="-111.4807" y="150">A</text>
+          <circle cx="-85.5" cy="115" r="30"/>
+          <text x="-85.5" y="105">B</text>
+          <circle cx="-68.1795" cy="145" r="30"/>
+          <text x="-59.5193" y="150">C</text>
+
+          <rect x="-140.5" y="75" width="110" height="110" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_17_a">
+            <circle cx="-17.3205" cy="275" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_17_b">
+            <circle cx="0" cy="245" r="30"/>
+          </clipPath>
+
+          <!-- C -->
+          <clipPath id="clip_17_c">
+            <circle cx="17.3205" cy="275" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_17_aib" clip-path="url('#clip_17_a')">
+            <circle cx="0" cy="245" r="30"/>
+          </clipPath>
+
+          <!-- A intersect C -->
+          <clipPath id="clip_17_aic" clip-path="url('#clip_17_a')">
+            <circle cx="17.3205" cy="275" r="30"/>
+          </clipPath>
+
+          <!-- B intersect C -->
+          <clipPath id="clip_17_bic" clip-path="url('#clip_17_c')">
+            <circle cx="0" cy="245" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B intersect C -->
+          <clipPath id="clip_17_aibic" clip-path="url('#clip_17_aib')">
+            <circle cx="17.3205" cy="275" r="30"/>
+          </clipPath>
+
+          <!-- a intersect B intersect C -->
+          <mask id="mask_17_aibic" >
+            <rect x="-55" y="205" width="110" height="110" style="fill: white;"/>
+            <rect clip-path="url('#clip_17_aibic')" x="-55" y="205" width="110" height="110" style="fill: black;"/>
+          </mask>
+
+          <!-- A union B -->
+          <mask id="mask_17_aub">
+            <rect x="-55" y="205" width="110" height="110" style="fill: white;"/>
+            <circle cx="-17.3205" cy="275" r="30" style="fill: black;"/>
+            <circle cx="0" cy="245" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- A union C -->
+          <mask id="mask_17_auc">
+            <rect x="-55" y="205" width="110" height="110" style="fill: white;"/>
+            <circle cx="-17.3205" cy="275" r="30" style="fill: black;"/>
+            <circle cx="17.3205" cy="275" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B union C -->
+          <mask id="mask_17_buc">
+            <rect x="-55" y="205" width="110" height="110" style="fill: white;"/>
+            <circle cx="0" cy="245" r="30" style="fill: black;"/>
+            <circle cx="17.3205" cy="275" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_17_a')" mask="url(#mask_17_buc)" cx="0" cy="260" r="53"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_17_b')" mask="url(#mask_17_auc)" cx="0" cy="260" r="53"class="venn_yay"/>
+          <!-- just C -->
+          <circle clip-path="url('#clip_17_c')" mask="url(#mask_17_aub)" cx="0" cy="260" r="53"/>
+          <!-- A intersect B without C -->
+          <circle clip-path="url('#clip_17_aib')" mask="url(#mask_17_aibic)" cx="0" cy="260" r="53"class="venn_yay"/>
+          <!-- A intersect C without B -->
+          <circle clip-path="url('#clip_17_aic')" mask="url(#mask_17_aibic)" cx="0" cy="260" r="53"/>
+          <!-- B intersect C without A -->
+          <circle clip-path="url('#clip_17_bic')" mask="url(#mask_17_aibic)" cx="0" cy="260" r="53"class="venn_yay"/>
+          <!-- A intersect B intersect C -->
+          <circle clip-path="url('#clip_17_aibic')" cx="0" cy="260" r="53"class="venn_yay"/>
+
+          <circle cx="-17.3205" cy="275" r="30"/>
+          <text x="-25.9807" y="280">A</text>
+          <circle cx="0" cy="245" r="30"/>
+          <text x="0" y="235">B</text>
+          <circle cx="17.3205" cy="275" r="30"/>
+          <text x="25.9807" y="280">C</text>
+
+          <rect x="-55" y="205" width="110" height="110" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_18_a">
+            <circle cx="68.1795" cy="145" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_18_b">
+            <circle cx="85.5" cy="115" r="30"/>
+          </clipPath>
+
+          <!-- C -->
+          <clipPath id="clip_18_c">
+            <circle cx="102.8205" cy="145" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_18_aib" clip-path="url('#clip_18_a')">
+            <circle cx="85.5" cy="115" r="30"/>
+          </clipPath>
+
+          <!-- A intersect C -->
+          <clipPath id="clip_18_aic" clip-path="url('#clip_18_a')">
+            <circle cx="102.8205" cy="145" r="30"/>
+          </clipPath>
+
+          <!-- B intersect C -->
+          <clipPath id="clip_18_bic" clip-path="url('#clip_18_c')">
+            <circle cx="85.5" cy="115" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B intersect C -->
+          <clipPath id="clip_18_aibic" clip-path="url('#clip_18_aib')">
+            <circle cx="102.8205" cy="145" r="30"/>
+          </clipPath>
+
+          <!-- a intersect B intersect C -->
+          <mask id="mask_18_aibic" >
+            <rect x="30.5" y="75" width="110" height="110" style="fill: white;"/>
+            <rect clip-path="url('#clip_18_aibic')" x="30.5" y="75" width="110" height="110" style="fill: black;"/>
+          </mask>
+
+          <!-- A union B -->
+          <mask id="mask_18_aub">
+            <rect x="30.5" y="75" width="110" height="110" style="fill: white;"/>
+            <circle cx="68.1795" cy="145" r="30" style="fill: black;"/>
+            <circle cx="85.5" cy="115" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- A union C -->
+          <mask id="mask_18_auc">
+            <rect x="30.5" y="75" width="110" height="110" style="fill: white;"/>
+            <circle cx="68.1795" cy="145" r="30" style="fill: black;"/>
+            <circle cx="102.8205" cy="145" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B union C -->
+          <mask id="mask_18_buc">
+            <rect x="30.5" y="75" width="110" height="110" style="fill: white;"/>
+            <circle cx="85.5" cy="115" r="30" style="fill: black;"/>
+            <circle cx="102.8205" cy="145" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_18_a')" mask="url(#mask_18_buc)" cx="85.5" cy="130" r="53"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_18_b')" mask="url(#mask_18_auc)" cx="85.5" cy="130" r="53"class="venn_yay"/>
+          <!-- just C -->
+          <circle clip-path="url('#clip_18_c')" mask="url(#mask_18_aub)" cx="85.5" cy="130" r="53"class="venn_yay"/>
+          <!-- A intersect B without C -->
+          <circle clip-path="url('#clip_18_aib')" mask="url(#mask_18_aibic)" cx="85.5" cy="130" r="53"class="venn_yay"/>
+          <!-- A intersect C without B -->
+          <circle clip-path="url('#clip_18_aic')" mask="url(#mask_18_aibic)" cx="85.5" cy="130" r="53"class="venn_yay"/>
+          <!-- B intersect C without A -->
+          <circle clip-path="url('#clip_18_bic')" mask="url(#mask_18_aibic)" cx="85.5" cy="130" r="53"class="venn_yay"/>
+          <!-- A intersect B intersect C -->
+          <circle clip-path="url('#clip_18_aibic')" cx="85.5" cy="130" r="53"class="venn_yay"/>
+
+          <circle cx="68.1795" cy="145" r="30"/>
+          <text x="59.5193" y="150">A</text>
+          <circle cx="85.5" cy="115" r="30"/>
+          <text x="85.5" y="105">B</text>
+          <circle cx="102.8205" cy="145" r="30"/>
+          <text x="111.4807" y="150">C</text>
+
+          <rect x="30.5" y="75" width="110" height="110" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_19_a">
+            <circle cx="153.6795" cy="275" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_19_b">
+            <circle cx="171" cy="245" r="30"/>
+          </clipPath>
+
+          <!-- C -->
+          <clipPath id="clip_19_c">
+            <circle cx="188.3205" cy="275" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_19_aib" clip-path="url('#clip_19_a')">
+            <circle cx="171" cy="245" r="30"/>
+          </clipPath>
+
+          <!-- A intersect C -->
+          <clipPath id="clip_19_aic" clip-path="url('#clip_19_a')">
+            <circle cx="188.3205" cy="275" r="30"/>
+          </clipPath>
+
+          <!-- B intersect C -->
+          <clipPath id="clip_19_bic" clip-path="url('#clip_19_c')">
+            <circle cx="171" cy="245" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B intersect C -->
+          <clipPath id="clip_19_aibic" clip-path="url('#clip_19_aib')">
+            <circle cx="188.3205" cy="275" r="30"/>
+          </clipPath>
+
+          <!-- a intersect B intersect C -->
+          <mask id="mask_19_aibic" >
+            <rect x="116" y="205" width="110" height="110" style="fill: white;"/>
+            <rect clip-path="url('#clip_19_aibic')" x="116" y="205" width="110" height="110" style="fill: black;"/>
+          </mask>
+
+          <!-- A union B -->
+          <mask id="mask_19_aub">
+            <rect x="116" y="205" width="110" height="110" style="fill: white;"/>
+            <circle cx="153.6795" cy="275" r="30" style="fill: black;"/>
+            <circle cx="171" cy="245" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- A union C -->
+          <mask id="mask_19_auc">
+            <rect x="116" y="205" width="110" height="110" style="fill: white;"/>
+            <circle cx="153.6795" cy="275" r="30" style="fill: black;"/>
+            <circle cx="188.3205" cy="275" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B union C -->
+          <mask id="mask_19_buc">
+            <rect x="116" y="205" width="110" height="110" style="fill: white;"/>
+            <circle cx="171" cy="245" r="30" style="fill: black;"/>
+            <circle cx="188.3205" cy="275" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_19_a')" mask="url(#mask_19_buc)" cx="171" cy="260" r="53"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_19_b')" mask="url(#mask_19_auc)" cx="171" cy="260" r="53"/>
+          <!-- just C -->
+          <circle clip-path="url('#clip_19_c')" mask="url(#mask_19_aub)" cx="171" cy="260" r="53"class="venn_yay"/>
+          <!-- A intersect B without C -->
+          <circle clip-path="url('#clip_19_aib')" mask="url(#mask_19_aibic)" cx="171" cy="260" r="53"/>
+          <!-- A intersect C without B -->
+          <circle clip-path="url('#clip_19_aic')" mask="url(#mask_19_aibic)" cx="171" cy="260" r="53"class="venn_yay"/>
+          <!-- B intersect C without A -->
+          <circle clip-path="url('#clip_19_bic')" mask="url(#mask_19_aibic)" cx="171" cy="260" r="53"class="venn_yay"/>
+          <!-- A intersect B intersect C -->
+          <circle clip-path="url('#clip_19_aibic')" cx="171" cy="260" r="53"class="venn_yay"/>
+
+          <circle cx="153.6795" cy="275" r="30"/>
+          <text x="145.0193" y="280">A</text>
+          <circle cx="171" cy="245" r="30"/>
+          <text x="171" y="235">B</text>
+          <circle cx="188.3205" cy="275" r="30"/>
+          <text x="196.9807" y="280">C</text>
+
+          <rect x="116" y="205" width="110" height="110" class="venn_frame"/><line x1="60" y1="260" x2="111" y2="260" class="venn_flow"/>
+                        <line x1="85.5" y1="260" x2="85.5" y2="190" class="venn_flow"/>
+                        <polygon points="85.5,190 78.5,206 92.5,206" class="venn_flow"/>
+                        <foreignObject x="35.5" y="210" width="100" height="100"><div class="venn_op_container"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo href="http://localhost:1234/sets.html#union">∪</mo></mrow><annotation encoding="application/x-tex">\htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><a href="http://localhost:1234/sets.html#union"><span class="mord">∪</span></a></span></span></span></span></div></foreignObject><line x1="-25.5" y1="130" x2="25.5" y2="130" class="venn_flow"/>
+                        <line x1="0" y1="130" x2="0" y2="60" class="venn_flow"/>
+                        <polygon points="0,60 -7,76 7,76" class="venn_flow"/>
+                        <foreignObject x="-50" y="80" width="100" height="100"><div class="venn_op_container"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo href="http://localhost:1234/sets.html#union">∪</mo></mrow><annotation encoding="application/x-tex">\htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><a href="http://localhost:1234/sets.html#union"><span class="mord">∪</span></a></span></span></span></span></div></foreignObject></svg></span></a></h6>
     <p>Let <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace></mspace><mtext>,</mtext></mrow><annotation encoding="application/x-tex">A\nobreak\htmlClass{normal_text}{\text{,}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">A</span><span class="mspace nobreak"></span><span class="enclosing normal_text"><span class="mord text"><span class="mord">,</span></span></span></span></span></span> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mspace></mspace><mtext>,</mtext></mrow><annotation encoding="application/x-tex">B\nobreak\htmlClass{normal_text}{\text{,}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace nobreak"></span><span class="enclosing normal_text"><span class="mord text"><span class="mord">,</span></span></span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span> be <a class="ref definition" href="http://localhost:1234/sets.html#set" data-preview="http://localhost:1234/previews/set.html">sets</a>. Then <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo fence="true">(</mo><mi>A</mi><mo href="http://localhost:1234/sets.html#union">∪</mo><mi>B</mi><mo fence="true">)</mo></mrow><mo href="http://localhost:1234/sets.html#union">∪</mo><mi>C</mi><mo href="http://localhost:1234/sets.html#set_eq">=</mo><mi>A</mi><mo href="http://localhost:1234/sets.html#union">∪</mo><mrow><mo fence="true">(</mo><mi>B</mi><mo href="http://localhost:1234/sets.html#union">∪</mo><mi>C</mi><mo fence="true">)</mo></mrow><mspace></mspace><mtext>.</mtext></mrow><annotation encoding="application/x-tex"> \left( A \htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}} B \right)  \htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}} C \htmlData{preview=http://localhost:1234/previews/set_eq.html}{\href{http://localhost:1234/sets.html#set_eq}{=}} A \htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}}  \left( B \htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}} C \right) \nobreak\htmlClass{normal_text}{\text{.}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><a href="http://localhost:1234/sets.html#union"><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><a href="http://localhost:1234/sets.html#union"><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/set_eq.html"><a href="http://localhost:1234/sets.html#set_eq"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></a></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><a href="http://localhost:1234/sets.html#union"><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/union.html"><a href="http://localhost:1234/sets.html#union"><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace nobreak"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="enclosing normal_text"><span class="mord text"><span class="mord">.</span></span></span></span></span></span></p>
-              <div class="three_venns centered"><div class="venn3_container"><svg class="venn vennop" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
-  <clipPath id="clip1_union3_a">
-    <circle cx="-17.3205" cy="10" r="30"/>
-    <circle cx="0" cy="-20" r="30"/>
-  </clipPath>
-
-  <clipPath id="clip2_union3_a">
-    <circle cx="17.3205" cy="10" r="30"/>
-  </clipPath>
-
-  <circle class="venn_yay_a" clip-path="url('#clip1_union3_a')" cx="0" cy="0" r="53"/>
-  <circle class="venn_yay_b" cx="17.3205" cy="10" r="30"/>
-
-  <circle cx="-17.3205" cy="10" r="30"/>
-  <text x="-25.9807" y="15">A</text>
-
-  <circle cx="0" cy="-20" r="30"/>
-  <text x="0" y="-30">B</text>
-
-  <circle cx="17.3205" cy="10" r="30"/>
-  <text x="25.9807" y="15">C</text>
-</svg></div>
-                <div class="venn3_container"><svg class="venn vennop" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
-  <clipPath id="clip1_union3_b">
-    <circle cx="-17.3205" cy="10" r="30"/>
-    <circle cx="0" cy="-20" r="30"/>
-    <circle cx="17.3205" cy="10" r="30"/>
-  </clipPath>
-
-  <circle class="venn_yay" clip-path="url('#clip1_union3_b')" cx="0" cy="0" r="53"/>
-
-  <circle cx="-17.3205" cy="10" r="30"/>
-  <text x="-25.9807" y="15">A</text>
-
-  <circle cx="0" cy="-20" r="30"/>
-  <text x="0" y="-30">B</text>
-
-  <circle cx="17.3205" cy="10" r="30"/>
-  <text x="25.9807" y="15">C</text>
-</svg></div>
-                <div class="venn3_container"><svg class="venn vennop" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
-  <clipPath id="clip2_union3_c">
-    <circle cx="0" cy="-20" r="30"/>
-    <circle cx="17.3205" cy="10" r="30"/>
-  </clipPath>
-
-  <circle class="venn_yay_a" cx="-17.3205" cy="10" r="30"/>
-  <circle class="venn_yay_b" clip-path="url('#clip2_union3_c')" cx="0" cy="0" r="53"/>
-
-  <circle cx="-17.3205" cy="10" r="30"/>
-  <text x="-25.9807" y="15">A</text>
-
-  <circle cx="0" cy="-20" r="30"/>
-  <text x="0" y="-30">B</text>
-
-  <circle cx="17.3205" cy="10" r="30"/>
-  <text x="25.9807" y="15">C</text>
-</svg></div></div>
 </article>

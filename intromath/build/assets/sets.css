@@ -18,6 +18,15 @@
   isolation: isolate;
 }
 
+.venn.multi {
+  max-height: unset;
+}
+
+/* .multi {
+  border: 0.16em var(--color-text) solid;
+  padding: 0.16em;
+} */
+
 .eulersvg > path, .venn > circle {
   mix-blend-mode: multiply;
 }
@@ -117,6 +126,30 @@
 .first_venn_region {
   stroke: none;
   fill: rgba(0, 0, 0, 0);
+}
+
+.venn_frame {
+  stroke: var(--color-bg2);
+  fill: none;
+}
+
+.venn_flow {
+  stroke: var(--color-bg2);
+  stroke-width: 2;
+  fill: var(--color-bg2);
+}
+
+.venn_op_container {
+  font-size: 2rem;
+  display: table;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.venn_op_container > * {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 #duck_region {

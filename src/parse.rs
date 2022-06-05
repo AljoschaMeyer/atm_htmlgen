@@ -404,6 +404,8 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, true, true, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"proven_fact" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="proven_fact">"###, "</div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"clfx" {
+                        self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="clfx">"###, "</div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"lparen" {
                         self.pm(|t, p, a| OutInternal::LeftDelimiter(t, p, a, "("), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"rparen" {
@@ -622,6 +624,90 @@ impl<'a> Parser<'a> {
                                     Box::new(Term::Unary(S2)),
                                     Intersection,
                                     Box::new(Term::Unary(S3)),
+                                )),
+                            ),
+                        ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"venn_associative_union" {
+                        self.pm(|t, p, a| OutInternal::EquationVenn3(t, p, a,
+                            Term::Binary(
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S1)),
+                                    Union,
+                                    Box::new(Term::Unary(S2)),
+                                )),
+                                Union,
+                                Box::new(Term::Unary(S3)),
+                            ),
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                Union,
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S2)),
+                                    Union,
+                                    Box::new(Term::Unary(S3)),
+                                )),
+                            ),
+                        ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"venn_absorption_intersection_union" {
+                        self.pm(|t, p, a| OutInternal::EquationVenn2(t, p, a,
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                Intersection,
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S1)),
+                                    Union,
+                                    Box::new(Term::Unary(S2)),
+                                )),
+                            ),
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                Union,
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S1)),
+                                    Intersection,
+                                    Box::new(Term::Unary(S2)),
+                                )),
+                            ),
+                        ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"venn_intersection_via_set_difference" {
+                        self.pm(|t, p, a| OutInternal::EquationVenn2(t, p, a,
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                Intersection,
+                                Box::new(Term::Unary(S2)),
+                            ),
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                Difference,
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S1)),
+                                    Difference,
+                                    Box::new(Term::Unary(S2)),
+                                )),
+                            ),
+                        ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"venn_exercise_set_difference2" {
+                        self.pm(|t, p, a| OutInternal::EquationVenn3(t, p, a,
+                            Term::Binary(
+                                Box::new(Term::Unary(S3)),
+                                Difference,
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S2)),
+                                    Difference,
+                                    Box::new(Term::Unary(S1)),
+                                )),
+                            ),
+                            Term::Binary(
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S3)),
+                                    Intersection,
+                                    Box::new(Term::Unary(S1)),
+                                )),
+                                Union,
+                                Box::new(Term::Binary(
+                                    Box::new(Term::Unary(S3)),
+                                    Difference,
+                                    Box::new(Term::Unary(S2)),
                                 )),
                             ),
                         ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;

@@ -1,4 +1,294 @@
 <article class="fact" id="intersection_via_set_difference">
     <h6><a href="http://localhost:1234/sets.html#intersection_via_set_difference">Theorem 2.37</a></h6>
-    <p>Let <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span> be <a class="ref definition" href="http://localhost:1234/sets.html#set" data-preview="http://localhost:1234/previews/set.html">sets</a>. Then <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo href="http://localhost:1234/sets.html#intersection">∩</mo><mi>B</mi><mo href="http://localhost:1234/sets.html#set_eq">=</mo><mi>A</mi><mo href="http://localhost:1234/sets.html#set_difference">∖</mo><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><mi>A</mi><mo href="http://localhost:1234/sets.html#set_difference">∖</mo><mi>B</mi><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo><mspace></mspace><mtext>.</mtext></mrow><annotation encoding="application/x-tex">A \htmlData{preview=http://localhost:1234/previews/intersection.html}{\href{http://localhost:1234/sets.html#intersection}{\cap}} B \htmlData{preview=http://localhost:1234/previews/set_eq.html}{\href{http://localhost:1234/sets.html#set_eq}{=}} A \htmlData{preview=http://localhost:1234/previews/set_difference.html}{\href{http://localhost:1234/sets.html#set_difference}{\setminus}}  \big( A \htmlData{preview=http://localhost:1234/previews/set_difference.html}{\href{http://localhost:1234/sets.html#set_difference}{\setminus}} B \big) \nobreak\htmlClass{normal_text}{\text{.}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.35em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/intersection.html"><a href="http://localhost:1234/sets.html#intersection"><span class="mbin">∩</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/set_eq.html"><a href="http://localhost:1234/sets.html#set_eq"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></a></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/set_difference.html"><a href="http://localhost:1234/sets.html#set_difference"><span class="mbin">∖</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="mord"><span class="delimsizing size1">(</span></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/set_difference.html"><a href="http://localhost:1234/sets.html#set_difference"><span class="mbin">∖</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord"><span class="delimsizing size1">)</span></span><span class="mspace nobreak"></span><span class="enclosing normal_text"><span class="mord text"><span class="mord">.</span></span></span></span></span></span></p>
+    <span class="nowrap"></span><span class="aside"><svg class="venn vennop multi" version"1.1" viewBox="-141.5 -141 368.5 382" xmlns="http://www.w3.org/2000/svg">
+          <!-- A -->
+          <clipPath id="clip_30_a">
+            <circle cx="-100.5" cy="-100" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_30_b">
+            <circle cx="-70.5" cy="-100" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_30_aib" clip-path="url('#clip_30_a')">
+            <circle cx="-70.5" cy="-100" r="30"/>
+          </clipPath>
+
+          <!-- A -->
+          <mask id="mask_30_a">
+            <rect x="-140.5" y="-140" width="110" height="110" style="fill: white;"/>
+            <circle cx="-100.5" cy="-100" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B -->
+          <mask id="mask_30_b">
+            <rect x="-140.5" y="-140" width="110" height="110" style="fill: white;"/>
+            <circle cx="-70.5" cy="-100" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_30_a')" mask="url(#mask_30_b)" cx="-85.5" cy="-100" r="53"class="venn_yay"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_30_b')" mask="url(#mask_30_a)" cx="-85.5" cy="-100" r="53"/>
+          <!-- A intersect B -->
+          <circle clip-path="url('#clip_30_aib')" cx="-85.5" cy="-100" r="53"class="venn_yay"/>
+
+          <circle cx="-100.5" cy="-100" r="30"/>
+          <text x="-110.5" y="-100">A</text>
+          <circle cx="-70.5" cy="-100" r="30"/>
+          <text x="-60.5" y="-100">B</text>
+
+          <rect x="-140.5" y="-140" width="110" height="80" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_31_a">
+            <circle cx="-15" cy="0" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_31_b">
+            <circle cx="15" cy="0" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_31_aib" clip-path="url('#clip_31_a')">
+            <circle cx="15" cy="0" r="30"/>
+          </clipPath>
+
+          <!-- A -->
+          <mask id="mask_31_a">
+            <rect x="-55" y="-40" width="110" height="110" style="fill: white;"/>
+            <circle cx="-15" cy="0" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B -->
+          <mask id="mask_31_b">
+            <rect x="-55" y="-40" width="110" height="110" style="fill: white;"/>
+            <circle cx="15" cy="0" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_31_a')" mask="url(#mask_31_b)" cx="0" cy="0" r="53"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_31_b')" mask="url(#mask_31_a)" cx="0" cy="0" r="53"/>
+          <!-- A intersect B -->
+          <circle clip-path="url('#clip_31_aib')" cx="0" cy="0" r="53"class="venn_yay"/>
+
+          <circle cx="-15" cy="0" r="30"/>
+          <text x="-25" y="0">A</text>
+          <circle cx="15" cy="0" r="30"/>
+          <text x="25" y="0">B</text>
+
+          <rect x="-55" y="-40" width="110" height="80" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_32_a">
+            <circle cx="70.5" cy="-100" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_32_b">
+            <circle cx="100.5" cy="-100" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_32_aib" clip-path="url('#clip_32_a')">
+            <circle cx="100.5" cy="-100" r="30"/>
+          </clipPath>
+
+          <!-- A -->
+          <mask id="mask_32_a">
+            <rect x="30.5" y="-140" width="110" height="110" style="fill: white;"/>
+            <circle cx="70.5" cy="-100" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B -->
+          <mask id="mask_32_b">
+            <rect x="30.5" y="-140" width="110" height="110" style="fill: white;"/>
+            <circle cx="100.5" cy="-100" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_32_a')" mask="url(#mask_32_b)" cx="85.5" cy="-100" r="53"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_32_b')" mask="url(#mask_32_a)" cx="85.5" cy="-100" r="53"class="venn_yay"/>
+          <!-- A intersect B -->
+          <circle clip-path="url('#clip_32_aib')" cx="85.5" cy="-100" r="53"class="venn_yay"/>
+
+          <circle cx="70.5" cy="-100" r="30"/>
+          <text x="60.5" y="-100">A</text>
+          <circle cx="100.5" cy="-100" r="30"/>
+          <text x="110.5" y="-100">B</text>
+
+          <rect x="30.5" y="-140" width="110" height="80" class="venn_frame"/><line x1="-25.5" y1="-100" x2="25.5" y2="-100" class="venn_flow"/>
+                        <line x1="0" y1="-100" x2="0" y2="-45" class="venn_flow"/>
+                        <polygon points="0,-45 -7,-61 7,-61" class="venn_flow"/>
+                        <foreignObject x="-50" y="-150" width="100" height="100"><div class="venn_op_container"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo href="http://localhost:1234/sets.html#intersection">∩</mo></mrow><annotation encoding="application/x-tex">\htmlData{preview=http://localhost:1234/previews/intersection.html}{\href{http://localhost:1234/sets.html#intersection}{\cap}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/intersection.html"><a href="http://localhost:1234/sets.html#intersection"><span class="mord">∩</span></a></span></span></span></span></div></foreignObject>
+          <!-- A -->
+          <clipPath id="clip_33_a">
+            <circle cx="-100.5" cy="100" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_33_b">
+            <circle cx="-70.5" cy="100" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_33_aib" clip-path="url('#clip_33_a')">
+            <circle cx="-70.5" cy="100" r="30"/>
+          </clipPath>
+
+          <!-- A -->
+          <mask id="mask_33_a">
+            <rect x="-140.5" y="60" width="110" height="110" style="fill: white;"/>
+            <circle cx="-100.5" cy="100" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B -->
+          <mask id="mask_33_b">
+            <rect x="-140.5" y="60" width="110" height="110" style="fill: white;"/>
+            <circle cx="-70.5" cy="100" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_33_a')" mask="url(#mask_33_b)" cx="-85.5" cy="100" r="53"class="venn_yay"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_33_b')" mask="url(#mask_33_a)" cx="-85.5" cy="100" r="53"/>
+          <!-- A intersect B -->
+          <circle clip-path="url('#clip_33_aib')" cx="-85.5" cy="100" r="53"class="venn_yay"/>
+
+          <circle cx="-100.5" cy="100" r="30"/>
+          <text x="-110.5" y="100">A</text>
+          <circle cx="-70.5" cy="100" r="30"/>
+          <text x="-60.5" y="100">B</text>
+
+          <rect x="-140.5" y="60" width="110" height="80" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_35_a">
+            <circle cx="-15" cy="200" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_35_b">
+            <circle cx="15" cy="200" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_35_aib" clip-path="url('#clip_35_a')">
+            <circle cx="15" cy="200" r="30"/>
+          </clipPath>
+
+          <!-- A -->
+          <mask id="mask_35_a">
+            <rect x="-55" y="160" width="110" height="110" style="fill: white;"/>
+            <circle cx="-15" cy="200" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B -->
+          <mask id="mask_35_b">
+            <rect x="-55" y="160" width="110" height="110" style="fill: white;"/>
+            <circle cx="15" cy="200" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_35_a')" mask="url(#mask_35_b)" cx="0" cy="200" r="53"class="venn_yay"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_35_b')" mask="url(#mask_35_a)" cx="0" cy="200" r="53"/>
+          <!-- A intersect B -->
+          <circle clip-path="url('#clip_35_aib')" cx="0" cy="200" r="53"class="venn_yay"/>
+
+          <circle cx="-15" cy="200" r="30"/>
+          <text x="-25" y="200">A</text>
+          <circle cx="15" cy="200" r="30"/>
+          <text x="25" y="200">B</text>
+
+          <rect x="-55" y="160" width="110" height="80" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_36_a">
+            <circle cx="70.5" cy="100" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_36_b">
+            <circle cx="100.5" cy="100" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_36_aib" clip-path="url('#clip_36_a')">
+            <circle cx="100.5" cy="100" r="30"/>
+          </clipPath>
+
+          <!-- A -->
+          <mask id="mask_36_a">
+            <rect x="30.5" y="60" width="110" height="110" style="fill: white;"/>
+            <circle cx="70.5" cy="100" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B -->
+          <mask id="mask_36_b">
+            <rect x="30.5" y="60" width="110" height="110" style="fill: white;"/>
+            <circle cx="100.5" cy="100" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_36_a')" mask="url(#mask_36_b)" cx="85.5" cy="100" r="53"class="venn_yay"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_36_b')" mask="url(#mask_36_a)" cx="85.5" cy="100" r="53"/>
+          <!-- A intersect B -->
+          <circle clip-path="url('#clip_36_aib')" cx="85.5" cy="100" r="53"/>
+
+          <circle cx="70.5" cy="100" r="30"/>
+          <text x="60.5" y="100">A</text>
+          <circle cx="100.5" cy="100" r="30"/>
+          <text x="110.5" y="100">B</text>
+
+          <rect x="30.5" y="60" width="110" height="80" class="venn_frame"/>
+          <!-- A -->
+          <clipPath id="clip_37_a">
+            <circle cx="156" cy="200" r="30"/>
+          </clipPath>
+
+          <!-- B -->
+          <clipPath id="clip_37_b">
+            <circle cx="186" cy="200" r="30"/>
+          </clipPath>
+
+          <!-- A intersect B -->
+          <clipPath id="clip_37_aib" clip-path="url('#clip_37_a')">
+            <circle cx="186" cy="200" r="30"/>
+          </clipPath>
+
+          <!-- A -->
+          <mask id="mask_37_a">
+            <rect x="116" y="160" width="110" height="110" style="fill: white;"/>
+            <circle cx="156" cy="200" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- B -->
+          <mask id="mask_37_b">
+            <rect x="116" y="160" width="110" height="110" style="fill: white;"/>
+            <circle cx="186" cy="200" r="30" style="fill: black;"/>
+          </mask>
+
+          <!-- just A -->
+          <circle clip-path="url('#clip_37_a')" mask="url(#mask_37_b)" cx="171" cy="200" r="53"/>
+          <!-- just B -->
+          <circle clip-path="url('#clip_37_b')" mask="url(#mask_37_a)" cx="171" cy="200" r="53"class="venn_yay"/>
+          <!-- A intersect B -->
+          <circle clip-path="url('#clip_37_aib')" cx="171" cy="200" r="53"class="venn_yay"/>
+
+          <circle cx="156" cy="200" r="30"/>
+          <text x="146" y="200">A</text>
+          <circle cx="186" cy="200" r="30"/>
+          <text x="196" y="200">B</text>
+
+          <rect x="116" y="160" width="110" height="80" class="venn_frame"/><line x1="60" y1="200" x2="111" y2="200" class="venn_flow"/>
+                        <line x1="85.5" y1="200" x2="85.5" y2="145" class="venn_flow"/>
+                        <polygon points="85.5,145 78.5,161 92.5,161" class="venn_flow"/>
+                        <foreignObject x="35.5" y="150" width="100" height="100"><div class="venn_op_container"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo href="http://localhost:1234/sets.html#set_difference">∖</mo></mrow><annotation encoding="application/x-tex">\htmlData{preview=http://localhost:1234/previews/set_difference.html}{\href{http://localhost:1234/sets.html#set_difference}{\setminus}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/set_difference.html"><a href="http://localhost:1234/sets.html#set_difference"><span class="mord">∖</span></a></span></span></span></span></div></foreignObject><line x1="-25.5" y1="100" x2="25.5" y2="100" class="venn_flow"/>
+                        <line x1="0" y1="100" x2="0" y2="45" class="venn_flow"/>
+                        <polygon points="0,45 -7,61 7,61" class="venn_flow"/>
+                        <foreignObject x="-50" y="50" width="100" height="100"><div class="venn_op_container"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo href="http://localhost:1234/sets.html#set_difference">∖</mo></mrow><annotation encoding="application/x-tex">\htmlData{preview=http://localhost:1234/previews/set_difference.html}{\href{http://localhost:1234/sets.html#set_difference}{\setminus}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/set_difference.html"><a href="http://localhost:1234/sets.html#set_difference"><span class="mord">∖</span></a></span></span></span></span></div></foreignObject></svg></span>
+            <p>Let <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span> be <a class="ref definition" href="http://localhost:1234/sets.html#set" data-preview="http://localhost:1234/previews/set.html">sets</a>. Then <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo href="http://localhost:1234/sets.html#intersection">∩</mo><mi>B</mi><mo href="http://localhost:1234/sets.html#set_eq">=</mo><mi>A</mi><mo href="http://localhost:1234/sets.html#set_difference">∖</mo><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><mi>A</mi><mo href="http://localhost:1234/sets.html#set_difference">∖</mo><mi>B</mi><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo><mspace></mspace><mtext>.</mtext></mrow><annotation encoding="application/x-tex">A \htmlData{preview=http://localhost:1234/previews/intersection.html}{\href{http://localhost:1234/sets.html#intersection}{\cap}} B \htmlData{preview=http://localhost:1234/previews/set_eq.html}{\href{http://localhost:1234/sets.html#set_eq}{=}} A \htmlData{preview=http://localhost:1234/previews/set_difference.html}{\href{http://localhost:1234/sets.html#set_difference}{\setminus}}  \big( A \htmlData{preview=http://localhost:1234/previews/set_difference.html}{\href{http://localhost:1234/sets.html#set_difference}{\setminus}} B \big) \nobreak\htmlClass{normal_text}{\text{.}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.35em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/intersection.html"><a href="http://localhost:1234/sets.html#intersection"><span class="mbin">∩</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/set_eq.html"><a href="http://localhost:1234/sets.html#set_eq"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></a></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/set_difference.html"><a href="http://localhost:1234/sets.html#set_difference"><span class="mbin">∖</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="mord"><span class="delimsizing size1">(</span></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="enclosing" data-preview="http://localhost:1234/previews/set_difference.html"><a href="http://localhost:1234/sets.html#set_difference"><span class="mbin">∖</span><span class="mspace" style="margin-right:0.2222em;"></span></a></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord"><span class="delimsizing size1">)</span></span><span class="mspace nobreak"></span><span class="enclosing normal_text"><span class="mord text"><span class="mord">.</span></span></span></span></span></span></p>
 </article>

@@ -9,7 +9,7 @@
 :root {
     --color-bg0: #ffffff;
     --color-bg: #fffff8;
-    --color-bg2: #eeeee8;
+    --color-bg2: #ccccc8;
     --color-text: #111;
     --color-text2: #555;
 
@@ -261,6 +261,16 @@ article {
   border-width: 4px;
   border-style: solid;
   border-color: var(--color-definition);
+}
+
+.clear {
+  clear: both;
+}
+
+.clfx::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .proven_fact {
