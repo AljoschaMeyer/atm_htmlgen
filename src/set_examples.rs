@@ -9,6 +9,7 @@ pub enum Operator {
     Intersection,
     Union,
     Difference,
+    SymmetricDifference,
 }
 
 impl Operator {
@@ -17,6 +18,7 @@ impl Operator {
             Operator::Intersection => lhs & rhs,
             Operator::Union => lhs | rhs,
             Operator::Difference => (lhs ^ rhs) & lhs,
+            Operator::SymmetricDifference => lhs ^ rhs,
         }
     }
 }
@@ -85,6 +87,7 @@ impl Term {
                     Operator::Intersection => ("intersection", r###"\cap"###),
                     Operator::Union => ("union", r###"\cup"###),
                     Operator::Difference => ("setminus", r###"\setminus"###),
+                    Operator::SymmetricDifference => ("symdif", r###"\operatorname{\triangle}"###),
                 };
 
                 return Out::Many(vec![
@@ -133,6 +136,32 @@ pub struct DrawingInfo {
     op_width: f64,
     op_height: f64,
     draw_node: fn(usize, f64, f64, u8) -> String,
+}
+
+pub fn render_venn(id: usize, t: &Term, draw: DrawingInfo) -> Out {
+    let coordinates = Box::new(t.to_coordinate_tree(draw.node_width + draw.op_width));
+    let dimensions = coordinates.dimensions();
+
+    let x_start = dimensions.min_x - (draw.node_width / 2.0);
+    let x_end = dimensions.max_x + (draw.node_width / 2.0);
+    let width = (-1.0 * x_start) + x_end;
+
+    let y_start = -1.0 * ((dimensions.max_y as f64 * (draw.node_height + draw.op_height)) + (draw.node_height / 2.0));
+    let y_end = draw.node_height / 2.0;
+    let height = (-1.0 * y_start) + y_end;
+
+    let r = Out::Many(vec![
+        Out::Text(format!(
+            r###"<svg class="venn vennop multi" version"1.1" viewBox="{} {} {} {}" xmlns="http://www.w3.org/2000/svg">"###,
+            x_start - 1.0, y_start - 1.0, width + 2.0, height + 2.0,
+        ).into()),
+        t.render(id, &coordinates, 0.0, 0.0, false, false, draw),
+        Out::Text("</svg>".into()),
+    ]);
+
+    Node::free(Box::into_raw(coordinates));
+
+    return r;
 }
 
 pub fn render_equation(id: usize, lhs: &Term, rhs: &Term, draw: DrawingInfo) -> Out {

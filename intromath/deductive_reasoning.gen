@@ -1,5 +1,5 @@
 §template(
-
+  <title>Deductive Reasoning — Introduction to Mathematics</title>
 )(
   §hsection["chapter_deductive_reasoning"](Deductive Reasoning)(
     §p(
@@ -14,9 +14,21 @@
 
     §hsection["section_deductive_reasoning"](Gathering Knowledge)(
       §p(
-        §definex["deductive_reasoning"](deductive reasoning)(deductive reasonings)(Deductive reasoning)(§Rdef(deductive reasoning) is the process of concluding facts from assumptions.) is the process of concluding facts from assumptions. If we assume that squirrels are always hungry, and that Alex is a squirrel, we can conclude that Alex is always hungry. A framework for §r(deductive reasoning) must provide clear rules on which deduction steps are valid. If, for example, we knew that Vic was always hungry, we should §em(not) be able to conclude that Vic is a squirrel; Vic could be a badger for all we know.
+        §definex["deductive_reasoning"](deductive reasoning)(deductive reasonings)(Deductive reasoning)(
+          §p(
+            §Rdef(deductive reasoning) is the process of concluding facts from assumptions.
+          )§p(
+            §verbatim(All squirrels are hungry, and Alex is a squirrel. Thus, Alex is hungry.)
+          )
+        ) is the process of concluding facts from assumptions. If we assume that squirrels are always hungry, and that Alex is a squirrel, we can conclude that Alex is always hungry. A framework for §r(deductive reasoning) must provide clear rules on which deduction steps are valid. If, for example, we knew that Vic was always hungry, we should §em(not) be able to conclude that Vic is a squirrel; Vic could be a badger for all we know.
       )§p(
-        Contrast this with §definex["inductive_reasoning"](inductive reasoning)(§Rdef(inductive reasoning) is the process of hypothesizing causes from observed facts.), the process of hypothesizing causes from observed facts. From observing that the sun rises and sets every day, you might form the potential explanation that the sun orbits the §side(earth)(According to current scientific consensus, it does not.). Later observations might invalidate a hypothesis, but a hypothesis can never be proven beyond doubt.
+        Contrast this with §definex["inductive_reasoning"](inductive reasoning)(
+          §p(
+            §Rdef(inductive reasoning) is the process of hypothesizing causes from observed facts.
+          )§p(
+            §verbatim(The sun sets every day. Thus, the sun might orbit the earth.)
+          )
+        ), the process of hypothesizing causes from observed facts. From observing that the sun rises and sets every day, you might form the potential explanation that the sun orbits the §side(earth)(According to current scientific consensus, it does not.). Later observations might invalidate a hypothesis, but a hypothesis can never be proven beyond doubt.
       )§p(
         Even though §r(inductive reasoning) can lead to false conclusions, it has its firm place in humanity's quest for knowledge. Physics or chemistry, for example, would make little sense if they were not grounded in observations of the world around us. Scientists can strive to find increasingly accurate models of the world, but there could always come a new observation that contradicts the existing models.
       )§p(

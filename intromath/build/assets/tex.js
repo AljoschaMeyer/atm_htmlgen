@@ -47,6 +47,63 @@ export function set(elems, level) {
   }
 }
 
+export function highlight(c_, mode, r, inner_tex) {
+  const c = [1, 3, 5, 2, 4, 6, 3, 5, 1, 4, 6, 2, 5, 1, 3, 6, 2, 4][c_ % 18];
+  if (c === 1 && mode === "low" && r) {
+    return String.raw`\htmlClass{bgclll1 highlight rightspace low}{${inner_tex}}`;
+  } else if (c === 2 && mode === "low" && r) {
+    return String.raw`\htmlClass{bgclll2 highlight rightspace low}{${inner_tex}}`;
+  } else if (c === 3 && mode === "low" && r) {
+    return String.raw`\htmlClass{bgclll3 highlight rightspace low}{${inner_tex}}`;
+  } else if (c === 4 && mode === "low" && r) {
+    return String.raw`\htmlClass{bgclll4 highlight rightspace low}{${inner_tex}}`;
+  } else if (c === 5 && mode === "low" && r) {
+    return String.raw`\htmlClass{bgclll5 highlight rightspace low}{${inner_tex}}`;
+  } else if (c === 6 && mode === "low" && r) {
+    return String.raw`\htmlClass{bgclll6 highlight rightspace low}{${inner_tex}}`;
+  } else if (c === 1 && mode === "top" && r) {
+    return String.raw`\htmlClass{bgclll1 highlight rightspace top}{${inner_tex}}`;
+  } else if (c === 2 && mode === "top" && r) {
+    return String.raw`\htmlClass{bgclll2 highlight rightspace top}{${inner_tex}}`;
+  } else if (c === 3 && mode === "top" && r) {
+    return String.raw`\htmlClass{bgclll3 highlight rightspace top}{${inner_tex}}`;
+  } else if (c === 4 && mode === "top" && r) {
+    return String.raw`\htmlClass{bgclll4 highlight rightspace top}{${inner_tex}}`;
+  } else if (c === 5 && mode === "top" && r) {
+    return String.raw`\htmlClass{bgclll5 highlight rightspace top}{${inner_tex}}`;
+  } else if (c === 6 && mode === "top" && r) {
+    return String.raw`\htmlClass{bgclll6 highlight rightspace top}{${inner_tex}}`;
+  } else if (c === 1 && mode === "low" && !r) {
+    return String.raw`\htmlClass{bgclll1 highlight low}{${inner_tex}}`;
+  } else if (c === 2 && mode === "low" && !r) {
+    return String.raw`\htmlClass{bgclll2 highlight low}{${inner_tex}}`;
+  } else if (c === 3 && mode === "low" && !r) {
+    return String.raw`\htmlClass{bgclll3 highlight low}{${inner_tex}}`;
+  } else if (c === 4 && mode === "low" && !r) {
+    return String.raw`\htmlClass{bgclll4 highlight low}{${inner_tex}}`;
+  } else if (c === 5 && mode === "low" && !r) {
+    return String.raw`\htmlClass{bgclll5 highlight low}{${inner_tex}}`;
+  } else if (c === 6 && mode === "low" && !r) {
+    return String.raw`\htmlClass{bgclll6 highlight low}{${inner_tex}}`;
+  } else if (c === 1 && mode === "top" && !r) {
+    return String.raw`\htmlClass{bgclll1 highlight top}{${inner_tex}}`;
+  } else if (c === 2 && mode === "top" && !r) {
+    return String.raw`\htmlClass{bgclll2 highlight top}{${inner_tex}}`;
+  } else if (c === 3 && mode === "top" && !r) {
+    return String.raw`\htmlClass{bgclll3 highlight top}{${inner_tex}}`;
+  } else if (c === 4 && mode === "top" && !r) {
+    return String.raw`\htmlClass{bgclll4 highlight top}{${inner_tex}}`;
+  } else if (c === 5 && mode === "top" && !r) {
+    return String.raw`\htmlClass{bgclll5 highlight top}{${inner_tex}}`;
+  } else if (c === 6 && mode === "top" && !r) {
+    return String.raw`\htmlClass{bgclll6 highlight top}{${inner_tex}}`;
+  }
+}
+
+export function highlight_raw(c, mode, r) {
+  return highlight(c, mode, r, "").slice(0, -2);
+}
+
 export function p(inner_tex, level) {
   if (level === 0 || !level) {
     return String.raw` \left( ${inner_tex} \right) `;

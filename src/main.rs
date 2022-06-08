@@ -184,10 +184,6 @@ impl State {
         self.current_file.parent().expect("Cwd must not be the root of the file system.").to_path_buf()
     }
 
-    // pub(crate) fn current_filename(&self) -> PathBuf {
-    //     self.current_file.strip_prefix(&self.cwd()).unwrap().to_path_buf()
-    // }
-
     pub(crate) fn base_dir(&self) -> PathBuf {
         self.entrypoint.parent().expect("Entrypoint must not be the root of the file system.").to_path_buf()
     }
@@ -195,24 +191,6 @@ impl State {
     pub(crate) fn current_output_relative(&self) -> PathBuf {
         self.current_output.strip_prefix(self.base_dir().join("build/")).unwrap().to_path_buf()
     }
-
-    // pub(crate) fn relative_path(&self, to: &Path) -> PathBuf {
-    //     let mut cwd_relative = self.cwd().strip_prefix(self.base_dir()).unwrap().to_path_buf();
-    //     let up = cwd_relative.components().count();
-    //     if up == 0 {
-    //         return self.current_output_relative();
-    //     } else {
-    //         for _ in 0..up {
-    //             cwd_relative.push("..");
-    //         }
-    //         return cwd_relative.join(self.current_output_relative());
-    //     }
-    // }
-    //
-    // pub(crate) fn relative_link(&self, id: &str) -> PathBuf {
-    //     let info = self.sticky_state.ids.get(id).unwrap();
-    //     return self.relative_path(&info.file);
-    // }
 
     pub(crate) fn register_id(&mut self, id: impl Into<String>, kind: CrefKind, trace: Trace) -> Result<String, ExpansionError> {
         let id = id.into();
@@ -222,7 +200,6 @@ impl State {
         match self.sticky_state.ids.insert(id.clone().into(), IdInfo {
             definition: trace.clone(),
             file: self.current_output_relative(),
-            // preview: self.base_dir().join(format!(r#"previews/{}.html"#, id)),
             kind,
         }) {
             Some(info) if !self.second_iteration => return Err(ExpansionError::DuplicateId(info.definition, trace)),

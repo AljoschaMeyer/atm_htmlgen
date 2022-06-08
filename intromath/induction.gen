@@ -1,5 +1,5 @@
 §template(
-
+  <title>Induction — Introduction to Mathematics</title>
 )(
   §hsection["chapter_induction"](Induction)(
     §p(

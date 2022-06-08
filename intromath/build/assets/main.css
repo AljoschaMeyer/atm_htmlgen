@@ -315,7 +315,7 @@
 
 
 :root {
-    --color-bg0: #ffffff;
+    --color-bg0: #fff;
     --color-bg: #fffff8;
     --color-bg2: #ccccc8;
     --color-text: #111;
@@ -398,6 +398,7 @@ body {
   width: var(--max-width-marginalia);
   margin-right: calc(-1 * calc(var(--padding-marginalia) + var(--max-width-marginalia)));
   font-size: 0.9rem;
+  margin-bottom: 1em;
 }
 
 .obstruction {
@@ -609,6 +610,40 @@ article {
   font-style: italic;
 }
 
+.box_marginalia {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-right: 1em;
+  padding-left: 1em;
+
+  border-width: 4px;
+  border-style: solid;
+}
+
+.box_marginalia > .proven_fact, .box_marginalia > article {
+  max-width: var(--max-width-main);
+}
+
+.box_marginalia > .aside {
+  transform: translate(calc(calc(var(--max-width-main)) - calc(var(--max-width-slightlywide))));
+}
+
+.box_marginalia > article .aside {
+  transform: translate(calc(-1 * calc(2em + 8px)));
+}
+
+.box_marginalia .aside {
+  max-width: calc(var(--max-width-slightlywide) - calc(1em + 4px + var(--max-width-main) + var(--padding-marginalia)));
+}
+
+.box_marginalia article, .box_marginalia .proven_fact {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
 .exercise {
   border-color: var(--color-exercise);
 }
@@ -623,6 +658,10 @@ article {
 
 .example {
   border-color: var(--color-example);
+}
+
+.definition {
+  border-color: var(--color-definition);
 }
 
 .preview {

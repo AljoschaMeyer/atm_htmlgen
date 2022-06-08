@@ -2,7 +2,7 @@ import { reduce_motion } from "./accessibility.js";
 
 import { animate, ease_in_out_cubic } from "./animation.js";
 
-import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, powerset, p } from "./tex.js";
+import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, powerset, p, highlight, highlight_raw } from "./tex.js";
 
 import {
   bitvec_singleton,
@@ -516,11 +516,11 @@ function random_bin_tree(target_inner, gen_leaf, gen_inner, state) {
   } else {
     const left = random_int(target_inner, state);
     return {
-      "inner": [
-        random_bin_tree(left, gen_leaf, gen_inner, state),
-        gen_inner(state),
-        random_bin_tree(target_inner - (left + 1), gen_leaf, gen_inner, state),
-      ],
+      "inner": {
+        l: random_bin_tree(left, gen_leaf, gen_inner, state),
+        node: gen_inner(state),
+        r: random_bin_tree(target_inner - (left + 1), gen_leaf, gen_inner, state),
+      },
     };
   }
 }
@@ -543,12 +543,12 @@ function random_from_array(arr, state) {
 
 function dfs(inner_pre, inner_post, leaf, node, parent_pre) {
   if (node["inner"]) {
-    const pre = inner_pre ? inner_pre(node.inner[1], parent_pre) : undefined;
-    const left = dfs(inner_pre, inner_post, leaf, node.inner[0], pre);
-    const right = dfs(inner_pre, inner_post, leaf, node.inner[2], pre);
-    return inner_post ? inner_post(node.inner[0], node.inner[1], node.inner[2], left, pre, right) : undefined;
+    const pre = inner_pre ? inner_pre(node.inner, parent_pre) : undefined;
+    const left = dfs(inner_pre, inner_post, leaf, node.inner.l, pre);
+    const right = dfs(inner_pre, inner_post, leaf, node.inner.r, pre);
+    return inner_post ? inner_post(node.inner, left, pre, right) : undefined;
   } else {
-    return leaf ? leaf(node) : node;
+    return leaf ? leaf(node.leaf) : node;
   }
 }
 
@@ -564,13 +564,13 @@ function eval_op(op, left, right) {
 }
 
 function eval_node(node) {
-  return dfs(null, (_l, op, _r, l, _p, r) => {return eval_op(op, l, r)}, null, node);
+  return dfs(null, (n, l, _p, r) => {return eval_op(n.node, l, r)}, (x) => x.leaf.set, node);
 }
 
 function has_all_operators(node, ops) {
   const found_ops = {};
 
-  dfs(op => {found_ops[op] = true}, null, null, node);
+  dfs(n => {found_ops[n.node] = true}, null, null, node);
 
   let all = true;
   ops.forEach(op => {
@@ -583,8 +583,8 @@ function has_all_operators(node, ops) {
 function has_two_differences(node) {
   let differences = 0;
 
-  dfs(op => {
-    if (op === "difference") {
+  dfs(n => {
+    if (n.node === "difference") {
       differences += 1;
     }
   }, null, null, node);
@@ -593,7 +593,7 @@ function has_two_differences(node) {
 }
 
 function height(node) {
-  return dfs(null, (_l, _op, _r, l, _p, r) => {
+  return dfs(null, (_n, l, _p, r) => {
     return 1 + Math.max(l, r);
   }, () => 0, node);
 }
@@ -605,32 +605,41 @@ function leaves(node) {
 }
 
 function eval_one_step(node) {
-  return dfs(null, (lnode, op, rnode, l, _p, r) => {
-    if (!lnode["inner"] && !rnode["inner"]) {
-      return eval_op(op, l, r);
+  return dfs(null, (n, l, _p, r) => {
+    if (!n.l["inner"] && !n.r["inner"]) {
+      return {
+        leaf: {
+          set: eval_op(n.node, l.leaf.set, r.leaf.set),
+          fresh: true,
+        }
+      };
     } else {
       return {
-        "inner": [l, op, r],
+        "inner": {l, node: n.node, r},
       };
     }
   }, null, node);
 }
 
+function random_leaf() {
+  return {leaf: {set: random_set_5()}};
+}
+
 function practice_intersection_union_tree() {
   while (true) {
-    const expr = random_bin_tree(3, random_set_5, () => {return random_from_array(["intersection", "union"]);});
+    const expr = random_bin_tree(3, random_leaf, () => {return random_from_array(["intersection", "union"]);});
     if (!has_all_operators(expr, ["intersection", "union"])) {
       continue
     }
 
     let interesting = true;
 
-    dfs(null, (_l, op, _r, left, _p, right) => {
-      const result = eval_op(op, left, right);
-      if (bitvec_eq(result, left) && Math.random() <= 0.7) {
+    dfs(null, (n, l, _p, r) => {
+      const result = eval_op(n.node, l, r);
+      if (bitvec_eq(result, l) && Math.random() <= 0.7) {
         interesting = false;
       }
-      if (bitvec_eq(result, right) && Math.random() <= 0.7) {
+      if (bitvec_eq(result, r) && Math.random() <= 0.7) {
         interesting = false;
       }
       return result;
@@ -644,19 +653,19 @@ function practice_intersection_union_tree() {
 
 function practice_set_difference_tree() {
   while (true) {
-    const expr = random_bin_tree(3, random_set_5, () => {return random_from_array(["intersection", "union", "difference"]);});
+    const expr = random_bin_tree(3, random_leaf, () => {return random_from_array(["intersection", "union", "difference"]);});
     if (!has_two_differences(expr)) {
       continue
     }
 
     let interesting = true;
 
-    dfs(null, (_l, op, _r, left, _p, right) => {
-      const result = eval_op(op, left, right);
-      if (bitvec_eq(result, left) && Math.random() <= 0.7) {
+    dfs(null, (n, l, _p, r) => {
+      const result = eval_op(n.node, l, r);
+      if (bitvec_eq(result, l) && Math.random() <= 0.7) {
         interesting = false;
       }
-      if (bitvec_eq(result, right) && Math.random() <= 0.7) {
+      if (bitvec_eq(result, r) && Math.random() <= 0.7) {
         interesting = false;
       }
       if (bitvec_eq(result, empty_s()) && Math.random() <= 0.8) {
@@ -686,34 +695,64 @@ function associative_op(op) {
   return (op === "intersection") || (op === "union") || (op === "symmetric_difference");
 }
 
-function expr_to_tex(expr, not_a_set, associative) {
+let color_top = -1;
+let color_low = -1;
+function expr_to_tex(expr, not_a_set, associative, do_highlight) {
   const h = height(expr);
   let outermost = true;
   return dfs(
-    (op, [parent_op, _, _2]) => {
+    (n, [parent_op, _, _2]) => {
+      if (n.l["inner"]) {
+        n.l["inner"].is_left = true;
+      } else {
+        n.l["leaf"].is_left = true;
+      }
+      if (n.l["leaf"] && n.r["leaf"]) {
+        n.l["leaf"].highlight_bot = true;
+        n.r["leaf"].highlight_bot = true;
+      }
       if (outermost) {
         outermost = false;
-        return [op, true, associative && (op === parent_op) && associative_op(op)];
+        return [n.node, true, associative && (n.node === parent_op) && associative_op(n.node)];
       } else {
-        return [op, false, associative && (op === parent_op) && associative_op(op)];
+        return [n.node, false, associative && (n.node === parent_op) && associative_op(n.node)];
       }
-    }, (lnode, op, rnode, [left_tex, left_level], pre, [right_tex, right_level]) => {
-    if (pre[1] || pre[2]) {
-      return [`${left_tex} ${tex_op(op)} ${right_tex}`, Math.max(left_level, right_level)];
-    } else {
-      const level = Math.max(left_level, right_level) + 1;
-      return [p(`${left_tex} ${tex_op(op)} ${right_tex}`, level - (not_a_set ? 1 : 0)), level];
-    }
-  }, not_a_set ? x => [x, 0] : x => [set_tex_vanilla(x), 0], expr, [null, null, null])[0];
+    }, (n, [left_tex, left_level], pre, [right_tex, right_level]) => {
+      if (pre[1] || pre[2]) {
+        return [`${left_tex} ${tex_op(n.node)} ${right_tex}`, Math.max(left_level, right_level)];
+      } else {
+        const level = Math.max(left_level, right_level) + 1;
+        return [p(`${left_tex} ${tex_op(n.node)} ${right_tex}`, level - (not_a_set ? 1 : 0)), level];
+      }
+    }, (x) => {
+      let set_t = not_a_set ? x.set : set_tex_vanilla(x.set);
+      if (do_highlight && x.fresh) {
+        color_top += 1;
+        set_t = highlight(color_top, "top", x.is_left, set_t);
+      }
+      if (do_highlight && x.highlight_bot) {
+        if (x.is_left) {
+          color_low += 1;
+          set_t = `${highlight_raw(color_low, "low", x.is_left)}{${set_t}`;
+        } else {
+          set_t = `${set_t}}`;
+        }
+      }
+      return [set_t, 0];
+    },
+    expr, [null, null, null]
+  )[0];
 }
 
 function expr_to_solution_tex(expr_) {
   let expr = expr_;
-  const lines = [`&${expr_to_tex(expr)}\\\\`];
+  color_top = -1;
+  color_low = -1;
+  const lines = [`&${expr_to_tex(expr, false, false, true)}\\\\`];
 
   while (true) {
     expr = eval_one_step(expr);
-    lines.push(`${seq} {} &${expr_to_tex(expr)}\\\\`);
+    lines.push(`${seq} {} &${expr_to_tex(expr, false, false, true)}\\\\`);
     if (!expr["inner"]) {
       break
     }
@@ -764,19 +803,19 @@ const arbitrary_venn_solutions = [[120,2,120],[27,2,126],[46,0,3],[27,2,120],[46
 
 function arbitrary_venn_index_to_term(i) {
   if (i === 27) {
-    return "C";
+    return {leaf: {set: "C"}};
   } else if (i === 46) {
-    return "B";
+    return {leaf: {set: "B"}};
   } else if (i === 120) {
-    return "A";
+    return {leaf: {set: "A"}};
   } else {
     const op = arbitrary_venn_solutions[i][1];
     return {
-      "inner": [
-        arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][0]),
-        op === 0 ? "intersection" : (op === 1 ? "union" : "difference"),
-        arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][2]),
-      ],
+      "inner": {
+        l: arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][0]),
+        node: op === 0 ? "intersection" : (op === 1 ? "union" : "difference"),
+        r: arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][2]),
+      },
     };
   }
 }

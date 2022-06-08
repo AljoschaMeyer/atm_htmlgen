@@ -1,4 +1,6 @@
 §template(
+  <title>An Opinionated Introduction to Mathematics</title>
+
   <style>
     .toc {
       text-align: center;

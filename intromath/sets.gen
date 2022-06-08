@@ -1,4 +1,6 @@
 §template(
+  <title>Naïve Set Theory — Introduction to Mathematics</title>
+
   <link rel="stylesheet" href="./assets/sets.css">
   <script defer src="./assets/katex.min.js"></script/>
 
@@ -570,20 +572,21 @@
           We now define our terminology for the objects that occur in both of two §rs(set):
         )
 
-        §definition["intersection"](Intersection)(
-          §set_math_id["intersection", "intersection"]
-          §p(
-            Let §$(A) and §$(B) be §rs(set).
-          )
-          §p(
-            The §define(intersection) of §$(A) and §$(B)(,) written as §$(A §$define_notation(§$intersection) B)(,) is the §r(set) of all objects which are §rs(element) of both §$(A) and §$(B)(:)
-
-            §$$(
-              A §$intersection B §$defeq §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)).
+        §definition_marginalia(
+          §venn_intersection
+        )(
+          §definition["intersection"](Intersection)(
+            §set_math_id["intersection", "intersection"]
+            §p(
+              Let §$(A) and §$(B) be §rs(set).
             )
-          )
-          §div(venn2_container centered)(
-            §input["venn_diagrams/intersection.svg"]
+            §p(
+              The §define(intersection) of §$(A) and §$(B)(,) written as §$(A §$define_notation(§$intersection) B)(,) is the §r(set) of all objects which are §rs(element) of both §$(A) and §$(B)(:)
+
+              §$$(
+                A §$intersection B §$defeq §$set_builder(x)(§$text($x §$in A$ and $x §$in B$)).
+              )
+            )
           )
         )
 
@@ -595,20 +598,21 @@
           If we swap the §r(conjunction) in the definition of the §r(intersection) of two §rs(set) for a §r(disjunction), we obtain another useful concept:
         )
 
-        §definition["union"](Union)(
-          §set_math_id["union", "union"]
-          §p(
-            Let §$(A) and §$(B) be §rs(set).
-          )
-          §p(
-            The §define(union) of §$(A) and §$(B)(,) written as §$(A §$define_notation(§$union) B)(,) is the §r(set) of all objects which are §rs(element) of at least one of §$(A) or §$(B)(:)
-
-            §$$(
-              A §$union B §$defeq §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)).
+        §definition_marginalia(
+          §venn_union
+        )(
+          §definition["union"](Union)(
+            §set_math_id["union", "union"]
+            §p(
+              Let §$(A) and §$(B) be §rs(set).
             )
-          )
-          §div(venn2_container centered)(
-            §input["venn_diagrams/union.svg"]
+            §p(
+              The §define(union) of §$(A) and §$(B)(,) written as §$(A §$define_notation(§$union) B)(,) is the §r(set) of all objects which are §rs(element) of at least one of §$(A) or §$(B)(:)
+
+              §$$(
+                A §$union B §$defeq §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)).
+              )
+            )
           )
         )
 
@@ -690,9 +694,11 @@
           The grouping does not affect the result however when they are only §rs(intersection) or only §rs(union) involved.
         )
 
-        §clfx(
+        §fact_marginalia(
+          §venn_associative_intersection
+        )(
           §proven_fact(
-            §theorem["associative_intersection"](Associativity of §$(§$intersection[true]§ )§side*()(§venn_associative_intersection))(
+            §theorem["associative_intersection"](Associativity of §$(§$intersection[true]§ ))(
               §p(
                 Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set). Then §$(§$p(A §$intersection B) §$intersection C §$seq A §$intersection §$p(B §$intersection C))(.)
               )
@@ -723,38 +729,44 @@
           )
         )
 
-        §proven_fact(
-          §theorem["associative_union"](Associativity of §$(§$union[true]§ )§side*()(§venn_associative_union))(
-            §p(
-              Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set). Then §$(§$p(A §$union B) §$union C §$seq A §$union §$p(B §$union C))(.)
+        §fact_marginalia(
+          §venn_associative_union
+        )(
+          §proven_fact(
+            §theorem["associative_union"](Associativity of §$(§$union[true]§ ))(
+              §p(
+                Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set). Then §$(§$p(A §$union B) §$union C §$seq A §$union §$p(B §$union C))(.)
+              )
             )
-          )
-          §proof["associative_union"](
-            §proof_as_exercise["associative_union"](
-              §fleqn(
-                §p(
-                  Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set). Then §$$align*(
-                    &§$p(A §$union B) §$union C
-                  )(
-                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)) §$union C §$tag(§cref(union)(Definition) $§$union§ $)
-                  )(
-                    §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ or $x §$in B$))$ or $y §$in C$)) §$tag(§cref(union)(Definition) $§$union§ $)
-                  )(
-                    §$seq {} & §$set_builder(x)(§$text(($x §$in A$ or $x §$in B$) or $x §$in C$)) §$tag(§R(set builder notation preliminary))
-                  )(
-                    §$seq {} & §$set_builder(x)(§$text($x §$in A$ or ($x §$in B$ or $x §$in C$))) §$tag(§r(associative disjunction)(Asso.) §r(disjunction))
-                  )(
-                    §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ or $y §$in §$set_builder(x)(§$text($x §$in B$ or $x §$in C$))$)) §$tag(§R(set builder notation preliminary))
-                  )(
-                    §$seq {} & A §$union §$set_builder(x)(§$text($x §$in B$ or $x §$in C$)) §$tag(§cref(union)(Definition) $§$union§ $)
-                  )(
-                    §$seq {} & A §$union §$p(B §$union C). §$tag(§cref(union)(Definition) $§$union§ $)
+            §proof["associative_union"](
+              §proof_as_exercise["associative_union"](
+                §fleqn(
+                  §p(
+                    Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set). Then §$$align*(
+                      &§$p(A §$union B) §$union C
+                    )(
+                      §$seq {} & §$set_builder(x)(§$text($x §$in A$ or $x §$in B$)) §$union C §$tag(§cref(union)(Definition) $§$union§ $)
+                    )(
+                      §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ or $x §$in B$))$ or $y §$in C$)) §$tag(§cref(union)(Definition) $§$union§ $)
+                    )(
+                      §$seq {} & §$set_builder(x)(§$text(($x §$in A$ or $x §$in B$) or $x §$in C$)) §$tag(§R(set builder notation preliminary))
+                    )(
+                      §$seq {} & §$set_builder(x)(§$text($x §$in A$ or ($x §$in B$ or $x §$in C$))) §$tag(§r(associative disjunction)(Asso.) §r(disjunction))
+                    )(
+                      §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ or $y §$in §$set_builder(x)(§$text($x §$in B$ or $x §$in C$))$)) §$tag(§R(set builder notation preliminary))
+                    )(
+                      §$seq {} & A §$union §$set_builder(x)(§$text($x §$in B$ or $x §$in C$)) §$tag(§cref(union)(Definition) $§$union§ $)
+                    )(
+                      §$seq {} & A §$union §$p(B §$union C). §$tag(§cref(union)(Definition) $§$union§ $)
+                    )
                   )
                 )
               )
             )
           )
         )
+
+
 
         §p(
           If the way in which we group multiple occurrences of a §r(binary operator) has no influence on the result, we call that §r(binary operator)(operator) §define["binop_associative"](associative). To keep our notation clean from unnecessary details, we allowed to omit grouping parentheses for §r(associative) §rs(binary operator)(operators). It is fine, for example, to write §$(§lquote)(A §$union B §$union C)(§rquote§ .) For all §rs(binary operator) that have not been proven §r(associative), we always provide the parentheses to indicate the exact grouping.
@@ -915,53 +927,57 @@
           )
         )
 
-        §proven_fact(
-          §theorem["exercise_intersection_union_absorption"](Absorption of §$(§$intersection[true]) and §$(§$union[true])§side*()(§venn_absorption_intersection_union))(
-            §p(
-              Let §$(A) and §$(B) be §rs(set). Then
-            )§ol(
-              §li(
-                §$(A §$intersection §$p(A §$union B) §$seq A)(,) and
-              )§li(
-                §$(A §$union §$p(A §$intersection B) §$seq A)(.)
+        §fact_marginalia(
+          §venn_absorption_intersection_union
+        )(
+          §proven_fact(
+            §theorem["exercise_intersection_union_absorption"](Absorption of §$(§$intersection[true]) and §$(§$union[true]))(
+              §p(
+                Let §$(A) and §$(B) be §rs(set). Then
+              )§ol(
+                §li(
+                  §$(A §$intersection §$p(A §$union B) §$seq A)(,) and
+                )§li(
+                  §$(A §$union §$p(A §$intersection B) §$seq A)(.)
+                )
               )
             )
-          )
-          §proof["exercise_intersection_union_absorption"](
-            §p(
-              Let §$(A) and §$(B) be §rs(set).
-            )§ol(
-              §li(
-                §proof_as_exercise["exercise_intersection_union_absorption_1"](
-                  §proof_part(
-                    §verbatim(§$(A §$intersection §$p(A §$union B) §$subseteq A))
-                  )(
-                    §p(
-                      Holds by §cref(intersection_nonincreasing).
-                    )
-                  )§proof_part(
-                    §verbatim(§$(A §$intersection §$p(A §$union B) §$supseteq A))
-                  )(
-                    §p(
-                      Let §$(x) be an object. If §$(x §$in A)(,) then also §$(A §$union B)(,) and then also §$(x §$in A §$intersection §$p(A §$union B))(.)
+            §proof["exercise_intersection_union_absorption"](
+              §p(
+                Let §$(A) and §$(B) be §rs(set).
+              )§ol(
+                §li(
+                  §proof_as_exercise["exercise_intersection_union_absorption_1"](
+                    §proof_part(
+                      §verbatim(§$(A §$intersection §$p(A §$union B) §$subseteq A))
+                    )(
+                      §p(
+                        Holds by §cref(intersection_nonincreasing).
+                      )
+                    )§proof_part(
+                      §verbatim(§$(A §$intersection §$p(A §$union B) §$supseteq A))
+                    )(
+                      §p(
+                        Let §$(x) be an object. If §$(x §$in A)(,) then also §$(A §$union B)(,) and then also §$(x §$in A §$intersection §$p(A §$union B))(.)
+                      )
                     )
                   )
                 )
-              )
 
-              §li(
-                §proof_as_exercise["exercise_intersection_union_absorption_2"](
-                  §proof_part(
-                    §verbatim(§$(A §$union §$p(A §$intersection B) §$subseteq A))
-                  )(
-                    §p(
-                      We show the §r(contraposition), that is, we show that if an object is not §r(in) §$(A)(,) then it is not §r(in) §$(A §$union §$p(A §$intersection B)) either. To that end, let §$(x) be an object. If §$(x §$notin A)(,) then also §$(x §$notin A §$intersection B)(,) and then also §$(x §$notin A §$union §$p(A §$intersection B))(.)
-                    )
-                  )§proof_part(
-                    §verbatim(§$(A §$union §$p(A §$intersection B) §$supseteq A))
-                  )(
-                    §p(
-                      Holds by §cref(union_nondecreasing).
+                §li(
+                  §proof_as_exercise["exercise_intersection_union_absorption_2"](
+                    §proof_part(
+                      §verbatim(§$(A §$union §$p(A §$intersection B) §$subseteq A))
+                    )(
+                      §p(
+                        We show the §r(contraposition), that is, we show that if an object is not §r(in) §$(A)(,) then it is not §r(in) §$(A §$union §$p(A §$intersection B)) either. To that end, let §$(x) be an object. If §$(x §$notin A)(,) then also §$(x §$notin A §$intersection B)(,) and then also §$(x §$notin A §$union §$p(A §$intersection B))(.)
+                      )
+                    )§proof_part(
+                      §verbatim(§$(A §$union §$p(A §$intersection B) §$supseteq A))
+                    )(
+                      §p(
+                        Holds by §cref(union_nondecreasing).
+                      )
                     )
                   )
                 )
@@ -977,20 +993,21 @@
           §R(intersection) and §r(union) are arguably the two most simple operations on §rs(set), but sometimes they do not suffice. Consider, for example, the §r(set) of animal species that can swim but cannot fly. This §r(set) is neither the §r(intersection) nor the §r(union) of the species that can swim or fly respectively. We thus define a third §r(binary operator):
         )
 
-        §definition["set_difference"](Set Difference)(
-          §set_math_id["setminus", "set_difference"]
-          §p(
-            Let §$(A) and §$(B) be §rs(set).
-          )
-          §p(
-            The §define(set difference) of §$(A) and §$(B)(,) §define(relative complement) of §$(B) in §$(A)(,) or simply §$(A) §define(without) §$(B)(,) written as §$(A §$define_notation(§$setminus) B)(,) is the §r(set) of all objects which are §rs(element) of §$(A) but not of §$(B)(:)
-
-            §$$(
-              A §$setminus B §$defeq §$set_builder(x)(§$text($x §$in A$ and $x §$notin B$)).
+        §definition_marginalia(
+          §venn_setdifference
+        )(
+          §definition["set_difference"](Set Difference)(
+            §set_math_id["setminus", "set_difference"]
+            §p(
+              Let §$(A) and §$(B) be §rs(set).
             )
-          )
-          §div(venn2_container centered)(
-            §input["venn_diagrams/setminus.svg"]
+            §p(
+              The §define(set difference) of §$(A) and §$(B)(,) §define(relative complement) of §$(B) in §$(A)(,) or simply §$(A) §define(without) §$(B)(,) written as §$(A §$define_notation(§$setminus) B)(,) is the §r(set) of all objects which are §rs(element) of §$(A) but not of §$(B)(:)
+
+              §$$(
+                A §$setminus B §$defeq §$set_builder(x)(§$text($x §$in A$ and $x §$notin B$)).
+              )
+            )
           )
         )
 
@@ -1105,33 +1122,36 @@
           We can prove that this technique always yields the correct result — take a moment to think through how the §cref(intersection_via_set_difference)(following theorem) relates to the technique:
         )
 
-        §proven_fact(
-          §theorem["intersection_via_set_difference"](
-            §side*()(§venn_intersection_via_set_difference)
-            §p(
-              Let §$(A) and §$(B) be §rs(set). Then §$(A §$intersection B §$seq A §$setminus §$p[1](A §$setminus B))(.)
-            )
-          )
-          §proof["intersection_via_set_difference"](
-            §proof_as_exercise["intersection_via_set_difference"](
+        §fact_marginalia(
+          §venn_intersection_via_set_difference
+        )(
+          §proven_fact(
+            §theorem["intersection_via_set_difference"](
               §p(
-                Let §$(A) and §$(B) be §rs(set), and let §$(x) be an object.
+                Let §$(A) and §$(B) be §rs(set). Then §$(A §$intersection B §$seq A §$setminus §$p[1](A §$setminus B))(.)
               )
-
-              §proof_part(
-                §verbatim(§$(A §$intersection B §$subseteq A §$setminus §$p[1](A §$setminus B))):
-              )(
+            )
+            §proof["intersection_via_set_difference"](
+              §proof_as_exercise["intersection_via_set_difference"](
                 §p(
-                  Assume §$(x §$in A §$intersection B)(.) Then §$(x §$in B)(,) and thus §$(x §$notin A §$setminus B)(.) Since §$(x §$in A) (because §$(x §$in A §$intersection B)) and §$(x §$notin A §$setminus B)(,) we have that §$(x §$in A §$setminus §$p[1](A §$setminus B)) (by definition of §$(§$setminus)).
+                  Let §$(A) and §$(B) be §rs(set), and let §$(x) be an object.
                 )
-              )
-              §proof_part(
-                §verbatim(§$(A §$intersection B §$supseteq A §$setminus §$p[1](A §$setminus B))):
-              )(
-                §p(
-                  Assume §$(x §$in A §$setminus §$p[1](A §$setminus B))(.) Then §$(x §$in A) by §cref(set_difference_nonincreasing), so it remains to show that §$(x §$in B)(.)
-                )§p(
-                  Suppose toward a contradiction that §$(x §$notin B)(.) Then §$(x §$in A §$setminus B)(,) and thus §$(x §$notin A §$setminus §$p[1](A §$setminus B))(,) contradicting our initial assumption that §$(x §$in A §$setminus §$p[1](A §$setminus B))(.)
+
+                §proof_part(
+                  §verbatim(§$(A §$intersection B §$subseteq A §$setminus §$p[1](A §$setminus B))):
+                )(
+                  §p(
+                    Assume §$(x §$in A §$intersection B)(.) Then §$(x §$in B)(,) and thus §$(x §$notin A §$setminus B)(.) Since §$(x §$in A) (because §$(x §$in A §$intersection B)) and §$(x §$notin A §$setminus B)(,) we have that §$(x §$in A §$setminus §$p[1](A §$setminus B)) (by definition of §$(§$setminus)).
+                  )
+                )
+                §proof_part(
+                  §verbatim(§$(A §$intersection B §$supseteq A §$setminus §$p[1](A §$setminus B))):
+                )(
+                  §p(
+                    Assume §$(x §$in A §$setminus §$p[1](A §$setminus B))(.) Then §$(x §$in A) by §cref(set_difference_nonincreasing), so it remains to show that §$(x §$in B)(.)
+                  )§p(
+                    Suppose toward a contradiction that §$(x §$notin B)(.) Then §$(x §$in A §$setminus B)(,) and thus §$(x §$notin A §$setminus §$p[1](A §$setminus B))(,) contradicting our initial assumption that §$(x §$in A §$setminus §$p[1](A §$setminus B))(.)
+                  )
                 )
               )
             )
@@ -1196,74 +1216,77 @@
           )
         )
 
-        §exercise["exercise_set_difference2"](
-        §side*()(§venn_exercise_set_difference2)
-          §ol(
-            §li(
-              §p(
-                Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set). Prove that §$(C §$setminus §$p(B §$setminus A) §$seq §$p(C §$intersection A) §$union §$p(C §$setminus B))(.)
-              )
-              §solution["exercise_set_difference2a"](
+        §exercise_marginalia(
+          §venn_exercise_set_difference2
+        )(
+          §exercise["exercise_set_difference2"](
+            §ol(
+              §li(
                 §p(
-                  Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set), and let §$(x) be an object.
+                  Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set). Prove that §$(C §$setminus §$p(B §$setminus A) §$seq §$p(C §$intersection A) §$union §$p(C §$setminus B))(.)
                 )
-                §proof_part(
-                  §verbatim(§$(§$subseteq)):
-                )(
+                §solution["exercise_set_difference2a"](
                   §p(
-                    Assume that §$(x §$in C §$setminus §$p(B §$setminus A))(.) Then §$(x §$in C) and §$(x §$notin B §$setminus A)(.) We do a case §side(distinction)(Whenever you cannot make progress in a proof, try looking for a helpful case distinction. You then have §em(two) unfinished proofs to worry about, but both of them have stronger assumptions for you to work with.) over §r(member)(membership) of §$(x) in §$(B)(:)
-                  )§cases(
-                    §case(§$(x §$in B))(
-                      §p(
-                        If §$(x §$in B) while §$(x §$notin B §$setminus A)(,) we can conclude that §$(x §$in A)(.) Then §$(x §$in A §$intersection C)(,) and thus also §$(x §$in §$p(C §$intersection A) §$union §$p(C §$setminus B))(.)
+                    Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set), and let §$(x) be an object.
+                  )
+                  §proof_part(
+                    §verbatim(§$(§$subseteq)):
+                  )(
+                    §p(
+                      Assume that §$(x §$in C §$setminus §$p(B §$setminus A))(.) Then §$(x §$in C) and §$(x §$notin B §$setminus A)(.) We do a case §side(distinction)(Whenever you cannot make progress in a proof, try looking for a helpful case distinction. You then have §em(two) unfinished proofs to worry about, but both of them have stronger assumptions for you to work with.) over §r(member)(membership) of §$(x) in §$(B)(:)
+                    )§cases(
+                      §case(§$(x §$in B))(
+                        §p(
+                          If §$(x §$in B) while §$(x §$notin B §$setminus A)(,) we can conclude that §$(x §$in A)(.) Then §$(x §$in A §$intersection C)(,) and thus also §$(x §$in §$p(C §$intersection A) §$union §$p(C §$setminus B))(.)
+                        )
+                      )§case(§$(x §$notin B))(
+                        §p(
+                          If §$(x §$notin B)(,) then §$(x §$in C §$setminus B)(,) and then also §$(x §$in §$p(C §$intersection A) §$union §$p(C §$setminus B))(.)
+                        )
                       )
-                    )§case(§$(x §$notin B))(
-                      §p(
-                        If §$(x §$notin B)(,) then §$(x §$in C §$setminus B)(,) and then also §$(x §$in §$p(C §$intersection A) §$union §$p(C §$setminus B))(.)
+                    )
+                  )§proof_part(
+                    §verbatim(§$(§$supseteq)):
+                  )(
+                    §p(
+                      Assume that §$(x §$in §$p(C §$intersection A) §$union §$p(C §$setminus B))(.)
+                    )§cases(
+                      §case(§$(x §$in C §$intersection A))(
+                        §p(
+                          If §$(x §$in C §$intersection A)(,) then §$(x §$in C) and §$(x §$in A)(.) Because §$(x §$in A)(,) we have that §$(x §$notin B §$setminus A)(,) and thus §$(x §$in C §$setminus §$p(B §$setminus A))(.)
+                        )
+                      )§case(§$(x §$in C §$setminus B))(
+                        §p(
+                          If §$(x §$in C §$setminus B)(,) then §$(x §$in C) and §$(x §$notin B)(.) Because §$(x §$notin B)(,) we have that §$(x §$notin B §$setminus A)(,) and thus §$(x §$in C §$setminus §$p(B §$setminus A))(.)
+                        )
                       )
                     )
                   )
-                )§proof_part(
-                  §verbatim(§$(§$supseteq)):
-                )(
-                  §p(
-                    Assume that §$(x §$in §$p(C §$intersection A) §$union §$p(C §$setminus B))(.)
-                  )§cases(
-                    §case(§$(x §$in C §$intersection A))(
-                      §p(
-                        If §$(x §$in C §$intersection A)(,) then §$(x §$in C) and §$(x §$in A)(.) Because §$(x §$in A)(,) we have that §$(x §$notin B §$setminus A)(,) and thus §$(x §$in C §$setminus §$p(B §$setminus A))(.)
-                      )
-                    )§case(§$(x §$in C §$setminus B))(
-                      §p(
-                        If §$(x §$in C §$setminus B)(,) then §$(x §$in C) and §$(x §$notin B)(.) Because §$(x §$notin B)(,) we have that §$(x §$notin B §$setminus A)(,) and thus §$(x §$in C §$setminus §$p(B §$setminus A))(.)
-                      )
-                    )
-                  )
                 )
-              )
-            )§li(
-              §p(
-                How does §cref(intersection_via_set_difference) relate to this?
-              )
-              §solution["exercise_set_difference2b"](
+              )§li(
                 §p(
-                  §cref(intersection_via_set_difference) is the special case that occurs when §$(B §$seq C):
-                )§p(
-                  Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set) with §$(B §$seq C)(.) Then
+                  How does §cref(intersection_via_set_difference) relate to this?
                 )
-                §fleqn(
-                  §$$align*(
-                    & C §$setminus §$p(§$highlightlowr1(B) §$setminus A) §$seq §$p(C §$intersection A) §$union §$p(C §$setminus §$highlightlow1(B))
-                  )(
-                    §$implies {} & C §$setminus §$p(§$highlighttopr1(C) §$setminus A) §$seq §$p(C §$intersection A) §$union §$highlightlow3(§$p(C §$setminus §$highlighttop1(C))) §$tag($B §$seq C$)
-                  )(
-                    §$implies {} & C §$setminus §$p(C §$setminus A) §$seq §$highlightlow5(§$p(C §$intersection A) §$union §$highlighttop3(§$set)) §$tag(§cref(set_difference)(Definition) $§$setminus§ $)
-                  )(
-                    §$implies {} & §$highlightlowr2(C §$setminus §$p(C §$setminus A)) §$seq §$highlightlow4(§$highlighttop5(C §$intersection A)) §$tag(§cref(union)(Definition) $§$union§ $)
-                  )(
-                    §$implies {} & §$highlighttopr4(§$highlightlowr6(C) §$intersection §$highlightlowr1(A)) §$seq §$highlighttop2(§$highlightlowr6(C) §$setminus §$p(§$highlightlowr6(C) §$setminus §$highlightlow1(A))) §$tag(§cref(seq_symmetry)(Symmetry $§$seq[true]$))
-                  )(
-                    §$implies {} & §$highlighttopr6(A) §$intersection §$highlighttopr1(B) §$seq §$highlighttopr6(A) §$setminus §$p(§$highlighttopr6(A) §$setminus §$highlighttop1(B)). §$tag(Rename)
+                §solution["exercise_set_difference2b"](
+                  §p(
+                    §cref(intersection_via_set_difference) is the special case that occurs when §$(B §$seq C):
+                  )§p(
+                    Let §$(A)(,) §$(B)(,) and §$(C) be §rs(set) with §$(B §$seq C)(.) Then
+                  )
+                  §fleqn(
+                    §$$align*(
+                      & C §$setminus §$p(§$highlightlowr1(B) §$setminus A) §$seq §$p(C §$intersection A) §$union §$p(C §$setminus §$highlightlow1(B))
+                    )(
+                      §$implies {} & C §$setminus §$p(§$highlighttopr1(C) §$setminus A) §$seq §$p(C §$intersection A) §$union §$highlightlow3(§$p(C §$setminus §$highlighttop1(C))) §$tag($B §$seq C$)
+                    )(
+                      §$implies {} & C §$setminus §$p(C §$setminus A) §$seq §$highlightlow5(§$p(C §$intersection A) §$union §$highlighttop3(§$set)) §$tag(§cref(set_difference)(Definition) $§$setminus§ $)
+                    )(
+                      §$implies {} & §$highlightlowr2(C §$setminus §$p(C §$setminus A)) §$seq §$highlightlow4(§$highlighttop5(C §$intersection A)) §$tag(§cref(union)(Definition) $§$union§ $)
+                    )(
+                      §$implies {} & §$highlighttopr4(§$highlightlowr6(C) §$intersection §$highlightlowr1(A)) §$seq §$highlighttop2(§$highlightlowr6(C) §$setminus §$p(§$highlightlowr6(C) §$setminus §$highlightlow1(A))) §$tag(§cref(seq_symmetry)(Symmetry $§$seq[true]$))
+                    )(
+                      §$implies {} & §$highlighttopr6(A) §$intersection §$highlighttopr1(B) §$seq §$highlighttopr6(A) §$setminus §$p(§$highlighttopr6(A) §$setminus §$highlighttop1(B)). §$tag(Rename)
+                    )
                   )
                 )
               )
@@ -1355,7 +1378,7 @@
 
         §exercise["exercise_powerset_at_least"](
           §p(
-            Find the mistake in the following claim: Because the §r(empty set) is a §r(subset) of every §r(set) (§cref(empty_set_subset_everything)) and every §r(set) is a §r(subset) of itself (§cref(subseteq_reflexivity)), §$(§$powerset(X)) must contain at least two §rs(element) for each §r(set) §$(X)(.)
+            Find the mistake in the following claim: because the §r(empty set) is a §r(subset) of every §r(set) (§cref(empty_set_subset_everything)) and every §r(set) is a §r(subset) of itself (§cref(subseteq_reflexivity)), §$(§$powerset(X)) must contain at least two §rs(element) for each §r(set) §$(X)(.)
           )
 
           §solution["exercise_powerset_at_least"](
@@ -1560,19 +1583,20 @@
         )
       )
 
-      §definition["symmetric_difference"](Symmetric Difference)(
-        §set_math_id["symdif", "symmetric_difference"]
-        §p(
-          Let §$(A) and §$(B) be §rs(set).
-        )§p(
-          The §define(symmetric difference) of §$(A) and §$(B)(,) written as §$(A §$define_notation(§$symdif) B)(,) is the §r(set) of all objects which are §rs(element) of exactly one of §$(A) or §$(B)(:)
+      §definition_marginalia(
+        §venn_symmetric_difference
+      )(
+        §definition["symmetric_difference"](Symmetric Difference)(
+          §set_math_id["symdif", "symmetric_difference"]
+          §p(
+            Let §$(A) and §$(B) be §rs(set).
+          )§p(
+            The §define(symmetric difference) of §$(A) and §$(B)(,) written as §$(A §$define_notation(§$symdif) B)(,) is the §r(set) of all objects which are §rs(element) of exactly one of §$(A) or §$(B)(:)
 
-          §$$(
-            A §$symdif B §$defeq §$p(A §$setminus B) §$union §$p(B §$setminus A).
+            §$$(
+              A §$symdif B §$defeq §$p(A §$setminus B) §$union §$p(B §$setminus A).
+            )
           )
-        )
-        §div(venn2_container centered)(
-          §input["venn_diagrams/symdif.svg"]
         )
       )
 

@@ -536,6 +536,12 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, "\\htmlClass{bgmcllldirect6}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$class" {
                         self.pm(|t, p, a| OutInternal::Enclose2(t, p, a, "\\htmlClass{", "}{", "}"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"fact_marginalia" {
+                        self.pm(|t, p, a| OutInternal::Enclose2(t, p, a, r###"<div class="box_marginalia fact clfx slightlywide"><span class="aside">"###, "</span>", "</div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"exercise_marginalia" {
+                        self.pm(|t, p, a| OutInternal::Enclose2(t, p, a, r###"<div class="box_marginalia exercise clfx slightlywide"><span class="aside">"###, "</span>", "</div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"definition_marginalia" {
+                        self.pm(|t, p, a| OutInternal::Enclose2(t, p, a, r###"<div class="box_marginalia definition clfx slightlywide"><span class="aside">"###, "</span>", "</div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"link" {
                         self.pm(OutInternal::Link, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"captioned" {
@@ -709,6 +715,38 @@ impl<'a> Parser<'a> {
                                     Difference,
                                     Box::new(Term::Unary(S2)),
                                 )),
+                            ),
+                        ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"venn_intersection" {
+                        self.pm(|t, p, a| OutInternal::Venn2(t, p, a,
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                Intersection,
+                                Box::new(Term::Unary(S2)),
+                            ),
+                        ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"venn_union" {
+                        self.pm(|t, p, a| OutInternal::Venn2(t, p, a,
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                Union,
+                                Box::new(Term::Unary(S2)),
+                            ),
+                        ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"venn_setdifference" {
+                        self.pm(|t, p, a| OutInternal::Venn2(t, p, a,
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                Difference,
+                                Box::new(Term::Unary(S2)),
+                            ),
+                        ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"venn_symmetric_difference" {
+                        self.pm(|t, p, a| OutInternal::Venn2(t, p, a,
+                            Term::Binary(
+                                Box::new(Term::Unary(S1)),
+                                SymmetricDifference,
+                                Box::new(Term::Unary(S2)),
                             ),
                         ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {

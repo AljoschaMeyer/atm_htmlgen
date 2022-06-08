@@ -1,3 +1,4 @@
+use crate::set_examples::render_venn;
 use palette::LabHue;
 use std::io;
 use std::fs;
@@ -273,6 +274,7 @@ pub(crate) enum OutInternal {
     PowersetColors(Trace, (), Vec<OutInternal>),
     EulerToggles(Trace, (), Vec<OutInternal>),
     EulerTogglesPower(Trace, (), Vec<OutInternal>),
+    Venn2(Trace, (), Vec<OutInternal>, Term),
     EquationVenn2(Trace, (), Vec<OutInternal>, Term, Term),
     EquationVenn3(Trace, (), Vec<OutInternal>, Term, Term),
 }
@@ -433,13 +435,12 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
     </head>
     <body>
         <div class="container_main">
-            <div id="js_notice" style="margin-top: 10rem; border: 4px solid var(--cd5); padding: 1rem;">
-              <p>This page uses javascript for helpful features such as tooltips, generating exercises, hiding solutions, or interactive visualizations. It does not do anything evil, in particular there is no tracking, no reporting, no storing of any information anywhere.</p>
-              <p>Enable javascript for many niceties and hopefully no drawbacks. All the code is publicly available at <a href="https://github.com/AljoschaMeyer/atm_htmlgen/" class="outlink">https://github.com/AljoschaMeyer/atm_htmlgen/</a>. If anything feels objectionable to you, please open an issue.</p>
-            </div>
-            <script>
-                document.querySelector("#js_notice").remove()
-            </script>
+            <noscript>
+                <div style="margin-top: 10rem; border: 4px solid var(--cd5); padding: 1rem;">
+                  <p>This page uses javascript for helpful features such as tooltips, generating exercises, hiding solutions, or interactive visualizations. It does not do anything evil, in particular there is no tracking, no reporting, no storing of any information anywhere.</p>
+                  <p>Enable javascript for many niceties and hopefully no drawbacks. All the code is publicly available at <a href="https://github.com/AljoschaMeyer/atm_htmlgen/" class="outlink">https://github.com/AljoschaMeyer/atm_htmlgen/</a>. If anything feels objectionable to you, please open an issue.</p>
+                </div>
+            </noscript>
 "###.into()),
                     Out::Argument(1),
                     Out::Text(r###"
@@ -1055,8 +1056,11 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 if custom_text {
                     y.state.register_id(&target_id.clone(), CrefKind::BoxlessDefinition, Trace(None))?;
 
-                    let p = y.state.base_dir().join(format!(r#"build/previews/{}.html"#, target_id));
-                    let _ = std::fs::write(&p, format!(r###"<article>{}</article>"###, &args[args.len() - 1])).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
+                    if y.state.second_iteration {
+                        let _ = fs_extra::dir::create_all(y.state.base_dir().join("build/previews/"), false);
+                        let p = y.state.base_dir().join(format!(r#"build/previews/{}.html"#, target_id));
+                        let _ = std::fs::write(&p, format!(r###"<article>{}</article>"###, &args[args.len() - 1])).map_err(|e| ExpansionError::OutputIO(e, p.clone(), Trace(None)))?;
+                    }
                 } else {
                     if boxless {
                         y.state.register_id(&target_id.clone(), CrefKind::BoxlessDefinition, Trace(None))?;
@@ -1415,9 +1419,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                         outs.push(Out::Text(r###"\\
 "###.into()));
                     }
-                    // outs.push(Out::Text(r###"\htmlClass{background_stripe}{"###.into()));
                     outs.push(Out::Argument(i));
-                    // outs.push(Out::Text(r###"}"###.into()));
                 }
                 outs.push(Out::Text(format!(r###"\end{{{}}}"###, env).into()));
 
@@ -1657,6 +1659,16 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }
 
             return Ok(r.into());
+        }
+
+        OutInternal::Venn2(trace, params, args, t) => {
+            arguments_exact(0, &args, &trace)?;
+
+            return down_macro(|_p, _n, y, _trace| {
+                let id = y.state.venn_id;
+                y.state.venn_id += t.count();
+                return Ok(render_venn(id, &t, crate::set_examples::DRAW_VENN2));
+            }, &params, args, trace, y);
         }
 
         OutInternal::EquationVenn2(trace, params, args, lhs, rhs) => {

@@ -22,11 +22,6 @@
   max-height: unset;
 }
 
-/* .multi {
-  border: 0.16em var(--color-text) solid;
-  padding: 0.16em;
-} */
-
 .eulersvg > path, .venn > circle {
   mix-blend-mode: multiply;
 }
