@@ -281,25 +281,25 @@ impl<'a> Parser<'a> {
                     } else if macro_name == b"$mid" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\mid"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"symbol0" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol0"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container">/span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$symbol0" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\char"e904}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"symbol1" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol1"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$symbol1" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\char"e903}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"symbol2" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol2"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$symbol2" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\char"e902}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"symbol3" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol3"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$symbol3" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\char"e901}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"symbol4" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"><span class="symbol4"></span></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container"></span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$symbol4" {
-                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\htmlClass{symbol_container}{\char"e900}"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"hr" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, "<hr>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"br" {
@@ -749,6 +749,10 @@ impl<'a> Parser<'a> {
                                 Box::new(Term::Unary(S2)),
                             ),
                         ), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"polar_x" {
+                        self.pm(OutInternal::PolarX, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"polar_y" {
+                        self.pm(OutInternal::PolarY, y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else {
                         let trace_end = source_offset + self.p.position() - initial_position;
                         let trace = Trace(Some((trace_start, trace_end)));
@@ -846,42 +850,22 @@ static EULER_SVG: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xml
 <path class="cd1 bgclll1" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
 <path class="cd3 bgclll3" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
 
-<foreignObject x="-16.2858" y="-85" width="30" height="30">
-<span class="symbol_container"><span class="symbol0"></span></span>
-</foreignObject>
-<foreignObject x="51.5739" y="-36.6311" width="30" height="30">
-<span class="symbol_container"><span class="symbol1"></span></span>
-</foreignObject>
-<foreignObject x="26.1449" y="41.6311" width="30" height="30">
-<span class="symbol_container"><span class="symbol2"></span></span>
-</foreignObject>
-<foreignObject x="-56.1449" y="41.6311" width="30" height="30">
-<span class="symbol_container"><span class="symbol3"></span></span>
-</foreignObject>
-<foreignObject x="-81.5739" y="-36.6311" width="30" height="30">
-<span class="symbol_container"><span class="symbol4"></span></span>
-</foreignObject>
+<text x="0" y="-70">&#xe904;</text>
+<text x="66.57" y="-21.6311">&#xe903;</text>
+<text x="41.1449" y="56.6311">&#xe902;</text>
+<text x="-41.1449" y="56.6311">&#xe901;</text>
+<text x="-66.57" y="-21.6311">&#xe900;</text>
 </svg>"###;
 
 static EULER_SVG_EQUALITY: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">
 <path class="cd1 bgclll1" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
 <path class="cd3 bgclll3" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
 
-<foreignObject x="-16.2858" y="-85" width="30" height="30">
-<span class="symbol_container"><span class="symbol0"></span></span>
-</foreignObject>
-<foreignObject x="51.5739" y="-36.6311" width="30" height="30">
-<span class="symbol_container"><span class="symbol1"></span></span>
-</foreignObject>
-<foreignObject x="26.1449" y="41.6311" width="30" height="30" class="s3">
-<span class="symbol_container"><span class="symbol2"></span></span>
-</foreignObject>
-<foreignObject x="-56.1449" y="41.6311" width="30" height="30" class="s3">
-<span class="symbol_container"><span class="symbol3"></span></span>
-</foreignObject>
-<foreignObject x="-81.5739" y="-36.6311" width="30" height="30" class="s3">
-<span class="symbol_container"><span class="symbol4"></span></span>
-</foreignObject>
+<text x="0" y="-70">&#xe904;</text>
+<text x="66.57" y="-21.6311">&#xe903;</text>
+<text class="obstruction" x="41.1449" y="56.6311">&#xe902;</text>
+<text class="obstruction" x="-41.1449" y="56.6311">&#xe901;</text>
+<text class="obstruction" x="-66.57" y="-21.6311">&#xe900;</text>
 </svg>"###;
 
 static EULER_SVG_INTERSECTION: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">
@@ -902,21 +886,11 @@ static EULER_SVG_INTERSECTION: &str = r###"<svg version="1.1" viewBox="-100 -100
 
 <rect class="euler_yay" clip-path="url('#intersection_clip2_euler')" mask="url('#intersection_mask_euler')" x="-100" y="-100" width="200" height="200"/>
 
-<foreignObject x="-16.2858" y="-85" width="30" height="30">
-<span class="symbol_container"><span class="symbol0"></span></span>
-</foreignObject>
-<foreignObject x="51.5739" y="-36.6311" width="30" height="30" class="s3">
-<span class="symbol_container"><span class="symbol1"></span></span>
-</foreignObject>
-<foreignObject x="26.1449" y="41.6311" width="30" height="30" class="">
-<span class="symbol_container"><span class="symbol2"></span></span>
-</foreignObject>
-<foreignObject x="-56.1449" y="41.6311" width="30" height="30" class="">
-<span class="symbol_container"><span class="symbol3"></span></span>
-</foreignObject>
-<foreignObject x="-81.5739" y="-36.6311" width="30" height="30" class="">
-<span class="symbol_container"><span class="symbol4"></span></span>
-</foreignObject>
+<text x="0" y="-70">&#xe904;</text>
+<text x="66.57" y="-21.6311">&#xe903;</text>
+<text x="41.1449" y="56.6311">&#xe902;</text>
+<text x="-41.1449" y="56.6311">&#xe901;</text>
+<text x="-66.57" y="-21.6311">&#xe900;</text>
 </svg>"###;
 
 static EULER_SVG_SETMINUS: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">
@@ -935,21 +909,11 @@ static EULER_SVG_SETMINUS: &str = r###"<svg version="1.1" viewBox="-100 -100 200
 
 <rect class="euler_yay" clip-path="url('#setminus_clip1_euler')" mask="url('#setminus_mask_euler')" x="-100" y="-100" width="200" height="200"/>
 
-<foreignObject x="-16.2858" y="-85" width="30" height="30">
-<span class="symbol_container"><span class="symbol0"></span></span>
-</foreignObject>
-<foreignObject x="51.5739" y="-36.6311" width="30" height="30" class="s3">
-<span class="symbol_container"><span class="symbol1"></span></span>
-</foreignObject>
-<foreignObject x="26.1449" y="41.6311" width="30" height="30" class="">
-<span class="symbol_container"><span class="symbol2"></span></span>
-</foreignObject>
-<foreignObject x="-56.1449" y="41.6311" width="30" height="30" class="">
-<span class="symbol_container"><span class="symbol3"></span></span>
-</foreignObject>
-<foreignObject x="-81.5739" y="-36.6311" width="30" height="30" class="">
-<span class="symbol_container"><span class="symbol4"></span></span>
-</foreignObject>
+<text x="0" y="-70">&#xe904;</text>
+<text x="66.57" y="-21.6311">&#xe903;</text>
+<text x="41.1449" y="56.6311">&#xe902;</text>
+<text x="-41.1449" y="56.6311">&#xe901;</text>
+<text x="-66.57" y="-21.6311">&#xe900;</text>
 </svg>"###;
 
 static EULER_SVG_UNION: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">
@@ -964,20 +928,12 @@ static EULER_SVG_UNION: &str = r###"<svg version="1.1" viewBox="-100 -100 200 20
 <path id="union_mask1_euler_path" class="euler mask" d="M -66.57395614066075 -39.131189606246295 A 17.5 17.5 0 0 0 -76.86019805577904 -7.473392204684714 L 30.858725745354857, 70.78898700780789 A 17.5 17.5 0 0 0 57.78845669563833 62.03898700780788 L 83.21744517582593, -16.223392204684764 A 17.5 17.5 0 0 0 66.57395614066074 -39.13118960624634 L -66.57395614066075, -39.131189606246295"></path>
 <path id="union_mask2_euler_path" class="euler mask" d="M -49.961746444860204 44.49593469062212 A 15 15 0 0 0 -32.328188876086 68.76644452187054 L 75.39073492504784, -9.495934690622128 A 15 15 0 0 0 57.757177356273644 -33.76644452187055 L -49.961746444860204, 44.49593469062212"></path>
 </mask>
+
 <rect class="euler_yay" clip-path="url('#union_clip1_euler')" mask="url('#union_mask_euler')" x="-100" y="-100" width="200" height="200"/>
-<foreignObject x="-16.2858" y="-85" width="30" height="30">
-<span class="symbol_container"><span class="symbol0"></span></span>
-</foreignObject>
-<foreignObject x="51.5739" y="-36.6311" width="30" height="30" class="s3">
-<span class="symbol_container"><span class="symbol1"></span></span>
-</foreignObject>
-<foreignObject x="26.1449" y="41.6311" width="30" height="30" class="">
-<span class="symbol_container"><span class="symbol2"></span></span>
-</foreignObject>
-<foreignObject x="-56.1449" y="41.6311" width="30" height="30" class="">
-<span class="symbol_container"><span class="symbol3"></span></span>
-</foreignObject>
-<foreignObject x="-81.5739" y="-36.6311" width="30" height="30" class="">
-<span class="symbol_container"><span class="symbol4"></span></span>
-</foreignObject>
+
+<text x="0" y="-70">&#xe904;</text>
+<text x="66.57" y="-21.6311">&#xe903;</text>
+<text x="41.1449" y="56.6311">&#xe902;</text>
+<text x="-41.1449" y="56.6311">&#xe901;</text>
+<text x="-66.57" y="-21.6311">&#xe900;</text>
 </svg>"###;

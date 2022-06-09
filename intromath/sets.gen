@@ -32,7 +32,7 @@
       )§p(
         Furthermore, every object must be §verbatim(well-defined), that is, it must always be clear which object we are talking about. For example, §verbatim(the)(most important composer of the 18th)(century) is not well-defined; whether the most important composer of the 18th century is §r(equal) to §link(Johann Sebastian Bach)(https://en.wikipedia.org/wiki/Johann_Sebastian_Bach) is a matter of personal opinion, not of mathematical reasoning.
       )§p(
-        In examples, we will use squirrel-related iconography for our mathematical objects: §$(§$symbol0§ , §$symbol1§ , §$symbol2§ , §$symbol3)(,) and §$(§$symbol4)(.) We know that §$(§$symbol0 §$eq §$symbol0§ , §$symbol0 §$neq §$symbol1)(,) and so on, and these are the only properties we ascribe to those symbols.
+        In examples, we will use squirrel-related §side(iconography)(§cref(attribution_squirrelicons)(Attribution).) for our mathematical objects: §$(§$symbol0§ , §$symbol1§ , §$symbol2§ , §$symbol3)(,) and §$(§$symbol4)(.) We know that §$(§$symbol0 §$eq §$symbol0§ , §$symbol0 §$neq §$symbol1)(,) and so on, and these are the only properties we ascribe to those symbols.
       )§p(
         With that out of the way, it is time to look at the one definition upon which everything else in this book will build:
       )
@@ -528,7 +528,45 @@
       §figure["my_first_venn_diagram"](
         §captioned(
           §div{"style": "display: flex; flex-direction: column;"}(
-            §input["venn_diagrams/first_venn.svg"]
+            <svg id="first_venn" class="venn" version="1.1" viewBox="-55 -60 110 110" xmlns="http://www.w3.org/2000/svg">
+              <!-- A -->
+              <clipPath id="clip_a_first_venn">
+                <circle cx="-17.3205" cy="10" r="30.5"/>
+              </clipPath>
+
+              <!-- A intersect B -->
+              <clipPath id="clip_aib_first_venn" clip-path="url('#clip_a_first_venn')">
+                <circle cx="0" cy="-20" r="30.5"/>
+              </clipPath>
+
+              <!-- A intersect B intersect C -->
+              <clipPath id="clip_aibic_first_venn" clip-path="url('#clip_aib_first_venn')">
+                <circle cx="17.3205" cy="10" r="30.5"/>
+              </clipPath>
+
+              <!-- a intersect B intersect C -->
+              <mask id="mask_aibic_first_venn" >
+                <rect x="-55" y="-60" width="110" height="110" style="fill: white;"/>
+                <rect clip-path="url('#clip_aibic_first_venn')" x="-55" y="-60" width="110" height="110" style="fill: black;"/>
+              </mask>
+
+
+              <circle class="cd1 bgclll1" cx="-17.3205" cy="10" r="30"/>
+              <circle class="cd5 bgclll5" cx="0" cy="-20" r="30"/>
+              <circle class="cd3 bgclll3" cx="17.3205" cy="10" r="30"/>
+
+              <text x="§polar_x[150.0, 30.0, 0.0]" y="§polar_y[150.0, 30.0, 0.0]">&#xe906;</text>
+              <text x="§polar_x[270.0, 30.0, 0.0]" y="§polar_y[270.0, 30.0, 0.0]">&#xe905;</text>
+              <text x="§polar_x[30.0, 30.0, 0.0]" y="§polar_y[30.0, 30.0, 0.0]">&#xe904;</text>
+              <text x="§polar_x[90.0, 20.0, 0.0]" y="§polar_y[90.0, 20.0, 0.0]">&#xe903;</text>
+              <text x="§polar_x[210.0, 20.0, 0.0]" y="§polar_y[210.0, 20.0, 0.0]">&#xe902;</text>
+              <text x="§polar_x[330.0, 20.0, 0.0]" y="§polar_y[330.0, 20.0, 0.0]">&#xe901;</text>
+              <text x="0" y="0" style="font-size: 0.62rem;">&#xe900;</text>
+
+              <!-- A intersect B intersect C -->
+              <rect id="duck_region" class="first_venn_region" clip-path="url('#clip_aibic_first_venn')" x="-55" y="-60" width="110" height="110"/>
+            </svg>
+
           )
           §div(duck_container)()(
             §div(img_container)(
@@ -537,7 +575,7 @@
           )
         )(
           §p(
-            A §r(Venn diagram) showing the §rs(set) of animal species that can §span(cd5 highlight bgclll5)(walk), §span(cd1 highlight bgclll1)(fly), and §span(cd3 highlight bgclll3)(swim). Each of the seven resulting regions shows an icon of a species that belongs to it.
+            A §r(Venn diagram) showing the §rs(set) of animal species that can §span(cd5 highlight bgclll5)(walk), §span(cd1 highlight bgclll1)(fly), and §span(cd3 highlight bgclll3)(swim). Each of the seven resulting regions shows an §side(icon)(§cref(attribution_species)(Attribution).) of a species that belongs to it.
           )
         )
       )
@@ -990,7 +1028,7 @@
 
       §hsection["section_set_difference"](Set Difference)(
         §p(
-          §R(intersection) and §r(union) are arguably the two most simple operations on §rs(set), but sometimes they do not suffice. Consider, for example, the §r(set) of animal species that can swim but cannot fly. This §r(set) is neither the §r(intersection) nor the §r(union) of the species that can swim or fly respectively. We thus define a third §r(binary operator):
+          §R(intersection) and §r(union) are arguably the two most simple operations on §rs(set), but sometimes they do not suffice. Consider, for example, the §r(set) of animal species that can swim but cannot fly. We cannot construct this set using §r(intersection) and §r(union) only. We thus define a third §r(binary operator):
         )
 
         §definition_marginalia(

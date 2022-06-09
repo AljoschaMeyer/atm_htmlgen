@@ -1,0 +1,127 @@
+§template(
+  <title>Attributions — Introduction to Mathematics</title>
+
+  <style>
+    @font-face {
+      font-family: 'speciesicons';
+      src:
+        url('./assets/fonts/speciesicons.ttf?5xwzqk') format('truetype'),
+        url('./assets/fonts/speciesicons.woff?5xwzqk') format('woff'),
+        url('./assets/fonts/speciesicons.svg?5xwzqk#speciesicons') format('svg');
+      font-weight: normal;
+      font-style: normal;
+      font-display: block;
+    }
+
+    .species > tr > td:nth-child(1) {
+      font-family: 'speciesicons' !important;
+      font-size: 2rem;
+    }
+
+    .squirrels > tr > td:nth-child(1) {
+      font-family: 'squirrelicons' !important;
+      font-size: 2rem;
+    }
+  </style>
+)(
+  §hsection*["attribution"](Appendix A — Attributions)(
+    §p(
+      Attribution for all media that are not individually attributed when they occur in the book.
+    )
+
+    §hsection*["attribution_squirrelicons"](Squirrel-Related Iconography)(
+      §p(
+        Used throughout the book, first introduced in §cref(section_sets).
+      )
+      §table(
+        §thead(
+          §tr(
+            §th(Icon)
+            §th(Creator)
+            §th(Location)
+          )
+        )
+        §tbody(squirrels)(
+          §tr(§tr(
+            §td(&#xe904;)
+            §td(§link(Vectorstall)(https://thenounproject.com/vectorstall/))
+            §td(§link(https://thenounproject.com/icon/squirrel-4752461/)(https://thenounproject.com/icon/squirrel-4752461/))
+          )§tr(
+            §td(&#xe903;)
+            §td(§link(Deemak Daksina)(https://thenounproject.com/deemakdaksina/))
+            §td(§link(https://thenounproject.com/icon/acorn-1582345/)(https://thenounproject.com/icon/acorn-1582345/))
+          )§tr(
+            §td(&#xe902;)
+            §td(§link(Georgiana Ionescu)(https://thenounproject.com/georgiana.ionescu/))
+            §td(§link(https://thenounproject.com/icon/oak-2159975/)(https://thenounproject.com/icon/oak-2159975/))
+          )§tr(
+            §td(&#xe901;)
+            §td(§link(Andy Mc)(https://thenounproject.com/andimukticahyono123/))
+            §td(§link(https://thenounproject.com/icon/sun-1056994/)(https://thenounproject.com/icon/sun-1056994/))
+          )§tr(
+            §td(&#xe900;)
+            §td(§link(Yuvika Koul)(https://thenounproject.com/yuvikakoul/))
+            §td(§link(https://thenounproject.com/icon/rain-2238342/)(https://thenounproject.com/icon/rain-2238342/))
+          )
+        )
+      )
+
+    )
+
+    §hsection*["attribution_species"](Animal Species Icons)(
+      §p(
+        Used in §cref(my_first_venn_diagram).
+      )
+      §table(
+        §thead(
+          §tr(
+            §th(Icon)
+            §th(Creator)
+            §th(Location)
+          )
+        )
+        §tbody(species)(
+          §tr(
+            §td(&#xe906;)
+            §td(§link(tulpahn)(https://thenounproject.com/tulpahn/))
+            §td(§link(https://thenounproject.com/icon/bat-2064473/)(https://thenounproject.com/icon/bat-2064473/))
+          )§tr(
+            §td(&#xe905;)
+            §td(§link(Aleks)(https://thenounproject.com/saintofthesaints/))
+            §td(§link(https://thenounproject.com/icon/camel-1081331/)(https://thenounproject.com/icon/camel-1081331/))
+          )§tr(
+            §td(&#xe904;)
+            §td(§link(bambang pramusinto)(https://thenounproject.com/rockn_ibenk/))
+            §td(§link(https://thenounproject.com/icon/dolphin-3120906/)(https://thenounproject.com/icon/dolphin-3120906/))
+          )§tr(
+            §td(&#xe903;)
+            §td(§link(parkjisun)(https://thenounproject.com/naripuru/))
+            §td(§link(https://thenounproject.com/icon/flying-fish-469924/)(https://thenounproject.com/icon/flying-fish-469924/))
+          )§tr(
+            §td(&#xe902;)
+            §td(§link(Georgiana Ionescu)(https://thenounproject.com/georgiana.ionescu/))
+            §td(§link(https://thenounproject.com/icon/bumblebee-1975344/)(https://thenounproject.com/icon/bumblebee-1975344/))
+          )§tr(
+            §td(&#xe901;)
+            §td(§link(ProSymbols)(https://thenounproject.com/prosymbols/))
+            §td(§link(https://thenounproject.com/icon/frog-2430975/)(https://thenounproject.com/icon/frog-2430975/))
+          )§tr(
+            §td(&#xe900;)
+            §td(§link(atman napitupulu)(https://thenounproject.com/atmanapitupulu/))
+            §td(§link(https://thenounproject.com/icon/duck-3707172/)(https://thenounproject.com/icon/duck-3707172/))
+          )
+        )
+      )
+
+    )
+
+    §hsection*["attributions_secrets"](Hidden Drawings)(
+      §p(
+        Used in hidden locations, pointing them out would rather defeat the point.
+      )§p(
+        All hidden drawings created by the author and placed in the public domain. More out of principle than because anyone would ever want to reuse them.
+      )
+    )
+
+  )
+)

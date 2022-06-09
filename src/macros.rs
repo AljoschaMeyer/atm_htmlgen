@@ -277,6 +277,8 @@ pub(crate) enum OutInternal {
     Venn2(Trace, (), Vec<OutInternal>, Term),
     EquationVenn2(Trace, (), Vec<OutInternal>, Term, Term),
     EquationVenn3(Trace, (), Vec<OutInternal>, Term, Term),
+    PolarX(Trace, (f64, f64, f64), Vec<OutInternal>),
+    PolarY(Trace, (f64, f64, f64), Vec<OutInternal>),
 }
 
 impl OutInternal {
@@ -1699,36 +1701,36 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     Out::html_class("div", "euler_toggles", vec![
                         Out::html("div", vec![
                             Out::html_class("button", "toggle bordercd1 bgclll1 no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}} \notin A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e904} \notin A"###),
                             ]),
                             Out::html_class("button", "toggle bordercd1 bgclll1 yes", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}} \in A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e903} \in A"###),
                             ]),
                             Out::html_class("button", "toggle bordercd1 bgclll1 yes", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}} \in A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e902} \in A"###),
                             ]),
                             Out::html_class("button", "toggle bordercd1 bgclll1 no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}} \notin A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e901} \notin A"###),
                             ]),
                             Out::html_class("button", "toggle bordercd1 bgclll1 yes", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}} \in A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e900} \in A"###),
                             ]),
                         ]),
                         Out::html("div", vec![
                             Out::html_class("button", "toggle bordercd3 bgclll3 no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}} \notin B"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e904} \notin B"###),
                             ]),
                             Out::html_class("button", "toggle bordercd3 bgclll3 yes", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}} \in B"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e903} \in B"###),
                             ]),
                             Out::html_class("button", "toggle bordercd3 bgclll3 no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}} \notin B"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e902} \notin B"###),
                             ]),
                             Out::html_class("button", "toggle bordercd3 bgclll3 yes", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}} \in B"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e901} \in B"###),
                             ]),
                             Out::html_class("button", "toggle bordercd3 bgclll3 no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}} \notin B"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e900} \notin B"###),
                             ]),
                         ]),
                     ]),
@@ -1744,24 +1746,38 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     Out::html_class("div", "euler_toggles", vec![
                         Out::html("div", vec![
                             Out::html_class("button", "toggle no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol0}{}} \notin A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e904} \notin A"###),
                             ]),
                             Out::html_class("button", "toggle no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol1}{}} \notin A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e903} \notin A"###),
                             ]),
                             Out::html_class("button", "toggle no", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol2}{}} \notin A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e902} \notin A"###),
                             ]),
                             Out::html_class("button", "toggle yes", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol3}{}} \in A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e901} \in A"###),
                             ]),
                             Out::html_class("button", "toggle yes", vec![
-                                Out::tex(r###"\htmlClass{symbol_container}{\htmlClass{symbol4}{}} \in A"###),
+                                Out::tex(r###"\htmlClass{symbol_container}{\char"e900} \in A"###),
                             ]),
                         ]),
                     ]),
                 ]));
             }, &params, args, trace, y);
+        }
+
+        OutInternal::PolarX(trace, (degs, r, x), args) => {
+            arguments_exact(0, &args, &trace)?;
+
+            let radians = degs.to_radians();
+            return Ok((r * radians.cos() + x).to_string().into());
+        }
+
+        OutInternal::PolarY(trace, (degs, r, y), args) => {
+            arguments_exact(0, &args, &trace)?;
+
+            let radians = degs.to_radians();
+            return Ok((r * radians.sin() + y).to_string().into());
         }
 
     }

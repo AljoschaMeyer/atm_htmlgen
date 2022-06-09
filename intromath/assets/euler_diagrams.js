@@ -2,7 +2,7 @@ import { reduce_motion } from "./accessibility.js";
 
 import { animate, ease_in_out_cubic } from "./animation.js";
 
-import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, powerset, p, highlight, highlight_raw } from "./tex.js";
+import { tex, tex_string, defeq, set, seq, sneq, subseteq, subset, supseteq, supset, nsubseteq, nsubset, nsupseteq, nsupset, intersection, union, setminus, powerset, p, highlight, highlight_raw, symbol as tex_symbol } from "./tex.js";
 
 import {
   bitvec_singleton,
@@ -193,10 +193,6 @@ function set_tex_vanilla(s) {
   }, []);
 
   return set(elements);
-}
-
-function tex_symbol(i) {
-  return `\\htmlClass{symbol_container}{\\htmlClass{symbol${i}}{}}`;
 }
 
 const container_vanilla = document.querySelector("#container_euler_vanilla");

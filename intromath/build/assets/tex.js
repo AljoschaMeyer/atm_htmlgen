@@ -150,3 +150,23 @@ export const nsupset = String.raw`\htmlData{preview=http://localhost:1234/previe
 export const intersection = String.raw`\htmlData{preview=http://localhost:1234/previews/intersection.html}{\href{http://localhost:1234/sets.html#intersection}{\cap}}`;
 export const union = String.raw`\htmlData{preview=http://localhost:1234/previews/union.html}{\href{http://localhost:1234/sets.html#union}{\cup}}`;
 export const setminus = String.raw`\htmlData{preview=http://localhost:1234/previews/set_difference.html}{\href{http://localhost:1234/sets.html#set_difference}{\setminus}}`;
+
+export const symbol0 = String.raw`\htmlClass{symbol_container}{\char"e904}`;
+export const symbol1 = String.raw`\htmlClass{symbol_container}{\char"e903}`;
+export const symbol2 = String.raw`\htmlClass{symbol_container}{\char"e902}`;
+export const symbol3 = String.raw`\htmlClass{symbol_container}{\char"e901}`;
+export const symbol4 = String.raw`\htmlClass{symbol_container}{\char"e900}`;
+
+export function symbol(i) {
+  if (i === 0) {
+    return symbol0;
+  } else if (i === 1) {
+    return symbol1;
+  } else if (i === 2) {
+    return symbol2;
+  } else if (i === 3) {
+    return symbol3;
+  } else if (i === 4) {
+    return symbol4;
+  }
+}

@@ -126,6 +126,13 @@ h2 div {
 h3 {
     font-size: 1.8rem;
     padding-bottom: 0.8rem;
+    position: relative;
+}
+
+h3:hover:before, h4:hover:before, h5:hover:before {
+  content: "#";
+  position: absolute;
+  left: -2rem;
 }
 
 h4 {
@@ -588,14 +595,14 @@ span.enclosing.highlight.rightspace.top:before {
 .cancel_symbol:before {
   position: absolute;
   content: "";
-  left: 0;
-  top: 45%;
-  right: 0;
+  left: -0.3em;
+  top: 0.4em;
   border-top: 0.25em solid;
   border-color: var(--color-obstruction);
   border-radius: 1em;
-  transform: rotate(-60deg);
+  transform: rotate(-55deg);
   z-index: 1;
+  width: 1.5em;
 }
 
 .nowrap {
@@ -646,4 +653,14 @@ span.enclosing.highlight.rightspace.top:before {
 .three_venns {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+}
+
+.symbol_container {
+  font-family: 'squirrelicons' !important;
+  font-style: initial;
+  color: var(--color-text);
+}
+
+.s3 .symbol_container, .obstruction .symbol_container {
+  color: var(--color-obstruction);
 }

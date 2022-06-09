@@ -150,3 +150,23 @@ export const nsupset = String.raw`§$nsupset§ `;
 export const intersection = String.raw`§$intersection§ `;
 export const union = String.raw`§$union§ `;
 export const setminus = String.raw`§$setminus§ `;
+
+export const symbol0 = String.raw`§$symbol0§ `;
+export const symbol1 = String.raw`§$symbol1§ `;
+export const symbol2 = String.raw`§$symbol2§ `;
+export const symbol3 = String.raw`§$symbol3§ `;
+export const symbol4 = String.raw`§$symbol4§ `;
+
+export function symbol(i) {
+  if (i === 0) {
+    return symbol0;
+  } else if (i === 1) {
+    return symbol1;
+  } else if (i === 2) {
+    return symbol2;
+  } else if (i === 3) {
+    return symbol3;
+  } else if (i === 4) {
+    return symbol4;
+  }
+}

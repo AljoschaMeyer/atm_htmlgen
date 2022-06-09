@@ -780,7 +780,7 @@
               §case["exercise_tour_use_disjunction_case1"](§$(n §$eq 0))(
                 §p(
                   Define §$(m §$defeq 1)(,)§side*()(
-                    A common mistake is to not provide a specific value in §cref(exercise_tour_use_disjunction_case1), but only write something along the lines of §verbatim(§$(m))(can be any natural number other than)(§$(0)). That may be true, but it does not change the fact that the only way of proving an §r(existential quantification) is to give a concrete, well-defined §r(witness). §verbatim(Any)(natural number other than)(§$(0)) is not that.§br
+                    A common mistake is to not provide a specific value in §cref(exercise_tour_use_disjunction_case1), but only write something along the lines of §verbatim(§$(m))(can be any natural number other than)(§$(0)). That may be true, but it does not change the fact that the only way of proving an §r(existential quantification) is to give a concrete, well-defined §r(witness). §verbatim(Any)(natural number other than)(§$(0)) does not suffice.§br
                     It can be helpful to explicitly tell your reader that you chose a §r(witness) arbitrarily within certain constraints. But for mathematical correctness, you always have to settle on a specific one.
                   ) then §$(m §$neq n)(.)
                 )
@@ -804,7 +804,7 @@
 
       §hsection["negating_conjunction_disjunction"](Negating Conjunctions and Disjunctions)(
         §p(
-          The similarities to the behavior of quantifiers continues with the way that you prove the §rs(negation) of §rs(conjunction) and §rs(disjunction).
+          The similarities to the behavior of quantifiers continue with the way you prove the §rs(negation) of §rs(conjunction) and §rs(disjunction).
         )§p(
           If two statements are not both true, then at least one of them has to be false. In other words, you can prove a §r(negation)(negated) §r(conjunction) by changing it to a §r(disjunction) and §r(negation)(negating) its substatements.
         )
@@ -899,7 +899,7 @@
             )
           ) of §rs(disjunction) respectively.
         )§p(
-          Because a §r(conjunction) has §em(exactly) two substatements, we technically cannot state directly that three different statements all must hold, we instead either have to say that §lquote(§meta1) and §lparen(§meta2) and §rquote(§rparen(§meta3)) or that §lquote(§lparen(§meta1)) and §rparen(§meta2) and §rquote(§meta3). Both ways of grouping the §rs(conjunction) §r(mean the same), which is why we do not require making the grouping explicit. This law is called the §definex["conjunction_associativity"](associative conjunction)(blarg)(associativity)(
+          Because a §r(conjunction) has §em(exactly) two substatements, we technically cannot state directly that three different statements all must hold, we instead either have to say that §lquote(§meta1) and §lparen(§meta2) and §rquote(§rparen(§meta3)) or that §lquote(§lparen(§meta1)) and §rparen(§meta2) and §rquote(§meta3). Both ways of grouping the §rs(conjunction) §r(mean the same), which is why we are not required to make the grouping explicit. This law is called the §definex["conjunction_associativity"](associative conjunction)(blarg)(associativity)(
             §p(
               The §rdef(associative conjunction)(associativity) of §rs(conjunction) states that all ways of grouping multiple successive §rs(conjunction) are §r(bi-implication)(equivalent):
             )§p(
@@ -943,7 +943,7 @@
                 §R(negation) is propagated past a quantifier by swapping the quantifier and §r(negation)(negating) the substatement. §R(negation) is propagated past a §r(conjunction) or §r(disjunction) by swapping to the other and §r(negation)(negating) the substatements.
               )§li(
                 §p(
-                  Proving §rs(universal quantification) and §rs(conjunction) requires more powerful arguments than proving §rs(existential quantification) and §rs(disjunction) respectively. The prior talk about §em(multiple) substatements or object respectively at a time, whereas the latter only talk about §em(individual) ones.
+                  Proving §rs(universal quantification) and §rs(conjunction) requires more powerful arguments than proving §rs(existential quantification) and §rs(disjunction) respectively. The prior talk about §em(multiple) substatements or objects respectively at a time, whereas the latter only talk about §em(individual) ones.
                 )§p(
                   Proving §rs(existential quantification) and §rs(disjunction) requires more intelligent choice however, because you need to choose a suitable object or substatement respectively from multiple options.
                 )

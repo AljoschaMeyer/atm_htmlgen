@@ -9,12 +9,10 @@
 §output["cardinality.html"](§input["cardinality.gen"])
 §output["homogeneous_relations.html"](§input["homogeneous_relations.gen"])
 §output["abstract_algebra.html"](§input["abstract_algebra.gen"])
+§output["attribution.html"](§input["attribution.gen"])
 
 §output["assets/tex.js"](§input["tex.js"])
 §output["assets/main.css"](§input["main.css"])
 
-https://www.nopio.com/blog/converting-svg-font-icon-using-icomoon/
-anchor hover
-mail >= 2
 better toc
 talk about pictures as proofs
