@@ -3,7 +3,49 @@
 )(
   §hsection["chapter_induction"](Induction)(
     §p(
-      TODO
+      In the §cref(chapter_sets)(previous chapter) we defined the basic notions of set theory, and mostly avoided the topic of infinite §rs(set). In this chapter, we tackle the subject of infinity heads-on. Finite sets are rather boring, we can simply examine them and figure out whether they satisfy any given §r(predicate) by manually checking against the definition of that §r(predicate). With infinite §rs(set), this is not possible anymore: checking whether some property is fulfilled by looking at all §rs(member) of an infinite §r(set) would literally take forever. Instead, we need to find clever ways of §em(proving) properties; infinite quantities are in fact the reason why we need to bother with proofs, §r(deductive reasoning) and mathematics in the first place.
+    )
+
+    §hsection["section_infinity_introduction"](Infinite Troubles)(
+      §p(
+        It turns out that constructing an infinite §r(set) from first principles is not a trivial task. We cannot just list all its §rs(element), because we want our mathematical notation itself to be of finite size. Instead, we can use the technique we introduced for §r(set builder notation): we can define a §r(set) by giving a §r(predicate) that is satisfied by exactly the §rs(member) of the §r(set).
+      )§p(
+        Perhaps the simplemost §r(predicate) that is satisfied by infinitely many objects is that of being a §side(§r(set))(Remember that we can think of every object as a convenient notation for some §r(set) that is distinct from any other §r(set) under consideration, so this §r(predicate) is effectively satisfied by everything.); consider §$(§$set_builder(x)(§$text($x$ is a §r(set)))), the §r(set) of all §rs(set). This construct looks innocuous enough, but closer inspection reveals some problematic properties. The §r(set) of all §rs(set) is a §r(set) itself. And as such, it has to contain itself.
+      )§p(
+        A §r(set) that contains itself is already unsettling enough, as it makes the very natural notion of grouping objects together feel a lot less natural. But by getting slightly more creative with our choice of §r(predicate), we can reveal even more problematic inconsistencies. Consider §$(Z §$defeq §$set_builder(X)(X §$notin X))(,) the §r(set) of all §rs(set) which do not contain themselves. Does this set contain itself?
+      )§p(
+        Suppose §$(Z §$in Z)(,) then by definition of §$(Z), we know that §$(Z §$notin Z) (as any §r(member) of §$(Z) is known to not contain itself), which is a contradiction. So suppose that §$(Z §$notin Z)(,) then it belongs to §$(Z) by definition of §$(Z)(,) which is again a §side*(contradiction)(In unrelated news: this sentence is a lie.). By the §r(principle of bivalence), one of the two cases must be true. Regardless of which it is, we have a contradiction. And by the §r(principle of explosion), we then know that every statement is true. Math is solved, the end. Time to practice the violin instead.
+      )§p(
+        Or, we can of course forbid defining §rs(set) via arbitrary §rs(predicate), which seems to be a more constructive way forward. In order to not lose the convenience of §r(set builder notation), we can still allow definitions via §rs(predicate), as long as the §r(predicate) is only applied to §rs(member) of some pre-existing §r(set)(set(s)). §R(intersection), §r(union), and §r(set difference) are all defined via §rs(predicate), but the predicate need only be applied to the §rs(element) of the two §rs(set) to be §side(combined)(
+          The astute reader may notice that the definition of §rs(power set) violates this constraint; for each §r(set) §$(X)(,) there exists §$(y §$in §$powerset(X)) such that §$(y §$notin X) (for example, §$(X) itself). And while §rs(power set) do not lead to inconsistencies, they lie at the source of some rather unexpected properties that we will study in §cref(chapter_cardinality).
+        ).
+      )§p(
+        Having narrowly prevented mathematics from self-destructing, we unfortunately must admit that we are now unable to construct §rs(set) of infinite size again. For that reason, we introduce a new way of defining §rs(set) in the next section, a technique that allows us to describe infinite §rs(set) without introducing any inconsistencies.
+      )
+    )
+
+    §hsection["section_induction"](Structural Induction)(
+      §p(
+        To be written.
+      )
+    )
+
+    §hsection["section_peano"](Peano Arithmetic)(
+      §p(
+        To be written.
+      )
+    )
+
+    §hsection["conclusion_induction"](Conclusion)(
+      §p(
+        To be written.
+      )
+    )
+
+    §hsection["exercises_induction"](Exercises)(
+      §p(
+        To be written.
+      )
     )
 
     §chapternav

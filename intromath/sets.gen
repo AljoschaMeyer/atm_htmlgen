@@ -581,9 +581,9 @@
       )
 
       §p(
-        So far, we have always denoted §rs(set) by explicitly enumerating their §rs(member), which does not help us when trying to define a §r(set) in terms of other §rs(set). For that reason, we introduce the §definex["set_builder_notation_preliminary", "set builder notation preliminary"](set builder notation)(set builder notations)(
+        So far, we have always denoted §rs(set) by explicitly enumerating their §rs(member), which does not help us when trying to define a §r(set) in terms of other §rs(set). For that reason, we introduce the §definex["set_builder_notation_preliminary", "set builder notation"](set builder notation)(set builder notations)(
           §p(
-            In §rdef(set builder notation preliminary)(set builder notation), we define a §r(set) by giving a §r(predicate) that holds for exactly the §rs(member) of that §r(set):
+            In §rdef(set builder notation)(set builder notation), we define a §r(set) by giving a §r(predicate) that holds for exactly the §rs(member) of that §r(set):
             §$$(
               §$set_builder[1](x)(§$text($x §$in §$set(§$symbol0)(§$symbol1)(§$symbol2)$ and $x §$in §$set(§$symbol0)(§$symbol2)(§$symbol3)$)) §$seq §$set(§$symbol0)(§$symbol2).
             )
@@ -751,11 +751,11 @@
                   )(
                     §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ and $x §$in B$))$ and $y §$in C$)) §$tag(§cref(intersection)(Definition) $§$intersection§ $)
                   )(
-                    §$seq {} & §$set_builder(x)(§$text(($x §$in A$ and $x §$in B$) and $x §$in C$)) §$tag(§R(set builder notation preliminary))
+                    §$seq {} & §$set_builder(x)(§$text(($x §$in A$ and $x §$in B$) and $x §$in C$)) §$tag(§R(set builder notation))
                   )(
                     §$seq {} & §$set_builder(x)(§$text($x §$in A$ and ($x §$in B$ and $x §$in C$))) §$tag(§r(associative conjunction)(Asso.) §r(conjunction))
                   )(
-                    §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ and $y §$in §$set_builder(x)(§$text($x §$in B$ and $x §$in C$))$)) §$tag(§R(set builder notation preliminary))
+                    §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ and $y §$in §$set_builder(x)(§$text($x §$in B$ and $x §$in C$))$)) §$tag(§R(set builder notation))
                   )(
                     §$seq {} & A §$intersection §$set_builder(x)(§$text($x §$in B$ and $x §$in C$)) §$tag(§cref(intersection)(Definition) $§$intersection§ $)
                   )(
@@ -787,11 +787,11 @@
                     )(
                       §$seq {} & §$set_builder[1](y)(§$text($y §$in §$set_builder(x)(§$text($x §$in A$ or $x §$in B$))$ or $y §$in C$)) §$tag(§cref(union)(Definition) $§$union§ $)
                     )(
-                      §$seq {} & §$set_builder(x)(§$text(($x §$in A$ or $x §$in B$) or $x §$in C$)) §$tag(§R(set builder notation preliminary))
+                      §$seq {} & §$set_builder(x)(§$text(($x §$in A$ or $x §$in B$) or $x §$in C$)) §$tag(§R(set builder notation))
                     )(
                       §$seq {} & §$set_builder(x)(§$text($x §$in A$ or ($x §$in B$ or $x §$in C$))) §$tag(§r(associative disjunction)(Asso.) §r(disjunction))
                     )(
-                      §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ or $y §$in §$set_builder(x)(§$text($x §$in B$ or $x §$in C$))$)) §$tag(§R(set builder notation preliminary))
+                      §$seq {} & §$set_builder[1](y)(§$text($y §$in A$ or $y §$in §$set_builder(x)(§$text($x §$in B$ or $x §$in C$))$)) §$tag(§R(set builder notation))
                     )(
                       §$seq {} & A §$union §$set_builder(x)(§$text($x §$in B$ or $x §$in C$)) §$tag(§cref(union)(Definition) $§$union§ $)
                     )(
@@ -922,7 +922,7 @@
                   )(
                     §$seq {} & §$set_builder(x)(§$text($x §$in A$)) §$tag($x §$in A §$implies x §$in B$)
                   )(
-                    §$seq {} & A. §$tag(§R(set builder notation preliminary))
+                    §$seq {} & A. §$tag(§R(set builder notation))
                   )
                 )
               )§proof_part(
@@ -1018,6 +1018,56 @@
                       )
                     )
                   )
+                )
+              )
+            )
+          )
+        )
+
+        §exercise["exercise_diagram_as_proof"](
+          §p(
+            §cref(exercise_intersection_union_absorption) is annotated with a series of §rs(Venn diagram) which demonstrate that the equation in question holds. Other, similar statements include such visualizations as well (§cref(associative_intersection), §cref(associative_union), not displayed in the tooltips). A diagram is clearly not a (written) proof, the actual proofs do not directly relate to the diagrams, and yet these visualizations unescapably convey the §r(seq)(equality) of the two sides of the equation.
+          )§ol(
+            §li(
+              How can the information contained in such a diagram be mechanically translated into a proof of §r(seq)(equality)?
+            )§li(
+              Give a written proof of §cref(exercise_intersection_union_absorption) that corresponds directly to the visualization.
+            )§li(
+              How do you feel about these proofs compared to more natural proofs like those given in the book?
+            )
+          )
+
+          §solution["exercise_diagram_as_proof"](
+            §ol(
+              §li(
+                §p(
+                  Every region of a §r(Venn diagram) corresponds to one particular way in which the §r(member)(membership) of some object with respect to all involved §rs(set) can work out. The diagram as a whole lists §em(all) possible ways in which any object can relate to the §rs(set) (the easily forgotten outer region corresponds to objects which are not §rs(member) of any depicted §r(set)).
+                )§p(
+                  So overall, we can translate a diagram into a written proof by taking some object §$(x), and then doing a §r(case distinction) over §r(member)(membership) in all §rs(set) in question. In each individual case, the information about §r(member)(set membership) suffices to compute whether the object is §r(in) further §rs(intersection) or §rs(union). Thus we can show that in each case the object is either §r(in) both or none of the §rs(set) on either side of the equation.
+                )
+              )§li(
+                §p(
+                  Let §$(A) and §$(B) be sets, and let §$(x) be an object. We show that §$(x §$in A §$intersection §$p(A §$union B)) if and only if §$(x §$in A)(.)
+                )§cases(
+                  §case(§$(x §$notin A) and §$(x §$notin B))(
+                    If §$(x §$notin A) and §$(x §$notin B)(,) then §$(x §$notin A §$union B)(,) and then §$(x §$notin A §$intersection §$p(A §$union B))(.) As also §$(x §$notin A) by assumption, we have §$(x §$in A §$intersection §$p(A §$union B)) if and only if §$(x §$in A) in this case.
+                  )§case(§$(x §$notin A) and §$(x §$in B))(
+                    If §$(x §$notin A) and §$(x §$in B)(,) then §$(x §$in A §$union B)(,) and then §$(x §$notin A §$intersection §$p(A §$union B))(.) As also §$(x §$notin A) by assumption, we have §$(x §$in A §$intersection §$p(A §$union B)) if and only if §$(x §$in A) in this case.
+                  )§case(§$(x §$in A) and §$(x §$notin B))(
+                    If §$(x §$in A) and §$(x §$notin B)(,) then §$(x §$in A §$union B)(,) and then §$(x §$in A §$intersection §$p(A §$union B))(.) As also §$(x §$in A) by assumption, we have §$(x §$in A §$intersection §$p(A §$union B)) if and only if §$(x §$in A) in this case.
+                  )§case(§$(x §$in A) and §$(x §$in B))(
+                    If §$(x §$in A) and §$(x §$in B)(,) then §$(x §$in A §$union B)(,) and then §$(x §$in A §$intersection §$p(A §$union B))(.) As also §$(x §$in A) by assumption, we have §$(x §$in A §$intersection §$p(A §$union B)) if and only if §$(x §$in A) in this case.
+                  )
+                )§p(
+                  As the claim holds in every case, it holds in general.
+                )§p(
+                  For the sake of brevity, we omit the corresponding proof of §$(A §$union §$p(A §$intersection B) §$seq A).
+                )
+              )§li(
+                §p(
+                  The resulting proofs are rather long and uninspired compared to more natural proofs. They may be correct, but they convey little information about the structure of the problem at hand. Then again, even an uninspired proof is better than no proof at all. So do not be afraid to start slinging those §rs(case distinction) when you cannot make progress with a proof.
+                )§p(
+                  Even though the written form of these diagrams can feel clunky, many people find the diagrams themselves quite elegant. This is a remarkable testament to our ability to process visual information much more naturally than symbolic information. Many mathematicians think about problems in imagery, with the translation into written language as an almost incidental last step. Care must be taken however that the visualization is indeed an accurate representation of the problem; checking whether the visual information can be mechanically translated into a complete account of the situation in written language is a good habit to have.
                 )
               )
             )

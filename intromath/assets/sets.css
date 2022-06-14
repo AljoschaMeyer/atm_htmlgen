@@ -38,7 +38,7 @@
   font-style: initial;
 }
 
-.eulersvg > text.obstruction {
+.eulersvg > text.obstruction, .eulersvg > text.s3 {
   fill: var(--color-obstruction);
 }
 

@@ -91,6 +91,7 @@ body {
   margin-right: calc(-1 * calc(var(--padding-marginalia) + var(--max-width-marginalia)));
   font-size: 0.9rem;
   margin-bottom: 1em;
+  white-space: normal;
 }
 
 .obstruction {

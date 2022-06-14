@@ -105,18 +105,20 @@
                 §li(§cref(conclusion_sets)(2.4 Conclusion))
                 §li(§cref(exercises_sets)(2.5 Exercises))
               )
-            )§div(tocchapter todo)(
+            )§div(tocchapter)(
               §cref(chapter_induction)
               §cref(chapter_induction)(Induction)
               §ol(
-                §li(To)
-                §li(Be)
-                §li(Written)
+                §li(§cref(section_infinity_introduction)(3.1 Infinite Troubles))
+                §li(todo)(§cref(section_induction)(3.2 Structural Induction))
+                §li(todo)(§cref(section_peano)(3.3 Peano Arithmetic))
+                §li(todo)(§cref(conclusion_induction)(3.4 Conclusion))
+                §li(todo)(§cref(exercises_induction)(3.5 Exercises))
               )
             )
           )
         )
-        §div(tocpart)(
+        §div(tocpart todo)(
           §div(tocparttitle)(
             Part 2: Pervasive Patterns
           )§div(tocpartchapters)(

@@ -237,7 +237,7 @@ pub(crate) enum OutInternal {
     HSection(Trace, HSection, Vec<OutInternal>, bool /*no numbering*/),
     Aside(Trace, (), Vec<OutInternal>, bool /*no numbering*/),
     ChapterNav(Trace, (), Vec<OutInternal>),
-    Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String),
+    Box(Trace, BoxParams, Vec<OutInternal>, BoxKind, String, bool /*no numbering*/),
     Fact(Trace, BoxParams, Vec<OutInternal>, String, bool /*no numbering*/),
     Proof(Trace, Proof, Vec<OutInternal>),
     Toggled(Trace, Toggled, Vec<OutInternal>, &'static str, &'static str),
@@ -760,17 +760,21 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             }, &params, args, trace, y);
         }
 
-        OutInternal::Box(trace, params, args, kind, name) => {
+        OutInternal::Box(trace, params, args, kind, name, no_numbering) => {
             arguments_gte(1, &args, &trace)?;
             arguments_lt(3, &args, &trace)?;
 
             let (hsection_level, number) = match kind {
                 BoxKind::Exercise => {
-                    y.state.box_exercise_current_count += 1;
+                    if !no_numbering {
+                        y.state.box_exercise_current_count += 1;
+                    }
                     (y.state.box_exercise_level, y.state.box_exercise_current_count)
                 }
                 BoxKind::Other(_) => {
-                    y.state.box_other_current_count += 1;
+                    if !no_numbering {
+                        y.state.box_other_current_count += 1;
+                    }
                     (y.state.box_other_level, y.state.box_other_current_count)
                 }
                 BoxKind::Proof => (0, 0), // not used, dummy values
@@ -784,6 +788,9 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                 }
             }
             numbering.push_str(&format!("{}", number));
+            if no_numbering {
+                numbering = "".to_string();
+            }
 
             let id = params.0[0].clone();
             y.state.box_current = Some(id.to_string());
@@ -1389,11 +1396,11 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 
             let (sizing_left, sizing_right) = sizing_level(params.0[0]);
             return down_macro(|_p, _n, _y, _trace| Ok(Out::Many(vec![
-                    Out::Text(format!(r###"{}\lbrace "###, sizing_left).into()),
+                    Out::Text(format!(r###"{} \lbrace "###, sizing_left).into()),
                     Out::Argument(0),
-                    Out::Text(r###"\mid"###.into()),
+                    Out::Text(r###" \mid "###.into()),
                     Out::Argument(1),
-                    Out::Text(format!(r###" {}\rbrace "###, sizing_right).into()),
+                    Out::Text(format!(r###" {} \rbrace "###, sizing_right).into()),
                 ])), &params, args, trace, y);
         }
 

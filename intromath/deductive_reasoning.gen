@@ -221,7 +221,7 @@
               Define §$(k §$defeq 5)(.) Then §$$align*(
                   12 + k &§$eq 12 + 5 §$tag(Definition $k$)
                 )(
-                  &§$eq 17, §$tag(Definition $+$)
+                  &§$eq 17, §$tag(§cref(tour_definition_addition)(Definition) $+$)
                 ) and §side(thus)(
                 The intent behind chaining §r(equal)(equal signs) as in §span(nowrap)(§$(§lquote)(12 + k §$eq 12 + 5 §$eq 17)(§rquote)) is to express that the §rs(term) on the two sides of each §$(§lquote)(§$eq)(§rquote) are §r(equal) to each other, and that consequently the first §r(term) is §r(equal) to the last one.§br
                 This interpretation is different from that of each §$(§lquote)(§$eq)(§rquote) expressing a new statement; technically we must write something along the lines of §$(§lquote)(12 + k §$eq 12 + 5)(,) §$(12 + 5 §$eq 17)(,) and thus §$(12 + k §$eq 17)(§rquote) instead.§br
@@ -966,19 +966,19 @@
 
       §hsection["implications"](Implications)(
         §p(
-          §R(deductive reasoning) is about deriving statements from other statements. Whether some statement — the §definex["conclusion"](conclusion)(
+          §R(deductive reasoning) is about deriving statements from other statements. If you claim that some statement follows from another, that claim might either be true or false. In other words, claiming that some statement follows from another, is in itself a statement. We call such a statement an §definex["implication"](implication)(
             §p(
               An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §lquote§ If §$(x §$eq x)(,) then §$(x §$eq x)(§rquote§ .)
             )§p(
               You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume)(§$(x §$eq x)(,) then §$(x §$eq x) by)(assumption).
             )
-          ) — can be derived from some other statement — the §definex["premise"](premise)(
+          ). For an §r(implication) §verbatim(if)(§meta1 then)(§meta2), we say that §meta1 is the §definex["premise"](premise)(
             §p(
               An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §lquote§ If §$(x §$eq x)(,) then §$(x §$eq x)(§rquote§ .)
             )§p(
               You prove an §r(implication) by assuming the §r(premise) to be true and then proving the §r(conclusion): §verbatim(Assume)(§$(x §$eq x)(,) then §$(x §$eq x) by)(assumption).
             )
-          ) — is in itself either true or false, that is, it is a statement itself. Such a statement is called an §definex["implication"](implication)(
+          ) and §meta2 is the §definex["conclusion"](conclusion)(
             §p(
               An §rdef(implication) asserts that from a §rdef(premise) follows a §rdef(conclusion): §lquote§ If §$(x §$eq x)(,) then §$(x §$eq x)(§rquote§ .)
             )§p(
@@ -1005,7 +1005,7 @@
         )
 
         §p(
-          You prove an §r(implication) by assuming the §r(premise) to hold and then proving the §side(§r(conclusion))(If the §r(conclusion) holds even without assuming the §r(premise), the §r(implication) is true, albeit rather uninteresting.). Note that the truth of an §r(implication) has no bearing on the truth of its §r(premise) or its §r(conclusion) in isolation. Considering §cref(tour_implication), there exist both numbers which are §r(less than or equal to) §$(5) as well as numbers that are not §r(less than or equal to) §$(5)(,) same for §$(7)(.) But we do know that there exist no numbers which are both §r(less than or equal to) §$(5) and not §r(less than or equal to) §$(7)(.)
+          You prove an §r(implication) by assuming the §r(premise) to hold and then proving the §side(§r(conclusion))(If the §r(conclusion) holds even without assuming the §r(premise), the §r(implication) is true, albeit rather uninteresting.). In §cref(tour_implication), the §r(premise) is §$(§lquote)(n §$leq 5)(§rquote§ ,) and the §r(conclusion) is §$(§lquote)(n §$leq 7)(§rquote§ .) Note that the truth of an §r(implication) has no bearing on the truth of its §r(premise) or its §r(conclusion) in isolation. Considering §cref(tour_implication), there exist both numbers which are §r(less than or equal to) §$(5) as well as numbers that are not §r(less than or equal to) §$(5)(,) same for §$(7)(.) But we do know that there exist no numbers which are §r(less than or equal to) §$(5) but not §r(less than or equal to) §$(7)(.)
         )§p(
           The proof of §cref(tour_implication) consists primarily of a chain of §lquote§ if §meta1§ , then also §rquote(§meta2) fragments, that is, it consists of many successive §rs(implication). A more readable way of writing such proofs is by separating those statements with double arrows §parens(§verbatim(§$(§$implies))), particularly if the implications connect mathematical symbols rather than natural language statements:
         )
@@ -1020,12 +1020,20 @@
             )
           )
 
-          §theorem*["tour_associativity_addition"](Associativivity of Addition)(
+          §theorem*["tour_associativity_addition"](Associativity of Addition)(
             §p(
               Let §$(a)(,) §$(b)(,) and §$(c) be natural numbers. Then
             )
             §$$(
               a + §$p(b + c) §$eq §$p(a + b) + c.
+            )
+          )
+
+          §definition*["tour_definition_addition"](Addition)(
+            §p(
+              We refrain from giving a precise definition of §$(§$define_notation(+)) in this chapter, simply taking the results of concrete computations for granted.
+            )§p(
+              Chapter 3 contains a precise definition of natural numbers and addition, as well as proofs for the properties we assume to hold in this chapter.
             )
           )
         )
@@ -1042,7 +1050,7 @@
           )(
             §$implies {} && §$p(n + k) + 2 &§$eq 5 + 2 §$tag(§cref(tour_monotonicity_addition)(Monotonicity) $+$)
           )(
-            §$implies {} && §$p(n + k) + 2 &§$eq 7 §$tag(Definition $+$)
+            §$implies {} && §$p(n + k) + 2 &§$eq 7 §$tag(§cref(tour_definition_addition)(Definition) $+$)
           )(
             §$implies {} && n + §$p(k + 2) &§$eq 7 §$tag(§cref(tour_associativity_addition)(Associativity) $+$)
           )(
@@ -1066,7 +1074,7 @@
               §p(
                 Let §$(a)(,) §$(b)(,) and §$(c) be natural numbers.
               )§p(
-                Assume that §$(a §$leq b) and obtain §$(k) such that §$(a + k §$eq b)(.) Furthermore, assume that §$(b §$leq c) and obtain §$(k')§side()(Pronounced §verbatim(k)(prime), a common way of generating new, uninventive names.) such that §$(b + k' §$eq c)(.)
+                Assume that §$(a §$leq b) and obtain §$(k) such that §$(a + k §$eq b)(.) Furthermore, assume that §$(b §$leq c) and obtain §$(k')§side()(Pronounced §verbatim(k)(prime), a common way of generating new, uninventive names. §$(k'') is pronounced §verbatim(k)(double-prime).) such that §$(b + k' §$eq c)(.)
               )§p(
                 Define §$(k'' §$defeq k + k')(.) Then
               )§$$align*(
@@ -1209,7 +1217,7 @@
         )
 
         §p(
-          Eating pumpkin pie in a hot air balloon is rather atypical behavior for squirrels, and yet, we were able to prove it when assuming a falsehood. In fact, we could have proven §em(any) statement, including even that §$(§$value(Alex)) is §em(not) currently eating pumpkin pie in a hot air balloon. The fact that every statement can be proven from a falsehood is vivaciously called the §definex(principle of explosion)(
+          Eating pumpkin pie in a hot air balloon is rather atypical behavior for squirrels, and yet, we were able to prove it when assuming a falsehood. In fact, we could have proven §em(any) statement, including even that §$(§$value(Alex)) is §em(not) currently eating pumpkin pie in a hot air balloon. The fact that every statement can be proven from a falsehood is vivaciously called the §definex["principle_of_explosion"](principle of explosion)(
             §p(
               The §rdef(principle of explosion) states that from a falsehood every statement can be proven.
             )
@@ -1373,7 +1381,7 @@
         )§ul(
           §set_math_id["iff", "bi_implication"]
           §li(§verbatim(§meta1 if and only if §meta2))
-          §li(§verbatim(§meta1 iff §meta2))
+          §li(§verbatim(§meta1 §side(iff)(The second §verbatim(f) is not a misspelling, but a compact way for distinguishing between an §r(implication) (§verbatim(if)) and a §r(bi-implication) (§verbatim(if§strong(f))).) §meta2))
           §li(§verbatim(§meta1 exactly if §meta2))
           §li(§verbatim(§meta1 is equivalent to §meta2))
           §li(§verbatim(§meta1 and §meta2 imply each other))
@@ -1383,7 +1391,7 @@
         §p(
           Furthermore, the concept of statements that §r(mean the same) is exactly that of statements that §side(§r(bi-implication)(imply each other))(We simply did not have the necessary terminology available when first introducing §rs(meta statement). From now on, we use more standard §r(bi-implication) terminology when formulating §rs(meta statement).).
         )§p(
-          Finally, every definition establishes a §r(bi-implication) between the newly-defined terminology and its meaning. By convention, definitions usually leave the §verbatim(only if) implicit. For example, we write §lquote§ a squirrel is a §define["frob1"](frob) §em(if) §rquote(§meta1) rather than §lquote§ a squirrel is a §define["frob2"](frob2)()(frob) §em(if and only if) §rquote(§meta1). This is technically incorrect, but so widely-spread that there is little point in fighting §side(it)(The correct reading is so intuitively obvious to most people that they never even detect the ambiguity. Few people read the definition of §$(§$leq) and conclude that there is no information on whether §$(5 §$leq 4) is true or not.).
+          Finally, every definition establishes a §r(bi-implication) between the newly-defined terminology and its meaning. By convention, definitions usually leave the §verbatim(only if) implicit. For example, we write §lquote§ a squirrel is a §define["frob1"](frob) §em(if) §rquote(§meta1) rather than §lquote§ a squirrel is a §define["frob2"](frob2)()(frob) §em(if and only if) §rquote(§meta1). This is technically incorrect, but so widely spread that there is little point in fighting §side(it)(The correct reading is so intuitively obvious to most people that they never even detect the ambiguity. Few people read the definition of §$(§$leq) and conclude that there is no information on whether §$(5 §$leq 4) is true or not.).
         )
 
       )
