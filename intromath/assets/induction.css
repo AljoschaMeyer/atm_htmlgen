@@ -1,0 +1,22 @@
+.induction_tree_node {
+  position: absolute;
+  font-size: 1.2rem;
+  text-align: center;
+  left: 0;
+  right: 0;
+  background-color: var(--color-bg2);
+  border-radius: 50%;
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+}
+
+.induction_tree_node * {
+  pointer-events: none;
+}
+
+.induction_menu {
+  display: inline-block;
+  font-size: 1rem;
+}

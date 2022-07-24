@@ -429,9 +429,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
         <meta charset="UTF-8">
         <link rel="stylesheet" href="./assets/katex.min.css">
         <link rel="stylesheet" href="./assets/fonts.css">
-        <link rel="stylesheet" href="./assets/main.css">
-        <script src="./assets/floating-ui.core.min.js"></script>
-        <script src="./assets/floating-ui.dom.min.js"></script>"###.into()),
+        <link rel="stylesheet" href="./assets/main.css">"###.into()),
                     Out::Argument(0),
                     Out::Text(r###"
     </head>
@@ -446,7 +444,6 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
 "###.into()),
                     Out::Argument(1),
                     Out::Text(r###"
-                <script src="./assets/previews.js"></script>
             </div>
     </body>
 </html>

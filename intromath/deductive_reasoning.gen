@@ -1,5 +1,10 @@
 §template(
   <title>Deductive Reasoning — Introduction to Mathematics</title>
+
+  <script defer src="./assets/floating-ui.core.min.js" type="module"></script>
+  <script defer src="./assets/floating-ui.dom.min.js" type="module"></script>
+  <script defer src="./assets/tooltips.js" type="module"></script>
+  <script defer src="./assets/previews.js" type="module"></script>
 )(
   §hsection["chapter_deductive_reasoning"](Deductive Reasoning)(
     §p(
