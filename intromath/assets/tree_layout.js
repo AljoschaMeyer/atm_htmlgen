@@ -1,6 +1,7 @@
 import { tex } from "./tex.js";
-
+import { animate, ease_in_out_cubic } from "./animation.js";
 import { register_tooltip_handler } from "./tooltips.js";
+import { lerp, angle_to_x, distance } from "./geometry.js";
 
 export function node(children) {
   return {
@@ -8,43 +9,62 @@ export function node(children) {
   };
 }
 
+const TREE_ANIMATION_DURATION = 400;
+
 export function make_tree(id, cases, layout) {
   const container = document.querySelector(`#${id}`);
 
   let node_id = 0;
   const logical_tree = default_leaf(true);
+  logical_tree.x = 0;
   let root = logical_tree;
 
   const container_drawing = document.createElement("div");
+  const drawing_edges = document.createElement("div");
+  container_drawing.appendChild(drawing_edges);
+  const drawing_vertices = document.createElement("div");
+  container_drawing.appendChild(drawing_vertices);
+
   if (layout) {
     container.appendChild(container_drawing);
-    container_drawing.appendChild(root.drawing);
+    drawing_vertices.appendChild(root.drawing);
   }
 
-  function modify_logical_tree(c, replaced) {
+  function modify_logical_tree(c, t) {
+    const old_children = t.children;
+
     const children = [];
     for (let i = 0; i < cases[c].arity; i++) {
       const child = default_leaf(false);
       children.push(child);
     }
 
-    const r = node(children);
-    children.forEach(child => child.parent = r);
-    r.id = node_id;
-    node_id += 1;
+    t.children = children;
 
-    const parent = replaced.parent;
-    if (parent) {
-      const i = parent.children.indexOf(replaced);
-      parent.children[i] = r;
-    } else {
-      root = r;
-    }
-    r.parent = parent;
+    children.forEach(child => {
+      child.parent = t;
+    });
 
     if (layout) {
-      create_drawing_node(r, c, !r.parent);
-      replaced.drawing.replaceWith(r.drawing);
+      function remove_children(t) {
+        t.children.forEach(c => {
+          c.drawing.remove();
+          c.drawing_edge.remove();
+          remove_children(c);
+        });
+      }
+      old_children.forEach(old_child => {
+        old_child.drawing.remove();
+        old_child.drawing_edge.remove();
+        remove_children(old_child);
+      });
+
+      children.forEach(child => {
+        drawing_vertices.appendChild(child.drawing);
+      });
+
+      render_case_label(t.drawing, c);
+
       determine_threads(root);
       determine_x_offset(root);
       petrify(root);
@@ -145,9 +165,7 @@ export function make_tree(id, cases, layout) {
     }
 
     l.x_offset = distance / -2;
-    // l.drawing.style.transform = `translateX(${l.x_offset}em)`;
     r.x_offset = distance / 2;
-    // r.drawing.style.transform = `translateX(${r.x_offset}em)`;
   }
 
   function leftmost_child_or_thread(t) {
@@ -180,7 +198,29 @@ export function make_tree(id, cases, layout) {
 
   function petrify_(t, x, y) {
     const x_ = x + (t.x_offset ? t.x_offset : 0);
-    t.drawing.style.transform = `translate(${x_}em, ${y * 4}em)`;
+
+    t.old_x = (t.x || (t.x === 0)) ? t.x : t.parent.old_x + (t.x_offset ? t.x_offset : 0);
+
+    t.x = x_;
+    animate(
+      t.drawing,
+      (drawing, time) => {
+        const factor = ease_in_out_cubic(time);
+        const node_x = lerp(t.old_x, t.x, factor);
+        const node_y = y * 4;
+        t.drawing_x = node_x;
+        t.drawing_y = node_y;
+
+        t.drawing.style.transform = `translate(${node_x}em, ${node_y}em)`;
+
+        if (t.parent) {
+          const edge_line = [[node_x, node_y], [t.parent.drawing_x, t.parent.drawing_y]];
+          t.drawing_edge.style.width = `${distance(edge_line[0], edge_line[1])}em`;
+          t.drawing_edge.style.transform = `translate(${node_x + 0.75}em, ${node_y + 0.75 - 0.125}em) rotate(${angle_to_x(edge_line)}rad)`;
+        }
+      },
+      TREE_ANIMATION_DURATION,
+    );
 
     for (const child of t.children) {
       petrify_(child, x_, y + 1);
@@ -205,7 +245,7 @@ export function make_tree(id, cases, layout) {
     const drawing = document.createElement("span");
     drawing.induction_tree = [
       logical_tree,
-      () => {
+      (remove_tooltip) => {
         const menu = document.createElement("div");
         menu.classList.add("induction_menu");
 
@@ -214,6 +254,7 @@ export function make_tree(id, cases, layout) {
           render_case_label(case_btn, i);
           case_btn.addEventListener("click", n => {
             modify_logical_tree(i, logical_tree);
+            remove_tooltip();
           });
           menu.appendChild(case_btn);
         }
@@ -224,20 +265,20 @@ export function make_tree(id, cases, layout) {
     drawing.classList.add("induction_tree_node");
     if (is_root) {
       drawing.classList.add("root");
+    } else {
+      const drawing_edge = document.createElement("div");
+      drawing_edge.classList.add("induction_edge");
+      logical_tree.drawing_edge = drawing_edge;
+      drawing_edges.appendChild(drawing_edge);
     }
 
-    // drawing.appendChild(document.createElement("span"));
-    // drawing.children[0].classList.add("label");
     render_case_label(drawing, c);
 
     // drawing.children[0].textContent = `${logical_tree.id}`; // TODO remove, tmp for debugging
 
-    // drawing.appendChild(document.createElement("span"));
-    // drawing.children[1].classList.add("children");
     for (let i = 0; i < cases[c].arity; i++) {
       create_default_drawing_node(logical_tree.children[i], false)
-      // drawing.children[1].appendChild(logical_tree.children[i].drawing);
-      container_drawing.appendChild(logical_tree.children[i].drawing);
+      drawing_vertices.appendChild(logical_tree.children[i].drawing);
     }
 
     logical_tree.drawing = drawing;
@@ -259,8 +300,8 @@ export function make_tree(id, cases, layout) {
 register_tooltip_handler({
   selector: find_induction_tree,
   start_delay: 200,
-  render: ([_logical_tree, make_menu], _evt) => {
-    return make_menu();
+  render: ([_logical_tree, make_menu], _evt, remove_tooltip) => {
+    return make_menu(remove_tooltip);
   },
 });
 

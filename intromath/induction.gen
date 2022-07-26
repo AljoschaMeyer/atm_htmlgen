@@ -10,6 +10,8 @@
   <script defer src="./assets/previews.js" type="module"></script>
 
   <script defer src="./assets/accessibility.js" type="module"></script>
+  <script defer src="./assets/animation.js" type="module"></script>
+  <script defer src="./assets/geometry.js" type="module"></script>
   <script defer src="./assets/tree_layout.js" type="module"></script>
   <script defer src="./assets/induction.js" type="module"></script>
 )(

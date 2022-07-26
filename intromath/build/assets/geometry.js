@@ -6,6 +6,10 @@ export function eq_point([x1, y1], [x2, y2], epsilon_) {
   return (Math.abs(x1 - x2) <= epsilon) && (Math.abs(y1 - y2) <= epsilon);
 }
 
+export function distance([x1, y1], [x2, y2]) {
+  return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
+
 export function polar_to_cartesian([x, y], r, t) {
   return [r * Math.cos(t) + x, r * Math.sin(t) + y];
 }

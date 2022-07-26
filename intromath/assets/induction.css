@@ -2,11 +2,8 @@
   position: absolute;
   font-size: 1.2rem;
   text-align: center;
-  left: 0;
-  right: 0;
   background-color: var(--color-bg2);
-  border-radius: 50%;
-  display: inline-block;
+  /* display: inline-block; */
   width: 1.5em;
   height: 1.5em;
   border-radius: 50%;
@@ -19,4 +16,12 @@
 .induction_menu {
   display: inline-block;
   font-size: 1rem;
+}
+
+.induction_edge {
+  position: absolute;
+  font-size: 1.2rem; /* same em unit as .induction_tree_node */
+  background-color: var(--color-bg2);
+  height: 0.25em;
+  transform-origin: 0 0.125em;
 }

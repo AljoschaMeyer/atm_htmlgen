@@ -18,8 +18,8 @@ const registry = [];
   selector, // synchronous function: given a DOM node, return the data to pass to the lifecycle functions, or `undefined` to indicate that this handler does not apply to this DOM node
   start_delay, // milliseconds to wait until the tooltip begins rendering
   preprocess_data, // asynchronous, fallible function that converts the output of the `selector` into the input of the `render` function or the `render_err` function
-  render, // synchronous function: given the successful output of preprocess_data and the mouseover event, return a DOM node to display
-  render_err, // synchronous function: given the erroneous output of preprocess_data and the mouseover event, return a DOM node to display
+  render, // synchronous function: given the successful output of preprocess_data, the mouseover event, and a callback for immediately removing the tooltip, return a DOM node to display
+  render_err, // synchronous function: given the erroneous output of preprocess_data, the mouseover event, and a callback for immediately removing the tooltip, return a DOM node to display
 }
 */
 export function register_tooltip_handler(handler) {
@@ -80,7 +80,12 @@ body.addEventListener("mouseover", (evt) => {
             schedule_tooltip_removal(tooltip);
           });
 
-          const tooltip_node = result.ok ? render(result.ok, evt) : render_err(result.err, evt);
+          const remove_tooltip = () => {
+            tooltip.hovered = false; // so that `clean_stack` removes it
+            clean_stack();
+          }
+
+          const tooltip_node = result.ok ? render(result.ok, evt, remove_tooltip) : render_err(result.err, evt, remove_tooltip);
           tooltip_node.classList.add("tooltip");
 
           tooltip_node.addEventListener('mouseenter', () => {
