@@ -280,6 +280,14 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<i class="bgclll5 highlight low">blip</i>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$mid" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\mid"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$top" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\top"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$bot" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\bot"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$neg" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\neg"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$land" {
+                        self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"\land"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"symbol0" {
                         self.pm(|t, p, a| OutInternal::Const(t, p, a, r###"<span class="symbol_container">/span>"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$symbol0" {
@@ -404,6 +412,14 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, false, true, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"Rsdef" {
                         self.pm(|t, p, a| OutInternal::ReferenceDefined(t, p, a, true, true, true), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"base_case" {
+                        self.pm(|t, p, a| OutInternal::TitledList(t, p, a, r###"Base case:"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"base_cases" {
+                        self.pm(|t, p, a| OutInternal::TitledList(t, p, a, r###"Base cases:"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"inductive_case" {
+                        self.pm(|t, p, a| OutInternal::TitledList(t, p, a, r###"Inductive case:"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"inductive_cases" {
+                        self.pm(|t, p, a| OutInternal::TitledList(t, p, a, r###"Inductive cases:"###), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"proven_fact" {
                         self.pm(|t, p, a| OutInternal::Enclose(t, p, a, r###"<div class="proven_fact">"###, "</div>"), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"clfx" {
@@ -610,6 +626,16 @@ impl<'a> Parser<'a> {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "setminus".into(), r###"\setminus"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$symdif" {
                         self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "symdif".into(), r###"\operatorname{\triangle}"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$lamps" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "lamps".into(), r###"\mathcal{L}"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$lamp_blue" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "lamp_blue".into(), r###"\top"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$lamp_pink" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "lamp_pink".into(), r###"\bot"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$lamp_invert" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "lamp_invert".into(), r###"\neg"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
+                    } else if macro_name == b"$lamp_amplify" {
+                        self.pm(|t, p, a| OutInternal::MathMacro(t, p, a, "lamp_amplify".into(), r###"\land"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$twice" {
                         self.pm(|t, p, a| OutInternal::EncloseFunctionApplication(t, p, a, "twice".into(), r###"\operatorname{twice}"###.into()), y, source_offset, parse_parameters, initial_position, trace_start, &mut outs, &mut start, &mut last_non_ws)?;
                     } else if macro_name == b"$powerset" {
@@ -865,9 +891,9 @@ static EULER_SVG_EQUALITY: &str = r###"<svg version="1.1" viewBox="-100 -100 200
 
 <text x="0" y="-70">&#xe904;</text>
 <text x="66.57" y="-21.6311">&#xe903;</text>
-<text class="obstruction" x="41.1449" y="56.6311">&#xe902;</text>
-<text class="obstruction" x="-41.1449" y="56.6311">&#xe901;</text>
-<text class="obstruction" x="-66.57" y="-21.6311">&#xe900;</text>
+<text class="s3" x="41.1449" y="56.6311">&#xe902;</text>
+<text class="s3" x="-41.1449" y="56.6311">&#xe901;</text>
+<text class="s3" x="-66.57" y="-21.6311">&#xe900;</text>
 </svg>"###;
 
 static EULER_SVG_INTERSECTION: &str = r###"<svg version="1.1" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" class="eulersvg">

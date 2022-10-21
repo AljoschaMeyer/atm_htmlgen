@@ -7,7 +7,7 @@ const layout = {
 };
 
 make_tree(
-  "tree_test",
+  "first_induction_tree",
   [
     {
       tex: true,
@@ -31,4 +31,25 @@ make_tree(
     },
   ],
   layout,
+  (t, children_eval) => {
+    function handle(t, bool) {
+      t.drawing.classList.add(bool ? "true" : "false");
+      t.drawing.classList.remove(!bool ? "true" : "false");
+      if (t.drawing_edge) {
+        t.drawing_edge.classList.add(bool ? "true" : "false");
+        t.drawing_edge.classList.remove(!bool ? "true" : "false");
+      }
+      return bool;
+    }
+
+    if (t.c === 0) {
+      return handle(t, true);
+    } else if (t.c === 1) {
+      return handle(t, false);
+    } else if (t.c === 2) {
+      return handle(t, !children_eval[0]);
+    } else {
+      return handle(t, children_eval[0] && children_eval[1]);
+    }
+  }
 );

@@ -148,12 +148,12 @@ h5, h6 {
     margin-bottom: 0;
 }
 
-p, .cases {
+p, .cases, div.p {
   margin-bottom: 1em;
   margin-top: 0;
 }
 
-.assumptions + p {
+.assumptions + p + div.p {
     margin-top: 0;
 }
 
@@ -240,7 +240,7 @@ dfn {
     font-style: normal;
 }
 
-:not(section) > p:last-child {
+:not(section) > p:last-child, :not(section) > div.p:last-child {
     margin-bottom: 0em;
 }
 

@@ -1,3 +1,10 @@
+.induction_tree {
+  height: 17rem;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .induction_tree_node {
   position: absolute;
   font-size: 1.2rem;
@@ -7,6 +14,10 @@
   width: 1.5em;
   height: 1.5em;
   border-radius: 50%;
+}
+
+.induction_tree_node.true, .induction_tree_node.false {
+  border: 1px solid;
 }
 
 .induction_tree_node * {
@@ -24,4 +35,22 @@
   background-color: var(--color-bg2);
   height: 0.25em;
   transform-origin: 0 0.125em;
+}
+
+.induction_tree_node.true {
+  color: var(--cd3);
+  background-color: var(--clll3);
+}
+
+.induction_edge.true {
+  /* background-color: var(--clll3); */
+}
+
+.induction_tree_node.false {
+  color: var(--cd5);
+  background-color: var(--clll5);
+}
+
+.induction_edge.false {
+  /* background-color: var(--clll5); */
 }

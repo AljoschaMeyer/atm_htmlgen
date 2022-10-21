@@ -24,26 +24,133 @@
       §p(
         It turns out that constructing an infinite §r(set) from first principles is not a trivial task. We cannot just list all its §rs(element), because we want our mathematical notation itself to be of finite size. Instead, we can use the technique we introduced for §r(set builder notation): we can define a §r(set) by giving a §r(predicate) that is satisfied by exactly the §rs(member) of the §r(set).
       )§p(
-        Perhaps the simplemost §r(predicate) that is satisfied by infinitely many objects is that of being a §side(§r(set))(Remember that we can think of every object as a convenient notation for some §r(set) that is distinct from any other §r(set) under consideration, so this §r(predicate) is effectively satisfied by everything.); consider §$(§$set_builder(x)(§$text($x$ is a §r(set)))), the §r(set) of all §rs(set). This construct looks innocuous enough, but closer inspection reveals some problematic properties. The §r(set) of all §rs(set) is a §r(set) itself. And as such, it has to contain itself.
+        A simple §r(predicate) that is satisfied by infinitely many objects is that of being a §r(set); consider §$(§$set_builder(x)(§$text($x$ is a §r(set)))), the §r(set) of all §rs(set). This construct looks innocuous enough, but closer inspection reveals some problematic properties. The §r(set) of all §rs(set) is a §r(set) itself. And as such, it has to contain itself.
       )§p(
-        A §r(set) that contains itself is already unsettling enough, as it makes the very natural notion of grouping objects together feel a lot less natural. But by getting slightly more creative with our choice of §r(predicate), we can reveal even more problematic inconsistencies. Consider §$(Z §$defeq §$set_builder(X)(X §$notin X))(,) the §r(set) of all §rs(set) which do not contain themselves. Does this set contain itself?
+        A §r(set) that contains itself is already unsettling, as it makes the very natural notion of grouping objects together feel a lot less natural. But we can reveal even more problematic inconsistencies by getting slightly more creative with our choice of §r(predicate). Consider §$(Z §$defeq §$set_builder(X)(X §$notin X))(,) the §r(set) of all §rs(set) which do not contain themselves. Does this set contain itself?
       )§p(
         Suppose §$(Z §$in Z)(,) then by definition of §$(Z), we know that §$(Z §$notin Z) (as any §r(member) of §$(Z) is known to not contain itself), which is a contradiction. So suppose that §$(Z §$notin Z)(,) then it belongs to §$(Z) by definition of §$(Z)(,) which is again a §side*(contradiction)(In unrelated news: this sentence is a lie.). By the §r(principle of bivalence), one of the two cases must be true. Regardless of which it is, we have a contradiction. And by the §r(principle of explosion), we then know that every statement is true. Math is solved, the end. Time to practice the violin instead.
       )§p(
-        Or, we can of course forbid defining §rs(set) via arbitrary §rs(predicate), which seems to be a more constructive way forward. In order to not lose the convenience of §r(set builder notation), we can still allow definitions via §rs(predicate), as long as the §r(predicate) is only applied to §rs(member) of some pre-existing §r(set)(set(s)). §R(intersection), §r(union), and §r(set difference) are all defined via §rs(predicate), but the predicate need only be applied to the §rs(element) of the two §rs(set) to be §side(combined)(
-          The astute reader may notice that the definition of §rs(power set) violates this constraint; for each §r(set) §$(X)(,) there exists §$(y §$in §$powerset(X)) such that §$(y §$notin X) (for example, §$(X) itself). And while §rs(power set) do not lead to inconsistencies, they lie at the source of some rather unexpected properties that we will study in §cref(chapter_cardinality).
+        Apparently, it should not be possible to define §rs(set) via arbitrary §rs(predicate). In order to not lose the convenience of §r(set builder notation), we can still allow definitions via §rs(predicate), as long as the §r(predicate) is only applied to §rs(member) of some pre-existing §r(set)(set(s)). §R(intersection), §r(union), and §r(set difference) are all defined via §rs(predicate), but the predicate need only be applied to the §rs(element) of the two §rs(set) to be §side(combined)(
+          The astute reader may notice that the definition of §rs(power set) violates this constraint; for each §r(set) §$(X)(,) there exists §$(y §$in §$powerset(X)) such that §$(y §$notin X) (for example, §$(X) itself). And while §rs(power set) do not lead to inconsistencies, they do lie at the source of some rather unexpected properties that we will study in §cref(chapter_cardinality).
         ).
       )§p(
-        Having narrowly prevented mathematics from self-destructing, we unfortunately must admit that we are now unable to construct §rs(set) of infinite size again. For that reason, we introduce a new way of defining §rs(set) in the next section, a technique that allows us to describe infinite §rs(set) without introducing any inconsistencies.
+        Having narrowly prevented mathematics from self-destructing, we must unfortunately admit that we are still unable to construct §rs(set) of infinite size. For that reason, we introduce a new way of defining §rs(set) in the next section, a technique that allows us to describe infinite §rs(set) without introducing any inconsistencies.
       )
     )
 
     §hsection["section_induction"](Structural Induction)(
       §p(
-        To be written.
+        The core idea behind safely defining an infinite §r(set) is to start out with some non-empty §r(set), and to allow constructing new, larger §rs(member) of the §r(set) from already existing §rs(member) of the set. Any such newly constructed §r(member) can then be used to construct even larger §rs(member), ad infinitum.
+      )§p(
+        Consider the following example of a set of blue and pink lamps. We start out with two different kinds of simple lamps; one kind emits blue light, the other kind emits pink light. We also have §em(inverters), which can be placed over any lamp to switch its color. Finally, we can combine any two lamps with a §em(pink-amplifier), the resulting lamp is pink if any of its two sub-lamps is pink, or blue if both sub-lamps are blue. §cref(example_structural_induction) lets you build such lamps.
       )
 
-      §div{"style": "height: 20rem; position: relative"}(tree_test)()()
+      §example["example_structural_induction"](Building Lamps)(
+        §captioned(
+          §div(first_induction_tree)(induction_tree)()
+        )(
+          §p(
+            A hierarchical depiction of a lamp. Hover over any circle to modify the lamp. §verbatim(§$(§$top)) denotes a simple blue lamp, §verbatim(§$(§$bot)) a simple pink lamp, §verbatim(§$(§$neg)) an inverter, and §verbatim(§$(§$land)) a pink-amplifier.
+          )§p(
+            The color of the topmost circle indicates the color of the lanp as a whole.
+          )
+        )
+      )
+
+      §p(
+        This silly example demonstrates several interesting properties. Clearly, there are infinitely many distinct lamps, as you can, for example, create arbitrarily long chains of inverters. But not only have we defined an infinite §r(set) of lamps, we have also defined how to assign a color to each of its infinitely many §rs(member). And despite there being infinitely many lamps to consider, you probably have a good understanding of some properties they all share; for example, you will agree that every lamp that consists only of simple pink lamps and pink-amplifiers is going to be a pink itself. Take a moment and try to pinpoint exactly why that statement must be true even though you cannot check it for every single possible lamp.
+      )§p(
+        We will now take a detailed look at the traditional mathematical notation for defining infinite §rs(set) and working with them.
+      )
+
+      §hsection["subsection_syntax"](Syntax)(
+        §p(
+          An §side(§define["inductive_definition_set", "inductively"](inductively)(inductively defined set)(inductively defined set))(Entirely unrelated to the concept of §r(inductive reasoning).) is given by a number of §define["inductive_base_case"](base case)(base case)(base cases) that specify some of the §rs(member) of the §r(set), and a number of §define["inductive_cases"](inductive case)(inductive case)(inductive cases) that specify how to create further §rs(member) of the §r(set) from §rs(member) that are already known to belong to the §r(set).
+        )
+
+        §example["lamp"](Lamps)(
+          §set_math_id["lamps", "lamp"]
+          §set_math_id["lamp_blue", "lamp"]
+          §set_math_id["lamp_pink", "lamp"]
+          §set_math_id["lamp_invert", "lamp"]
+          §set_math_id["lamp_amplify", "lamp"]
+          §p(
+            The §r(set) §$(§$define_notation(§$lamps)) of §define(lamp)(lamps)(lamps) is defined §r(inductively):
+          )§base_cases(
+            §define(simple blue lamp)(simple blue lamps)(Simple blue lamp): §$(§$define_notation(§$lamp_blue) §$in §$lamps)(.)
+          )(
+            §define(simple pink lamp)(simple pink lamps)(Simple pink lamp): §$(§$define_notation(§$lamp_pink) §$in §$lamps)(.)
+          )§inductive_cases(
+            §define(inverter)(inverters)(Inverter): If §$(l §$in §$lamps), then §$(§$define_notation(§$lamp_invert)l §$in §$lamps)(.)
+          )(
+            §define(pink-amplifier)(pink-amplifiers)(Pink-amplifier): If §$(l_0, l_1 §$in §$lamps), then §$(l_0 §$define_notation(§$lamp_amplify) l_1 §$in §$lamps)(.)§side*()(
+              §div{"style": "height: 11em;"}(induction_tree)(
+                §div{"style": "transform: translateX(calc(50% - 0.75em));"}(
+                  §span{"style": "display: inline-block; transform: translateX(calc(0.75em - 50%));"}(§$(§$lamp_blue §$lamp_amplify §$lamp_invert§$lamp_pink)(:))
+                  §div(
+                    §div{"style": "width: 3.20156em; transform: translate(-1.25em, 3.125em) rotate(-0.896055rad);"}(induction_edge)()
+                    §div{"style": "width: 3.20156em; transform: translate(2.75em, 3.125em) rotate(-2.24554rad);"}(induction_edge)()
+                    §div{"style": "width: 2.5em; transform: translate(2.75em, 5.625em) rotate(-1.5708rad);"}(induction_edge)()
+                  )§div(
+                    §span{"style": "transform: translate(0em);"}(induction_tree_node root)(
+                      §$(§$lamp_amplify)
+                    )§span{"style": "transform: translate(-2em, 2.5em);"}(induction_tree_node)(
+                      §$(§$lamp_blue)
+                    )§span{"style": "transform: translate(2em, 2.5em);"}(induction_tree_node)(
+                      §$(§$lamp_invert)
+                    )§span{"style": "transform: translate(2em, 5em);"}(induction_tree_node)(
+                      §$(§$lamp_pink)
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+
+        §p(
+          For example, §$(§$lamp_blue §$lamp_amplify §$lamp_invert§$lamp_pink §$in §$lamps)(,) because §$(§$lamp_blue §$in §$lamps) (§r(simple blue lamp)) and §$(§$lamp_invert§$lamp_pink §$in §$lamps) (§r(inverter), as §$(§$lamp_pink §$in §$lamps) (§r(simple pink lamp))). The §r(set) §$(§$lamps) is exactly the §r(set) of all the objects that can be constructed this way.
+        )§p(
+          Notation such as §verbatim(§$(§$lamp_blue §$lamp_amplify §$lamp_invert§$lamp_pink §$in §$lamps))§side*()(
+            §venn_union
+          ) compresses the hierarchical structure of §rs(lamp) into a sequence of symbols that can be read from start to finish. This compression can sometimes introduce ambiguity, see in the margin the two different interpretations of §verbatim(§$(§$lamp_blue §$lamp_amplify §$lamp_blue §$lamp_amplify §$lamp_pink)). Similar to how we resolve ambiguity with §r(set) §rs(binary operator)(operators), we use parentheses to disambiguate: §verbatim(§$(§$p(§$lamp_blue §$lamp_amplify §$lamp_blue) §$lamp_amplify §$lamp_pink)) and §verbatim(§$(§$lamp_blue §$lamp_amplify §$p(§$lamp_blue §$lamp_amplify §$lamp_pink))) denote the two possible groupings.
+        )§p(
+          §Rs(element) of an §r(inductively)(inductively defined set) must always be given unambiguously. §verbatim(§$(§$lamp_blue §$lamp_amplify §$lamp_blue §$lamp_amplify §$lamp_pink)) is just as invalid a §r(lamp) as §verbatim(§$(§$lamp_pink §$lamp_invert §$lamp_amplify)) or §verbatim(§$(§$value(Alex))) are.
+        )§p(
+          Even though you will read and write flat sequences of symbols far more often than looking at or drawing hierarchical representations of objects, you should always keep in mind the hierarchy behind the notation. §cref(example_structural_notation) lets you manipulate both hierarchical representation and flat notation. Play around with it to develop your sense of how they relate to each other. As an exercise, try to find the three different valid groupings of §verbatim(§$(§$lamp_invert§$lamp_invert§$lamp_blue §$lamp_amplify §$lamp_pink)).
+        )
+
+        §example["example_structural_notation"](Flat Notation and Hierarchy)(
+          §captioned(
+            To be implemented.
+
+          )(
+            §p(
+              A hierarchical depiction of a §r(lamp), together with the corresponding flat notation. Hover over any symbol to modify the §r(lamp), both in the traditional notation or in the hierarchical depiction.
+            )
+          )
+        )
+
+        §p(
+          Perhaps surprisingly, the definition of §rs(lamp) does not involve their colors at all. All we have defined so far is a §r(set) of certain sequences of symbols according to some hierarchical structure, without any associated meaning. In general, such §rs(set) of hierarchy-encoding symbol sequences are called §define["syntax"](syntax)(
+            §p(
+              §Rdef(syntax) is the structure of §r(inductively) defined objects, excluding any meaning that might be assigned to these symbols. §R(syntax)(Syntactic) objects have no properties beyond their inherent structure; two such objects are §r(equal), if they have identical structure.
+            )
+          ). §R(syntax)(Syntactic) objects have no properties beyond their inherent structure; two such objects are §r(equal), if they have identical structure.
+        )§p(
+          All mathematical reasoning starts out from defining some purely §r(syntax)(syntactic) objects without intrinsic meaning. We can then ascribe meaning to them, as demonstrated in the following section where we introduce the notion of the color of a §r(lamp).
+        )
+
+      )
+
+      §hsection["subsection_semantics"](Semantics)(
+        §p(
+          To be written.
+        )
+
+
+      )
+
 
 
 
@@ -70,3 +177,6 @@
     §chapternav
   )
 )
+
+- syntactically driven meaning: semantics
+- Even proofs are syntactically driven -> art of playing stupid

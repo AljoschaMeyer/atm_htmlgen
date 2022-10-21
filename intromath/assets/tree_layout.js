@@ -11,7 +11,7 @@ export function node(children) {
 
 const TREE_ANIMATION_DURATION = 400;
 
-export function make_tree(id, cases, layout) {
+export function make_tree(id, cases, layout, bottom_up_function) {
   const container = document.querySelector(`#${id}`);
 
   let node_id = 0;
@@ -20,6 +20,7 @@ export function make_tree(id, cases, layout) {
   let root = logical_tree;
 
   const container_drawing = document.createElement("div");
+  container_drawing.style.transform = "translateX(calc(50% - 0.75em))"
   const drawing_edges = document.createElement("div");
   container_drawing.appendChild(drawing_edges);
   const drawing_vertices = document.createElement("div");
@@ -28,6 +29,10 @@ export function make_tree(id, cases, layout) {
   if (layout) {
     container.appendChild(container_drawing);
     drawing_vertices.appendChild(root.drawing);
+  }
+
+  if (bottom_up_function) {
+    bottom_up(root, bottom_up_function);
   }
 
   function modify_logical_tree(c, t) {
@@ -40,6 +45,7 @@ export function make_tree(id, cases, layout) {
     }
 
     t.children = children;
+    t.c = c;
 
     children.forEach(child => {
       child.parent = t;
@@ -68,6 +74,10 @@ export function make_tree(id, cases, layout) {
       determine_threads(root);
       determine_x_offset(root);
       petrify(root);
+    }
+
+    if (bottom_up_function) {
+      bottom_up(root, bottom_up_function);
     }
   }
 
@@ -207,7 +217,7 @@ export function make_tree(id, cases, layout) {
       (drawing, time) => {
         const factor = ease_in_out_cubic(time);
         const node_x = lerp(t.old_x, t.x, factor);
-        const node_y = y * 4;
+        const node_y = y * 2.5;
         t.drawing_x = node_x;
         t.drawing_y = node_y;
 
@@ -225,6 +235,10 @@ export function make_tree(id, cases, layout) {
     for (const child of t.children) {
       petrify_(child, x_, y + 1);
     }
+  }
+
+  function bottom_up(t, f) {
+    return f(t, t.children.map(child => bottom_up(child, f)));
   }
 
   function default_leaf(is_root) {

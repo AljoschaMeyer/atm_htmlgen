@@ -279,6 +279,7 @@ pub(crate) enum OutInternal {
     EquationVenn3(Trace, (), Vec<OutInternal>, Term, Term),
     PolarX(Trace, (f64, f64, f64), Vec<OutInternal>),
     PolarY(Trace, (f64, f64, f64), Vec<OutInternal>),
+    TitledList(Trace, (), Vec<OutInternal>, &'static str),
 }
 
 impl OutInternal {
@@ -747,12 +748,12 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
                     Out::Text(r###"<span class="nowrap">"###.into()),
                     Out::Argument(0),
                     if no_numbering {
-                        Out::Text(r###"</span><span class="aside">"###.into())
+                        Out::Text(r###"</span><div class="aside">"###.into())
                     } else {
-                        Out::Text(format!(r###"<span class="aside_counter">{}</span></span><span class="aside"><span class="aside_counter">{}</span>"###, numbering, numbering).into())
+                        Out::Text(format!(r###"<span class="aside_counter">{}</span></span><div class="aside"><span class="aside_counter">{}</span>"###, numbering, numbering).into())
                     },
                     Out::Argument(1),
-                    Out::Text(r###"</span>"###.into()),
+                    Out::Text(r###"</div>"###.into()),
                     ]));
             }, &params, args, trace, y);
         }
@@ -934,7 +935,7 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             arguments_exact(1, &args, &trace)?;
 
             let r = up_macro(|_p, args, y, _trace| {
-                let p_html = format!(r###"<p>{}</p>"###, args[0]);
+                let p_html = format!(r###"<div class="p">{}</div>"###, args[0]);
                 y.state.create_boxless_previews(&p_html)?;
                 return Ok(p_html.into());
             }, &params, args, trace, y);
@@ -1168,6 +1169,26 @@ pub(crate) fn expand(out: OutInternal, y: &mut Yatt) -> Result<Rope, ExpansionEr
             } else {
                 return Ok(Rope::new());
             }
+        }
+
+        OutInternal::TitledList(trace, params, args, title) => {
+            return down_macro(|_p, n, _y, _trace| {
+                let mut items = vec![];
+                for i in 0..n {
+                    items.push(Out::Text("<li>".into()));
+                    items.push(Out::Argument(i));
+                    items.push(Out::Text("</li>".into()));
+                };
+
+                return Ok(Out::Many(vec![
+                        Out::Text("<div>".into()),
+                        Out::Text(title.into()),
+                        Out::Text("</ul>".into()),
+                        Out::Many(items),
+                        Out::Text("</ul>".into()),
+                        Out::Text("</div>".into()),
+                    ]));
+            }, &params, args, trace, y);
         }
 
         OutInternal::Enclose(trace, params, args, pre, post) => {

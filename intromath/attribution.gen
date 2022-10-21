@@ -1,6 +1,8 @@
 §template(
   <title>Attributions — Introduction to Mathematics</title>
 
+  <link rel="stylesheet" href="./assets/sets.css">
+
   <style>
     @font-face {
       font-family: 'speciesicons';
