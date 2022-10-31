@@ -52,7 +52,7 @@
           §p(
             A hierarchical depiction of a lamp. Hover over any circle to modify the lamp. §verbatim(§$(§$top)) denotes a simple blue lamp, §verbatim(§$(§$bot)) a simple pink lamp, §verbatim(§$(§$neg)) an inverter, and §verbatim(§$(§$land)) a pink-amplifier.
           )§p(
-            The color of the topmost circle indicates the color of the lanp as a whole.
+            The color of the topmost circle indicates the color of the lamp as a whole.
           )
         )
       )
@@ -136,7 +136,7 @@
             §p(
               §Rdef(syntax) is the structure of §r(inductively) defined objects, excluding any meaning that might be assigned to these symbols. §R(syntax)(Syntactic) objects have no properties beyond their inherent structure; two such objects are §r(equal), if they have identical structure.
             )
-          ). §R(syntax)(Syntactic) objects have no properties beyond their inherent structure; two such objects are §r(equal), if they have identical structure.
+          ). §R(syntax)(Syntactic) objects have no properties beyond their inherent structure; two such objects are §r(equal) if they have identical structure.
         )§p(
           All mathematical reasoning starts out from defining some purely §r(syntax)(syntactic) objects without intrinsic meaning. We can then ascribe meaning to them, as demonstrated in the following section where we introduce the notion of the color of a §r(lamp).
         )

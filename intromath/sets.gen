@@ -14,7 +14,12 @@
   <script defer src="./assets/geometry.js" type="module"></script>
   <script defer src="./assets/bitvec.js" type="module"></script>
   <script defer src="./assets/svg.js" type="module"></script>
-  <script defer src="./assets/euler_diagrams.js" type="module"></script>
+  <script defer src="./assets/trees.js" type="module"></script>
+  <script defer src="./assets/tex.js" type="module"></script>
+  <script defer src="./assets/expressions.js" type="module"></script>
+  <script defer src="./assets/random.js" type="module"></script>
+
+  <script defer src="./assets/chapter_sets.js" type="module"></script>
 
   <style>
     §powerset_colors
@@ -734,7 +739,7 @@
         )
 
         §p(
-          The grouping does not affect the result however when they are only §rs(intersection) or only §rs(union) involved.
+          The grouping does not affect the result however when there are only §rs(intersection) or only §rs(union) involved.
         )
 
         §fact_marginalia(

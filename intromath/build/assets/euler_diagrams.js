@@ -27,8 +27,24 @@ import {
 } from "./geometry.js";
 
 import {
-  convex_path_string
+  convex_path_string,
 } from "./svg.js";
+
+import {
+  random_bool, random_int, random_from_array
+} from "./random.js";
+
+import {
+  dfs, is_leaf, new_tree, push_child, height, count_leaves,
+} from "./trees.js";
+
+import {
+  count_node_kind,
+  expr_to_solution_tex,
+  expr_to_tex,
+  has_all_operators,
+  new_expr
+} from "./expressions.js";
 
 const svgns = "http://www.w3.org/2000/svg";
 const R = 10;
@@ -196,7 +212,7 @@ function set_tex_vanilla(s) {
 }
 
 const container_vanilla = document.querySelector("#container_euler_vanilla");
-euler(container_vanilla, () => [false, false, false, false, false], () => {});
+euler(container_vanilla, () => [false, false, false, false, false], () => { });
 
 const container_equality = document.querySelector("#container_euler_equality");
 euler(container_equality, bitvec_xor, (container, s1, s2, s3) => {
@@ -340,7 +356,7 @@ const container_powerset = document.querySelector("#container_euler_powerset");
     } else {
       tex(`${tex_prefix}\\big\\{\\\\ \\hspace{2em}
   ${lines.map(sets => sets.join(", ")).join(", \\\\ \\hspace{2em}")}
-\\\\\\big\\}`, results, {display: true, fleqn: true});
+\\\\\\big\\}`, results, { display: true, fleqn: true });
     }
 
   }
@@ -506,140 +522,92 @@ function make_set_morph(poly_from, r_from, poly_to, r_to) {
   };
 }
 
+
+
 function random_bin_tree(target_inner, gen_leaf, gen_inner, state) {
   if (target_inner === 0) {
     return gen_leaf(state);
   } else {
     const left = random_int(target_inner, state);
-    return {
-      "inner": {
-        l: random_bin_tree(left, gen_leaf, gen_inner, state),
-        node: gen_inner(state),
-        r: random_bin_tree(target_inner - (left + 1), gen_leaf, gen_inner, state),
-      },
-    };
+    const t = new_expr(gen_inner(state));
+    push_child(t, random_bin_tree(left, gen_leaf, gen_inner, state));
+    push_child(t, random_bin_tree(target_inner - (left + 1), gen_leaf, gen_inner, state));
+    return t;
   }
-}
-
-function random_int(max_exclusive) {
-  return Math.floor(Math.random() * max_exclusive);
-}
-
-function coin_flip() {
-  return Math.random() < 0.5;
 }
 
 function random_set_5(state) {
-  return [coin_flip(state), coin_flip(state), coin_flip(state), coin_flip(state), coin_flip(state)];
+  return [random_bool(state), random_bool(state), random_bool(state), random_bool(state), random_bool(state)];
 }
 
-function random_from_array(arr, state) {
-  return arr[random_int(arr.length, state)];
-}
 
-function dfs(inner_pre, inner_post, leaf, node, parent_pre) {
-  if (node["inner"]) {
-    const pre = inner_pre ? inner_pre(node.inner, parent_pre) : undefined;
-    const left = dfs(inner_pre, inner_post, leaf, node.inner.l, pre);
-    const right = dfs(inner_pre, inner_post, leaf, node.inner.r, pre);
-    return inner_post ? inner_post(node.inner, left, pre, right) : undefined;
-  } else {
-    return leaf ? leaf(node.leaf) : node;
+
+function set_ops(node, cs) {
+  switch (node) {
+    case "intersection": return bitvec_and(...cs);
+    case "union": return bitvec_or(...cs);
+    case "difference": return bitvec_without(...cs);
+    case "symmetric_difference": return bitvec_xor(...cs);
   }
 }
 
-function eval_op(op, left, right) {
+function tex_op(op, cs) {
+  let op_tex = "";
   switch (op) {
-    case "intersection": return bitvec_and(left, right);
-    case "union": return bitvec_or(left, right);
-    case "difference": return bitvec_without(left, right);
-    case "symmetric_difference": return bitvec_xor(left, right);
-
+    case "intersection":
+      op_tex = intersection;
+      break;
+    case "union":
+      op_tex = union;
+      break;
+    case "difference":
+      op_tex = setminus;
+      break;
     default: throw "unknown operator";
   }
+  return `${cs[0]} ${op_tex} ${cs[1]}`;
 }
 
-function eval_node(node) {
-  return dfs(null, (n, l, _p, r) => {return eval_op(n.node, l, r)}, (x) => x.leaf.set, node);
+function associative_op(op) {
+  return (op === "intersection") || (op === "union") || (op === "symmetric_difference");
 }
 
-function has_all_operators(node, ops) {
-  const found_ops = {};
 
-  dfs(n => {found_ops[n.node] = true}, null, null, node);
-
-  let all = true;
-  ops.forEach(op => {
-    all = all && !!found_ops[op];
-  });
-
-  return all;
-}
-
-function has_two_differences(node) {
-  let differences = 0;
-
-  dfs(n => {
-    if (n.node === "difference") {
-      differences += 1;
-    }
-  }, null, null, node);
-
-  return differences >= 2;
-}
-
-function height(node) {
-  return dfs(null, (_n, l, _p, r) => {
-    return 1 + Math.max(l, r);
-  }, () => 0, node);
-}
-
-function leaves(node) {
-  let n = 0;
-  dfs(null, null, () => {n += 1;}, node);
-  return n;
-}
-
-function eval_one_step(node) {
-  return dfs(null, (n, l, _p, r) => {
-    if (!n.l["inner"] && !n.r["inner"]) {
-      return {
-        leaf: {
-          set: eval_op(n.node, l.leaf.set, r.leaf.set),
-          fresh: true,
-        }
-      };
-    } else {
-      return {
-        "inner": {l, node: n.node, r},
-      };
-    }
-  }, null, node);
+function has_two_differences(t) {
+  return count_node_kind(t, "difference") >= 2;
 }
 
 function random_leaf() {
-  return {leaf: {set: random_set_5()}};
+  return new_expr(random_set_5());
 }
 
 function practice_intersection_union_tree() {
   while (true) {
-    const expr = random_bin_tree(3, random_leaf, () => {return random_from_array(["intersection", "union"]);});
+    const expr = random_bin_tree(3, random_leaf, () => { return random_from_array(["intersection", "union"]); });
     if (!has_all_operators(expr, ["intersection", "union"])) {
       continue
     }
 
     let interesting = true;
 
-    dfs(null, (n, l, _p, r) => {
-      const result = eval_op(n.node, l, r);
-      if (bitvec_eq(result, l) && Math.random() <= 0.7) {
-        interesting = false;
-      }
-      if (bitvec_eq(result, r) && Math.random() <= 0.7) {
-        interesting = false;
-      }
-      return result;
-    }, null, expr);
+    dfs(
+      null,
+      (t, cs) => {
+        if (!is_leaf(t)) {
+          const result = set_ops(t.node, cs);
+          if (bitvec_eq(result, cs[0]) && Math.random() <= 0.7) {
+            interesting = false;
+          }
+          if (bitvec_eq(result, cs[1]) && Math.random() <= 0.7) {
+            interesting = false;
+          }
+          return result;
+        } else {
+          return t.node;
+        }
+      },
+      expr,
+    );
 
     if (interesting) {
       return expr;
@@ -649,112 +617,39 @@ function practice_intersection_union_tree() {
 
 function practice_set_difference_tree() {
   while (true) {
-    const expr = random_bin_tree(3, random_leaf, () => {return random_from_array(["intersection", "union", "difference"]);});
+    const expr = random_bin_tree(3, random_leaf, () => { return random_from_array(["intersection", "union", "difference"]); });
     if (!has_two_differences(expr)) {
       continue
     }
 
     let interesting = true;
 
-    dfs(null, (n, l, _p, r) => {
-      const result = eval_op(n.node, l, r);
-      if (bitvec_eq(result, l) && Math.random() <= 0.7) {
-        interesting = false;
-      }
-      if (bitvec_eq(result, r) && Math.random() <= 0.7) {
-        interesting = false;
-      }
-      if (bitvec_eq(result, empty_s()) && Math.random() <= 0.8) {
-        interesting = false;
-      }
-      return result;
-    }, null, expr);
+    dfs(
+      null,
+      (t, cs) => {
+        if (!is_leaf(t)) {
+          const result = set_ops(t.node, cs);
+          if (bitvec_eq(result, cs[0]) && Math.random() <= 0.7) {
+            interesting = false;
+          }
+          if (bitvec_eq(result, cs[1]) && Math.random() <= 0.7) {
+            interesting = false;
+          }
+          if (bitvec_eq(result, empty_s()) && Math.random() <= 0.8) {
+            interesting = false;
+          }
+          return result;
+        } else {
+          return t.node;
+        }
+      },
+      expr,
+    );
 
     if (interesting) {
       return expr;
     }
   }
-}
-
-function tex_op(op) {
-  switch (op) {
-    case "intersection": return intersection;
-    case "union": return union;
-    case "difference": return setminus;
-    case "symmetric_difference": return "TODO";
-
-    default: throw "unknown operator";
-  }
-}
-
-function associative_op(op) {
-  return (op === "intersection") || (op === "union") || (op === "symmetric_difference");
-}
-
-let color_top = -1;
-let color_low = -1;
-function expr_to_tex(expr, not_a_set, associative, do_highlight) {
-  const h = height(expr);
-  let outermost = true;
-  return dfs(
-    (n, [parent_op, _, _2]) => {
-      if (n.l["inner"]) {
-        n.l["inner"].is_left = true;
-      } else {
-        n.l["leaf"].is_left = true;
-      }
-      if (n.l["leaf"] && n.r["leaf"]) {
-        n.l["leaf"].highlight_bot = true;
-        n.r["leaf"].highlight_bot = true;
-      }
-      if (outermost) {
-        outermost = false;
-        return [n.node, true, associative && (n.node === parent_op) && associative_op(n.node)];
-      } else {
-        return [n.node, false, associative && (n.node === parent_op) && associative_op(n.node)];
-      }
-    }, (n, [left_tex, left_level], pre, [right_tex, right_level]) => {
-      if (pre[1] || pre[2]) {
-        return [`${left_tex} ${tex_op(n.node)} ${right_tex}`, Math.max(left_level, right_level)];
-      } else {
-        const level = Math.max(left_level, right_level) + 1;
-        return [p(`${left_tex} ${tex_op(n.node)} ${right_tex}`, level - (not_a_set ? 1 : 0)), level];
-      }
-    }, (x) => {
-      let set_t = not_a_set ? x.set : set_tex_vanilla(x.set);
-      if (do_highlight && x.fresh) {
-        color_top += 1;
-        set_t = highlight(color_top, "top", x.is_left, set_t);
-      }
-      if (do_highlight && x.highlight_bot) {
-        if (x.is_left) {
-          color_low += 1;
-          set_t = `${highlight_raw(color_low, "low", x.is_left)}{${set_t}`;
-        } else {
-          set_t = `${set_t}}`;
-        }
-      }
-      return [set_t, 0];
-    },
-    expr, [null, null, null]
-  )[0];
-}
-
-function expr_to_solution_tex(expr_) {
-  let expr = expr_;
-  color_top = -1;
-  color_low = -1;
-  const lines = [`&${expr_to_tex(expr, false, false, true)}\\\\`];
-
-  while (true) {
-    expr = eval_one_step(expr);
-    lines.push(`${seq} {} &${expr_to_tex(expr, false, false, true)}\\\\`);
-    if (!expr["inner"]) {
-      break
-    }
-  }
-
-  return `\\begin{align*}${lines.join("\n")}\\end{align*}`;
 }
 
 function generated_exercise(id_prefix, new_exercise, new_text, new_solution) {
@@ -776,18 +671,35 @@ function generated_exercise(id_prefix, new_exercise, new_text, new_solution) {
   tag_new.addEventListener("click", () => on_click(false));
 }
 
+function render_node_to_tex(node, rendered_children) {
+  if (rendered_children.length === 0) {
+    if (Array.isArray(node)) {
+      return set_tex_vanilla(node);
+    } else {
+      return node;
+    }
+  } else {
+    return tex_op(node, rendered_children);
+  }
+}
+
+const simple_opts = {
+  highlight_steps: true,
+  base_level: 1
+};
+
 generated_exercise(
   "practice_intersection_union_direct",
   practice_intersection_union_tree,
-  (ex, tag) => tex(`${expr_to_tex(ex)}.`, tag),
-  (ex, tag) => tex(expr_to_solution_tex(ex), tag, {displayMode: true}),
+  (ex, tag) => tex(`${expr_to_tex(ex, render_node_to_tex, { base_level: 1 })}.`, tag),
+  (ex, tag) => tex(expr_to_solution_tex(ex, render_node_to_tex, set_ops, simple_opts), tag, { displayMode: true }),
 );
 
 generated_exercise(
   "practice_set_difference_direct",
   practice_set_difference_tree,
-  (ex, tag) => tex(`${expr_to_tex(ex)}.`, tag),
-  (ex, tag) => tex(expr_to_solution_tex(ex), tag, {displayMode: true}),
+  (ex, tag) => tex(`${expr_to_tex(ex, render_node_to_tex, { base_level: 1 })}.`, tag),
+  (ex, tag) => tex(expr_to_solution_tex(ex, render_node_to_tex, set_ops, simple_opts), tag, { displayMode: true }),
 );
 
 const exercise_arbitrary_venn_sections = [];
@@ -795,24 +707,21 @@ for (let i = 0; i < 7; i++) {
   exercise_arbitrary_venn_sections.push(document.querySelector(`#arbitrary_venn${i}`));
 }
 
-const arbitrary_venn_solutions = [[120,2,120],[27,2,126],[46,0,3],[27,2,120],[46,2,123],[63,2,122],[46,2,120],[63,2,120],[120,0,10],[27,2,86],[46,0,27],[27,2,80],[46,2,99],[125,2,112],[46,2,96],[63,2,112],[120,0,17],[27,2,46],[126,0,19],[27,2,40],[126,2,106],[63,2,42],[126,2,104],[63,2,40],[120,0,27],[27,2,6],[126,0,27],null,[124,2,96],[31,2,2],[126,2,96],[27,1,6],[120,0,36],[123,2,90],[123,0,38],[123,2,88],[46,2,27],[63,2,26],[46,2,24],[63,2,24],[120,0,46],[121,2,80],[123,0,46],[123,2,80],[46,2,3],[47,2,2],null,[46,1,3],[120,0,53],[63,2,14],[126,0,51],[59,2,8],[63,2,11],[63,2,10],[62,2,8],[63,2,8],[120,0,63],[63,2,6],[126,0,59],[40,1,27],[63,2,3],[63,2,2],[46,1,24],[46,1,27],[120,2,63],[123,2,62],[126,2,60],[123,2,56],[126,2,59],[127,2,58],[126,2,56],[127,2,56],[120,2,53],[123,2,54],[110,2,36],[91,2,16],[126,2,51],[125,2,48],[110,2,32],[127,2,48],[120,2,46],[123,2,46],[126,2,44],[123,2,40],[126,2,42],[127,2,42],[126,2,40],[127,2,40],[120,2,36],[123,2,38],[126,2,36],[80,1,27],[124,2,32],[127,2,34],[126,2,32],[91,1,6],[120,2,27],[123,2,26],[123,2,25],[123,2,24],[126,2,27],[127,2,26],[126,2,24],[127,2,24],[120,2,17],[121,2,16],[123,2,17],[123,2,16],[126,2,19],[127,2,18],[96,1,46],[110,1,3],[120,2,10],[123,2,10],[122,2,8],[123,2,8],[126,2,10],[127,2,10],[126,2,8],[127,2,8],null,[120,1,17],[120,1,10],[120,1,27],[120,1,36],[124,1,17],[120,1,46],[126,1,27]];
+const arbitrary_venn_solutions = [[120, 2, 120], [27, 2, 126], [46, 0, 3], [27, 2, 120], [46, 2, 123], [63, 2, 122], [46, 2, 120], [63, 2, 120], [120, 0, 10], [27, 2, 86], [46, 0, 27], [27, 2, 80], [46, 2, 99], [125, 2, 112], [46, 2, 96], [63, 2, 112], [120, 0, 17], [27, 2, 46], [126, 0, 19], [27, 2, 40], [126, 2, 106], [63, 2, 42], [126, 2, 104], [63, 2, 40], [120, 0, 27], [27, 2, 6], [126, 0, 27], null, [124, 2, 96], [31, 2, 2], [126, 2, 96], [27, 1, 6], [120, 0, 36], [123, 2, 90], [123, 0, 38], [123, 2, 88], [46, 2, 27], [63, 2, 26], [46, 2, 24], [63, 2, 24], [120, 0, 46], [121, 2, 80], [123, 0, 46], [123, 2, 80], [46, 2, 3], [47, 2, 2], null, [46, 1, 3], [120, 0, 53], [63, 2, 14], [126, 0, 51], [59, 2, 8], [63, 2, 11], [63, 2, 10], [62, 2, 8], [63, 2, 8], [120, 0, 63], [63, 2, 6], [126, 0, 59], [40, 1, 27], [63, 2, 3], [63, 2, 2], [46, 1, 24], [46, 1, 27], [120, 2, 63], [123, 2, 62], [126, 2, 60], [123, 2, 56], [126, 2, 59], [127, 2, 58], [126, 2, 56], [127, 2, 56], [120, 2, 53], [123, 2, 54], [110, 2, 36], [91, 2, 16], [126, 2, 51], [125, 2, 48], [110, 2, 32], [127, 2, 48], [120, 2, 46], [123, 2, 46], [126, 2, 44], [123, 2, 40], [126, 2, 42], [127, 2, 42], [126, 2, 40], [127, 2, 40], [120, 2, 36], [123, 2, 38], [126, 2, 36], [80, 1, 27], [124, 2, 32], [127, 2, 34], [126, 2, 32], [91, 1, 6], [120, 2, 27], [123, 2, 26], [123, 2, 25], [123, 2, 24], [126, 2, 27], [127, 2, 26], [126, 2, 24], [127, 2, 24], [120, 2, 17], [121, 2, 16], [123, 2, 17], [123, 2, 16], [126, 2, 19], [127, 2, 18], [96, 1, 46], [110, 1, 3], [120, 2, 10], [123, 2, 10], [122, 2, 8], [123, 2, 8], [126, 2, 10], [127, 2, 10], [126, 2, 8], [127, 2, 8], null, [120, 1, 17], [120, 1, 10], [120, 1, 27], [120, 1, 36], [124, 1, 17], [120, 1, 46], [126, 1, 27]];
 
 function arbitrary_venn_index_to_term(i) {
   if (i === 27) {
-    return {leaf: {set: "C"}};
+    return new_expr("C");
   } else if (i === 46) {
-    return {leaf: {set: "B"}};
+    return new_expr("B");
   } else if (i === 120) {
-    return {leaf: {set: "A"}};
+    return new_expr("A");
   } else {
     const op = arbitrary_venn_solutions[i][1];
-    return {
-      "inner": {
-        l: arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][0]),
-        node: op === 0 ? "intersection" : (op === 1 ? "union" : "difference"),
-        r: arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][2]),
-      },
-    };
+    const t = new_expr(op === 0 ? "intersection" : (op === 1 ? "union" : "difference"));
+    push_child(t, arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][0]));
+    push_child(t, arbitrary_venn_index_to_term(arbitrary_venn_solutions[i][2]));
+    return t;
   }
 }
 
@@ -822,7 +731,7 @@ generated_exercise(
     while (true) {
       const i = random_int(128);
       const expr = arbitrary_venn_index_to_term(i);
-      const size = leaves(expr);
+      const size = count_leaves(expr);
 
       if ((size >= 4) && ((!first) || (size === 4))) {
         return [i, expr];
@@ -830,14 +739,16 @@ generated_exercise(
     }
   },
   ([i, expr], tag) => {
-    const size = leaves(expr);
+    const size = count_leaves(expr);
     tag.textContent = `${size - 1}`;
 
     for (let j = 0; j < 7; j++) {
       exercise_arbitrary_venn_sections[j].classList.toggle("venn_yay", (i & (1 << j)) != 0);
     }
   },
-  ([_, expr], tag) => tex(`${expr_to_tex(expr, true, true)}.`, tag),
+  ([_, expr], tag) => tex(`${expr_to_tex(expr, render_node_to_tex, {
+    associativity: associative_op,
+  })}.`, tag),
 );
 
 const duck_container = document.querySelector("#duck_container");
