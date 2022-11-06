@@ -554,21 +554,16 @@ function set_ops(node, cs) {
     }
 }
 
-function tex_op(op, cs) {
-    let op_tex = "";
-    switch (op) {
+function tex_op(ex) {
+    switch (ex.node) {
         case "intersection":
-            op_tex = intersection;
-            break;
+            return intersection;
         case "union":
-            op_tex = union;
-            break;
+            return union;
         case "difference":
-            op_tex = setminus;
-            break;
+            return setminus;
         default: throw "unknown operator";
     }
-    return `${cs[0]} ${op_tex} ${cs[1]}`;
 }
 
 function render_node_to_tex(node, rendered_children) {

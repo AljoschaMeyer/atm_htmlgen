@@ -86,18 +86,24 @@ function needs_parens(t, opts) {
     }
 }
 
-// render_node_to_tex: (Node, [RenderedChildren]) -> RenderedExpr
+// render_node_to_tex: (Node) -> RenderedExpr // tex as string, only the operator
 // opts: { // all keys are optional
 //     highlight_steps: bool, // whether to highlight the last and next possible computation steps
 //     base_level: uint, // starting size level for parens
 //     associativity: (Node) => bool, // whether the given node is associative. Does not take associativity into account if this key is missing
+//     interactive_id: String, // if truthy, this is rendering for an interactive expression
 // }
 export function expr_to_tex(ex, render_node_to_tex, opts) {
     return dfs(
         null,
         (t, cs) => {
             if (is_leaf(t)) {
-                let expr_tex = render_node_to_tex(t.node, []);
+                let expr_tex = render_node_to_tex(t);
+
+                if (opts.interactive_id) {
+                    expr_tex = interactive_expression_mark_node(expr_tex, t, opts);
+                    expr_tex = interactive_expression_mark_node_and_operands(expr_tex, t, opts);
+                }
 
                 if (opts.highlight_steps && t.render_step_fresh) {
                     opts.color_top += 1;
@@ -119,12 +125,28 @@ export function expr_to_tex(ex, render_node_to_tex, opts) {
                     level: 0,
                 };
             } else {
-                let expr_tex = `${render_node_to_tex(t.node, cs.map(c => c.expr_tex))}`;
+                let expr_tex = `${render_node_to_tex(t)}`;
+
+                if (opts.interactive_id) {
+                    expr_tex = interactive_expression_mark_node(expr_tex, t, opts);
+                }
+
+                if (t.children.length === 1) {
+                    expr_tex = `${expr_tex} ${cs[0].expr_tex}`;
+                } else {
+                    expr_tex = `${cs[0].expr_tex} ${expr_tex} ${cs[1].expr_tex}`;
+                }
+                
                 let level = Math.max(...(cs.map(c => c.level)));
                 if (needs_parens(t, opts)) {
                     level += 1;
                     expr_tex = p(expr_tex, level - (opts.base_level ? opts.base_level : 0));
                 }
+
+                if (opts.interactive_id) {
+                    expr_tex = interactive_expression_mark_node_and_operands(expr_tex, t, opts);
+                }
+                
                 return {
                     expr_tex,
                     level,
@@ -133,6 +155,14 @@ export function expr_to_tex(ex, render_node_to_tex, opts) {
         },
         ex,
     ).expr_tex;
+}
+
+function interactive_expression_mark_node(expr_tex, ex, opts) {
+    return `\\htmlId{${opts.interactive_id}_tex_${ex.interactive_expression_no}}{\\htmlClass{interactive_expression_tex_node}{${expr_tex}}}`;
+}
+
+function interactive_expression_mark_node_and_operands(expr_tex, ex, opts) {
+    return `\\htmlId{${opts.interactive_id}_tex_subexpression_${ex.interactive_expression_no}}{${expr_tex}}`;
 }
 
 // args see expr_to_tex

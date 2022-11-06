@@ -39,6 +39,31 @@ export function is_leaf_as_are_siblings(t) {
     }
 }
 
+export function leftmost_child(t) {
+    if (t === null) {
+        return null;
+    } else {
+        return t.children.length > 0 ? t.children[0] : null;
+    }
+}
+
+export function rightmost_child(t) {
+    if (t === null) {
+        return null;
+    } else {
+        return t.children.length > 0 ? t.children[t.children.length - 1] : null;
+    }
+}
+
+export function tree_for_each(t, fun, start) {
+  dfs(
+    fun,
+    null,
+    t,
+    start,
+);
+}
+
 export function push_child(t, c) {
     t.children.push(c);
     c.parent = t;

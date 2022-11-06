@@ -176,15 +176,3 @@ function position_tooltip({clientX, clientY, ref: target, node: tooltip}) {
     });
   });
 }
-
-function find_tooltip_url(elem) {
-  if (elem.dataset && elem.dataset.tooltip) {
-    return elem.dataset.tooltip;
-  }
-
-  if (elem.parentNode) {
-    return find_tooltip_url(elem.parentNode);
-  }
-
-  return null;
-}

@@ -13,7 +13,7 @@
   <script defer src="./assets/animation.js" type="module"></script>
   <script defer src="./assets/geometry.js" type="module"></script>
   <script defer src="./assets/tree_layout.js" type="module"></script>
-  <script defer src="./assets/induction.js" type="module"></script>
+  <script defer src="./assets/chapter_induction.js" type="module"></script>
 )(
   §hsection["chapter_induction"](Induction)(
     §p(
@@ -147,6 +147,9 @@
         §p(
           To be written.
         )
+
+        §div(bbbbbdraw)(induction_tree)()
+        §div(bbbbb)()()
 
 
       )

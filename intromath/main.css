@@ -9,7 +9,8 @@
 :root {
     --color-bg0: #fff;
     --color-bg: #fffff8;
-    --color-bg2: #ccccc8;
+    --color-bg2: #ddddd8;
+    --color-bg3: #bbbbb8;
     --color-text: #111;
     --color-text2: #555;
 
@@ -34,12 +35,19 @@
   :root {
     --color-bg0: #171b1d;
     --color-bg: #293035;
-    --color-bg2: #516066;
+    --color-bg2: #475257;
+    --color-bg3: #728288;
     --color-text: #eee;
     --color-text2: #aaa;
 
     --color-obstruction: rgb(251, 69, 69);
   }
+}
+
+.bgcbg3 {
+  background-color: var(--color-bg3);
+  fill: var(--color-bg3);
+  --color-highlight: var(--color-bg3);
 }
 
 * {
@@ -532,7 +540,7 @@ span.enclosing.highlight {
   padding-right: 0;
 }
 
-.highlight.low, .highlight.top {
+.highlight.low, .highlight.top, .highlight.full {
   background-color: inherit;
   isolation: isolate;
 }
@@ -585,8 +593,42 @@ span.enclosing.rightspace.highlight.low:before {
   bottom: unset;
 }
 
+.highlight.full:not(.rightspace):before {
+  position: absolute;
+  display: inline-block;
+  z-index: -1;
+  bottom: 0.25em;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-color: var(--color-highlight);
+  border-radius: 0.15em;
+}
+
+.highlight.rightspace.full:before {
+  position: absolute;
+  display: inline-block;
+  z-index: -1;
+  bottom: 0.25em;
+  left: 0;
+  height: 100%;
+  content: "";
+  background-color: var(--color-highlight);
+  border-radius: 0.15em;
+  width: calc(100% - 0.2222em);
+}
+
 span.enclosing.highlight.rightspace.top:before {
   top: 0;
+}
+
+span.enclosing.highlight.full:not(.rightspace):before {
+  bottom: 0;
+}
+
+span.enclosing.rightspace.highlight.full:before {
+  bottom: 0;
 }
 
 .cancel_symbol {

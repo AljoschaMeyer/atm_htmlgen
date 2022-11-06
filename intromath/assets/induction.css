@@ -54,3 +54,11 @@
 .induction_edge.false {
   /* background-color: var(--clll5); */
 }
+
+.interactive_expression_tex * {
+  pointer-events: none;
+}
+
+.interactive_expression_tex_node {
+  pointer-events: initial;
+}

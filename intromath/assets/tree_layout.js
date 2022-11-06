@@ -16,7 +16,7 @@ export function make_tree(id, cases, layout, bottom_up_function) {
 
   let node_id = 0;
   const logical_tree = default_leaf(true);
-  logical_tree.x = 0;
+  logical_tree.x = 0; // ?
   let root = logical_tree;
 
   const container_drawing = document.createElement("div");
@@ -28,11 +28,11 @@ export function make_tree(id, cases, layout, bottom_up_function) {
 
   if (layout) {
     container.appendChild(container_drawing);
-    drawing_vertices.appendChild(root.drawing);
+    drawing_vertices.appendChild(root.drawing); // ?
   }
 
   if (bottom_up_function) {
-    bottom_up(root, bottom_up_function);
+    bottom_up(root, bottom_up_function); // ?
   }
 
   function modify_logical_tree(c, t) {
@@ -45,7 +45,7 @@ export function make_tree(id, cases, layout, bottom_up_function) {
     }
 
     t.children = children;
-    t.c = c;
+    t.c = c; // ?
 
     children.forEach(child => {
       child.parent = t;
