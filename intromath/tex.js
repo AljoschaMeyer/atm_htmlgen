@@ -42,7 +42,7 @@ export function set(elems, level) {
     } else if (level === 4) {
       return String.raw`§$set[4](${elems.join(", ")})§ `;
     } else {
-      throw "unimplemented level of paren sizing";
+      return String.raw`§$set[4](${elems.join(", ")})§ `;
     }
   }
 }
@@ -116,7 +116,7 @@ export function p(inner_tex, level) {
   } else if (level === 4) {
     return String.raw`§$p[4](${inner_tex})§ `;
   } else {
-    throw "unimplemented level of paren sizing";
+    return String.raw`§$p[4](${inner_tex})§ `;
   }
 }
 
@@ -132,7 +132,7 @@ export function powerset(inner_tex, level) {
   } else if (level === 4) {
     return String.raw`§$powerset[4](${inner_tex})§ `;
   } else {
-    throw "unimplemented level of paren sizing";
+    return String.raw`§$powerset[4](${inner_tex})§ `;
   }
 }
 

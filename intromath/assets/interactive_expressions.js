@@ -2,7 +2,7 @@ import { tex } from "./tex.js";
 import { animate, ease_in_out_cubic } from "./animation.js";
 import { register_tooltip_handler } from "./tooltips.js";
 import { lerp, angle_to_x, distance } from "./geometry.js";
-import { dfs, is_rightmost_child, is_root, leftmost_child, push_child, rightmost_child, set_children, tree_for_each } from "./trees.js";
+import { dfs, height, is_rightmost_child, is_root, leftmost_child, push_child, rightmost_child, set_children, tree_for_each } from "./trees.js";
 import { expr_to_tex, new_expr } from "./expressions.js";
 
 // id: String // prefix for dom ids unique to this interactive expression
@@ -18,8 +18,11 @@ import { expr_to_tex, new_expr } from "./expressions.js";
 //         layout: {
 //             minsep: f64, // minimum x distance between two nodes in em units
 //             y_factor: f64, // distance between y layers in em units
+//             min_height: Option<f64>,
+//             max_height: Option<f64>,
 //         },
 //         animation_duration: f64, // duration of x positioning in ms units
+//         magnify: Option<f64>, // set font size to this many rem units, default 1
 //     },
 // }
 export function new_interactive_expression(id, ex_, opts) {
@@ -56,7 +59,6 @@ export function new_interactive_expression(id, ex_, opts) {
     }
 
     const container_drawing = document.createElement("div");
-    container_drawing.style.transform = "translateX(calc(50% - 0.75em))"
     const drawing_edges = document.createElement("div");
     container_drawing.appendChild(drawing_edges);
     const drawing_vertices = document.createElement("div");
@@ -66,12 +68,15 @@ export function new_interactive_expression(id, ex_, opts) {
         ex.x = 0;
 
         opts.render_hierarchy.appendChild(container_drawing);
+        opts.render_hierarchy.style.fontSize = `${opts.render_hierarchy_opts.magnify ? opts.render_hierarchy_opts.magnify : 1}rem`;
 
         tree_for_each(ex, init_drawing_of_node);
 
         determine_threads(ex);
         determine_x_offset(ex, opts);
         petrify(ex, opts);
+        compute_drawing_width(ex);
+        update_dimensions(ex, opts);
     }
 
     function init_drawing_of_node(t) {
@@ -160,6 +165,8 @@ export function new_interactive_expression(id, ex_, opts) {
             determine_threads(ex);
             determine_x_offset(ex, opts);
             petrify(ex, opts);
+            compute_drawing_width(ex);
+            update_dimensions(ex, opts);
         }
     }
 
@@ -172,7 +179,9 @@ export function new_interactive_expression(id, ex_, opts) {
 
         dfs(
             ex => {
-                document.getElementById(`${id}_tex_${ex.interactive_expression_no}`).interactive_expression = ex;
+                const node = document.getElementById(`${id}_tex_${ex.interactive_expression_no}`);
+                node.interactive_expression = ex;
+                node.childNodes[0].menu = make_render_menu(ex);
             },
             null,
             ex,
@@ -189,7 +198,12 @@ export function new_interactive_expression(id, ex_, opts) {
 
         if (opts.render_hierarchy) {
             const node_vertex = document.getElementById(`${id}_hierarchy_${iex.interactive_expression_no}`);
-            node_vertex.style.backgroundColor = "var(--color-bg3)";
+            tree_for_each(iex, t => t.drawing.style.backgroundColor = "var(--color-bg3)");
+            tree_for_each(iex, t => {
+                if (t != iex) {
+                    t.drawing_edge.style.backgroundColor = "var(--color-bg3)";
+                }
+            });
         }
     }
 
@@ -203,14 +217,20 @@ export function new_interactive_expression(id, ex_, opts) {
 
         if (opts.render_hierarchy) {
             const node_vertex = document.getElementById(`${id}_hierarchy_${iex.interactive_expression_no}`);
-            node_vertex.style.backgroundColor = "";
-        }
+            tree_for_each(iex, t => t.drawing.style.backgroundColor = "");
+            tree_for_each(iex, t => {
+                if (t != iex) {
+                    t.drawing_edge.style.backgroundColor = "var(--color-bg2)"
+                }
+            });
+   ;     }
     }
 }
 
 function highlighting_classes(ex, area) {
     const classes = ["bgcbg3", "highlight", area];
-    if ((!is_root(ex) || (area === "full")) && !is_rightmost_child(ex)) {
+    // Add this class if the glyph(s) to highlight have whitespace to their right.
+    if (ex.children.length != 1 && (ex.children.length === 2 || /*leaf*/ (!is_rightmost_child(ex) && !is_root(ex)))) {
         classes.push("rightspace");
     }
     return classes;
@@ -341,19 +361,19 @@ function petrify_(t, x, y, opts) {
     t.x = x_;
     animate(
         t.drawing,
-        (drawing, time) => {
+        (_drawing, time) => {
             const factor = ease_in_out_cubic(time);
             const node_x = lerp(t.old_x, t.x, factor);
             const node_y = y * opts.render_hierarchy_opts.layout.y_factor;
             t.drawing_x = node_x;
             t.drawing_y = node_y;
 
-            t.drawing.style.transform = `translate(${node_x}em, ${node_y}em)`;
+            t.drawing.style.transform = `translate(${node_x + t.drawing_width/2}em, ${node_y}em)`;
 
             if (t.parent) {
-                const edge_line = [[node_x, node_y], [t.parent.drawing_x, t.parent.drawing_y]];
+                const edge_line = [[node_x + t.drawing_width/2, node_y], [t.parent.drawing_x + t.drawing_width/2, t.parent.drawing_y]];
                 t.drawing_edge.style.width = `${distance(edge_line[0], edge_line[1])}em`;
-                t.drawing_edge.style.transform = `translate(${node_x + 0.75}em, ${node_y + 0.75 - 0.125}em) rotate(${angle_to_x(edge_line)}rad)`;
+                t.drawing_edge.style.transform = `translate(${node_x + 0.75 + t.drawing_width/2}em, ${node_y + 0.75 - 0.125}em) rotate(${angle_to_x(edge_line)}rad)`;
             }
         },
         opts.render_hierarchy_opts.animation_duration,
@@ -364,6 +384,30 @@ function petrify_(t, x, y, opts) {
     }
 }
 
+function compute_drawing_width(ex) {
+    let min = 0;
+    let max = 0;
+
+    tree_for_each(ex, t => {
+        min = Math.min(min, t.x);
+        max = Math.max(max, t.x);
+    });
+
+    tree_for_each(ex, t => t.drawing_width = -min + max + 3);
+}
+
+function update_dimensions(ex, opts) {
+    const layout = opts.render_hierarchy_opts.layout;
+    
+    const h = height(ex);
+    let drawing_height = (layout.y_factor) * h + 3;
+    drawing_height = Math.max(drawing_height, layout.min_height ? layout.min_height : 0);
+    drawing_height = Math.min(drawing_height, layout.max_height ? layout.max_height : drawing_height);
+    opts.render_hierarchy.style.height = `${drawing_height}em`;
+
+    opts.render_hierarchy.style.width = `${ex.drawing_width}em`;
+}
+
 register_tooltip_handler({
     selector: elem => elem.menu,
     start_delay: 200,
@@ -371,62 +415,3 @@ register_tooltip_handler({
         return menu(remove_tooltip);
     },
 });
-
-
-//     function create_drawing_node(logical_tree, c, is_root) {
-//         const drawing = document.createElement("span");
-//         drawing.induction_tree = [
-//             logical_tree,
-//             (remove_tooltip) => {
-//                 const menu = document.createElement("div");
-//                 menu.classList.add("induction_menu");
-
-//                 for (let i = 0; i < cases.length; i++) {
-//                     const case_btn = document.createElement("button");
-//                     render_case_label(case_btn, i);
-//                     case_btn.addEventListener("click", n => {
-//                         modify_logical_tree(i, logical_tree);
-//                         remove_tooltip();
-//                     });
-//                     menu.appendChild(case_btn);
-//                 }
-//                 return menu;
-//             },
-//         ];
-
-//         drawing.classList.add("induction_tree_node");
-//         if (is_root) {
-//             drawing.classList.add("root");
-//         } else {
-//             const drawing_edge = document.createElement("div");
-//             drawing_edge.classList.add("induction_edge");
-//             logical_tree.drawing_edge = drawing_edge;
-//             drawing_edges.appendChild(drawing_edge);
-//         }
-
-//         render_case_label(drawing, c);
-
-//         // drawing.children[0].textContent = `${logical_tree.id}`; // TODO remove, tmp for debugging
-
-//         for (let i = 0; i < cases[c].arity; i++) {
-//             create_default_drawing_node(logical_tree.children[i], false)
-//             drawing_vertices.appendChild(logical_tree.children[i].drawing);
-//         }
-
-//         logical_tree.drawing = drawing;
-//     }
-
-//     function create_default_drawing_node(logical_tree, is_root) {
-//         return create_drawing_node(logical_tree, 0, is_root);
-//     }
-
-//     function render_case_label(elem, c) {
-//         if (cases[c].tex) {
-//             tex(cases[c].content, elem);
-//         } else {
-//             elem.textContent = cases[c].content;
-//         }
-//     }
-// }
-
-

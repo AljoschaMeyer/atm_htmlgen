@@ -1,16 +1,14 @@
 .induction_tree {
-  height: 17rem;
+  /* height: 17rem; */
   position: relative;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: auto;
 }
 
 .induction_tree_node {
   position: absolute;
-  font-size: 1.2rem;
   text-align: center;
   background-color: var(--color-bg2);
-  /* display: inline-block; */
   width: 1.5em;
   height: 1.5em;
   border-radius: 50%;
@@ -31,7 +29,6 @@
 
 .induction_edge {
   position: absolute;
-  font-size: 1.2rem; /* same em unit as .induction_tree_node */
   background-color: var(--color-bg2);
   height: 0.25em;
   transform-origin: 0 0.125em;

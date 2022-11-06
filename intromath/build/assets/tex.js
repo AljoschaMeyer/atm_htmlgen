@@ -42,7 +42,7 @@ export function set(elems, level) {
     } else if (level === 4) {
       return String.raw` \Bigg\lbrace ${elems.join(", ")} \Bigg\rbrace `;
     } else {
-      throw "unimplemented level of paren sizing";
+      return String.raw` \Bigg\lbrace ${elems.join(", ")} \Bigg\rbrace `;
     }
   }
 }
@@ -116,7 +116,7 @@ export function p(inner_tex, level) {
   } else if (level === 4) {
     return String.raw` \Bigg( ${inner_tex} \Bigg) `;
   } else {
-    throw "unimplemented level of paren sizing";
+    return String.raw` \Bigg( ${inner_tex} \Bigg) `;
   }
 }
 
@@ -132,7 +132,7 @@ export function powerset(inner_tex, level) {
   } else if (level === 4) {
     return String.raw`\htmlData{preview=http://localhost:1234/previews/powerset.html}{\href{http://localhost:1234/sets.html#powerset}{\operatorname{\mathcal{P}}}} \Bigg( ${inner_tex} \Bigg) `;
   } else {
-    throw "unimplemented level of paren sizing";
+    return String.raw`\htmlData{preview=http://localhost:1234/previews/powerset.html}{\href{http://localhost:1234/sets.html#powerset}{\operatorname{\mathcal{P}}}} \Bigg( ${inner_tex} \Bigg) `;
   }
 }
 
